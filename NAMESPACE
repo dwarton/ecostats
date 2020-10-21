@@ -3,6 +3,7 @@
 S3method(plot,mlm)
 S3method(predict,mlm)
 S3method(residuals,mlm)
-S3method(simulate,mlm)
+S3method(simulate,lm)
 export(gamenvelope)
 export(qqenvelope)
+export(simulate)
