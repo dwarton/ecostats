@@ -41,7 +41,7 @@
 #' @importFrom mgcv gam predict.gam
 
 gamenvelope=function(x, y, conf.level=0.95, col = par("col"), 
-              envelope.col=c("blue",rgb(0,0,1,0.25)), ...)
+                     envelope.col=c("blue",rgb(0,0,1,0.25)), ...)
 {
   # if required, coerce x and y into vectors 
   Y = c(y)
