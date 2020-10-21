@@ -34,9 +34,9 @@
 #' # predict each response conditionally on the values of all other responses:
 #' predict(iris.mlm, conditional=TRUE)
 #' 
+#' @rdname predict.mlm
 #' @method predict mlm
-#' @S3method predict mlm
-#' @export predict.mlm
+#' @export
 predict.mlm = function(object, conditional = FALSE, standardize=FALSE, ...)
 {
   mf = model.frame(object) 

@@ -38,8 +38,6 @@
 #' plot(iris.mlm,which=1,panel=gamenvelope)
 #'
 #' @export
-#' @importFrom mgcv gam predict.gam
-
 gamenvelope=function(x, y, conf.level=0.95, col = par("col"), 
                      envelope.col=c("blue",rgb(0,0,1,0.25)), ...)
 {
@@ -53,7 +51,6 @@ gamenvelope=function(x, y, conf.level=0.95, col = par("col"),
   }    
   
   # fit a smoother using gam from mgcv package, to data sorted by X
-  require(mgcv)
   xSort = sort(X,index.return=TRUE)
   gam.yx=mgcv::gam(Y[xSort$ix]~xSort$x)
   

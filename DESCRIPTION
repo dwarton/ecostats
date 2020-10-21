@@ -1,7 +1,9 @@
 Package: ecostats
 Title: Code and data accompanying the Ecostats text
-Version: 0.0.0.9000
-Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")))
+Version: 0.0.1
+Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
+            person("Christopher", "Chung", role = "ctb")
+            )
 Description: Functions and data supporting the Ecostats package, and solutions to exercises. 
 License: LGPL (>= 2.1)
 Imports: GET, mgcv, mvtnorm

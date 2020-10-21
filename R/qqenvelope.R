@@ -97,9 +97,6 @@
 #' qqenvelope(iris.mlm,col=1:4)
 #' 
 #' @export
-#' @importFrom GET create_curve_set global_envelope_test
-
-
 qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles", 
                        ylab = "Sample Quantiles", plot.it = TRUE, 
                        n.sim=999, col=par("col"), col.envelope="darkolivegreen", conf.level=0.95, 

@@ -28,14 +28,11 @@
 #' # fit a mlm:
 #' iris.mlm=lm(cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width)~Species,data=iris)
 #' # simulate new responses:
-#' simulate.mlm(iris.mlm)
+#' simulate(iris.mlm)
 #'
+#' @rdname simulate.mlm
 #' @method simulate mlm
-#' @S3method simulate mlm
-#' @export simulate.mlm
-#' @importFrom mvtnorm rmvnorm
-
-#simulate function needed for mlm objects
+#' @export
 simulate.mlm = function(object, nsim=1, seed=NULL, ...)
 {
   # code chunks taken from stats:::simulate.lm R version 4.0.3ish on 30/7/20
@@ -65,5 +62,3 @@ simulate.mlm = function(object, nsim=1, seed=NULL, ...)
   attr(val, "seed") <- RNGstate
   val
 }
-
-#setMethod("simulate", "mlm", simulate.mlm)

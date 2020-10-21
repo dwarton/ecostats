@@ -37,7 +37,7 @@ data(iris)
 # fit a mlm:
 iris.mlm=lm(cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width)~Species,data=iris)
 # simulate new responses:
-simulate.mlm(iris.mlm)
+simulate(iris.mlm)
 
 }
 \seealso{
