@@ -24,7 +24,7 @@ A vector or matrix of \code{nsim} sets of simulated responses
 }
 \description{
 Simulate one or more sets of responses from the distribution corresponding to the fitted model object.
-This function is the same one found in \code{stats} but rewritten here to overcome weird compilation issues.
+This is a duplicate of the function found in the \code{stats} package.
 }
 \details{
 A \code{simulate} function for \code{mlm} objects, which simulates one or more sets of responses from 

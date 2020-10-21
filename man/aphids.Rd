@@ -5,18 +5,37 @@
 \alias{aphids}
 \title{Aphid data}
 \format{
-A list containing whatevs.
+A list containing two dataframes, \code{oat} and \code{wheat}, depending on the crop. Each
+dataframe contains:\describe{
+\item{Plot}{The plot ID, a factor with eight levels}
+\item{Treatment}{A factor indicating whether birds were excluded, \code{excluded} or \code{present}.}
+\item{Time}{The number of days since netting was applied.}
+\item{counts}{Aphid abundance (counts)}
+\item{logcount}{log(y+1)-transformed aphid abundance}
+}
 }
 \usage{
 data(aphids)
 }
 \description{
-Insert details about the study
+A study of the effects of bird exclusion on biological control of aphids in oat and wheat fields in 
+Germany (Grass \emph{et al.} 2017). Many thanks to Ingo for providing the raw data.
+In each of two fields (one of oats, one of wheat) there were eight plots, four with plastic netting 
+to exclude birds, and four without. Aphid abundance was counted on seven different occasions over 
+the first 38 weeks following netting. The expectation was that aphid numbers would decrease on bird 
+exclusion, because an important food source to tree sparrows is aphid predators, hoverflies and 
+ladybird beetles, so presence of birds may be limit the effectiveness of a biological control of aphids.
 }
 \examples{
 data(aphids)
+cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours
+with(aphids$oat, interaction.plot(Time,Plot,logcount,legend=FALSE,
+                               col=cols[Treatment], lty=1, ylab="Counts [log(y+1) scale]",
+                               xlab="Time (days since treatment)") )
+                               legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
 }
 \references{
-insert ref
+Grass \emph{et al.} (2017) Insectivorous birds disrupt biological control of cereal aphids.
+Ecology, \bold{98} 1583-90.
 }
 \keyword{datasets}

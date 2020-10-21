@@ -7,9 +7,10 @@
 \method{simulate}{lm}(object, nsim = 1, seed = NULL, ...)
 }
 \arguments{
-\item{object}{a \code{lm} or \code{mlm} object, typically the result of calling \code{lm} with a matrix response.}
+\item{object}{a \code{lm} or \code{mlm} object, typically the result of calling \code{lm} 
+(if the response is a matrix this leads to a \code{mlm}).}
 
-\item{nsim}{number of replicate datasets to simulate. If \code{nsim} is greater than 1
+\item{nsim}{number of replicate datasets to simulate. For \code{mlm}, if \code{nsim} is greater than 1,
 the output is arranged in a 3D array.}
 
 \item{seed}{an object specifying if and how the random number generator should be 
@@ -21,27 +22,33 @@ return .Random.seed as the "seed" attribute, see ‘Value’}
 \item{...}{additional optional arguments.}
 }
 \value{
-A matrix of simulated values for the response
+A matrix of simulated values for the response (or an array, for \code{mlm} with \code{nsim} greater than 1)
 }
 \description{
 Simulate one or more sets of responses from a Linear Model (\code{lm}) or Multivariate Linear Model (\code{mlm}) object.
 }
 \details{
-A \code{simulate} function for \code{mlm} objects, which simulates one or more sets of responses from 
-a Multivariate Linear Model (\code{mlm}) object. If multiple sets of responses are requested,
-they are returned in a 3D array, with simulation number along the third dimension.
-Weights argument is currently ignored -- constant variance-covariance matrix assumed.
+A \code{simulate} function for \code{lm} and \code{mlm} objects, which simulates one or more 
+sets of responses from a Linear Model (\code{lm}) or Multivariate Linear Model (\code{mlm}) object.
+If multiple sets of responses are requested from a multivariate fit, they are returned in a 3D array,
+with simulation number along the third dimension.
+
+For multivariate fits, the weights argument is currently ignored -- a constant 
+variance-covariance matrix assumed for \code{mlm}.
 }
 \examples{
+x <- 1:5
+mod1 <- lm(c(1:3, 7, 6) ~ x)
+S1 <- simulate(mod1, nsim = 4)
+# fit a mlm to iris data:
 data(iris)
-# fit a mlm:
 iris.mlm=lm(cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width)~Species,data=iris)
 # simulate new responses:
 simulate(iris.mlm)
 
 }
 \seealso{
-\code{\link{lm}}, \code{\link{plot.mlm}}, \code{\link{predict.mlm}}, \code{\link{rstandard}}
+\code{\link{lm}}, \code{\link{simulate}}
 }
 \author{
 David Warton <david.warton@unsw.edu.au>

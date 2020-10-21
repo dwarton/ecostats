@@ -2,8 +2,9 @@
 #'
 #' Simulate one or more sets of responses from a Linear Model (\code{lm}) or Multivariate Linear Model (\code{mlm}) object.
 #'
-#' @param object a \code{lm} or \code{mlm} object, typically the result of calling \code{lm} with a matrix response.
-#' @param nsim number of replicate datasets to simulate. If \code{nsim} is greater than 1
+#' @param object a \code{lm} or \code{mlm} object, typically the result of calling \code{lm} 
+#' (if the response is a matrix this leads to a \code{mlm}).
+#' @param nsim number of replicate datasets to simulate. For \code{mlm}, if \code{nsim} is greater than 1,
 #' the output is arranged in a 3D array.
 #' @param seed an object specifying if and how the random number generator should be 
 #' initialized (‘seeded’). Either NULL or an integer that will be used in a call to set.seed
@@ -13,25 +14,30 @@
 #' @param ... additional optional arguments.
 #'
 #' @details
-#' A \code{simulate} function for \code{mlm} objects, which simulates one or more sets of responses from 
-#' a Multivariate Linear Model (\code{mlm}) object. If multiple sets of responses are requested,
-#' they are returned in a 3D array, with simulation number along the third dimension.
-#' Weights argument is currently ignored -- constant variance-covariance matrix assumed.
+#' A \code{simulate} function for \code{lm} and \code{mlm} objects, which simulates one or more 
+#' sets of responses from a Linear Model (\code{lm}) or Multivariate Linear Model (\code{mlm}) object.
+#' If multiple sets of responses are requested from a multivariate fit, they are returned in a 3D array,
+#' with simulation number along the third dimension.
 #' 
-#' @return A matrix of simulated values for the response
+#' For multivariate fits, the weights argument is currently ignored -- a constant 
+#' variance-covariance matrix assumed for \code{mlm}.
+#' 
+#' @return A matrix of simulated values for the response (or an array, for \code{mlm} with \code{nsim} greater than 1)
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' 
-#' @seealso \code{\link{lm}}, \code{\link{plot.mlm}}, \code{\link{predict.mlm}}, \code{\link{rstandard}}
+#' @seealso \code{\link{lm}}, \code{\link{simulate}}
 #' @examples
+#' x <- 1:5
+#' mod1 <- lm(c(1:3, 7, 6) ~ x)
+#' S1 <- simulate(mod1, nsim = 4)
+#' # fit a mlm to iris data:
 #' data(iris)
-#' # fit a mlm:
 #' iris.mlm=lm(cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width)~Species,data=iris)
 #' # simulate new responses:
 #' simulate(iris.mlm)
 #'
 #' @method simulate lm
-#' @method simulate mlm
 #' @export
 simulate.lm = function (object, nsim = 1, seed = NULL, ...) 
 {
@@ -101,7 +107,7 @@ simulate.lm = function (object, nsim = 1, seed = NULL, ...)
 #' Simulate Responses
 #'
 #' Simulate one or more sets of responses from the distribution corresponding to the fitted model object.
-#' This function is the same one found in \code{stats} but rewritten here to overcome weird compilation issues.
+#' This is a duplicate of the function found in the \code{stats} package.
 #'
 #' @param object an object representing a fitted model.
 #' @param nsim number of replicate datasets to simulate. Defaults to \code{1}.
