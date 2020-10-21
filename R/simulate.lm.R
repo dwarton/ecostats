@@ -31,6 +31,7 @@
 #' simulate(iris.mlm)
 #'
 #' @method simulate lm
+#' @method simulate mlm
 #' @export
 simulate.lm = function (object, nsim = 1, seed = NULL, ...) 
 {
@@ -60,9 +61,12 @@ simulate.lm = function (object, nsim = 1, seed = NULL, ...)
     #  if (!(is.null(w <- object$weights) || (length(w) == 
     #                                         1L && w == 1))) vars <- vars/w
     val <- replicate(nsim,ftd+mvtnorm::rmvnorm(n,sigma=vars))
+    if(nsim==1)
+      val=matrix(val,ncol=ncol(ftd))
+    else
+      dimnames(val)[[3]] = paste0("sim_",seq_len(nsim))
     colnames(val)=nm[[2]]
-    rownames(val) <- nm[[1]]
-    dimnames(val)[[3]] <- paste0("sim_",seq_len(nsim))
+    rownames(val) = nm[[1]]
   }
   else
   {
