@@ -16,10 +16,12 @@ all other responses.}
 \item{standardize}{logical defaults to \code{FALSE}, but for \code{TRUE} predictions will be
 standardised so they are comparable across responses.}
 
-\item{...}{further arguments passed to \code{predict.lm}.}
+\item{...}{further arguments passed to \code{\link{predict.lm}}, in particular, \code{newdata}.
+However, this function was not written to accept non-default values for \code{se.fit}, 
+\code{interval} or \code{terms}.}
 }
 \value{
-A matrix of predicted values
+A matrix of predicted values.
 }
 \description{
 Predicted values based on a multivariate linear model (\code{mlm}) object.
@@ -33,8 +35,11 @@ predicted values by default, but optionally returns predictions from a full cond
 model (\code{conditional=TRUE}), that is, from a linear model for each response as a function
 of all responses as well as predictors. This can be used in plots to diagnose the
 multivariate normality assumption.
+
 These can be standardized (\code{standardize=TRUE}) to facilitate overlay plots of multiple
 responses, as is the default behaviour in \code{\link{plot.mlm}}.
+
+Currently, standard errors and confidence intervals around predictions are not available.
 }
 \examples{
 data(iris)
@@ -45,7 +50,7 @@ predict(iris.mlm, conditional=TRUE)
 
 }
 \seealso{
-\code{\link{lm}}, \code{\link{plot.mlm}}, \code{\link{residuals.mlm}}
+\code{\link{lm}}, \code{\link{plot.mlm}}, \code{\link{predict.lm}}, \code{\link{residuals.mlm}}
 }
 \author{
 David Warton <david.warton@unsw.edu.au>

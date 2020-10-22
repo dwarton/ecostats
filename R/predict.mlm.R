@@ -11,7 +11,9 @@
 #' all other responses.
 #' @param standardize logical defaults to \code{FALSE}, but for \code{TRUE} predictions will be
 #' standardised so they are comparable across responses.
-#' @param ... further arguments passed to \code{predict.lm}.
+#' @param ... further arguments passed to \code{\link{predict.lm}}, in particular, \code{newdata}.
+#' However, this function was not written to accept non-default values for \code{se.fit}, 
+#' \code{interval} or \code{terms}. 
 #'
 #' @details
 #' A \code{predict} function for \code{mlm} objects, which returns the usual (marginal) 
@@ -19,14 +21,17 @@
 #' model (\code{conditional=TRUE}), that is, from a linear model for each response as a function
 #' of all responses as well as predictors. This can be used in plots to diagnose the
 #' multivariate normality assumption.
+#' 
 #' These can be standardized (\code{standardize=TRUE}) to facilitate overlay plots of multiple
 #' responses, as is the default behaviour in \code{\link{plot.mlm}}.
 #' 
-#' @return A matrix of predicted values
+#' Currently, standard errors and confidence intervals around predictions are not available.
+#' 
+#' @return A matrix of predicted values.
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' 
-#' @seealso \code{\link{lm}}, \code{\link{plot.mlm}}, \code{\link{residuals.mlm}}
+#' @seealso \code{\link{lm}}, \code{\link{plot.mlm}}, \code{\link{predict.lm}}, \code{\link{residuals.mlm}}
 #' @examples
 #' data(iris)
 #' # fit a mlm:
