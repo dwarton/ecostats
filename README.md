@@ -2,9 +2,9 @@
 
 ecostats - assorted functions and datasets to accompany the upcoming Eco-Stats text
 
-### Authors
+### Author
 
-David Warton and Christopher Chung
+David Warton
 
 ### License
 
