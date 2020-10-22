@@ -1,6 +1,5 @@
 #' Aphid data as a BACI design
 #'
-#' @description
 #' A subset from a study of the effects of bird exclusion on biological control of aphids in oat fields in 
 #' Germany (Grass \emph{et al.} 2017). Many thanks to Ingo for providing the raw data. The full data are
 #' in \code{\link{aphids}, here we provide just two sampling times, 3 days and 30 days after netting.
