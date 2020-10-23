@@ -59,6 +59,9 @@
 #' # construct residual vs fits and QQ plot
 #' plot(iris.mlm, which=1:2)
 #'
+#' @importFrom grDevices adjustcolor as.graphicsAnnot dev.flush dev.hold dev.interactive devAskNewPage extendrange rgb
+#' @importFrom graphics abline axis frame legend lines matplot matpoints mtext par plot points polygon strheight strwidth text title
+#' @importFrom stats cooks.distance deviance df.residual fitted influence lm model.frame model.matrix model.response predict qnorm qqnorm residuals residuals.lm rnorm rstandard rstudent runif terms update var weights
 #' @export
 plot.mlm=function(x, which = c(1L:3L, 5L), overlay = TRUE, caption = list("Residuals vs Fitted", 
                                                    "Normal Q-Q", "Scale-Location", "Cook's distance", "Residuals vs Leverage", 

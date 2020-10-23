@@ -4,10 +4,7 @@ Version: 0.1.2
 Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
             person("Christopher", "Chung", role = "ctb")
             )
-Description: Functions and data supporting the Ecostats text (Warton, in press, Springer), and solutions
-to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for
-diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where
-not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
+Description: Functions and data supporting the Eco-Stats text (Warton, in press, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
 License: LGPL (>= 2.1)
 Imports: GET, mgcv, mvtnorm
 Encoding: UTF-8

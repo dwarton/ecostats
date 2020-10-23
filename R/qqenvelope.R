@@ -94,7 +94,7 @@
 #' Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 #' iris.mlm=lm(Y~Species,data=iris)
 #' # check normality assumption:
-#' qqenvelope(iris.mlm,col=1:4)
+#' qqenvelope(iris.mlm,n.sim=499)
 #' 
 #' @export
 qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles", 
