@@ -1,6 +1,8 @@
-#' Add a scatterplot with a GAM smoother and confidence bands
+#' Add a scatterplot with a GAM smoother and confidence band
 #'
-#' A scatterplot with a GAM smoother and confidence bands.
+#' Produces a scatterplot of a \code{y} against \code{x}, with a smoother
+#' constructed using \code{\link[mgcv]{gam}} and point-wise confidence bands
+#' constructed as Wald intervals.
 #'
 #' @param x the \code{x} coordinates for the plot.
 #' @param y the \code{y} coordinates for the plot.

@@ -1,9 +1,15 @@
-#' Normal Quantile-Quantile Plots with Simulation Envelopes
+#' Diagnostic Plots for a Fitted Object with Simulation Envelopes
 #'
-#' Produces a normal QQ plot of a \emph{fitted model} \code{y}, with a user-specified 
-#' line to compare to "theoretical" quantiles, and global envelopes constructed
-#' by simulating new residuals. Global envelopes are constructed using the
-#' \code{GET} package for simultaneous control of error rates over the whole curve.
+#' Produces diagnostic plots of a \emph{fitted model} \code{y}, and
+#' adds global envelopes constructed by simulating new residuals to
+#' provide guidance as to whether departures from expected trends are
+#' large relative to sampling variation if the fitted model were
+#' correct. Global envelopes are constructed using the
+#' \code{GET} package for simultaneous control of error rates over the
+#' whole plot, and residuals can wither be simulated from the true model
+#' (computationally intensive) or from the standard normal (not always
+#' a smart move). Diagnostic plots presented are residual vs fits,
+#' a normal quantile plot, and a scale-location plot.
 #'
 #' @param y can be a set of values for which we wish to check (multivariate) normality, 
 #' or it can be \emph{any} object that responds to the \code{residuals} and \code{simulate}
@@ -42,34 +48,54 @@
 #' @param ... further arguments sent through to \code{plot}
 #' 
 #' @details
-#' A challenge when interpreting a \code{qqplot} is understanding the extent to which
-#' deviations from expected values could be due to random noise (sampling variation)
+#' A challenge when interpreting diagnostic plots is understanding the extent to which
+#' deviations from the expected pattern could be due to random noise (sampling variation)
 #' rather than actual assumption violations. This function is intended to assess this, 
-#' by simulating multiple realizations of residuals in situations where assumptions 
-#' are satisfied, and plotting a simulation envelope around these at level \code{conf.level}.
+#' by simulating multiple realizations of residuals (and fitted values) in situations where 
+#' assumptions are satisfied, and plotting a simulation envelope around these at level \code{conf.level}.
 #' 
 #' This function can take data (univariate or multivariate) and check for (multivariate)
 #' normality, or it can take a fitted model and use qq plots to interrogate residuals and
-#' see if they are behaving as we would expect them to if the model were true.
+#' see if they are behaving as we would expect them to if the model were true. As long as 
+#' the fitted model accepts \code{\link{simulate}}, \code{\link{residuals}} and 
+#' \code{\link{predict}} it should be fine.
 #' 
-#' The envelope is global, constructed using the \code{\link[GET]{GET-package}}, meaning that
-#' (for example) a 95% global envelope should contain \emph{all} residuals for 95% of datasets
+#' The \code{which} argument determines which plots are constructed, out of a residual vs fits
+#' plot, a normal quantile plot, and a scale-location plot. These are the first three options 
+#' in \code{link{plot.lm}}, code was borrowed from there in constructing these plots.
+#' 
+#' Envelopes are generated using one of two methods controlled by \code{do.fit}.
+#' The default is to simulate new (multivariate) normal residuals repeatedly and hence these
+#' can be used to assess whether trends in the observed data depart from what would be expected
+#' for independent (multivariate) normal residuals. A more rigorous and computationally
+#' intensive approach (\code{do.fit=FALSE}) is to use a "parametric bootstrap" approach:
+#' simulate new responses from the fitted model, refit the model and recompute residuals and 
+#' fitted values. This directly assesses whether trends in observed trends depart from what 
+#' would be expected if the fitted model were correct, without any further assumptions. For 
+#' complex models or large datasets this would however be super-slow.
+#' 
+#' Note that for multivariate normal data, \code{\link{cresiduals}} and \code{\link{cpredict}} 
+#' are used to construct residuals and fitted values (respectively) from the \emph{full conditional models}
+#' (that is, models constructed by regressing each response against all other responses
+#' together with predictors). This is done because full conditionals are diagnostic of joint 
+#' distributions, so \emph{any} violation of multivariate normality is expressed as a violation of 
+#' linear model assumptions on full conditionals. By default, results for all responses are
+#' overlaid on a single plot, but separate plots for each response can be constructed using
+#' \code{overlay=FALSE}.
+#' 
+#' Simulation envelopes are global, constructed using the \code{\link[GET]{GET-package}}, meaning that
+#' (for example) a 95% global envelope on a QQ plot should contain \emph{all} residuals for 95% of datasets
 #' for which assumptions are actually satisfied. So if \emph{any} data points lie outside the
 #' envelope we have evidence that assumptions of the fitted model are not satisfied. 
-#' 
-#' The best way to use this function, and the default, is to take a model that has
-#' been fitted to data and simulate new responses from the model, re-fit the model, and 
-#' construct new residuals. This "parametric bootstrap" approach will be computationally 
-#' intensive for large or hard-to-fit models. The alternative, \code{do.fit=FALSE}, will
-#' simulate independent standard normal data directly and use these to construct the envelope.
-#' This faster alternative should only be used if you would in fact expect residuals to be
-#' independent and standard normal if model assumptions were satisfied.
+#' For residual vs fits and scale-location plots, global envelopes are constructed for
+#' the \emph{smoother}, not for the data, hence we are looking to see if the smoother
+#' is wholly contained within the envelope. The smoother is constructed using \code{link[mgcv]{gam}}.
 #' 
 #' The simulated data and subsequent analysis are also used to obtain a \emph{P}-value 
-#' for the test that model assumptions are correct. This test uses a 'parametric bootstrap'
-#' test (for \code{do.fit=TRUE}), and tests if sample residuals are unusually far from
-#' the values expected of them if model assumptions were satisfied. For details see
-#' \code{\link[GET]{global_envelope_test}}.#' 
+#' for the test that model assumptions are correct, for each plot. This test uses a 
+#' "parametric bootstrap" test (for \code{do.fit=TRUE}), and tests if sample residuals or their smoothers
+#' are unusually far from the values expected of them if model assumptions were satisfied. For details see
+#' \code{\link[GET]{global_envelope_test}}.
 #' 
 #' @return a qqplot with simulation envelope is returned, and additionally:
 #' \item{x}{a vector of theoretical quantiles from the standard normal sorted from
@@ -94,10 +120,10 @@
 #' Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 #' iris.mlm=lm(Y~Species,data=iris)
 #' # check normality assumption:
-#' qqenvelope(iris.mlm,n.sim=499)
+#' plotenvelope(iris.mlm,n.sim=499)
 #' 
 #' @export
-qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles", 
+plotenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles", 
                        ylab = "Sample Quantiles", plot.it = TRUE, 
                        n.sim=999, col=par("col"), col.envelope="darkolivegreen", conf.level=0.95, 
                        alpha.f=0.1, type="st", add.line=c(0,1), transform = NULL,
@@ -112,10 +138,9 @@ qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantile
     y=model.response(model.frame(object))
   }
   
-  # get qq points
   resFunction = if(inherits(object,"lm")) rstandard else residuals
   y=resFunction(object)
-  
+
   # check if it is multivariate data, if so set a flag for later and vectorise res
   if(length(dim(y))>1)
   {
@@ -133,7 +158,6 @@ qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantile
     sigma=sd(y)
   }
   
-  qq.x=qqnorm(as.vector(y),plot.it=FALSE)
   n.obs=length(y)
   
   # simulate to get limits around these
@@ -165,6 +189,7 @@ qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantile
       rnorms = matrix(rnorm(n.obs*n.sim,mean=mu,sd=sigma),ncol=n.sim)
   }
   
+  qq.x=qqnorm(as.vector(y),plot.it=FALSE)
   qqSort=apply(rnorms,2,sort)
   
   
@@ -187,7 +212,6 @@ qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantile
     plot(qq.x$x,qq.x$y,main=main,xlab=xlab,ylab=ylab, col=col, ...)
     lines(range(qq.x$x),add.line[1]+add.line[2]*range(qq.x$x),col=col.envelope)
   }
-  
   
   #do a qq plot and add sim envelope
   if(plot.it)
