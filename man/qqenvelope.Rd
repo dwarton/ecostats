@@ -4,73 +4,22 @@
 \alias{qqenvelope}
 \title{Normal Quantile-Quantile Plots with Simulation Envelopes}
 \usage{
-qqenvelope(
-  y,
-  main = "Normal Q-Q Plot",
-  xlab = "Theoretical Quantiles",
-  ylab = "Sample Quantiles",
-  plot.it = TRUE,
-  n.sim = 999,
-  col = par("col"),
-  col.envelope = "darkolivegreen",
-  conf.level = 0.95,
-  alpha.f = 0.1,
-  type = "st",
-  add.line = c(0, 1),
-  transform = NULL,
-  do.fit = TRUE,
-  ...
-)
+qqenvelope(y, n.sim = 999, ylab = "Sample Quantiles", conf.level = 0.95, ...)
 }
 \arguments{
 \item{y}{can be a set of values for which we wish to check (multivariate) normality, 
 or it can be \emph{any} object that responds to the \code{residuals} and \code{simulate}
-functions. The function was designed with models in mind whose residuals would be are
+functions. The function was designed with models in mind whose residuals would be 
 approximately normally distributed if the model were correct.}
-
-\item{main}{the plot title (if a plot is produced)}
-
-\item{xlab}{\code{x} axis label (if a plot is produced)}
-
-\item{ylab}{\code{y} axis label (if a plot is produced)}
-
-\item{plot.it}{logical. Should the result be plotted?}
 
 \item{n.sim}{the number of simulated sets of residuals to be generated, to which
 the observed residuals will be compared. The default is 999 datasets.}
 
-\item{col}{color of points}
-
-\item{col.envelope}{the colour of the simulation envelope, defaulting to 
-"darkolivegreen". Because it's cool.}
-
 \item{conf.level}{the confidence level to use in constructing the envelope.}
 
-\item{alpha.f}{the amount of transparency to use for the shaded region representing
-the confidence envelope, values closer to zero are more transparent.}
+\item{...}{further arguments sent through to \code{plotenvelope}}
 
-\item{type}{the type of global envelope to construct, see 
-\code{\link[GET]{global_envelope_test}} for details. Defaults \code{"st"} uses 
-studentized envelope tests to protect for unequal variance, which has performed well
-in \code{qqnorm} simulations.}
-
-\item{add.line}{the line to be added to the plot. By default, a one-to-one line is 
-added, assuming that residuals are constructed in such a way that they would be
-standard normal if assumptions were satisfied. In other cases a better option would be
-\code{qqline(y)}.}
-
-\item{transform}{a character vector pointing to a function that should be applied to both
-theoretical and sample residuals prior constructing an envelope. The main potential
-use is to set \code{transform="pnorm"} to map across to PP-plots prior to envelope 
-construction.}
-
-\item{do.fit}{logical. Should residuals be simulated by constructing new responses
-and refitting the model (\code{TRUE}) or should should they be simulated as independent
-standard normal random variables (\code{FALSE})? The latter is much faster but is
-approximate, and is not appropriate in cases where residuals are not standard normal
-when assumptions are satisfied.}
-
-\item{...}{further arguments sent through to \code{plot}}
+\item{main}{the plot title (if a plot is produced)}
 }
 \value{
 a qqplot with simulation envelope is returned, and additionally:
@@ -105,19 +54,7 @@ The envelope is global, constructed using the \code{\link[GET]{GET-package}}, me
 for which assumptions are actually satisfied. So if \emph{any} data points lie outside the
 envelope we have evidence that assumptions of the fitted model are not satisfied. 
 
-The best way to use this function, and the default, is to take a model that has
-been fitted to data and simulate new responses from the model, re-fit the model, and 
-construct new residuals. This "parametric bootstrap" approach will be computationally 
-intensive for large or hard-to-fit models. The alternative, \code{do.fit=FALSE}, will
-simulate independent standard normal data directly and use these to construct the envelope.
-This faster alternative should only be used if you would in fact expect residuals to be
-independent and standard normal if model assumptions were satisfied.
-
-The simulated data and subsequent analysis are also used to obtain a \emph{P}-value 
-for the test that model assumptions are correct. This test uses a 'parametric bootstrap'
-test (for \code{do.fit=TRUE}), and tests if sample residuals are unusually far from
-the values expected of them if model assumptions were satisfied. For details see
-\code{\link[GET]{global_envelope_test}}.#'
+For further details refer to \code{\link{plotenvelope}}, which is called to construct the plot.
 }
 \examples{
 # simulate some data and fit a qq plot:
@@ -129,11 +66,11 @@ data(iris)
 Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
-qqenvelope(iris.mlm,col=1:4)
+qqenvelope(iris.mlm,n.sim=499)
 
 }
 \seealso{
-\code{\link{qqnorm}}, \code{\link{qqline}}
+\code{\link{qqnorm}}, \code{\link{qqline}}, \code{\link{plotenvelope}}
 }
 \author{
 David Warton <david.warton@unsw.edu.au>

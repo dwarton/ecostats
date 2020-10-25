@@ -10,36 +10,10 @@
 #' functions. The function was designed with models in mind whose residuals would be 
 #' approximately normally distributed if the model were correct.
 #' @param main the plot title (if a plot is produced)
-#' @param xlab \code{x} axis label (if a plot is produced)
-#' @param ylab \code{y} axis label (if a plot is produced)
-#' @param plot.it logical. Should the result be plotted?
-#' @param plot.it logical. Should the result be plotted?
 #' @param n.sim the number of simulated sets of residuals to be generated, to which
 #'  the observed residuals will be compared. The default is 999 datasets.
-#' @param col color of points
-#' @param col.envelope the colour of the simulation envelope, defaulting to 
-#'  "darkolivegreen". Because it's cool.
 #' @param conf.level the confidence level to use in constructing the envelope.
-#' @param alpha.f the amount of transparency to use for the shaded region representing
-#'  the confidence envelope, values closer to zero are more transparent.
-#' @param type the type of global envelope to construct, see 
-#'  \code{\link[GET]{global_envelope_test}} for details. Defaults \code{"st"} uses 
-#'  studentized envelope tests to protect for unequal variance, which has performed well
-#'  in \code{qqnorm} simulations.
-#' @param add.line the line to be added to the plot. By default, a one-to-one line is 
-#'  added, assuming that residuals are constructed in such a way that they would be
-#'  standard normal if assumptions were satisfied. In other cases a better option would be
-#'  \code{qqline(y)}. 
-#' @param transform a character vector pointing to a function that should be applied to both
-#'  theoretical and sample residuals prior constructing an envelope. The main potential
-#'  use is to set \code{transform="pnorm"} to map across to PP-plots prior to envelope 
-#'  construction. 
-#' @param do.fit logical. Should residuals be simulated by constructing new responses
-#'  and refitting the model (\code{TRUE}) or should should they be simulated as independent
-#'  standard normal random variables (\code{FALSE})? The latter is much faster but is
-#'  approximate, and is not appropriate in cases where residuals are not standard normal
-#'  when assumptions are satisfied.
-#' @param ... further arguments sent through to \code{plot}
+#' @param ... further arguments sent through to \code{plotenvelope}
 #' 
 #' @details
 #' A challenge when interpreting a \code{qqplot} is understanding the extent to which
@@ -57,19 +31,7 @@
 #' for which assumptions are actually satisfied. So if \emph{any} data points lie outside the
 #' envelope we have evidence that assumptions of the fitted model are not satisfied. 
 #' 
-#' The best way to use this function, and the default, is to take a model that has
-#' been fitted to data and simulate new responses from the model, re-fit the model, and 
-#' construct new residuals. This "parametric bootstrap" approach will be computationally 
-#' intensive for large or hard-to-fit models. The alternative, \code{do.fit=FALSE}, will
-#' simulate independent standard normal data directly and use these to construct the envelope.
-#' This faster alternative should only be used if you would in fact expect residuals to be
-#' independent and standard normal if model assumptions were satisfied.
-#' 
-#' The simulated data and subsequent analysis are also used to obtain a \emph{P}-value 
-#' for the test that model assumptions are correct. This test uses a 'parametric bootstrap'
-#' test (for \code{do.fit=TRUE}), and tests if sample residuals are unusually far from
-#' the values expected of them if model assumptions were satisfied. For details see
-#' \code{\link[GET]{global_envelope_test}}.#' 
+#' For further details refer to \code{\link{plotenvelope}}, which is called to construct the plot.
 #' 
 #' @return a qqplot with simulation envelope is returned, and additionally:
 #' \item{x}{a vector of theoretical quantiles from the standard normal sorted from
@@ -83,7 +45,7 @@
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' 
-#' @seealso \code{\link{qqnorm}}, \code{\link{qqline}}
+#' @seealso \code{\link{qqnorm}}, \code{\link{qqline}}, \code{\link{plotenvelope}}
 #' @examples
 #' # simulate some data and fit a qq plot:
 #' y=rnorm(20)
@@ -97,109 +59,12 @@
 #' qqenvelope(iris.mlm,n.sim=499)
 #' 
 #' @export
-qqenvelope = function (y, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles", 
-                       ylab = "Sample Quantiles", plot.it = TRUE, 
-                       n.sim=999, col=par("col"), col.envelope="darkolivegreen", conf.level=0.95, 
-                       alpha.f=0.1, type="st", add.line=c(0,1), transform = NULL,
-                       do.fit=TRUE, ...) 
+qqenvelope = function (y, n.sim=999, ylab="Sample Quantiles", conf.level=0.95, ...) 
 {
   # is y data or model fit? Make y data, object model fit
   if(is.numeric(y))
-    object = lm(y~1)
-  else
-  {
-    object=y
-    y=model.response(model.frame(object))
-  }
+    y = lm(y~1)
   
-  # get qq points
-  resFunction = if(inherits(object,"lm")) rstandard else residuals
-  y=resFunction(object)
-  
-  # check if it is multivariate data, if so set a flag for later and vectorise res
-  if(length(dim(y))>1)
-  {
-    n.resp=dim(y)[2]
-    n.rows=dim(y)[1]
-    is.mva = TRUE
-    mu = mean(y)
-    Sigma=var(y)
-  }
-  else
-  {
-    is.mva=FALSE
-    n.resp=1
-    mu = mean(y)
-    sigma=sd(y)
-  }
-  
-  qq.x=qqnorm(as.vector(y),plot.it=FALSE)
-  n.obs=length(y)
-  
-  # simulate to get limits around these
-  if(do.fit)
-  {
-    modelF=model.frame(object)
-    yNew=simulate(object,n.sim)
-    if(is.mva) # for multivariate data, vectorise res for each sim dataset
-      yNew=apply(yNew,3,cbind)
-    rnorms = matrix(NA,nrow(yNew),ncol(yNew))
-    for(iCol in 1:ncol(yNew))
-    {
-      modelF[1]=matrix(yNew[,iCol],ncol=n.resp,dimnames=dimnames(y))
-      newFit=try(update(object,data=modelF))
-      rnorms[,iCol]=resFunction(newFit)
-    }
-  }
-  else  
-  {
-    if(is.mva) # for multivariate data, generate multivariate normal and resize to long format
-    {
-      rnormMat = mvtnorm::rmvnorm(n.rows*n.sim, mean=mu, sigma=Sigma)
-      rnorms=array(rnormMat,c(n.rows,n.sim,n.resp)) #stack as an array, which defaults to sims second, response last
-      rm(rnormMat)
-      rnorms=aperm(rnorms,c(1,3,2)) #switch so response is second, sims last
-      dim(rnorms)=c(n.rows*n.resp,n.sim) #make a matrix with sims in columns and multivariate data vectorised ("long format")
-    }
-    else
-      rnorms = matrix(rnorm(n.obs*n.sim,mean=mu,sd=sigma),ncol=n.sim)
-  }
-  
-  qqSort=apply(rnorms,2,sort)
-  
-  
-  # if required, transform data
-  if (is.null(transform)==FALSE)
-  {
-    qq.x$x = do.call(transform,list(qq.x$x))
-    qq.x$y = do.call(transform,list(qq.x$y))
-    qqSort = do.call(transform,list(qqSort))
-    y      = do.call(transform,list(y))
-  }
-  
-  #use the Global Envelope Test package to get global envelope
-  ySort=sort(y, index.return=TRUE)
-  datCurves=GET::create_curve_set(list(obs=ySort$x,sim_m=qqSort))
-  cr=GET::global_envelope_test(datCurves,type=type,alpha=1-conf.level)
-  
-  if(plot.it==TRUE)
-  {
-    plot(qq.x$x,qq.x$y,main=main,xlab=xlab,ylab=ylab, col=col, ...)
-    lines(range(qq.x$x),add.line[1]+add.line[2]*range(qq.x$x),col=col.envelope)
-  }
-  
-  
-  #do a qq plot and add sim envelope
-  if(plot.it)
-  {
-    col_transparent = adjustcolor(col.envelope, alpha.f = alpha.f)
-    polygon(sort(qq.x$x)[c(1:n.obs,n.obs:1)],c(cr$lo,cr$hi[n.obs:1]), 
-            col=col_transparent, border=NA)
-  }
-  
-  # return a list with qq values and limits, ordered same way as input data
-  qqLo = qqHi = rep(NA,n.obs)
-  qqLo[ySort$ix] = cr$lo
-  qqHi[ySort$ix] = cr$hi
-  invisible(list(x = qq.x$x, y = qq.x$y, lo=qqLo, hi=qqHi, p.value=attr(cr,"p")))
+  out = plotenvelope(y, which=2, ylab=ylab, n.sim=n.sim, conf.level=conf.level, ...)
+  invisible(out[[2]])
 }
