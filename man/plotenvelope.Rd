@@ -59,8 +59,8 @@ for a PP-plot.}
 \item{sim.method}{How should residuals be simulated? The default \code{"norm"} simulates from a normal
 distribution, matching means and variances (and covariances for multivariate responses) to the observed residuals.
 The \code{"stand.norm"} option sets means to zero and variances to one, which is appropriate when residuals
-should be standard normal when assumptions are satisfied (as when using \code{\link[mvabund]{residuals.manyglm}}, for example).. If response is multivariate, this will use \code{\link[mvtnorm]{rmvnorm}} and
-The \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
+should be standard normal when assumptions are satisfied (as when using \code{residuals.manyglm} from the \code{mvabund}
+package, for example). The \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
 refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
 This is computationally intensive but gives a more robust answer. This is the only suitable option if
 residuals are not normal when assumptions are satisfied (like when using \code{\link[stats]{glm}}).}

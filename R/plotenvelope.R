@@ -31,8 +31,8 @@
 #' @param sim.method How should residuals be simulated? The default \code{"norm"} simulates from a normal
 #' distribution, matching means and variances (and covariances for multivariate responses) to the observed residuals.
 #' The \code{"stand.norm"} option sets means to zero and variances to one, which is appropriate when residuals
-#' should be standard normal when assumptions are satisfied (as when using \code{\link[mvabund]{residuals.manyglm}}, for example).. If response is multivariate, this will use \code{\link[mvtnorm]{rmvnorm}} and
-#' The \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
+#' should be standard normal when assumptions are satisfied (as when using \code{residuals.manyglm} from the \code{mvabund}
+#' package, for example). The \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
 #' refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
 #' This is computationally intensive but gives a more robust answer. This is the only suitable option if
 #' residuals are not normal when assumptions are satisfied (like when using \code{\link[stats]{glm}}). 
@@ -121,7 +121,7 @@
 #' plotenvelope(iris.mlm,n.sim=199)
 #' 
 #' @importFrom grDevices adjustcolor 
-#' @importFrom graphics lines par polygon
+#' @importFrom graphics plot lines par polygon
 #' @importFrom stats cor fitted formula lm model.frame model.matrix model.response predict qnorm qqnorm quantile residuals residuals.lm rnorm rstandard runif update var
 #' @export
 plotenvelope = function (y, which = 1:3, main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
