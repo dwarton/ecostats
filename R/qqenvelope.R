@@ -9,7 +9,7 @@
 #' or it can be \emph{any} object that responds to the \code{residuals} and \code{simulate}
 #' functions. The function was designed with models in mind whose residuals would be 
 #' approximately normally distributed if the model were correct.
-#' @param main the plot title (if a plot is produced)
+#' @param ylab \code{y} axis label (if a plot is produced).
 #' @param n.sim the number of simulated sets of residuals to be generated, to which
 #'  the observed residuals will be compared. The default is 999 datasets.
 #' @param conf.level the confidence level to use in constructing the envelope.

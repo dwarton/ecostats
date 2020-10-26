@@ -106,19 +106,12 @@
 #' are unusually far from the values expected of them if model assumptions were satisfied. For details see
 #' \code{\link[GET]{global_envelope_test}}.
 #' 
-#' @return a qqplot with simulation envelope is returned, and additionally:
-#' \item{x}{a vector of theoretical quantiles from the standard normal sorted from
-#'  smallest to largest}
-#' \item{y}{a vector of observed residuals sorted from smallest to largest}
-#' \item{lo}{lower bounds on the global simulation envelope for residuals}
-#' \item{hi}{upper bounds on the global simulation envelope for residuals}
-#' \item{p.value}{A \emph{P}-value for the test that model assumptions are correct,
-#'  using a 'parametric bootstrap' test, based on how far sample residuals depart from
-#'  the values expected of them if model assumptions were satisfied.}
+#' @return up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
+#' three objects used in plotting.
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' 
-#' @seealso \code{\link{qqnorm}}, \code{\link{qqline}}
+#' @seealso \code{\link{cpredict}}, \code{\link{cresiduals}}, \code{\link{qqenvelope}}
 #' @examples
 #' # fit a multivariate linear model to the iris dataset:
 #' data(iris)
@@ -127,6 +120,9 @@
 #' # check normality assumption:
 #' plotenvelope(iris.mlm,n.sim=199)
 #' 
+#' @importFrom grDevices adjustcolor 
+#' @importFrom graphics lines par polygon
+#' @importFrom stats cor fitted formula lm model.frame model.matrix model.response predict qnorm qqnorm quantile residuals residuals.lm rnorm rstandard runif update var
 #' @export
 plotenvelope = function (y, which = 1:3, main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
                        ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), 
@@ -134,11 +130,11 @@ plotenvelope = function (y, which = 1:3, main = c("Residuals vs Fitted Values", 
                        plot.it = TRUE, ...) 
 {
   ### which plots to construct? And clean up arguments
-  show <- rep(FALSE, 3)
-  show[which] <- TRUE
-  if(length(main)==1) main=rep(main,3)
-  if(length(xlab)==1) xlab=rep(xlab,3)
-  if(length(ylab)==1) ylab=rep(ylab,3)
+  show = rep(FALSE, 3)
+  show[which] = TRUE
+  if(length(main)==1) main = rep(main,3)
+  if(length(xlab)==1) xlab = rep(xlab,3)
+  if(length(ylab)==1) ylab = rep(ylab,3)
 
     
   ### first work out what object we have and get observed residuals and fits ###
@@ -148,13 +144,29 @@ plotenvelope = function (y, which = 1:3, main = c("Residuals vs Fitted Values", 
     stop("y must be an object obtained by fitting a model to data, it cannot be the dataset itself")
   else
   {
-    object=y
-    y=model.response(model.frame(object))
+    object = y
+    y      = model.response(model.frame(object))
   }
   
-  resFunction = if(inherits(object,"lm")) rstandard else residuals
-  y=resFunction(object)
-  x=predict(object)
+  resFunction = 
+  if(inherits(object,"mlm")) 
+    cresiduals
+  else
+  {
+    if(inherits(object,"lm"))
+      rstandard
+    else 
+      residuals
+  } 
+  predFunction = 
+  if(inherits(object,"mlm")) 
+    cpredict
+  else
+  {
+    predict
+  } 
+  y = resFunction(object)
+  x = predFunction(object)
 
   # check if it is multivariate data, if so set a flag for later and vectorise res
   if(length(dim(y))>1)
@@ -165,12 +177,12 @@ plotenvelope = function (y, which = 1:3, main = c("Residuals vs Fitted Values", 
     mu     = switch(sim.method, "stand.norm" = rep(0, n.resp), colMeans(y) )
     Sigma  = switch(sim.method, "stand.norm" = cor(y), var(y) )
     if(col==par("col"))
-      col=rep(1:n.resp,each=n.rows)
+      col  = rep(1:n.resp,each=n.rows)
   }
   else
   {
-    is.mva=FALSE
-    n.resp=1
+    is.mva = FALSE
+    n.resp = 1
     mu     = switch(sim.method,"stand.norm" = 0, mean(y))
     sigma  = switch(sim.method,"stand.norm" = 1, var(y))
   }
@@ -188,10 +200,10 @@ plotenvelope = function (y, which = 1:3, main = c("Residuals vs Fitted Values", 
     resids = fits = matrix(NA,nrow(yNew),ncol(yNew))
     for(i.sim in 1:n.sim)
     {
-      modelF[1]     = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(y))
-      newFit        = try(update(object,data=modelF))
+      modelF[1]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(y))
+      newFit         = try(update(object,data=modelF))
       resids[,i.sim] = resFunction(newFit)
-      fits[,i.sim]   = predict(newFit)
+      fits[,i.sim]   = predFunction(newFit)
     }
   }
   else  

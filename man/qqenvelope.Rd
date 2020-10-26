@@ -15,11 +15,11 @@ approximately normally distributed if the model were correct.}
 \item{n.sim}{the number of simulated sets of residuals to be generated, to which
 the observed residuals will be compared. The default is 999 datasets.}
 
+\item{ylab}{\code{y} axis label (if a plot is produced).}
+
 \item{conf.level}{the confidence level to use in constructing the envelope.}
 
 \item{...}{further arguments sent through to \code{plotenvelope}}
-
-\item{main}{the plot title (if a plot is produced)}
 }
 \value{
 a qqplot with simulation envelope is returned, and additionally:

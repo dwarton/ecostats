@@ -82,15 +82,8 @@ is returned, see \emph{Value}.}
 \item{...}{further arguments sent through to \code{plot}}
 }
 \value{
-a qqplot with simulation envelope is returned, and additionally:
-\item{x}{a vector of theoretical quantiles from the standard normal sorted from
- smallest to largest}
-\item{y}{a vector of observed residuals sorted from smallest to largest}
-\item{lo}{lower bounds on the global simulation envelope for residuals}
-\item{hi}{upper bounds on the global simulation envelope for residuals}
-\item{p.value}{A \emph{P}-value for the test that model assumptions are correct,
- using a 'parametric bootstrap' test, based on how far sample residuals depart from
- the values expected of them if model assumptions were satisfied.}
+up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
+three objects used in plotting.
 }
 \description{
 Produces diagnostic plots of a \emph{fitted model} \code{y}, and
@@ -167,7 +160,7 @@ plotenvelope(iris.mlm,n.sim=199)
 
 }
 \seealso{
-\code{\link{qqnorm}}, \code{\link{qqline}}
+\code{\link{cpredict}}, \code{\link{cresiduals}}, \code{\link{qqenvelope}}
 }
 \author{
 David Warton <david.warton@unsw.edu.au>

@@ -1,0 +1,59 @@
+#' Extract Conditional Residuals from Multivariate Linear Model Fits
+#'
+#' Residuals from full conditionals of a Multivariate 
+#' Linear Model (\code{mlm}) object. The full conditional for each response is a
+#' linear model with all other responses used as predictors in addition to the
+#' regressors specified in the formula of the \code{mlm} object. This is used to 
+#' diagnose the multivariate normality assumption in \code{\link{plotenvelope}}.
+#'
+#' @param object a \code{mlm} object, typically the result of calling \code{lm} with a matrix response.
+#' @param standardize logical defaults to \code{TRUE}, to return studentized residuals
+#' using \code{\link{rstandard}} so they are comparable across responses.
+#' @param ... further arguments passed to \code{\link{residuals.lm}} or \code{\link{rstandard}}.
+#'
+#' @details
+#' A \code{residuals} function for \code{mlm} objects, which returns residuals from a full 
+#' conditional model, that is, a linear model of each response against all responses
+#' as well as predictors, which can be used to diagnose the multivariate normality assumption.
+#' These can be standardized (\code{standardize=TRUE}) to facilitate overlay plots of multiple
+#' responses, as in \code{\link{plotenvelope}}.
+#' 
+#' @return A matrix of residuals
+#' 
+#' @author David Warton <david.warton@@unsw.edu.au>
+#' 
+#' @seealso \code{\link{cpredict}}, \code{\link{lm}}, \code{\link{plotenvelope}}, \code{\link{residuals}}, \code{\link{rstandard}}
+#' @examples
+#' data(iris)
+#' # fit a mlm:
+#' iris.mlm=lm(cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width)~Species,data=iris)
+#' # construct full conditional residuals:
+#' cresiduals(iris.mlm)
+#'
+#' @export
+cresiduals=function(object, standardize = TRUE, ...)
+{ 
+  mf = model.frame(object)
+  Ys = model.response(mf) #should be the response matrix
+  nYs = dim(Ys)[2]
+  resFunction = if(standardize==TRUE) rstandard else residuals
+  if(nYs>1 & inherits(object,"mlm"))
+  {
+    res=matrix(NA,dim(Ys)[1],nYs,dimnames=dimnames(Ys))
+    mfi=mf
+    formObj=as.character(formula(object))
+    formObji=formula(paste0("yi~",formObj[3],"+Y"))
+    for (iVar in 1:nYs){
+      mfi$yi = Ys[ ,iVar]
+      mfi$Y = Ys[ ,-iVar]
+      fit = lm(formObji,data=mfi)
+      res[ ,iVar] = resFunction(fit, ...)
+    }
+  }
+  else
+  {
+    warning("Not recognised as a mlm object so ordinary (marginal) residuals will be returned")
+    res = resFunction(object)
+  }
+  return(res)
+}
