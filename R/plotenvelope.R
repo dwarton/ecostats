@@ -75,8 +75,8 @@
 #' can be used to assess whether trends in the observed data depart from what would be expected
 #' for independent (multivariate) normal residuals. If residuals are expected to be standard
 #' normal, a more refined check is to simulate from the standard normal using (\code{sim.method="stand.norm"}).
-#' This would for example be appropriate when diagnosing a \code{\link[mvabund]{manyglm}} object, since
-#' Dun-Smyth residuals are approximately standard normal when assumptions are satisfied.  
+#' This would for example be appropriate when diagnosing a \code{manyglm} object (from the \code{mvabund} package),
+#' since Dunn-Smyth residuals are approximately standard normal when assumptions are satisfied.  
 #' A more rigorous but computationally intensive approach (\code{sim.method="refit"}) is to use a 
 #' \emph{parametric bootstrap} approach: simulate new responses from the fitted model, refit 
 #' the model and recompute residuals and fitted values. This directly assesses whether trends 
@@ -118,7 +118,8 @@
 #' Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 #' iris.mlm=lm(Y~Species,data=iris)
 #' # check normality assumption:
-#' plotenvelope(iris.mlm,n.sim=199)
+#' plotenvelope(iris.mlm,n.sim=99,which=3)
+#' \dontrun{plotenvelope(iris.mlm, n.sim=199) #takes maybe half a minute}
 #' 
 #' @importFrom grDevices adjustcolor 
 #' @importFrom graphics plot lines par polygon
