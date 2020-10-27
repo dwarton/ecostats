@@ -100,7 +100,7 @@
 #' in observed trends depart from what would be expected if the fitted model were correct, 
 #' without any further assumptions. For complex models or large datasets this would however be super-slow.
 #' 
-#' Note that for multivariate normal models (\code{\link{mlm}}), \code{\link{cresiduals}} and \code{\link{cpredict}} 
+#' Note that for multivariate normal models (\code{mlm}), \code{\link{cresiduals}} and \code{\link{cpredict}} 
 #' are used to construct residuals and fitted values (respectively) from the \emph{full conditional models}
 #' (that is, models constructed by regressing each response against all other responses
 #' together with predictors). This is done because full conditionals are diagnostic of joint 

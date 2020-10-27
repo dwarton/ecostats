@@ -142,7 +142,7 @@ the model and recompute residuals and fitted values. This directly assesses whet
 in observed trends depart from what would be expected if the fitted model were correct, 
 without any further assumptions. For complex models or large datasets this would however be super-slow.
 
-Note that for multivariate normal models (\code{\link{mlm}}), \code{\link{cresiduals}} and \code{\link{cpredict}} 
+Note that for multivariate normal models (\code{mlm}), \code{\link{cresiduals}} and \code{\link{cpredict}} 
 are used to construct residuals and fitted values (respectively) from the \emph{full conditional models}
 (that is, models constructed by regressing each response against all other responses
 together with predictors). This is done because full conditionals are diagnostic of joint 
@@ -171,8 +171,8 @@ iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
 plotenvelope(iris.mlm,n.sim=99,which=3)
 \dontrun{plotenvelope(iris.mlm, sim.method="refit")
-## takes a few seconds to run.
-## Note violation on the scale/location plot}
+## This line takes a few seconds to run.
+## Note violation on the scale/location plot.}
 
 }
 \seealso{
