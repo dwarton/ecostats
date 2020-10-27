@@ -7,54 +7,37 @@
 plotenvelope(
   y,
   which = 1:3,
-  main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"),
-  xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
-  ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))),
+  sim.method = "norm",
   n.sim = 199,
   conf.level = 0.95,
   type = "st",
   transform = NULL,
-  sim.method = "norm",
+  main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"),
+  xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
+  ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))),
   col = par("col"),
-  smooth.col = "black",
-  line.col = "darkolivegreen3",
-  envelope.col = adjustcolor(line.col, 0.1),
+  smooth.col = "olivedrab",
+  envelope.col = adjustcolor(smooth.col, 0.1),
   plot.it = TRUE,
   ...
 )
 }
 \arguments{
-\item{y}{is \emph{any} object that responds to the \code{residuals} and \code{simulate}
-functions. The function was designed with models in mind whose residuals would be 
+\item{y}{is \emph{any} object that responds to \code{residuals}, \code{predict} and 
+(if \code{sim.method="refit"}) \code{simulate}.
+This function was designed with models in mind whose residuals would be 
 approximately normally distributed if the model were correct.}
 
-\item{which}{which diagnostic plots to construct: 1=residual vs fits with a smoother,
-2=normal quantile plot, 3=scale-location plot with smoother. These are the first three
-options in \code{\link{plot.lm}} and borrow heavily from that code.}
-
-\item{main}{the plot title (if a plot is produced). A vector of three titles, one for each plot.
-If only one value is given that will be used for all plots.}
-
-\item{xlab}{\code{x} axis label (if a plot is produced). A vector of three labels, one for each plot.
-If only one value is given that will be used for all plots.}
-
-\item{ylab}{\code{y} axis label (if a plot is produced). A vector of three labels, one for each plot.
-If only one value is given that will be used for all plots.}
-
-\item{n.sim}{the number of simulated sets of residuals to be generated, to which
-the observed residuals will be compared. The default is 199 datasets, you should bump it up to
-something more like 999 for publication (but note that would take about five times longer to run).}
-
-\item{conf.level}{the confidence level to use in constructing the envelope.}
-
-\item{type}{the type of global envelope to construct, see 
-\code{\link[GET]{global_envelope_test}} for details. Defaults \code{"st"} uses 
-studentized envelope tests to protect for unequal variance, which has performed well
-in \code{qqnorm} simulations.}
-
-\item{transform}{a character vector pointing to a function that should be applied to both
-axes of the normal quantile plot. The most common use is to set \code{transform="pnorm"}
-for a PP-plot.}
+\item{which}{a vector specifying the diagnostic plots to construct: \enumerate{
+\item{residual vs fits, with a smoother}
+\item{normal quantile plot}
+\item{scale-location plot, with smoother}
+}
+These are the first three options in \code{\link{plot.lm}} and borrow 
+a little from that code. A global envelope is included with each plot, around where you would
+expect the smoother (for 1 and 3) or data points (2) to be when the model
+is correct. If the smoother (for 1 and 3) or data points (for 2) is not fully
+captured by the global envelope then there is some evidence of assumption violations.}
 
 \item{sim.method}{How should residuals be simulated? The default \code{"norm"} simulates from a normal
 distribution, matching means and variances (and covariances for multivariate responses) to the observed residuals.
@@ -65,16 +48,38 @@ refits the model (via \code{\link{update}}), then recomputes residuals, often kn
 This is computationally intensive but gives a more robust answer. This is the only suitable option if
 residuals are not normal when assumptions are satisfied (like when using \code{\link[stats]{glm}}).}
 
+\item{n.sim}{the number of simulated sets of residuals to be generated, to which
+the observed residuals will be compared. The default is 199 datasets, you should bump it up to
+something more like 999 for publication (but note that would take about five times longer to run).}
+
+\item{conf.level}{the confidence level to use in constructing the envelope.}
+
+\item{type}{the type of global envelope to construct, see 
+\code{\link[GET]{global_envelope_test}} for details. Default \code{"st"} uses 
+studentized envelope tests to protect for unequal variance, which has performed well
+in simulations for diagnosing normality.}
+
+\item{transform}{a character vector pointing to a function that should be applied to both
+axes of the normal quantile plot. The most common use is to set \code{transform="pnorm"}
+for a PP-plot.}
+
+\item{main}{the plot title (if a plot is produced). A vector of three titles, one for each plot.
+If only one value is given that will be used for all plots.}
+
+\item{xlab}{\code{x} axis label (if a plot is produced). A vector of three labels, one for each plot.
+If only one value is given that will be used for all plots.}
+
+\item{ylab}{\code{y} axis label (if a plot is produced). A vector of three labels, one for each plot.
+If only one value is given that will be used for all plots.}
+
 \item{col}{color of points}
 
-\item{smooth.col}{color of smoother in residual vs fits and scale-location plots}
-
-\item{line.col}{color of line on each plot, following the expected trend when assumptions
-are satisfied. Defaults to "darkolivegreen". Because it's cool.}
+\item{smooth.col}{color of smoother in residual vs fits and scale-location plots.
+Defaults to "olivedrab". Because it's cool.}
 
 \item{envelope.col}{color of the global envelope around the expected trend. The smoother
-should always stay within this (because it will do for a proportion \code{conf.level} of 
-datasets satisfying model assumptions). Color defaults to a transparent version of \code{line.col}.}
+should always stay within this (and it will do for a proportion \code{conf.level} of 
+datasets satisfying model assumptions). Color defaults to a transparent version of \code{smooth.col}.}
 
 \item{plot.it}{logical. Should the result be plotted? If not, a list of analysis outputs
 is returned, see \emph{Value}.}
@@ -104,22 +109,32 @@ rather than actual assumption violations. This function is intended to assess th
 by simulating multiple realizations of residuals (and fitted values) in situations where 
 assumptions are satisfied, and plotting a simulation envelope around these at level \code{conf.level}.
 
-This function can take data (univariate or multivariate) and check for (multivariate)
-normality, or it can take a fitted model and use qq plots to interrogate residuals and
-see if they are behaving as we would expect them to if the model were true. As long as 
-the fitted model accepts \code{\link{simulate}}, \code{\link{residuals}} and 
-\code{\link{predict}} it should be fine.
+This function can take any fitted model, construct any of:
+\enumerate{
+\item Residual vs fits plot
+\item Normal quantile plot
+\item Scale-Location plot
+}
+and see if the trend is behaving as expected if the model were true. As long as 
+the fitted model responds to \code{\link{residuals}} and \code{\link{predict}} 
+(and when \code{sim.method="refit"}, \code{\link{simulate}}) then it
+will construct a global envelope around where the smoother should be (for plots 1 and 3)
+or around where the data should be (for 2). Hence if we have evidence of
+assumption violations if either the smoother (in plots 1 and 3) is not wholly inside the
+envelope, or the data in the quantile plot is not inside its envelope.
 
 The \code{which} argument determines which plots are constructed, out of a residual vs fits
 plot, a normal quantile plot, and a scale-location plot. These are the first three options 
-in \code{link{plot.lm}}, code was borrowed from there in constructing these plots.
+in \code{link{plot.lm}}, a little code was borrowed from there in constructing these plots.
+The scale-location and quantile plots seem to be the most sensitive at detecting
+violations.
 
 Envelopes are generated using a method controlled by \code{sim.method}.
 The default (\code{sim.method="norm"}) is to simulate new (multivariate) normal residuals repeatedly and hence these
 can be used to assess whether trends in the observed data depart from what would be expected
 for independent (multivariate) normal residuals. If residuals are expected to be standard
 normal, a more refined check is to simulate from the standard normal using (\code{sim.method="stand.norm"}).
-This would for example be appropriate when diagnosing a \code{manyglm} object (from the \code{mvabund} package),
+This might for example be appropriate when diagnosing a \code{manyglm} object (from the \code{mvabund} package),
 since Dunn-Smyth residuals are approximately standard normal when assumptions are satisfied.  
 A more rigorous but computationally intensive approach (\code{sim.method="refit"}) is to use a 
 \emph{parametric bootstrap} approach: simulate new responses from the fitted model, refit 
@@ -127,26 +142,24 @@ the model and recompute residuals and fitted values. This directly assesses whet
 in observed trends depart from what would be expected if the fitted model were correct, 
 without any further assumptions. For complex models or large datasets this would however be super-slow.
 
-Note that for multivariate normal data, \code{\link{cresiduals}} and \code{\link{cpredict}} 
+Note that for multivariate normal models (\code{\link{mlm}}), \code{\link{cresiduals}} and \code{\link{cpredict}} 
 are used to construct residuals and fitted values (respectively) from the \emph{full conditional models}
 (that is, models constructed by regressing each response against all other responses
 together with predictors). This is done because full conditionals are diagnostic of joint 
 distributions, so \emph{any} violation of multivariate normality is expressed as a violation of 
 linear model assumptions on full conditionals. By default, results for all responses are
-overlaid on a single plot, but separate plots for each response can be constructed using
-\code{overlay=FALSE}.
+overlaid on a single plot.
 
 Simulation envelopes are global, constructed using the \code{\link[GET]{GET-package}}, meaning that
-(for example) a 95% global envelope on a QQ plot should contain \emph{all} residuals for 95% of datasets
-for which assumptions are actually satisfied. So if \emph{any} data points lie outside the
-envelope we have evidence that assumptions of the fitted model are not satisfied. 
+(for example) a 95\% global envelope on a quantile plot should contain \emph{all} residuals for 95\% of datasets
+that satisfy model assumptions. So if \emph{any} data points lie outside the
+quantile plot's envelope we have evidence that assumptions of the fitted model are not satisfied. 
 For residual vs fits and scale-location plots, global envelopes are constructed for
 the \emph{smoother}, not for the data, hence we are looking to see if the smoother
-is wholly contained within the envelope. The smoother is constructed using \code{link[mgcv]{gam}}.
+is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}}.
 
 The simulated data and subsequent analysis are also used to obtain a \emph{P}-value 
-for the test that model assumptions are correct, for each plot. This test uses a 
-"parametric bootstrap" test (for \code{do.fit=TRUE}), and tests if sample residuals or their smoothers
+for the test that model assumptions are correct, for each plot. These test if sample residuals or their smoothers
 are unusually far from the values expected of them if model assumptions were satisfied. For details see
 \code{\link[GET]{global_envelope_test}}.
 }
@@ -157,7 +170,9 @@ Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
 plotenvelope(iris.mlm,n.sim=99,which=3)
-\dontrun{plotenvelope(iris.mlm, n.sim=199) #takes maybe half a minute}
+\dontrun{plotenvelope(iris.mlm, sim.method="refit")
+## takes a few seconds to run.
+## Note violation on the scale/location plot}
 
 }
 \seealso{
