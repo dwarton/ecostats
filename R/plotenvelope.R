@@ -245,6 +245,8 @@ plotenvelope = function (y, which = 1:3, sim.method="norm",
       newFit         = try(update(object,data=modelF))
       resids[,i.sim] = resFunction(newFit)
       fits[,i.sim]   = predFunction(newFit)
+      # if no variation in preds, add v small random noise to avoid error later
+      if(var(fits[,i.sim])<1.e-8) fits[,i.sim] = fits[,i.sim] + 1.e-6*rnorm(n.obs)
     }
   }
   else  
@@ -270,7 +272,7 @@ plotenvelope = function (y, which = 1:3, sim.method="norm",
     # get observed smoother
     nPred = 500
     xPred = seq(min(x),max(x),length=nPred)
-    gam.yx=mgcv::gam(c(y)~c(x))
+    gam.yx=mgcv::gam(c(y)~s(c(x)))
     resPred=predict(gam.yx,newdata=data.frame(x=xPred))
 
     # get smoothers for simulated data
@@ -278,7 +280,7 @@ plotenvelope = function (y, which = 1:3, sim.method="norm",
     for(i.sim in 1:n.sim)
     {
       xiSim=fits[,i.sim]
-      gam.yxi=mgcv::gam(resids[,i.sim]~xiSim)
+      gam.yxi=mgcv::gam(resids[,i.sim]~s(xiSim))
       yiPred[,i.sim]=predict(gam.yxi,newdata=data.frame(xiSim=xPred))
     }
     
@@ -359,7 +361,7 @@ plotenvelope = function (y, which = 1:3, sim.method="norm",
     nPred   = 500
     xPred   = seq(min(x),max(x),length=nPred)
     yAbs    = sqrt(abs(y))
-    gam.yx  = mgcv::gam(c(yAbs)~c(x))
+    gam.yx  = mgcv::gam(c(yAbs)~s(c(x)))
     resPred = predict(gam.yx,newdata=data.frame(x=xPred))
     
     # get smoothers for simulated data
@@ -368,7 +370,7 @@ plotenvelope = function (y, which = 1:3, sim.method="norm",
     for(i.sim in 1:n.sim)
     {
       xiSim          = fits[,i.sim]
-      gam.yxi        = mgcv::gam(residsAbs[,i.sim]~xiSim)
+      gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim))
       yiPred[,i.sim] = predict(gam.yxi,newdata=data.frame(xiSim=xPred))
     }
     
