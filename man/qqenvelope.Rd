@@ -53,6 +53,9 @@ The envelope is global, constructed using the \code{\link[GET]{GET-package}}, me
 (for example) a 95% global envelope should contain \emph{all} residuals for 95% of datasets
 for which assumptions are actually satisfied. So if \emph{any} data points lie outside the
 envelope we have evidence that assumptions of the fitted model are not satisfied. 
+The \code{\link[GET]{GET-package}} was originally constructed to place envelopes around functions, motivated by
+the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), but it can equally
+well be applied here, by treating the set of residuals (order according to the x-axis) as point-wise evaluations of a function.
 
 For further details refer to \code{\link{plotenvelope}}, which is called to construct the plot.
 }
@@ -66,8 +69,11 @@ data(iris)
 Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
-qqenvelope(iris.mlm,n.sim=499)
+qqenvelope(iris.mlm,n.sim=199)
 
+}
+\references{
+Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
 }
 \seealso{
 \code{\link{qqnorm}}, \code{\link{qqline}}, \code{\link{plotenvelope}}

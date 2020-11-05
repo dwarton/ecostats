@@ -7,7 +7,7 @@
 plotenvelope(
   y,
   which = 1:3,
-  sim.method = "norm",
+  sim.method = "refit",
   n.sim = 199,
   conf.level = 0.95,
   type = "st",
@@ -16,8 +16,9 @@ plotenvelope(
   xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
   ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))),
   col = par("col"),
-  smooth.col = "olivedrab",
-  envelope.col = adjustcolor(smooth.col, 0.1),
+  line.col = if (do.smooth) "slateblue4" else "olivedrab",
+  envelope.col = adjustcolor(line.col, 0.1),
+  do.smooth = FALSE,
   plot.it = TRUE,
   ...
 )
@@ -36,16 +37,15 @@ a little from that code. A global envelope is included with each plot, around wh
 expect the smoother (for 1 and 3) or data points (2) to be when the model
 is correct. If not fully captured by the global envelope, there is some evidence of assumption violations.}
 
-\item{sim.method}{How should residuals be simulated? The default \code{"norm"} simulates from a normal
-distribution, matching means and variances (and covariances for multivariate responses) to the observed residuals.
+\item{sim.method}{How should residuals be simulated? The default \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
+refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
+This is computationally intensive but gives a robust answer. This is the only suitable option if
+residuals are not normal when assumptions are satisfied (like when using \code{\link[stats]{glm}} with a non-Gaussian family). In fact
+for an object that has class \code{glm} and non-Gaussian family, \code{"refit"} will override any user choice of \code{sim.method}. 
+Alternatively, \code{"norm"} simulates from a normal distribution, matches means and variances (and covariances for multivariate responses) to the observed residuals.
 The \code{"stand.norm"} option sets means to zero and variances to one, which is appropriate when residuals
 should be standard normal when assumptions are satisfied (as when using \code{residuals.manyglm} from the \code{mvabund}
-package, for example). The \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
-refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
-This is computationally intensive but gives a more robust answer. This is the only suitable option if
-residuals are not normal when assumptions are satisfied (like when using \code{\link[stats]{glm}} with a non-Gaussian family). In fact
-the default behaviour for an object that has class \code{glm} and non-Gaussian family is to \code{"refit"} with a warning indicating
-that this was done.}
+package, for example). These options are faster but more approximate than \code{"refit"}.}
 
 \item{n.sim}{the number of simulated sets of residuals to be generated, to which
 the observed residuals will be compared. The default is 199 datasets, you should bump it up to
@@ -73,15 +73,17 @@ If only one value is given that will be used for all plots.}
 
 \item{col}{color of points}
 
-\item{smooth.col}{color of smoother in residual vs fits and scale-location plots.
-Defaults to "olivedrab". Because it's cool.}
+\item{line.col}{color of the line on diagnostic plots about which points should show no trend if model assumptions are satisfied.
+Defaults to "olivedrab". Because it's cool. If \code{do.smoother=TRUE} this is the color of the smoother (defaulting to "slateblue4").}
 
-\item{envelope.col}{color of the global envelope around the expected trend. The smoother
-should always stay within this (and it will do for a proportion \code{conf.level} of 
-datasets satisfying model assumptions). Color defaults to a transparent version of \code{smooth.col}.}
+\item{envelope.col}{color of the global envelope around the expected trend. All data points should always stay within this envelope
+(and will for a proportion \code{conf.level} of datasets satisfying model assumptions). If a smoother has been used on
+the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay within the envelope.}
 
-\item{plot.it}{logical. Should the result be plotted? If not, a list of analysis outputs
-is returned, see \emph{Value}.}
+\item{do.smooth}{logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
+scale-location plots, and the global envelope is around the \emph{smoother} not the data. No smoother is added to the normal quantile plot.}
+
+\item{plot.it}{logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.}
 
 \item{...}{further arguments sent through to \code{plot}}
 }
@@ -103,7 +105,7 @@ Produces diagnostic plots of a fitted model \code{y}, and
 adds global envelopes constructed by simulating new residuals, to see how
 departures from expected trends compare to what might be expected if the 
 fitted model were correct. Global envelopes are constructed using the
-\code{GET} package for simultaneous control of error rates over the
+\code{GET} package (Myllymäki et al 2017) for simultaneous control of error rates over the
 whole plot, and residuals can be simulated from the (multivariate) normal distribution
 (not always a smart move) or by simulating new responses from the fitted model and recomputing residuals
 (can be computationally intensive). Diagnostic plots presented are residual vs fits,
@@ -114,13 +116,13 @@ A challenge when interpreting diagnostic plots is understanding the extent to wh
 deviations from the expected pattern could be due to random noise (sampling variation)
 rather than actual assumption violations. This function is intended to assess this, 
 by simulating multiple realizations of residuals (and fitted values) in situations where 
-assumptions are satisfied, and plotting a simulation envelope around these at level \code{conf.level}.
+assumptions are satisfied, and plotting a global simulation envelope around these at level \code{conf.level}.
 
 This function can take any fitted model, and construct any of three diagnostic plots, as determined by \code{which}:
 \enumerate{
-\item Residual vs fits plot (with a smoother)
+\item Residual vs fits plot (optionally, with a smoother)
 \item Normal quantile plot
-\item Scale-Location plot (with smoother)
+\item Scale-Location plot (optionally, with smoother)
 }
 and see if the trend is behaving as expected if the model were true. As long as 
 the fitted model responds to \code{\link{residuals}} and \code{\link{predict}} 
@@ -131,6 +133,9 @@ Simulation envelopes are global, constructed using the \code{\link[GET]{GET-pack
 (for example) a 95\% global envelope on a quantile plot should contain \emph{all} residuals for 95\% of datasets
 that satisfy model assumptions. So if \emph{any} data points lie outside the
 quantile plot's envelope we have evidence that assumptions of the fitted model are not satisfied. 
+The \code{\link[GET]{GET-package}} was originally constructed to place envelopes around functions, motivated by
+the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), but it can equally
+well be applied here, by treating the set of residuals (order according to the x-axis) as point-wise evaluations of a function.
 For residual vs fits and scale-location plots, global envelopes are constructed for
 the \emph{smoother}, not for the data, hence we are looking to see if the smoother
 is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}}.
@@ -179,10 +184,13 @@ Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris_mlm=lm(Y~Species,data=iris)
 # check normality assumption:
 plotenvelope(iris_mlm,n.sim=99,which=2)
-\dontrun{plotenvelope(iris_mlm, sim.method="refit")
+\donttest{plotenvelope(iris_mlm, sim.method="refit",which=1:3)
 ## This line takes a few seconds to run.
 ## Note violation on the scale/location plot.}
 
+}
+\references{
+Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
 }
 \seealso{
 \code{\link{cpredict}}, \code{\link{cresiduals}}, \code{\link{qqenvelope}}
