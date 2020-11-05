@@ -1,4 +1,4 @@
-#' Normal Quantile-Quantile Plots with Simulation Envelopes
+#' Normal Quantile-Quantile Plots with Global Simulation Envelopes
 #'
 #' Produces a normal QQ plot of a \emph{fitted model} \code{y}, with a user-specified 
 #' line to compare to "theoretical" quantiles, and global envelopes constructed
@@ -11,7 +11,7 @@
 #' approximately normally distributed if the model were correct.
 #' @param ylab \code{y} axis label (if a plot is produced).
 #' @param n.sim the number of simulated sets of residuals to be generated, to which
-#'  the observed residuals will be compared. The default is 999 datasets.
+#'  the observed residuals will be compared. The default is 199 datasets.
 #' @param conf.level the confidence level to use in constructing the envelope.
 #' @param ... further arguments sent through to \code{plotenvelope}
 #' 
@@ -61,10 +61,10 @@
 #' Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 #' iris.mlm=lm(Y~Species,data=iris)
 #' # check normality assumption:
-#' qqenvelope(iris.mlm,n.sim=199)
+#' qqenvelope(iris.mlm,n.sim=99)
 #' 
 #' @export
-qqenvelope = function (y, n.sim=999, ylab="Sample Quantiles", conf.level=0.95, ...) 
+qqenvelope = function (y, n.sim=199, ylab="Sample Quantiles", conf.level=0.95, ...) 
 {
   # is y data or model fit? Make y data, object model fit
   if(is.numeric(y))

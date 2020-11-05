@@ -2,9 +2,9 @@
 % Please edit documentation in R/qqenvelope.R
 \name{qqenvelope}
 \alias{qqenvelope}
-\title{Normal Quantile-Quantile Plots with Simulation Envelopes}
+\title{Normal Quantile-Quantile Plots with Global Simulation Envelopes}
 \usage{
-qqenvelope(y, n.sim = 999, ylab = "Sample Quantiles", conf.level = 0.95, ...)
+qqenvelope(y, n.sim = 199, ylab = "Sample Quantiles", conf.level = 0.95, ...)
 }
 \arguments{
 \item{y}{can be a set of values for which we wish to check (multivariate) normality, 
@@ -13,7 +13,7 @@ functions. The function was designed with models in mind whose residuals would b
 approximately normally distributed if the model were correct.}
 
 \item{n.sim}{the number of simulated sets of residuals to be generated, to which
-the observed residuals will be compared. The default is 999 datasets.}
+the observed residuals will be compared. The default is 199 datasets.}
 
 \item{ylab}{\code{y} axis label (if a plot is produced).}
 
@@ -69,7 +69,7 @@ data(iris)
 Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
-qqenvelope(iris.mlm,n.sim=199)
+qqenvelope(iris.mlm,n.sim=99)
 
 }
 \references{

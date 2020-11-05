@@ -5,10 +5,10 @@
 #' departures from expected trends compare to what might be expected if the 
 #' fitted model were correct. Global envelopes are constructed using the
 #' \code{GET} package (Myllymäki et al 2017) for simultaneous control of error rates over the
-#' whole plot, and residuals can be simulated from the (multivariate) normal distribution
-#' (not always a smart move) or by simulating new responses from the fitted model and recomputing residuals
-#' (can be computationally intensive). Diagnostic plots presented are residual vs fits,
-#' a normal quantile plot, and a scale-location plot, along the lines of \code{\link{plot.lm}}.
+#' whole plot, and residuals can be simulated by first simulating new responses from the fitted model and recomputing residuals
+#' (can be computationally intensive) or just simulating directly from the (multivariate) normal distribution
+#' (faster, but not always a smart move). Options for diagnostic plots to construct are a residual vs fits,
+#' a normal quantile plot, or scale-location plot, along the lines of \code{\link{plot.lm}}.
 #'
 #' @param y is \emph{any} object that responds to \code{residuals}, \code{predict} and 
 #' (if \code{sim.method="refit"}) \code{simulate}.
@@ -18,9 +18,9 @@
 #' \item{scale-location plot, with smoother}
 #' }
 #' These are the first three options in \code{\link{plot.lm}} and borrow 
-#' a little from that code. A global envelope is included with each plot, around where you would
-#' expect the smoother (for 1 and 3) or data points (2) to be when the model
-#' is correct. If not fully captured by the global envelope, there is some evidence of assumption violations.
+#' a little from that code. A global envelope is included with each plot around where we expect to see
+#' the data (or the smoother, if requested, for plots 1 and 3) when model assumptions are satisfied.
+#' If not fully captured by the global envelope, there is some evidence of assumption violations.
 #' @param n.sim the number of simulated sets of residuals to be generated, to which
 #'  the observed residuals will be compared. The default is 199 datasets, you should bump it up to
 #'  something more like 999 for publication (but note that would take about five times longer to run).
@@ -49,10 +49,11 @@
 #'  If only one value is given that will be used for all plots.
 #' @param col color of points
 #' @param line.col color of the line on diagnostic plots about which points should show no trend if model assumptions are satisfied.
-#' Defaults to "olivedrab". Because it's cool. If \code{do.smoother=TRUE} this is the color of the smoother (defaulting to "slateblue4").
+#' Defaults to "olivedrab". Because it's cool. If \code{do.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").
 #' @param envelope.col color of the global envelope around the expected trend. All data points should always stay within this envelope
 #' (and will for a proportion \code{conf.level} of datasets satisfying model assumptions). If a smoother has been used on
-#' the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay within the envelope.
+#' the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay
+#' within the envelope.
 #' @param do.smooth logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
 #' scale-location plots, and the global envelope is around the \emph{smoother} not the data. No smoother is added to the normal quantile plot.
 #' @param plot.it logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.
@@ -140,7 +141,7 @@
 #' y = rpois(50,lambda=1)
 #' x = 1:50
 #' rpois_glm = glm(y~x,family=poisson())
-#' plotenvelope(rpois_glm,which=1,n.sim=99,sim.method="refit")
+#' plotenvelope(rpois_glm,n.sim=99)
 #' 
 #' # fit a multivariate linear model to the iris dataset:
 #' data(iris)
@@ -157,7 +158,7 @@
 #' @importFrom stats cor fitted formula lm model.frame model.matrix model.response predict qnorm qqnorm quantile residuals residuals.lm rnorm rstandard runif sd update var
 
 #' @export
-plotenvelope = function (y, which = 1:3, sim.method="refit", 
+plotenvelope = function (y, which = 1:2, sim.method="refit", 
                        n.sim=199, conf.level=0.95, type="st", transform = NULL, 
                        main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
                        ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), col=par("col"), 
@@ -294,16 +295,14 @@ plotenvelope = function (y, which = 1:3, sim.method="refit",
         gam.yxi=mgcv::gam(resids[,i.sim]~s(xiSim))
         residFn[,i.sim]=predict(gam.yxi,newdata=data.frame(xiSim=xPred))
       }
-      xObs=x
-      ySort=y
     }
     else
     {
       # get observed smoother
       nPred=n.obs
       xSort = sort(x,index.return=TRUE)
-      xObs=xPred=xSort$x
-      resObs = ySort = y[xSort$ix]
+      xPred=xSort$x
+      resObs = y[xSort$ix]
       
       residFn=resids
       for(i.sim in 1:n.sim)
@@ -323,12 +322,12 @@ plotenvelope = function (y, which = 1:3, sim.method="refit",
       # make axes and scales as appropriate
       if(do.smooth) #for smoother, keep ylim to data only
       {
-        plot(xObs,ySort, main=main[1], 
+        plot(x,y, main=main[1], 
              xlab=xlab[1], ylab=ylab[1], type="n", ...)
       }
       else #otherwise ylim should cover envelope
       {
-        plot(c(xObs,xPred,xPred), c(ySort,cr$lo,cr$hi), main=main[1], 
+        plot(c(x,xPred,xPred), c(y,cr$lo,cr$hi), main=main[1], 
              xlab=xlab[1], ylab=ylab[1], type="n", ...)
       }
       # add envelope and line
@@ -338,9 +337,9 @@ plotenvelope = function (y, which = 1:3, sim.method="refit",
       if(do.smooth)
         lines(xPred,resObs,col=line.col)
       else
-        lines(range(xObs),c(0,0),col=line.col,...)
+        lines(range(x),c(0,0),col=line.col,...)
       # add data
-      points(xObs, ySort, col=col, ...)
+      points(x, y, col=col, ...)
       
     }
 
@@ -416,16 +415,14 @@ plotenvelope = function (y, which = 1:3, sim.method="refit",
         gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim))
         residFn[,i.sim] = predict(gam.yxi,newdata=data.frame(xiSim=xPred))
       }
-      xObs=x
-      ySort=yAbs
     }
     else
     {
       # get observed smoother
       nPred=n.obs
       xSort = sort(x,index.return=TRUE)
-      xObs=xPred=xSort$x
-      resObs = ySort = yAbs[xSort$ix]
+      xPred=xSort$x
+      resObs = yAbs[xSort$ix]
       
       residFn=residsAbs
       for(i.sim in 1:n.sim)
@@ -438,18 +435,19 @@ plotenvelope = function (y, which = 1:3, sim.method="refit",
     #use the Global Envelope Test package to get global envelope
     datCurves = GET::create_curve_set(list(obs=resObs, sim_m=residFn))
     cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
+    cr$lo=pmax(cr$lo,0) #ensure non-negative
     
     if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
     {
       # make axes and scales as appropriate
       if(do.smooth) #for smoother, keep ylim to data only
       {
-        plot(xObs,ySort, main=main[3], 
+        plot(x,yAbs, main=main[3], 
              xlab=xlab[3], ylab=ylab[3], type="n", ...)
       }
       else #otherwise ylim should cover envelope
       {
-        plot(c(xObs,xPred,xPred), c(ySort,cr$lo,cr$hi), main=main[3], 
+        plot(c(x,xPred,xPred), c(yAbs,cr$lo,cr$hi), main=main[3], 
              xlab=xlab[3], ylab=ylab[3], type="n", ...)
       }
       # add envelope and line
@@ -460,7 +458,7 @@ plotenvelope = function (y, which = 1:3, sim.method="refit",
       if(do.smooth)
         lines(xPred,resObs,col=line.col,...)
       # add data
-      points(xObs, ySort, col=col, ...)
+      points(x, yAbs, col=col, ...)
       
     }
     

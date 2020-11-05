@@ -6,7 +6,7 @@
 \usage{
 plotenvelope(
   y,
-  which = 1:3,
+  which = 1:2,
   sim.method = "refit",
   n.sim = 199,
   conf.level = 0.95,
@@ -106,9 +106,9 @@ adds global envelopes constructed by simulating new residuals, to see how
 departures from expected trends compare to what might be expected if the 
 fitted model were correct. Global envelopes are constructed using the
 \code{GET} package (Myllymäki et al 2017) for simultaneous control of error rates over the
-whole plot, and residuals can be simulated from the (multivariate) normal distribution
-(not always a smart move) or by simulating new responses from the fitted model and recomputing residuals
-(can be computationally intensive). Diagnostic plots presented are residual vs fits,
+whole plot, and residuals can be simulated by first simulating new responses from the fitted model and recomputing residuals
+(can be computationally intensive) or just simulating directly from the (multivariate) normal distribution
+(faster, but not always a smart move). Diagnostic plots presented are residual vs fits,
 a normal quantile plot, and a scale-location plot, along the lines of \code{\link{plot.lm}}.
 }
 \details{
@@ -176,7 +176,7 @@ are unusually far from the values expected of them if model assumptions were sat
 y = rpois(50,lambda=1)
 x = 1:50
 rpois_glm = glm(y~x,family=poisson())
-plotenvelope(rpois_glm,which=1,n.sim=99,sim.method="refit")
+plotenvelope(rpois_glm,n.sim=99)
 
 # fit a multivariate linear model to the iris dataset:
 data(iris)
