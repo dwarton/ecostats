@@ -10,6 +10,7 @@
 #' (faster, but not always a smart move). Options for diagnostic plots to construct are a residual vs fits,
 #' a normal quantile plot, or scale-location plot, along the lines of \code{\link{plot.lm}}.
 #'
+#' @param y is \emph{any} object that responds to \code{residuals}, \code{predict} and 
 #' (if \code{sim.method="refit"}) \code{simulate} and \code{update}.
 #' @param which a vector specifying the diagnostic plots to construct: \enumerate{
 #' \item{residual vs fits, with a smoother}
