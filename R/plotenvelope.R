@@ -5,41 +5,38 @@
 #' departures from expected trends compare to what might be expected if the 
 #' fitted model were correct. Global envelopes are constructed using the
 #' \code{GET} package (Myllymäki et al 2017) for simultaneous control of error rates over the
-#' whole plot, and residuals can be simulated by first simulating new responses from the fitted model and recomputing residuals
-#' (can be computationally intensive) or just simulating directly from the (multivariate) normal distribution
+#' whole plot, by simulating new responses from the fitted model then recomputing residuals
+#' (which can be computationally intensive), or alternatively, by simulating residuals directly from the (multivariate) normal distribution
 #' (faster, but not always a smart move). Options for diagnostic plots to construct are a residual vs fits,
 #' a normal quantile plot, or scale-location plot, along the lines of \code{\link{plot.lm}}.
 #'
-#' @param y is \emph{any} object that responds to \code{residuals}, \code{predict} and 
-#' (if \code{sim.method="refit"}) \code{simulate}.
+#' (if \code{sim.method="refit"}) \code{simulate} and \code{update}.
 #' @param which a vector specifying the diagnostic plots to construct: \enumerate{
 #' \item{residual vs fits, with a smoother}
 #' \item{normal quantile plot}
 #' \item{scale-location plot, with smoother}
 #' }
-#' These are the first three options in \code{\link{plot.lm}} and borrow 
-#' a little from that code. A global envelope is included with each plot around where we expect to see
+#' These are the first three options in \code{\link{plot.lm}} and a little is borrowed 
+#' from that code. A global envelope is included with each plot around where we expect to see
 #' the data (or the smoother, if requested, for plots 1 and 3) when model assumptions are satisfied.
-#' If not fully captured by the global envelope, there is some evidence of assumption violations.
+#' If not fully captured by the global envelope, there is some evidence that the model assumptions are not satisfied.
 #' @param n.sim the number of simulated sets of residuals to be generated, to which
-#'  the observed residuals will be compared. The default is 199 datasets, you should bump it up to
-#'  something more like 999 for publication (but note that would take about five times longer to run).
+#'  the observed residuals will be compared. The default is 199 datasets.
 #' @param conf.level the confidence level to use in constructing the envelope.
 #' @param type the type of global envelope to construct, see 
 #'  \code{\link[GET]{global_envelope_test}} for details. Default \code{"st"} uses 
 #'  studentized envelope tests to protect for unequal variance, which has performed well
-#'  in simulations for diagnosing normality.
+#'  in simulations in this context.
 #' @param transform a character vector pointing to a function that should be applied to both
 #'  axes of the normal quantile plot. The most common use is to set \code{transform="pnorm"}
 #'  for a PP-plot.
 #' @param sim.method How should residuals be simulated? The default \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
 #' refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
 #' This is computationally intensive but gives a robust answer. This is the only suitable option if
-#' residuals are not normal when assumptions are satisfied (like when using \code{\link[stats]{glm}} with a non-Gaussian family). In fact
-#' for an object that has class \code{glm} and non-Gaussian family, \code{"refit"} will override any user choice of \code{sim.method}. 
+#' residuals are not expected to be normal when assumptions are satisfied (like when using \code{\link[stats]{glm}} with a non-Gaussian family). 
 #' Alternatively, \code{"norm"} simulates from a normal distribution, matches means and variances (and covariances for multivariate responses) to the observed residuals.
 #' The \code{"stand.norm"} option sets means to zero and variances to one, which is appropriate when residuals
-#' should be standard normal when assumptions are satisfied (as when using \code{residuals.manyglm} from the \code{mvabund}
+#' should be standard normal when assumptions are satisfied (as for any object fitted using the \code{mvabund}
 #' package, for example). These options are faster but more approximate than \code{"refit"}.
 #' @param main the plot title (if a plot is produced). A vector of three titles, one for each plot.
 #'  If only one value is given that will be used for all plots.
@@ -83,27 +80,30 @@
 #' quantile plot's envelope we have evidence that assumptions of the fitted model are not satisfied. 
 #' The \code{\link[GET]{GET-package}} was originally constructed to place envelopes around functions, motivated by
 #' the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), but it can equally
-#' well be applied here, by treating the set of residuals (order according to the x-axis) as point-wise evaluations of a function.
+#' well be applied here, by treating the set of residuals (ordered according to the x-axis) as point-wise evaluations of a function.
 #' For residual vs fits and scale-location plots, global envelopes are constructed for
 #' the \emph{smoother}, not for the data, hence we are looking to see if the smoother
-#' is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}}.
+#' is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} package.
+#' 
+#' Note that the global envelopes only tell you if there is evidence of violation of model
+#' assumptions -- they do not tell you whether the violations are large enough to worry about. For example, in linear models,
+#' violations of normality are usually much less important than violations of linearity or equal variance. And in all cases,
+#' modest violations tend to only have modest effects on the validity of inferences, so you need to think about how big
+#' observed violations are rather than just thinking about whether or not they are outside their simulation envelope.
 #' 
 #' The method used to simulate data for the global envelopes is controlled by \code{sim.method}.
-#' Unless \code{y} has class \code{glm}, the default (\code{sim.method="norm"}) is to
-#' simulate new (multivariate) normal residuals repeatedly and use these to assess whether trends 
-#' in the observed data depart from what would be expected
+#' The default method (\code{sim.method="refit"}) uses a \emph{parametric bootstrap} approach: simulate 
+#' new responses from the fitted model, refit the model and recompute residuals and fitted values. 
+#' This directly assesses whether trends in observed trends depart from what would be expected if the fitted model
+#' were correct, without any further assumptions. For complex models or large datasets this would however be super-slow.
+#' A fast, more approximate alternative (\code{sim.method="norm"}) is to  simulate new (multivariate) normal residuals 
+#' repeatedly and use these to assess whether trends in the observed data depart from what would be expected
 #' for independent (multivariate) normal residuals. If residuals are expected to be standard
 #' normal, a more refined check is to simulate from the standard normal using (\code{sim.method="stand.norm"}).
-#' This might for example be appropriate when diagnosing a \code{manyglm} object (from the \code{mvabund} package),
-#' since Dunn-Smyth residuals are approximately standard normal when assumptions are satisfied.  
-#' A more rigorous but computationally intensive approach (\code{sim.method="refit"}) is to use a 
-#' \emph{parametric bootstrap} approach: simulate new responses from the fitted model, refit 
-#' the model and recompute residuals and fitted values. This directly assesses whether trends 
-#' in observed trends depart from what would be expected if the fitted model were correct, 
-#' without any further assumptions. For complex models or large datasets this would however be super-slow.
-#' If \code{y} is a \code{glm} with non-Gaussian
-#' family then residuals will not be normal and \code{"refit"} is the only appropriate option, hence default
-#' behavior for such a model is to use \code{sim.method="refit"} and return a warning indicating this
+#' This might for example be useful when diagnosing a model fitted using the \code{mvabund} package,
+#' since this calculates Dunn-Smyth residuals, which are approximately standard normal when assumptions are satisfied.  
+#' If \code{y} is a \code{glm} with non-Gaussian family then residuals will not be normal and \code{"refit"} is the
+#' only appropriate option, hence other choices will be overridden with a warning reporting that this
 #' has been done. 
 #' 
 #' Note that for Multivariate Linear Models (\code{mlm}), \code{\link{cresiduals}} and \code{\link{cpredict}} 
@@ -111,17 +111,17 @@
 #' (that is, models constructed by regressing each response against all other responses
 #' together with predictors). This is done because full conditionals are diagnostic of joint 
 #' distributions, so \emph{any} violation of multivariate normality is expressed as a violation of 
-#' linear model assumptions on full conditionals. By default, results for all responses are
-#' overlaid on a single plot.
+#' linear model assumptions on full conditionals. Results for all responses are overlaid on a single plot,
+#' future versions of this function may have an overlay option to separately plot each response.
 #' 
 #' The simulated data and subsequent analysis are also used to obtain a \emph{P}-value 
 #' for the test that model assumptions are correct, for each plot. This tests if sample residuals or their smoothers
 #' are unusually far from the values expected of them if model assumptions were satisfied. For details see
 #' \code{\link[GET]{global_envelope_test}}.
 #' 
-#' @return up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
+#' @return Up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
 #' three objects used in plotting, for plots 1-3 respectively. Each is a list with five components:\describe{
-#' \item{\code{x}}{X-values used for the envelope. In plots 1 and 3, this is 500 equally spaced points covering
+#' \item{\code{x}}{$X$-values used for the envelope. In plots 1 and 3 with \code{do.smooth=TRUE}, this is 500 equally spaced points covering
 #' the range of fitted values. For plot 2, this is sorted normal quantiles corresponding to observed data.}
 #' \item{\code{y}}{In plots 1 and 3, this is the values of the smoother corresponding to \code{x}. For plot 2,
 #' this is the sorted residuals.}
@@ -143,15 +143,16 @@
 #' rpois_glm = glm(y~x,family=poisson())
 #' plotenvelope(rpois_glm,n.sim=99)
 #' 
-#' # fit a multivariate linear model to the iris dataset:
+#' # Fit a multivariate linear model to the iris dataset:
 #' data(iris)
 #' Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 #' iris_mlm=lm(Y~Species,data=iris)
 #' # check normality assumption:
 #' plotenvelope(iris_mlm,n.sim=99,which=2)
-#' \donttest{plotenvelope(iris_mlm, sim.method="refit",which=1:3)
-#' ## This line takes a few seconds to run.
-#' ## Note violation on the scale/location plot.}
+#' 
+#' # A few more plots, with envelopes around smoothers: (this will take several seconds to run)
+#' \donttest{plotenvelope(iris_mlm, which=1:3, do.smooth=TRUE)
+#' # Note violation on the scale/location plot.}
 #' 
 #' @importFrom grDevices adjustcolor 
 #' @importFrom graphics plot points lines par polygon

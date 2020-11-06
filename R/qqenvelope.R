@@ -1,14 +1,13 @@
 #' Normal Quantile-Quantile Plots with Global Simulation Envelopes
 #'
-#' Produces a normal QQ plot of a \emph{fitted model} \code{y}, with a user-specified 
+#' Produces a normal QQ plot of data, or of residuals from a fitted model \code{y}, with a user-specified 
 #' line to compare to "theoretical" quantiles, and global envelopes constructed
 #' by simulating new residuals. Global envelopes are constructed using the
 #' \code{GET} package for simultaneous control of error rates over the whole curve.
 #'
 #' @param y can be a set of values for which we wish to check (multivariate) normality, 
-#' or it can be \emph{any} object that responds to the \code{residuals} and \code{simulate}
-#' functions. The function was designed with models in mind whose residuals would be 
-#' approximately normally distributed if the model were correct.
+#' or it can be \emph{any} object that responds to the \code{residuals}, \code{simulate} and \code{update}
+#' functions.
 #' @param ylab \code{y} axis label (if a plot is produced).
 #' @param n.sim the number of simulated sets of residuals to be generated, to which
 #'  the observed residuals will be compared. The default is 199 datasets.
@@ -20,19 +19,19 @@
 #' deviations from expected values could be due to random noise (sampling variation)
 #' rather than actual assumption violations. This function is intended to assess this, 
 #' by simulating multiple realizations of residuals in situations where assumptions 
-#' are satisfied, and plotting a simulation envelope around these at level \code{conf.level}.
+#' are satisfied, and plotting a global (or "simultaneous") simulation envelope around these at level \code{conf.level}.
+#' All data points should lie if assumptions are satisfied, and will do so for a proportion \code{conf.level} of
+#' datasets which satisfy their assumptions.
 #' 
 #' This function can take data (univariate or multivariate) and check for (multivariate)
 #' normality, or it can take a fitted model and use qq plots to interrogate residuals and
 #' see if they are behaving as we would expect them to if the model were true.
 #' 
-#' The envelope is global, constructed using the \code{\link[GET]{GET-package}}, meaning that
-#' (for example) a 95% global envelope should contain \emph{all} residuals for 95% of datasets
-#' for which assumptions are actually satisfied. So if \emph{any} data points lie outside the
-#' envelope we have evidence that assumptions of the fitted model are not satisfied. 
+#' The envelope is global, constructed using the \code{\link[GET]{GET-package}}. So if \emph{any} data points lie outside the
+#' envelope we have evidence that assumptions are not satisfied. 
 #' The \code{\link[GET]{GET-package}} was originally constructed to place envelopes around functions, motivated by
 #' the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), but it can equally
-#' well be applied here, by treating the set of residuals (order according to the x-axis) as point-wise evaluations of a function.
+#' well be applied here, by treating sorted residuals as point-wise evaluations of a function.
 #' 
 #' For further details refer to \code{\link{plotenvelope}}, which is called to construct the plot.
 #' 
@@ -64,7 +63,7 @@
 #' qqenvelope(iris.mlm,n.sim=99)
 #' 
 #' @export
-qqenvelope = function (y, n.sim=199, ylab="Sample Quantiles", conf.level=0.95, ...) 
+qqenvelope = function (y, n.sim=199, conf.level=0.95, ylab="Sample Quantiles", ...) 
 {
   # is y data or model fit? Make y data, object model fit
   if(is.numeric(y))
