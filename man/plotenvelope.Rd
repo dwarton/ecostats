@@ -16,14 +16,17 @@ plotenvelope(
   xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
   ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))),
   col = par("col"),
-  line.col = if (do.smooth) "slateblue4" else "olivedrab",
+  line.col = if (add.smooth) "slateblue4" else "olivedrab",
   envelope.col = adjustcolor(line.col, 0.1),
-  do.smooth = FALSE,
+  add.smooth = FALSE,
   plot.it = TRUE,
   ...
 )
 }
 \arguments{
+\item{y}{is \emph{any} object that responds to \code{residuals}, \code{predict} and 
+(if \code{sim.method="refit"}) \code{simulate} and \code{update}.}
+
 \item{which}{a vector specifying the diagnostic plots to construct: \enumerate{
 \item{residual vs fits, with a smoother}
 \item{normal quantile plot}
@@ -69,14 +72,14 @@ If only one value is given that will be used for all plots.}
 \item{col}{color of points}
 
 \item{line.col}{color of the line on diagnostic plots about which points should show no trend if model assumptions are satisfied.
-Defaults to "olivedrab". Because it's cool. If \code{do.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").}
+Defaults to "olivedrab". Because it's cool. If \code{add.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").}
 
 \item{envelope.col}{color of the global envelope around the expected trend. All data points should always stay within this envelope
 (and will for a proportion \code{conf.level} of datasets satisfying model assumptions). If a smoother has been used on
 the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay
 within the envelope.}
 
-\item{do.smooth}{logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
+\item{add.smooth}{logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
 scale-location plots, and the global envelope is around the \emph{smoother} not the data. No smoother is added to the normal quantile plot.}
 
 \item{plot.it}{logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.}
@@ -86,9 +89,9 @@ scale-location plots, and the global envelope is around the \emph{smoother} not 
 \value{
 Up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
 three objects used in plotting, for plots 1-3 respectively. Each is a list with five components:\describe{
-\item{\code{x}}{$X$-values used for the envelope. In plots 1 and 3 with \code{do.smooth=TRUE}, this is 500 equally spaced points covering
+\item{\code{x}}{_X_-values used for the envelope. In plots 1 and 3 this is the fitted values, or if \code{add.smooth=TRUE}, this is 500 equally spaced points covering
 the range of fitted values. For plot 2, this is sorted normal quantiles corresponding to observed data.}
-\item{\code{y}}{In plots 1 and 3, this is the values of the smoother corresponding to \code{x}. For plot 2,
+\item{\code{y}}{The _Y_-values used for the envelope. In plots 1 and 3 this is the residuals, or with \code{add.smooth=TRUE}, this is the values of the smoother corresponding to \code{x}. For plot 2,
 this is the sorted residuals.}
 \item{\code{lo}}{The lower bound on the global envelope, for each value of \code{x}.}
 \item{\code{hi}}{The upper bound on the global envelope, for each value of \code{x}.}
@@ -108,9 +111,6 @@ whole plot, by simulating new responses from the fitted model then recomputing r
 a normal quantile plot, or scale-location plot, along the lines of \code{\link{plot.lm}}.
 }
 \details{
-(if \code{sim.method="refit"}) \code{simulate} and \code{update}.
-
-
 A challenge when interpreting diagnostic plots is understanding the extent to which
 deviations from the expected pattern could be due to random noise (sampling variation)
 rather than actual assumption violations. This function is intended to assess this, 
@@ -125,7 +125,7 @@ This function can take any fitted model, and construct any of three diagnostic p
 }
 and see if the trend is behaving as expected if the model were true. As long as 
 the fitted model responds to \code{\link{residuals}} and \code{\link{predict}} 
-(and when \code{sim.method="refit"}, \code{\link{simulate}}) then a simulation envelope
+(and when \code{sim.method="refit"}, \code{\link{simulate}} and \code{\link{update}}) then a simulation envelope
 will be constructed for each plot.
 
 Simulation envelopes are global, constructed using the \code{\link[GET]{GET-package}}, meaning that
@@ -135,7 +135,7 @@ quantile plot's envelope we have evidence that assumptions of the fitted model a
 The \code{\link[GET]{GET-package}} was originally constructed to place envelopes around functions, motivated by
 the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), but it can equally
 well be applied here, by treating the set of residuals (ordered according to the x-axis) as point-wise evaluations of a function.
-For residual vs fits and scale-location plots, global envelopes are constructed for
+For residual vs fits and scale-location plots, if \code{do.smooth=TRUE}, global envelopes are constructed for
 the \emph{smoother}, not for the data, hence we are looking to see if the smoother
 is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} package.
 
@@ -143,7 +143,7 @@ Note that the global envelopes only tell you if there is evidence of violation o
 assumptions -- they do not tell you whether the violations are large enough to worry about. For example, in linear models,
 violations of normality are usually much less important than violations of linearity or equal variance. And in all cases,
 modest violations tend to only have modest effects on the validity of inferences, so you need to think about how big
-observed violations are rather than just thinking about whether or not they are outside their simulation envelope.
+observed violations are rather than just thinking about whether or not anything is outside its simulation envelope.
 
 The method used to simulate data for the global envelopes is controlled by \code{sim.method}.
 The default method (\code{sim.method="refit"}) uses a \emph{parametric bootstrap} approach: simulate 
@@ -188,7 +188,7 @@ iris_mlm=lm(Y~Species,data=iris)
 plotenvelope(iris_mlm,n.sim=99,which=2)
 
 # A few more plots, with envelopes around smoothers: (this will take several seconds to run)
-\donttest{plotenvelope(iris_mlm, which=1:3, do.smooth=TRUE)
+\donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=TRUE)
 # Note violation on the scale/location plot.}
 
 }

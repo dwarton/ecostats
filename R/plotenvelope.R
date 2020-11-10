@@ -47,12 +47,12 @@
 #'  If only one value is given that will be used for all plots.
 #' @param col color of points
 #' @param line.col color of the line on diagnostic plots about which points should show no trend if model assumptions are satisfied.
-#' Defaults to "olivedrab". Because it's cool. If \code{do.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").
+#' Defaults to "olivedrab". Because it's cool. If \code{add.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").
 #' @param envelope.col color of the global envelope around the expected trend. All data points should always stay within this envelope
 #' (and will for a proportion \code{conf.level} of datasets satisfying model assumptions). If a smoother has been used on
 #' the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay
 #' within the envelope.
-#' @param do.smooth logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
+#' @param add.smooth logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
 #' scale-location plots, and the global envelope is around the \emph{smoother} not the data. No smoother is added to the normal quantile plot.
 #' @param plot.it logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.
 #' @param ... further arguments sent through to \code{plot}
@@ -72,7 +72,7 @@
 #' }
 #' and see if the trend is behaving as expected if the model were true. As long as 
 #' the fitted model responds to \code{\link{residuals}} and \code{\link{predict}} 
-#' (and when \code{sim.method="refit"}, \code{\link{simulate}}) then a simulation envelope
+#' (and when \code{sim.method="refit"}, \code{\link{simulate}} and \code{\link{update}}) then a simulation envelope
 #' will be constructed for each plot.
 #' 
 #' Simulation envelopes are global, constructed using the \code{\link[GET]{GET-package}}, meaning that
@@ -82,7 +82,7 @@
 #' The \code{\link[GET]{GET-package}} was originally constructed to place envelopes around functions, motivated by
 #' the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), but it can equally
 #' well be applied here, by treating the set of residuals (ordered according to the x-axis) as point-wise evaluations of a function.
-#' For residual vs fits and scale-location plots, global envelopes are constructed for
+#' For residual vs fits and scale-location plots, if \code{do.smooth=TRUE}, global envelopes are constructed for
 #' the \emph{smoother}, not for the data, hence we are looking to see if the smoother
 #' is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} package.
 #' 
@@ -90,7 +90,7 @@
 #' assumptions -- they do not tell you whether the violations are large enough to worry about. For example, in linear models,
 #' violations of normality are usually much less important than violations of linearity or equal variance. And in all cases,
 #' modest violations tend to only have modest effects on the validity of inferences, so you need to think about how big
-#' observed violations are rather than just thinking about whether or not they are outside their simulation envelope.
+#' observed violations are rather than just thinking about whether or not anything is outside its simulation envelope.
 #' 
 #' The method used to simulate data for the global envelopes is controlled by \code{sim.method}.
 #' The default method (\code{sim.method="refit"}) uses a \emph{parametric bootstrap} approach: simulate 
@@ -122,9 +122,9 @@
 #' 
 #' @return Up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
 #' three objects used in plotting, for plots 1-3 respectively. Each is a list with five components:\describe{
-#' \item{\code{x}}{$X$-values used for the envelope. In plots 1 and 3 with \code{do.smooth=TRUE}, this is 500 equally spaced points covering
+#' \item{\code{x}}{_X_-values used for the envelope. In plots 1 and 3 this is the fitted values, or if \code{add.smooth=TRUE}, this is 500 equally spaced points covering
 #' the range of fitted values. For plot 2, this is sorted normal quantiles corresponding to observed data.}
-#' \item{\code{y}}{In plots 1 and 3, this is the values of the smoother corresponding to \code{x}. For plot 2,
+#' \item{\code{y}}{The _Y_-values used for the envelope. In plots 1 and 3 this is the residuals, or with \code{add.smooth=TRUE}, this is the values of the smoother corresponding to \code{x}. For plot 2,
 #' this is the sorted residuals.}
 #' \item{\code{lo}}{The lower bound on the global envelope, for each value of \code{x}.}
 #' \item{\code{hi}}{The upper bound on the global envelope, for each value of \code{x}.}
@@ -152,7 +152,7 @@
 #' plotenvelope(iris_mlm,n.sim=99,which=2)
 #' 
 #' # A few more plots, with envelopes around smoothers: (this will take several seconds to run)
-#' \donttest{plotenvelope(iris_mlm, which=1:3, do.smooth=TRUE)
+#' \donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=TRUE)
 #' # Note violation on the scale/location plot.}
 #' 
 #' @importFrom grDevices adjustcolor 
@@ -164,7 +164,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
                        n.sim=199, conf.level=0.95, type="st", transform = NULL, 
                        main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
                        ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), col=par("col"), 
-                       line.col=if(do.smooth) "slateblue4" else "olivedrab", envelope.col = adjustcolor(line.col, 0.1), do.smooth=FALSE,
+                       line.col=if(add.smooth) "slateblue4" else "olivedrab", envelope.col = adjustcolor(line.col, 0.1), add.smooth=FALSE,
                        plot.it = TRUE, ...) 
 {
   ### which plots to construct? And clean up arguments
@@ -281,7 +281,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   if (show[1L])
   {
     # get observed smoother
-    if(do.smooth)
+    if(add.smooth)
     {
       nPred = 500
       xPred = seq(min(x),max(x),length=nPred)
@@ -322,7 +322,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
     {
       # make axes and scales as appropriate
-      if(do.smooth) #for smoother, keep ylim to data only
+      if(add.smooth) #for smoother, keep ylim to data only
       {
         plot(x,y, main=main[1], 
              xlab=xlab[1], ylab=ylab[1], type="n", ...)
@@ -336,7 +336,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       polygon(xPred[c(1:nPred,nPred:1)], c(cr$lo,cr$hi[nPred:1]), 
               col=envelope.col, border=NA)
       # add smooth, if applicable
-      if(do.smooth)
+      if(add.smooth)
         lines(xPred,resObs,col=line.col)
       else
         lines(range(x),c(0,0),col=line.col,...)
@@ -401,7 +401,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     yAbs    = sqrt(abs(y))
     residsAbs = sqrt(abs(resids))
     # get observed smoother
-    if(do.smooth)
+    if(add.smooth)
     {
       nPred = 500
       xPred = seq(min(x),max(x),length=nPred)
@@ -442,7 +442,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
     {
       # make axes and scales as appropriate
-      if(do.smooth) #for smoother, keep ylim to data only
+      if(add.smooth) #for smoother, keep ylim to data only
       {
         plot(x,yAbs, main=main[3], 
              xlab=xlab[3], ylab=ylab[3], type="n", ...)
@@ -457,7 +457,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
               col=envelope.col, border=NA)
 #      lines(range(xObs),median(yAbs)*c(1,1),col=line.col,...)
       # add smooth, if applicable
-      if(do.smooth)
+      if(add.smooth)
         lines(xPred,resObs,col=line.col,...)
       # add data
       points(x, yAbs, col=col, ...)
