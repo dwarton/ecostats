@@ -122,9 +122,9 @@
 #' 
 #' @return Up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
 #' three objects used in plotting, for plots 1-3 respectively. Each is a list with five components:\describe{
-#' \item{\code{x}}{_X_-values used for the envelope. In plots 1 and 3 this is the fitted values, or if \code{add.smooth=TRUE}, this is 500 equally spaced points covering
+#' \item{\code{x}}{\emph{X}-values used for the envelope. In plots 1 and 3 this is the fitted values, or if \code{add.smooth=TRUE}, this is 500 equally spaced points covering
 #' the range of fitted values. For plot 2, this is sorted normal quantiles corresponding to observed data.}
-#' \item{\code{y}}{The _Y_-values used for the envelope. In plots 1 and 3 this is the residuals, or with \code{add.smooth=TRUE}, this is the values of the smoother corresponding to \code{x}. For plot 2,
+#' \item{\code{y}}{The \emph{Y}-values used for the envelope. In plots 1 and 3 this is the residuals, or with \code{add.smooth=TRUE}, this is the values of the smoother corresponding to \code{x}. For plot 2,
 #' this is the sorted residuals.}
 #' \item{\code{lo}}{The lower bound on the global envelope, for each value of \code{x}.}
 #' \item{\code{hi}}{The upper bound on the global envelope, for each value of \code{x}.}
