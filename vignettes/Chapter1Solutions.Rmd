@@ -1,0 +1,216 @@
+---
+title: "Chapter 1 - 'STATS 101' Revision -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 1 - 'STATS 101' Revision -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 1.1: Experimental design issues
+
+1. The issue is in the _compare_ step -- the mite treatment differed from the no mite treatment not just in presence or absence of mites, but also in presence or absence of crumpled up old leaves at the base of the plant. Crumpled up leaves could be beneficial to plants, _e.g._ by providing extra nutrients, or as a mulch that keeps moisture in the soil for longer.
+
+2. The issue is in the _replicate_ step -- Beryl did not replicate the _application_ of the treatment of interest. The oven temperature treatment was only applied once to each of 10 loaves. This means that she is unable to make generalisations about the effect of oven temperature because other aspects of the way treatment were applied in this one instance could also affect results, _e.g._ maybe the ovens were different (in size, shaoe, maybe one has a faulty door that leaks air out), maybe loaves were taken out slightly earlier for one batch than the another, maybe one oven was pre-heated better than the other. By replicating the baking process, with randomly chosen choices of treatment, these uncontrolled sources of variation can be considered as random and inferences can account for these.
+
+3. The issue is in the _randomise_ step -- while teachers were instructed to ensure there wasn't an undue proportion of well fed or undernourished children in either group, the point is that they were given responsibility for assigning students to treatments rather than this being done randomly.  The weight difference at the start of the study suggests that some teachers did actually assign smaller and potentially undernourished children to the group receiving milk, presumably on compassionate grounds. This may or may not have been done consciously. Because the treatment groups were not homogeneous at the start of the study, it is not possible to conclude that changes during the study were due to milk -- the groups were different to start off with so differences at the end of the study could be related to this. For example, it is possible that students receiving milk were smaller initially because they were later having a growth spurt, and so they grew more during the study for developmental reasons unrelated to milk.
+
+
+## Exercise 1.2: Which plot for which research question?
+
+1. Plot (c), the boxplot of after-before differences, is best for looking at whether counts are larger after the gunshot than before. (If they are larger after, counts should be above zero.)
+
+2. Plot (a), a scatterplot of after vs before counts, is best for studying of counts after the gunshot are relatd to counts before the gunshot sound.
+
+3. Plot (b), a Tukey mean-difference plot of after-before differences against average counts, is best for looking at whether or not these counts measure the same thing. If After and Before counts are measuring the same underlying quantity, the differences should all be centered around zero, relatively close to it, and ideally they should not be a function of mean count.
+
+
+## Exercise 1.3: Raven count data -- what data properties?
+
+\# ravens is a discrete, quantitative variable.
+
+Sampling time is a categorical variable. Strictly speaking it is nominal but there are only two levels of sampling so ordering is irrelevant.
+
+
+## Exercise 1.4: Gender ratios in bats
+
+There is one variable, bat gender. This is a categorical variable.
+
+The research question is _She would like to know if there is evidence of gender bias_. If she is looking for evidence of gender bias then Kerryn is making inference about the true proportion of females in the colony, and she wants to know if it is different from a 50:50 ratio. So she wants to do a hypothesis test (of whether there is evidence that the true proportion of females is not 50%).
+
+The specific procedure to use here is a one-sample test of proportions, _e.g._ using the 'prop.test' function on 'R': 
+
+```{r proptest}
+prop.test(65,65+44)
+```
+So there is marginal evidence that the true proportion of females in the colony is larger than 50:50 (since *P* is close to 0.05).
+
+An appropriate graph here would be a bar graph
+
+```{r proptest graph, fig.width=5}
+barplot(c(65,44),names.arg=c("females","males"))
+```
+
+## Exercise 1.5: Ravens and gunshots
+
+As in Exercise 1.3, we have two variables:
+- \# ravens which is a discrete, quantitative variable.
+- Sampling time which is a categorical variable taking two levels (before and after).
+(You could argue that _location_ is also a variable, it is categorical, and will be used to analyse the data using a linear model in Chapter 4.)
+
+
+The question is _whether ravens fly towards the sound of gunshots_. This is not really a descriptive question because we want to know if ravens fly towards the sound of gunshots in general, not just at these 12 sites. This could best be approached using a hypothesis test, to test for evidence that ravens fly towards the sound of gunshots, but you could also construct a confidence interval for difference in counts, to estimate the size of the after-before mean count (with particular interest in whether it covers zero). Like this:
+
+```{r ravens}
+library(ecostats)
+data(ravens)
+ravens1 = ravens[ravens$treatment==1,] #limit to just gunshot treatment
+t.test(ravens1$Before,ravens1$After,paired=TRUE,alternative = "less")
+```
+So there is some evidence, although it is still a bit marginal, that ravens fly towards gunshot sounds (*P* is a bit above 0.01).
+
+A suitable graph, as before, is a boxplot of the paired differences:
+```{r ravens plot, fig.width=5}
+boxplot(ravens1$delta,ylab="After-Before differences")
+```
+
+## Exercise 1.6: Pregnancy and smoking
+
+There are two variables:
+- `errors` is quantitative
+- `treatment` is categorical with two levels (control and nicotine treatment)
+
+The research question is *what is the effect of a mother's smoking during pregnancy on the resulting offspring?*. In the context of this experiment, this means estimating the size of the change in average \#errors in treatment vs control. So this is an estimation problem, we can use confidence intervals for average difference.
+
+I would use a *t*-test procedure but put the focus on confidence interval estimation:
+
+```{r guineapigs ttest}
+t.test(errors~treatment,data=guineapig, var.equal=TRUE)
+```
+So we are pretty sure (95% confident) that the true mean \#errors made under nicotine treatment is between 4 and 37 more than in control.
+
+I would use comparative boxplots:
+```{r guineapigs plot, fig.width=6}
+plot(errors~treatment,data=guineapig)
+```
+
+
+## Exercise 1.7: Inference notation -- Gender ratio in bats
+
+$n=65+44=109$.
+
+This is $\hat{p}$.
+
+The true proportion of female bats in the colony is written as $p$.
+
+
+## Exercise 1.8: Inference notation -- raven counts
+
+We know the value of $\bar{x}_\text{after}-\bar{x}_\text{before}$.
+
+We want to make inferences about the unknown value of $\mu_\text{after}-\mu_\text{before}$.
+
+
+## Code Box 1.1: Analysing Kerry's sex ratio data on bats
+
+```{r Code 1.1}
+prop.test(65,109,0.5)
+2*pbinom(64,109,0.5,lower.tail=FALSE)
+```
+
+## Exercise 1.9: Assumptions -- Gender ratio in bats
+
+If bats are randomly sampled from the colony, taking a simple random sample, then this assumption is satisfied.
+
+
+## Exercise 1.10: Assumptions -- Raven example
+
+There is no evidence of violation of the normality assumption (the points are all well within the envelope, with no particular trend).
+
+
+## Code Box 1.2: Normal quantile plot for the raven data
+
+```{r Code 1.2}
+Before = c(0, 0, 0, 0, 0, 2, 1, 0, 0, 3, 5, 0)
+After = c(2, 1, 4, 1, 0, 5, 0, 1, 0, 3, 5, 2)
+qqnorm(After-Before, main="")
+qqline(After-Before,col="red")
+library(ecostats)
+qqenvelope(After-Before)
+```
+
+## Code Box 1.3: log(y + 1)-transformation of the raven data
+
+
+```{r Code 1.3}
+# Enter the data
+Before = c(0, 0, 0, 0, 0, 2, 1, 0, 0, 3, 5, 0)
+After = c(2, 1, 4, 1, 0, 5, 0, 1, 0, 3, 5, 2)
+# Transform the data using y_new = log(y+1):
+logBefore = log(Before+1)
+logAfter = log(After+1)
+# Construct a normal quantile plot of the transformed data
+qqenvelope(logAfter-logBefore)
+```
+
+
+## Exercise 1.11: Height and latitude
+
+Angela is interested in (interval) estimation -- to understand *how* height is related to latitude.
+
+There are two variables:
+- `height` is quantitative
+- `latitude` is quantitative
+
+## Exercise 1.12: Transform plant height?
+
+
+```{r global plants}
+data(globalPlants)
+hist(globalPlants$height)
+```
+
+The data are bunched up against zero -- plants cannot have negative height! A log-transformation might be worth a try
+
+```{r global plants logHt}
+hist(log(globalPlants$height))
+```
+
+This has removed the boundary and seems to have removed the strong right-skew.
+
+
+## Exercise 1.13: Snails on seaweed
+
+The research question is *Does invertebrate density change with isolation?* meaning that we have a specific hypothesis of interest (no change) and we are looking for evidence against this hypothesis. So a hypothesis test is appropriate here.
+
+There are two variables:
+- invertebrate density is quantitative and is the response variable of interest.
+- isolation is an experimental factor taking three levels (0, 2 or 10 metres)
+
+I would use comparative boxplots, like this:
+
+```{r seaweed plot}
+data(seaweed)
+boxplot(Total~Dist,data=seaweed)
+```
+
+I used `boxplot` instead of using `plot` because `Dist` is currently a numerical variable rather than a factor, so the default behaviour of `plot` would have been to do a scatterplot :(
+
+
+## Exercise 1.14: Transform snails?
+
+```{r seaweed transform}
+hist(seaweed$Total)
+hist(log(seaweed$Total))
+```
+
+We have a boundary at zero (you can't have a negative number of snails!) and data seem to be bunched up against it, creating right-skew. Log-transformation removes this boundary and seems to remove the right-skew.

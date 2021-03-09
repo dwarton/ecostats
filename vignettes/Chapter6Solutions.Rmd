@@ -1,0 +1,175 @@
+---
+title: "Chapter 6 - Mixed effect models - Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 6 - Mixed effect models - Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 6.1: Effects of water pollution on subtidal marine micro-invertebrates
+
+*What factors are there? Fixed or random?*
+
+He samples in seven estuaries along the New South Wales coast (three of which are "Pristine", four are "Modified"), and in each estuary, he takes 4-7 samples and counts the creepy crawlies therein.
+
+*Modification* is a factor, taking levels "Pristine" and "Modified"
+
+*Estuary* is a factor, taking seven levels. If these were sampled randomly, and we want to make inferences across all estuaries on the New South Wales coast, it oculd be treated as a random factor.
+
+The 4-7 samples at each estuary are the replicates, so they shouldn't be added to the model,  variation in replicates will enter through the error term.
+
+
+## code for Fig 6.1
+```{r fig6.1, fig.width=6}
+library(ecostats)
+data(estuaries)
+plot(Total~Estuary,data=estuaries,col=c(4,2,2,4,2,4,2))
+legend("bottomleft",legend=c("Modified","Pristine"),col=c(4,2),pch=15,pt.cex=2)
+```
+
+
+## Code Box 6.1: Fitting a linear mixed model to the estuary data of Exercise 6.1
+
+```{r box6.1}
+library(ecostats)
+data(estuaries)
+library(lme4)
+ft_estu = lmer(Total~Mod+(1|Estuary),data=estuaries)
+summary(ft_estu)
+```
+
+There is some evidence of an effect of `Mod`, since the estimated coefficient is more than double its standard error (so a 95\% confidence interval would not cover zero). The effect appears to be a decrease in total abundance in pristine estuaries.
+
+
+## Code Box 6.2: Residual plots from a mixed model for Exercise 6.1
+
+```{r code62}
+ft_estu = lmer(Total~Mod+(1|Estuary),data=estuaries)
+scatter.smooth(residuals(ft_estu)~fitted(ft_estu),
+    xlab="Fitted values",ylab="Residuals")
+abline(h=0,col="red")
+scatter.smooth(residuals(ft_estu)~predict(ft_estu,re.form=NA),
+    xlab="Fitted values (no random effects)",ylab="Residuals")
+abline(h=0,col="red")
+```
+
+## Code Box 6.3: Using `anova` to compare mixed effects models for the estuary data
+```{r code63}
+ft_estu = lmer(Total~Mod+(1|Estuary),data=estuaries,REML=F)
+ft_estuInt = lmer(Total~(1|Estuary),data=estuaries,REML=F)
+anova(ft_estuInt,ft_estu)
+```
+
+There is some evidence of an effect of modification.
+
+
+## Code Box 6.4: Confidence intervals for parameters from a mixed effects model for the estuary data
+```{r code64}
+confint(ft_estu)
+```
+
+
+## Code Box 6.5: Prediction intervals for random effects terms in a mixed effects model
+```{r code65}
+rft=ranef(ft_estu,condVar=T)
+library(lattice)
+dotplot(rft)
+```
+
+## Exercise 6.2: Fitting random effects with different variances
+
+```{r ex62}
+estuaries$isMod = as.numeric(estuaries$Mod=="Modified")
+estuaries$isPri = as.numeric(estuaries$Mod!="Modified")
+ft_estuDiff = lmer(Total~Mod+(0+isMod|Estuary)+(0+isPri|Estuary),data=estuaries,REML=F)
+summary(ft_estuDiff)
+BIC(ft_estu,ft_estuDiff)
+```
+
+BIC suggests that we didn't need a different variance term for each level of `Mod`. (It also estimated the cross-estuary variance to be zero for modified estuaries, leading to a warning in the output.)
+
+
+## Exercise 6.3: Bird exclusion and biological control
+```{r ex63}
+data(aphidsBACI)
+str(aphidsBACI)
+```
+
+OK so we are looking for a `Treatment:Time` interaction, but to account for repeated measures of each plot, we want a random effect for `Plot` in the model.
+
+```{r ex63mod}
+ft_aphids=lmer(logcount~Treatment*Time+(1|Plot),data=aphidsBACI)
+ft_aphidNull=lmer(logcount~Time+(1|Plot),data=aphidsBACI)
+anova(ft_aphidNull,ft_aphids)
+```
+
+Which gives us marginal evidence of an effect of bird exclusion of aphid counts.
+
+Compare this to what we got when adding `Plot` as a fixed effect:
+```{r ex63an}
+lm_aphids=lm(logcount~Plot+Treatment*Time,data=aphidsBACI)
+anova(lm_aphids)
+```
+
+Interestingly, this $P$-value is a lot smaller.
+
+```{r ex63summ}
+summary(lm_aphids)
+summary(ft_aphids)
+```
+
+We get the same point estimate for the `Treatment:Time` effect, but the standard error is slightly smaller in the random effects model.
+
+
+## Exercise 6.4: Estuary data in different zones
+
+```{r ex64 plot, fig.width=8}
+data(estuaryZone)
+cols=c("blue","red","lightblue","pink")
+plot(Total~interaction(Estuary,Zone),data=estuaryZone,col=cols[c(1,2,2,1,2,1,2,3,4,4,3,4,3,4)])
+legend("bottomright",legend=c("Mod-Inner","Prist-Inner","Mod-Outer","Pris-Outer"),col=cols,pch=15,pt.cex=2)
+```
+
+It looks like there is an effect of Modification, not sure if there is an interaction (the effect seems more striking in Outer than Inner zones)
+
+```{r ex64 lme}
+library(lme4)
+lme_MZ = lmer(Total~Zone*Mod + (Zone|Estuary), data=estuaryZone )
+
+scatter.smooth(residuals(lme_MZ)~fitted(lme_MZ),
+    xlab="Fitted values",ylab="Residuals")
+abline(h=0,col="red")
+scatter.smooth(residuals(lme_MZ)~predict(lme_MZ,re.form=NA),
+    xlab="Fitted values (no random effects)",ylab="Residuals")
+abline(h=0,col="red")
+
+```
+
+There is a suggestion of less total abundance as fitted values increase, which is super-weird. But it's not too alarming...
+
+
+```{r ex64 anova}
+lme_MplusZ = lmer(Total~Zone+Mod + (Zone|Estuary), data=estuaryZone )
+anova(lme_MplusZ,lme_MZ)
+```
+
+No evidence of an interaction between Zone and Modification. Testing for a `Mod` main effect:
+
+```{r ex64 mod}
+lme_Z = lmer(Total~Zone + (Zone|Estuary), data=estuaryZone )
+anova(lme_Z,lme_MplusZ)
+```
+
+There is strong evidence that total abundance is different between Modified and Pristine estuaries. The boxplot suggests abundance is higher in Modified estuaries, and looking at the data, this appears to be mostly due to high counts of `Balanus.variegatus`, especially in outer modified zones.
+
+

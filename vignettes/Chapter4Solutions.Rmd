@@ -1,0 +1,370 @@
+---
+title: "Chapter 4 - Linear models - anything goes - Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 4 - Linear models - anything goes - Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 4.1: Ravens and gunshots
+
+We assume:
+- that we have a random sample of paired differences (most importantly, paired differences are independent of each other)
+- the paired differences are approixamtely normal.
+
+
+```{r ravens check}
+ library(ecostats)
+ data(ravens)
+ qqenvelope(ravens$delta[ravens$treatment==1])
+```
+
+This looks OK, there is no evidence against normality here
+
+
+## Code Box 4.1: Paired t-test for the ravens data
+```{r ravens t}
+ data(ravens)
+ crowGun = ravens[ravens$treatment == 1,]
+ t.test(crowGun$Before, crowGun$After, paired=TRUE, alternative="less")
+```
+There is some evidence that ravens fly towards the sound of gunshots.
+
+
+## Exercise 4.2: Ravens, guns and air horns
+
+*Is there evidence that the response to gunshot different to response to other treatments?*
+
+We will use a linear model, with `location` included as a blocking factor to control for differences in raven abundance from one place to another, see Code Box 4.3.
+
+
+## Code Box 4.2: Paired t-test for the ravens data via a linear model
+```{r ravens lm}
+ library(reshape2)
+ crowLong = melt(crowGun,measure.vars = c("Before","After"),
+variable.name="time",value.name="ravens")
+ head(crowLong)
+ ravenlm = lm(ravens~site+time,data=crowLong)
+ anova(ravenlm)
+```
+
+
+## Code Box 4.3: A linear model for the blocked design given by the raven counts in Exercise 4.2
+
+To analyse, we first subset to the three treatments of interest (1=gunshot, 2=airhorn, 3=whistle):
+```{r ravens block}
+crowAfter = ravens[ravens$treatment <=3,]
+ft_crowAfter = lm(After~site+treatment,data=crowAfter)
+anova(ft_crowAfter)
+```
+To check assumptions we could look at diagnostic plots:
+```{r ravens block assumptions}
+ plotenvelope(ft_crowAfter)
+```
+
+The residual vs fits plot has a fan-shaped pattern, suggesting that transformation might be a good idea here!
+
+
+# Exercise 4.3: Seaweed, snails and seaweed mass
+
+*Is there an effect of distance of isolation after controlling for wet mass?*
+
+*Q's* - this is a hypothesis test, for an effect on `Total` of `Dist` after controlling for `Wmass`.
+
+*P's* We have three variables of interest:
+- `Total` is the quantitative response
+- `Dist` is a factor (0, 2 or 10)
+- `Wmass` is a quantitative variable, to be use as a covariate
+
+We can get all three variables onto the same graph using a scatterplot, with different colours for different treatment levels, as in Code Box 4.4.
+
+
+## Code Box 4.4: Scatterplot of data from Exercise 4.3.
+```{r seaweed plot}
+ data(seaweed)
+ seaweed$Dist = factor(seaweed$Dist)
+ plot(Total~Wmass, data=seaweed, col=Dist, 
+      xlab="Wet Mass [log scale]",ylab="Density (per gram) [log scale]")
+ legend("topright",levels(seaweed$Dist),col=1:3,pch=1)
+```
+
+
+## Code Box 4.5: Analysis of covariance for the seaweed data of Exercise 4.3.
+```{r seaweed lm}
+ seaweed$logTot = log(seaweed$Total)
+ seaweed$logWmass = log(seaweed$Wmass)
+ lmMassDist=lm(logTot~logWmass+Dist,data=seaweed)
+  anova(lmMassDist)
+```
+
+## Exercise 4.4: Checking ANCOVA assumptions
+*Independence* can be guaranteed by randomly allocating `Dist` treatments to plots.
+
+Remaining assumptions can be checked using diagnostic plots.
+```{r seaweed plt}
+plotenvelope(lmMassDist)
+```
+
+- *normality* - normal quantile plot is close to a straight line so this is OK
+- *equal variance* - no fan shape on residual vs fits plot so this seems OK
+- *linearity* - no U-shape on residual vs fits plot so this seems OK
+
+
+## Code Box 4.6: ANCOVA with the order of terms switched.
+Notice that switching the order changes the results in the ANOVA table, and their interpretation.
+```{r seaweed lm switch}
+ lmDistMass=lm(logTot~Dist+logWmass,data=seaweed)
+ anova(lmDistMass)
+```
+
+## Exercise 4.5: Order of terms in writing out a model for snails and seaweed.
+The correct model is `...logWmass+Dist` so we can look for an effect of `Dist` after controlling for `logWmass`.
+
+
+## Code Box 4.7: "Type II sums of squares" for the ANCOVA of snails and seaweed.
+```{r seaweed lm drop1}
+drop1(lmMassDist,test="F")
+```
+
+## Exercise 4.6: Snails, isolation and time
+
+**Q's** - here is the research question:
+*Does invertebrate density change with isolation? Does the isolation effect vary with time period?*
+
+We want to test a specific hypothesis (no effect of `Dist`, no interaction of `Dist` with `Time`).
+
+**P's** There are three variables involved in this research question:
+- `Total` is invertebrate density (quantitative)
+- `Dist` is a factor (0, 2 or 10)
+- `Time` is also a factor (5 or 10 weeks)
+
+Given previous information we could also add `logWmass` as another covariate...
+
+Comparative boxplots would be a good way to start, as in Code Box 4.8.
+
+
+## Code Box 4.8: A comparative boxplot of snail density at each of the six possible combinations of sampling time and distance of isolation.
+```{r seaweed compBox}
+plot(Total ~ interaction(Dist,Time), data=seaweed, log="y") ## and as usual use xlabel, ylabel to name axes
+```
+
+
+## Exercise 4.7: Factorial ANOVA assumptions
+
+```{r seaweed fact}
+ ft_seaweedFact=lm(logTot~Time*Dist, data=seaweed)
+ plotenvelope(ft_seaweedFact)
+```
+- *independence*: if plots were randomly allocated to treatments then this will be satisfied
+- *normality*: the normal quantile plot is close to a straight line so this looks OK
+- *equal variance*: no fan-shape on the residual vs fits plot so this looks OK
+There is no linearity/additivity assumption in a factorial ANOVA
+
+
+```{r seaweed anova}
+anova(ft_seaweedFact)
+```
+
+There is marginal evidence of an interaction and strong evidence of a `Dist` main effect. So there is an effect of `Dist` and it could potentially vary with `Time`.
+
+Note we used `Time*Dist` because `Time` is not the variable of primary interest, it is `Dist`, and we only include `Time` to control for sampling time effects
+
+
+## Code Box 4.10: R code for the interaction plot in Figure 4.1.
+```{r seaweed interplot}
+ library(dplyr)
+ seaweed$Time = as.factor(seaweed$Time) 
+ by.DistTime = group_by(seaweed,Dist,Time)
+ distTimeMeans = summarise(by.DistTime, logTotal=mean(log(Total)))
+ distTimeMeans
+ library(ggplot2)
+ library(ggthemes) #loads special themes
+ ggplot(seaweed, aes(x = factor(Dist), y = Total, colour = Time)) +
+   geom_point() + geom_line(data = distTimeMeans, aes(y = exp(logTotal),
+   group = Time)) + theme_few() + xlab("Distance of Isolation") +
+   ylab("Total abundance [log scale]") + scale_y_log10(breaks=c(2,5,10,20))
+```
+
+Alternatively, for a simpler plot without the data points on it, try:
+```{r seaweed interplot2}
+interaction.plot(seaweed$Dist, seaweed$Time, ft_seaweedFact$fitted,
+      xlab="Isolation of patch", ylab="Total density [log]", trace.label="Time")
+```
+```{r seaweed no factor}
+data(seaweed)
+ft_nofactor=lm(log(Total)~Time*Dist,data=seaweed)
+anova(ft_nofactor)
+```
+
+## Code Box 4.12: Tukey's comparisons don't work for main eects in an orthogonal design, as seen for Exercise 4.9:
+
+```{r seaweed multcomp}
+ seaweed$Dist = factor(seaweed$Dist)
+ seaweed$Time = factor(seaweed$Time)
+ seaweed$logTot = log(seaweed$Total)
+ ft_seaweedFact = lm(logTot~Time*Dist, data=seaweed)
+ library(multcomp)
+ contFact = mcp(Dist="Tukey") # telling R to compare on the Dist factor
+ compFact = glht(ft_seaweedFact, linfct=contFact) # run multiple comparisions
+```
+
+## Code Box 4.13: Tukey's comparisons for a main eect of Dist for Exercise 4.6, assuming no interaction.
+```{r seaweed multcomp Main}
+ ft_seaweedMain=lm(logTot~Time+Dist,data=seaweed) # note it is + not *
+ contrast = mcp(Dist="Tukey") # telling R to compare on the Dist factor
+ compDistMain = glht(ft_seaweedMain, linfct=contrast)
+ confint(compDistMain)
+```
+
+## Code Box 4.14: Tukey's comparisons for all possible treatment combinations for Exercise 4.6.
+This approach is wasteful as it compares some pairs we are not interested in (e.g. 2.10
+vs 0.5).
+```{r seaweed multcomp Int}
+ td = interaction(seaweed$Dist,seaweed$Time)
+ ft_seaweedInt=lm(logTot~td,data=seaweed) # Time*Dist as a single term
+ contInt = mcp(td="Tukey") # telling R to compare on all Time*Dist levels
+ compDistInt = glht(ft_seaweedInt, linfct=contInt)
+ summary(compDistInt)
+```
+
+
+## Code Box 4.15: Tukey's comparisons for Dist within each sampling time, for Exercise 4.6.
+This is the best approach to use if you think there is an interaction and are primarily
+interested in Dist.
+```{r seaweed multcomp inTime}
+ levels(seaweed$Time) = c("five","ten") #need non-numbers for mcp to work
+ levels(seaweed$Dist) = c("Zero","Two","Ten")
+ td = interaction(seaweed$Dist,seaweed$Time)
+ ft_seaweedInt=lm(log(Total)~td,data=seaweed) # Time*Dist as a single term
+ contDistinTime = mcp(td = c("Two.five - Zero.five = 0",
+                             "Ten.five - Zero.five = 0",
+                             "Ten.five - Two.five = 0",
+                             "Two.ten - Zero.ten = 0",
+                             "Ten.ten - Zero.ten = 0",
+                             "Ten.ten - Two.ten = 0"))
+ compDistinTime = glht(ft_seaweedInt, linfct=contDistinTime)
+ summary(compDistinTime)
+```
+
+## Code Box 4.16: Testing for an interaction in an ANCOVA for density of epifauna as a function of Dist and algal wet mass.
+```{r seaweed ANCOVA Int}
+ lmMassDistInter=lm(logTot~log(Wmass)*Dist,data=seaweed)
+ anova(lmMassDistInter)
+```
+
+## Exercise 4.8: Global plant height
+*Do the effects on plant height of latitude and rainfall interact?*
+
+We need an interaction term in the model, but because `lat` and `rain` are both quantitative, this is a quadratic term and other quadratic terms should enter the model too, as in Code Box 4.17. 
+
+## Code Box 4.17: Using R to fit a quadratic model to the plant height data of Exercise 3.1.
+```{r height quad}
+ ft_latRain2 = lm(log(height)~poly(rain,lat,degree=2),data=globalPlants)
+ summary(ft_latRain2)
+```
+
+
+## Exercise 4.9: Snowmelt and time to flowering
+*Does time from snowmelt to flowering vary with snowmelt date, beyond that explained by
+elevation? If so, how does it vary?*
+
+The data are available as snowmelt in the ecostats package, averaged over measurements
+taken at three sampling times. Answer the research questions using the
+appropriate linear model, being sure to check your assumptions.
+```{r snowmelt}
+ data(snowmelt)
+ plot(flow~snow,data=snowmelt)
+ ft_snow = lm(flow~elev+snow, data=snowmelt)
+ plotenvelope(ft_snow)
+```
+
+This doesn't look great, there is the occasional large value for flowering time, and a suggestion of non-linearity (note from the scatterplot that at early snowmelt dates there is a strong decreasing relationship, but it can't continue to increase at the same rate because then flowering time would become negative). Try log-transforming flowering time...
+
+```{r snowmelt log}
+ plot(flow~snow,data=snowmelt,log="y")
+ snowmelt$logFlow = log(snowmelt$flow)
+ snowmelt$logFlow[snowmelt$logFlow==-Inf]=NA
+ ft_logsnow = lm(logFlow~elev+snow, data=snowmelt)
+ plotenvelope(ft_logsnow)
+ summary(ft_logsnow)
+ confint(ft_logsnow)
+```
+
+So as snowmelt date increases by 10 days, log(flowering time) decreases by between 0.12 and 0.09 (meaning about a 9-12% decrease).
+
+(Aside: Strictly speaking, `snow` should not be treated as a linear variable because it is a time-of-year variable, so is a cyclical variable with a period of 365. But in this case the values are all focussed over a few months towards the middle of the year so a linear approximation is OK.)
+
+
+## Exercise 4.10: Bird exclusion and biological control
+
+*Is there an effect of the netting treatment on changes in aphid numbers across the sampling
+times?*
+
+```{r aphid netting}
+data(aphidsBACI)
+str(aphidsBACI)
+plot(logcount~interaction(Time,Treatment),data=aphidsBACI)
+```
+
+OK log(count) looks fine, different treatments have similar variation.  Eyeballing the data it looks like there is a treatment effect, with many less aphids in the excluded group than in the control...
+
+When building a model, we need to take into account the pairing of the data -- Ingo and friends took repeated measures in each plot, so we include `Plot` as a blocking variable to account for this. This in turn means there is no need for a `Treatment` main effect, because different plots received different treatments.
+
+```{r aphid lm}
+lm_aphids = lm(logcount~Plot+Time+Treatment:Time,data=aphidsBACI)
+plotenvelope(lm_aphids,which=1:3)
+```
+
+This all looks fine to me. The term if interest is `Treatment:Time`, which tells us if changes in aphids over time varied due to the bird exclusion treatment:
+
+```{r aphid anova}
+anova(lm_aphids)
+```
+
+There is no evidence of an interaction, meaning there is no evidence of an effect of bird exclusion on aphid numbers. Oh :(
+
+I guess the reason for this is that the levels of replication were low -- there were only eight plots, four in each treatment, so an effect would have to be very strong to be statistically significant.
+
+## Exercise 4.11: Seaweed, snails and three factors
+
+```{r seaweed 3}
+data(seaweed)
+str(seaweed)
+seaweed$logTot = log(seaweed$Total)
+seaweed$Dist = factor(seaweed$Dist)
+par(mar=c(4,7,1,1))
+plot(logTot~interaction(Dist,Size,Time),data=seaweed,xlab="",ylab="Total abundance [log scale]",horizontal=TRUE,col=2:4,las=1)
+legend("topleft",legend=paste0("Dist=",levels(seaweed$Dist)),pch=15,col=2:4,pt.cex=2)
+```
+
+All good so far, no obvious trend, except that `Dist=0` seems to have lower total abundance at most times/sizes. Will analyse as a three-way ANOVA
+
+
+```{r seaweed anova3}
+ft_seaweed3 = lm(logTot~Size*Time*Dist,data=seaweed)
+plotenvelope(ft_seaweed3,which=1:3)
+anova(ft_seaweed3)
+```
+
+From the plots, we can't see any problems with assumptions.
+
+The ANOVA suggests a main effect of `Dist`, with marginal evidence of an interaction with `Time` (judging from the boxplots, this is probably because of the larger values for `logTot` at `Time=5` in large plots).
+
+We could reanalyse the data including `Wmass` as a covariate, for a three-factor ANCOVA:
+
+```{r seaweed ancova3}
+ft_seaweedW3 = lm(logTot~Wmass*Size*Time*Dist,data=seaweed)
+anova(ft_seaweedW3)
+```
+
+We get pretty much the same results. `Wmass` seems to be an important covariate, but after controlling for it, there is still a strong `Dist` main effect and not much else happening.

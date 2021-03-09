@@ -1,0 +1,182 @@
+---
+title: "Chapter 2 - An importance equivalence result - Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 2 - An importance equivalence result - Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 2.1 Two-sample t-test for guinea pig experiment
+
+See Code Box 2.1, $P$-value is about 0.008. This means that the test statistic is unusually small so there is good evidence of an effect of nicotine.  More directly, starting from the stated test statistic of $-2.67$, the test statistic has a $t_{n_1+n_2-2}$ distribution under the hypothesis of no effect, so we could calculate the $P$-value directly as:
+```{r guineapig P-value}
+ pt(-2.67,10+10-2)
+```
+
+
+## Code Box 2.1 A two-sample t-test of the data from the guinea pig experiment
+
+```{r guineapig}
+ require(ecostats)
+ data(guineapig)
+ t.test(errors~treatment, data=guineapig, alternative="less", var.equal=TRUE)
+```
+
+
+## Code Box 2.2: Smoking and pregnancy - checking assumptions
+The normal quantile plots of Figure 2.1 were generated using the below code.
+```{r guineapig qqplots}
+qqenvelope(guineapig$errors[guineapig$treatment=="N"])
+qqenvelope(guineapig$errors[guineapig$treatment=="C"])
+by(guineapig$errors,guineapig$treatment,sd)
+```
+
+While all the points lie in the simulation envelope, there is a clear curve on both of them suggesting some right skew. Also, the standard deviations are quite different, not quite a factor of two, but getting close. So it might be worth looking at (log-)transformation.
+
+
+
+## Exercise 2.2: Water quality
+
+The research question is *how it [IBI] related to catchment area* which is an estimation question, we want to estimate the relationship between IBI and catchment area.
+
+There are two variables:
+- *catchment area* is quantitative
+- *Water quality (IBI)* is quantitative
+
+I would use a scatterplot:
+
+```{r waterQuality scatterplot}
+ data(waterQuality)
+ plot(quality~logCatchment, data=waterQuality)
+```
+
+And I would fit a linear regression model, as in Code Box 2.3.
+
+
+## Code Box 2.3: Fitting a linear regression to the water quality data
+```{r waterQuality lm}
+ data(waterQuality)
+ fit_qual=lm(quality~logCatchment, data = waterQuality)
+ summary(fit_qual)
+```
+
+## Exercise 2.3: Water quality -- interpreting R output
+
+An approximate 95% CI is
+```{r waterQuality approxCI}
+ -11.042+c(-2,2)*1.780
+```
+
+or you could use `confint`:
+```{r waterQuality CI}
+ confint(fit_qual)
+```
+
+Either way we are 95% confident that as logCatchment changes by 1 (meaning a ten-fold increase in catchment area, since a log10-transformed of catchment area was used), IBI decreases by between about 7 and 15.
+
+
+## Code Box 2.4: Diagnostic plots for the water quality data
+To produce a residual vs fits plot, and a normal quantile plot of residuals, you just take a fitted regression object (like `fit_qual`, produced in Code Box 2.3) and apply the plot function:
+```{r waterQuality resplots}
+ plot(fit_qual, which=1:2)
+```
+
+The which argument lets you choose which plot to construct (1=residuals vs fits, 2=normal quantile plot).
+
+Alternatively, we can use `ecostats::plotenvelope` to add simulation envelopes around points on these plots, to check if any deviations from expected patterns are large compared
+to what we might expect for datasets that satisfy model assumptions:
+```{r waterQuality simenvelope}
+ library(ecostats)
+ plotenvelope(fit_qual, which=1:2)
+```
+
+Assumptions look reasonable here - there is no trend in the residual vs fits plot, and the normal quantile plot is close to a straight line. Points are all well within their simulation envelopes, suggesting that departures are also small compared to what would be expected if the model were correct.
+
+
+## Exercise 2.4: Water quality{ assumption checks
+
+There are four regression assumptions:
+- (conditional) *independence*: this cannot be checked using these plots, and depends primarily on the study design
+- *Normality* can be checked using the normal quantile plot of residuals, and it looks pretty good here.
+- *Equal variance* can be checked by looking for a fan shape in the residual vs fits plot, and there is no such trend here.
+- *Linearity* can be checked by looking for a U-shape in the residual vs fits plot, and there is no pattern so there are no concerns about this assumption here.
+
+
+## Code Box 2.5: Two-sample t-test output for the smoking-pregnant data, again
+```{r guineapigs ttest 2sided}
+ t.test(errors~treatment, data=guineapig, var.equal=TRUE)
+```
+
+
+## Code Box 2.6: Linear regression analysis of the smoking-pregnant data. compare to Code Box 2.5
+```{r guineapigs lm}
+ ft_guineapig=lm(errors~treatment,data=guineapig)
+ summary(ft_guineapig)
+```
+
+## Exercise 2.5: Global plant height against latitude
+
+Angela has two variables of interest -- height and latitude -- and both are quantitative. So linear regression is a good starting point.
+
+```{r globalPlants lm}
+ library(ecostats)
+ data(globalPlants)
+ plot(height~lat,data=globalPlants)
+ ft_height=lm(height~lat,data=globalPlants)
+ summary(ft_height)
+ plotenvelope(ft_height,which=1:2)
+```
+
+The original scatterplot suggests data are "pushed up" against the boundary of height=0, suggesting log-transformation.  The linear model residual plots substantiate this, with the normal quantile plot clearly being strongly right-skewed, and the residual vs fits plot suggesting a fan-shape.
+
+So let's log-transform height.
+
+```{r globalPlants loglm}
+ plot(height~lat,data=globalPlants,log="y")
+ globalPlants$logHeight=log10(globalPlants$height) 
+ ft_logHeight=lm(logHeight~lat,data=globalPlants)
+ summary(ft_logHeight)
+ plotenvelope(ft_logHeight,which=1:2)
+```
+
+OK suddenly everything is looking a lot better!
+
+
+## Exercise 2.6: Transform guinea pigs?
+
+It will actually be slightly easier to check assumptions using a linear model, so I'll use `lm` for reanalysis.
+
+```{r guineapigs ttest log-transform}
+ data(guineapig)
+ guineapig$logErrors=log(guineapig$errors) 
+ ft_logGuineapigs = lm(logErrors~treatment, data=guineapig)
+ summary(ft_logGuineapigs)
+ plotenvelope(ft_logGuineapigs)
+ by(guineapig$logErrors,guineapig$treatment,sd)
+```
+We are doing much better with assumptions: plots look better, standard deviations are more similar. Results became slightly more significant, which is not unexpected, as data are closer to normal (which usually means that tests based on linear models have more power).
+
+
+## Exercise 2.7: Influential value in the water quality data
+
+```{r waterQuality outliers}
+ data(waterQuality)
+ ft_water = lm(quality~logCatchment,data=waterQuality)
+ summary(ft_water)
+ ft_water2 = lm(quality~logCatchment,data=waterQuality, subset=waterQuality$logCatchment>2)
+ summary(ft_water2)
+```
+The $R^2$ value decreased a fair bit, which makes a bit of sense because we have removed from the dataset a point which has an extreme $X$ value. $R^2$ is a function of the sampling design and sampling a broader range of catchment areas would increase $R^2$, and we have just decreased the range of catchment areas being included in analysis.
+
+The $P$-value decreased slightly for similar reasons.
+

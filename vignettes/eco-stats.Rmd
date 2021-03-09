@@ -4,7 +4,7 @@ author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Eco-Stats - Package}
+  %\VignetteIndexEntry{Eco-Stats - Code and Data Accompanying the Eco-Stats Text}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,6 +1,6 @@
 Package: ecostats
 Title: Code and Data Accompanying the Eco-Stats Text
-Version: 0.1.5
+Version: 0.2.0
 Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
             person("Christopher", "Chung", role = "ctb")
             )
@@ -13,5 +13,17 @@ RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown,
+    DAAG,
+    MASS,
+    car,
+    dplyr,
+    ggplot2,
+    ggthemes,
+    glmnet,
+    lattice,
+    leaps,
+    lme4,
+    multcomp,
+    reshape2,
     testthat
 VignetteBuilder: knitr

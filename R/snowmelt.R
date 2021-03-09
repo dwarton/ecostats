@@ -1,0 +1,29 @@
+#' How flowering time relates to snowmelt date
+#'
+#' Data from a study of how time from snowmelt to flowering relates to snowmelt date and elevation
+#' (Wheeler et al 2016) in \emph{Salix herbacea}, based on about 120 plots on each of three mountains in the Swiss Alps.
+#' 
+#' @docType data
+#'
+#' @usage data(seaweed)
+#'
+#' @format A dataframe containing:\describe{
+#' \item{id}{Plot patch ID}
+#' \item{flow}{Number of days from snowmelt day to flowering}
+#' \item{snow}{Snowmelt day of year}
+#' \item{sex}{Sex of patch, corrected across years, NA - no flowering, 0 - male, 1 - female}
+#' \item{elev}{Elevation (from dGPS)}
+#' }
+#'
+#' @keywords datasets
+#'
+#' @references 
+#' Wheeler, J. A., Cortés, A. J., Sedlacek, J., Karrenberg, S., van Kleunen, M.,
+#' Wipf, S., Hoch G., Bossdorf, O. & Rixen C. (2016) The snow and the willows: earlier
+#' spring snowmelt reduces performance in the low‐lying alpine shrub \emph{Salix herbacea}.
+#' Journal of Ecology \bold{104}, 1041-50.
+#'
+#' @examples
+#' data(snowmelt)
+#' plot(flow~snow,data=snowmelt, log="y")
+"snowmelt"
