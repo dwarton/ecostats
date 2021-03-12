@@ -10,7 +10,7 @@
 #' \emph{any} object that responds to \code{update}, \code{anova} and \code{model.frame}.
 #' It must be larger than \code{objectNull} and its model frame should contain
 #' all the terms required to fit \code{objectNull}.
-#' @param nBoot the number of simulated datasets to generate for parametric
+#' @param n.sim the number of simulated datasets to generate for parametric
 #' bootstrap testing. Defaults to 999.
 #' @param rowRef the row number where the test statistic of interest can be found
 #' in the standard \code{anova} output when calling \code{anova(objectNull,object)}.
@@ -70,11 +70,11 @@
 #' rpois_int = glm(y~1,family=poisson())
 #' anovaPB(rpois_int,rpois_glm,n.sim=99)
 #' 
-#' @importFrom stats anova coef model.frame printCoefmat simulate update
+#' @importFrom stats anova coef logLik model.frame printCoefmat simulate update
 
 #' @export
 
-anovaPB=function(objectNull, object, nBoot=999, colRef = switch(class(object)[1],"lm"=5,"lmerMod"=6,4), rowRef=2,...)
+anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1],"lm"=5,"lmerMod"=6,4), rowRef=2,...)
 {
   # check the second model is the larger one... otherwise this will be a prob later
   if(length(unlist(coef(objectNull)))>length(unlist(coef(object))))
@@ -82,28 +82,61 @@ anovaPB=function(objectNull, object, nBoot=999, colRef = switch(class(object)[1]
   " it should be a smaller 'null' model fit, nested in the second object."))
 
   # get the observed stat
-  statObs=anova(objectNull,object,...)
-  
+  targs <- match.call(expand.dots = FALSE)
+  anovaFn=anova
+  statObs=try(anova(targs[[2]],targs[[3]],...)) #using targs[[c(2,3)]] instead of c(objectNull,object) so user names for models are in output 
+  if(inherits(statObs,"try-error"))
+  {
+    # OK so if that didn't work, let's define a new anova function via logLik
+    anovaFn=function(objectNull,object,...)
+    {
+      llAlt=logLik(object)
+      llNull=logLik(objectNull)
+      table=data.frame(df=c(attr(llNull,"df"),attr(llAlt,"df")),
+                       deviance=-2*c(llNull,llAlt),
+                       LRT = c(NA,-2*llNull+2*llAlt))
+      return(table)
+    }
+    # apply this function, add P-values column, change colRef to 3
+    statObs=anovaFn(objectNull,object)
+    statObs$P=c(NA,NA)
+    names(statObs)[4]='Pr(>LRT)'
+    colRef=3
+    
+    # add model details so the printed output looks nice
+    modelnamelist <- as.character(c(targs[[2]], targs[[3]]))
+    Xnames <- list(paste(deparse(formula(objectNull),width.cutoff=500), collapse = "\n"),
+                   paste(deparse(formula(object),width.cutoff=500), collapse = "\n"))
+    topnote <- paste(modelnamelist, ": ", Xnames, sep = "", collapse = "\n")
+    title <- "Analysis of Deviance Table\n"
+    rownames(statObs)=modelnamelist
+    attr(statObs, "heading") <- c(title, topnote)
+  }
+
   # set up for the bootstrap: assign a stats vector and get the model frame
-  stats = rep(NA,nBoot+1)
+  stats = rep(NA,n.sim+1)
   stats[1]=statObs[rowRef,colRef]
   mf = model.frame(object)
   
-  # now nBoot times, simulate new response, refit models and get anova again
-  for(iBoot in 1:nBoot+1)
+  # now n.sim times, simulate new response, refit models and get anova again
+  for(iBoot in 1:n.sim+1)
   {
-    mf[1]=simulate(objectNull)
-    objectiNull = update(objectNull, data=mf)
-    objecti = update(object, data=mf)
-    stats[iBoot]=anova(objectiNull,objecti,...)[rowRef,colRef]
+    mf[1]        = simulate(objectNull)
+    objectiNull  = update(objectNull, data=mf)
+    objecti      = update(object, data=mf)
+    stats[iBoot] = anovaFn(objectiNull,objecti,...)[rowRef,colRef]
   }  
   
   # now take the original anova table, get rid of unneeded columns, stick on P-value
   statReturn=statObs[,1:colRef] #get rid of the extra columns we don't need
   statReturn$'P-value'=NA
   statReturn$'P-value'[rowRef] = mean(stats>(stats[1]-1.e-8), na.rm=TRUE)
-  attr(statReturn,"nBoot")=sum(is.na(stats)==FALSE)-1
-  
+  attr(statReturn,"n.sim")=sum(is.na(stats)==FALSE)-1
+
+  # change the name of the P-value column to whatever it was in the original anova table
+  hasP = grep("Pr",colnames(statObs))
+  colnames(statReturn)[colRef+1]=colnames(statObs)[hasP[1]]
+    
   # add some bells and whistles to the anova table, useful for printing
   attr(statReturn, "heading") = attr(statObs,"heading")
   class(statReturn)=c("anovaPB",class(statObs))
@@ -121,11 +154,11 @@ print.anovaPB=function(x, digits = max(getOption("digits") - 3, 3),
   }
   
   if (!is.null(heading <- attr(x, "heading"))) 
-  { cat(heading, sep = "\n")
-    cat("\n")
+  { cat("\n")
+    cat(heading, sep = "\n")
   }
   printCoefmat(round(x, digits=dig.tst), digits = digits, signif.stars = signif.stars, P.values = TRUE, has.Pvalue=TRUE, cs.ind = NULL, tst.ind = NCOL(x)-1, zap.ind=NCOL(x)-1, na.print = "", ...)
   cat("\n")
-  cat("P-value calculated by simulating", attr(x,"nBoot"), "samples from Model 1.\n")
+  cat(paste("P-value calculated by simulating ", attr(x,"n.sim"), " samples from ", rownames(x)[1],".\n",sep=""))
   
 }

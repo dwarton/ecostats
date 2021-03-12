@@ -7,7 +7,7 @@
 anovaPB(
   objectNull,
   object,
-  nBoot = 999,
+  n.sim = 999,
   colRef = switch(class(object)[1], lm = 5, lmerMod = 6, 4),
   rowRef = 2,
   ...
@@ -22,7 +22,7 @@ anovaPB(
 It must be larger than \code{objectNull} and its model frame should contain
 all the terms required to fit \code{objectNull}.}
 
-\item{nBoot}{the number of simulated datasets to generate for parametric
+\item{n.sim}{the number of simulated datasets to generate for parametric
 bootstrap testing. Defaults to 999.}
 
 \item{colRef}{the column number where the test statistic of interest can be found

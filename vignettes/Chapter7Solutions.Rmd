@@ -1,0 +1,286 @@
+---
+title: "Chapter 7 - Correlated samples in times, space, phylogeny... - Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 7 - Correlated samples in times, space, phylogeny... - Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 7.1: Biological control of aphids over time
+
+_Is there an effect of the netting treatment on changes in aphid numbers across the sampling times?_
+
+_What sort of model is appropriate here?_
+
+Because we now have repeated measures in time, we have longitudinal data and should consider the methods of Section 7.1.1.
+
+## Code Box 7.1: R code to produce Figure 7.2.
+
+```{r box71, fig.width=8,fig.height=7}
+library(ecostats)
+data(aphids)
+cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours
+par(mfrow=c(2,1),mar=c(3,3,1.5,1),mgp=c(2,0.5,0),oma=c(0,0,0.5,0))
+with(aphids$oat, interaction.plot(Time,Plot,logcount,legend=FALSE,
+  col=cols[Treatment], lty=1, ylab="Counts [log(y+1) scale]",
+  xlab="Time (days since treatment)") )
+legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
+mtext("(a)",3,adj=0,line=0.5,cex=1.4)
+with(aphids$oat, interaction.plot(Time,Treatment,logcount, col=cols,
+  lty=1, legend=FALSE, ylab="Counts [log(y+1) scale]",
+  xlab="Time (days since treatment)"))
+legend("topright",c("Excluded","Present"),col=cols,lty=1)
+mtext("(b)",3,adj=0,line=0.5,cex=1.4)
+```
+
+## Code Box 7.2: Choosing a longitudinal model for the aphid data
+
+```{r box72}
+library(lme4)
+aphid_int = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(1|Plot),
+    data=aphids$oat,REML=FALSE) # random intercepts model
+aphid_slope = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(Time|Plot),
+    data=aphids$oat, REML=FALSE) # random slopes model
+library(nlme) # refit random intercepts model in nlme to get a ACF:
+aphid_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
+    random=~1|Plot, data=aphids$oat, method="ML")
+plot(ACF(aphid_int2),alpha=0.05) # only works for nlme-fitted mixed models
+# now try a model with a temporally structured random effect:
+aphid_CAR1 = update(aphid_int2,correlation=corCAR1(,form=~Time|Plot))
+BIC(aphid_int,aphid_int2,aphid_slope,aphid_CAR1)
+```
+
+
+## Code Box 7.3: Exploring the random intercept fit to the aphids data
+
+```{r box73}
+print(aphid_int)
+anova(aphid_int)
+```
+
+## Code Box 7.4: Exploring the random slopes fit to the aphids data
+
+```{r box74}
+print(aphid_slope)
+anova(aphid_slope)
+aphid_noTreatS = lmer(logcount~Time+I(Time^2)+(Time|Plot),
+    data=aphids$oat, REML=FALSE)
+anova(aphid_noTreatS,aphid_slope)
+```
+
+## Exercise 7.2: Biological control of aphids in a wheat field
+*Repeat the above longitudinal analyses for data from the wheat field. Which longitudinal model better handles repeated measures in this case?*
+
+```{r ex72plot, fig.width=8,fig.height=4}
+data(aphids)
+cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours
+par(mar=c(3,3,1.5,1),mgp=c(2,0.5,0),oma=c(0,0,0.5,0))
+with(aphids$wheat, interaction.plot(Time,Plot,logcount,legend=FALSE,
+  col=cols[Treatment], lty=1, ylab="Counts [log(y+1) scale]",
+  xlab="Time (days since treatment)") )
+legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
+```
+
+As before we don't see a lot of lines crossing over so expect some correlation. We also see a similar pattern with aphid counts reducing over time, but possibly being higher without bird exlcusion 2-5 weeks into the trial. 
+
+```{r ex72 long}
+library(lme4)
+aphidw_int = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(1|Plot),
+    data=aphids$wheat,REML=FALSE) # random intercepts model
+aphidw_slope = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(Time|Plot),
+    data=aphids$wheat, REML=FALSE) # random slopes model
+library(nlme) # refit random intercepts model in nlme to get a ACF:
+aphidw_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
+    random=~1|Plot, data=aphids$wheat, method="ML")
+plot(ACF(aphidw_int2),alpha=0.05) # only works for nlme-fitted mixed models
+# now try a model with a temporally structured random effect:
+aphidw_CAR1 = update(aphidw_int2,correlation=corCAR1(,form=~Time|Plot))
+BIC(aphidw_int,aphidw_int2,aphidw_slope,aphidw_CAR1)
+```
+
+As before the random intercept model seems to be favoured.
+
+*Is there evidence that bird exclusion improves biological control of aphids?*
+
+```{r ex72 birds}
+aphidw_noTr = lmer(logcount~Time+I(Time^2)+(1|Plot),
+    data=aphids$wheat,REML=FALSE) # random intercepts model
+anova(aphidw_noTr,aphidw_int)
+```
+
+There is marginal evidence of a treatment effect.
+
+
+## Exercise 7.3: Biological control of aphids across both fields!
+*Construct a single, larger model to test for an effect of biological exclusion, and to check if this effect differs across fields.*
+
+```{r ex73 prep}
+aphids$oat$field   = "oat"
+aphids$wheat$field = "wheat"
+aphids$wheat$Plot=paste0("W",aphids$wheat$Plot) #making sure we have different names for different Plots across fields
+aphids$all         = rbind(aphids$oat,aphids$wheat)
+aphids$all$field   = factor(aphids$all$field)
+str(aphids$all)
+```
+
+We will need a mixed model that allows effects to be different across fields (and times)
+```{r ex73 anova}
+aphida_int = lmer(logcount~field*Time*Treatment+field*I(Time^2)*Treatment+(1|Plot),
+    data=aphids$all,REML=FALSE) # random intercepts model
+aphida_noTr = lmer(logcount~field*Time+field*I(Time^2)+(1|Plot),
+    data=aphids$all,REML=FALSE) # random intercepts model
+anova(aphida_noTr,aphida_int)
+```
+
+In the combined model there is some evidence of a treatment effect.
+
+
+## Exercise 7.4: Eucalypt richness as a function of the environment
+*Ian wanted to know: how does \emph{Myrtaceae} species richness vary from one area to the next, and what are the main environmental correlates of richness?... Plotting richness against spatial location, he found spatial clusters of high or low species richness (Figure~\ref{fig:richnessMap})... What sort of analysis method should Ian consider using?*
+
+He should be looking at fitting a spatial model, along the lines of Code Box 7.5.
+
+## Code Box 7.5: Model selection to choose predictors, and a spatial model, for Ian's richness data
+
+```{r box75}
+data(Myrtaceae)
+Myrtaceae$logrich=log(Myrtaceae$richness+1)
+ft_rich = lm(logrich~soil+poly(TMP_MAX,TMP_MIN,RAIN_ANN,degree=2),
+     data=Myrtaceae)
+ft_richAdd = lm(logrich~soil+poly(TMP_MAX,degree=2)+
+     poly(TMP_MIN,degree=2)+poly(RAIN_ANN,degree=2), data=Myrtaceae)
+BIC(ft_rich,ft_richAdd)
+```
+
+```{r box75 spatial}
+library(nlme)
+richForm = logrich~soil+poly(TMP_MAX,degree=2)+poly(TMP_MIN,degree=2)+
+       poly(RAIN_ANN,degree=2)
+ft_richExp = gls(richForm,data=Myrtaceae,correlation=corExp(form=~X+Y))
+ft_richNugg = gls(richForm,data=Myrtaceae,
+         correlation=corExp(form=~X+Y,nugget=TRUE))
+BIC(ft_richExp,ft_richNugg)
+```
+
+
+## Code Box 7.6: Inferences from spatial and non-spatial models for Ian's richness data
+
+```{r box76} 
+ft_richNugg
+anova(ft_richAdd)
+anova(ft_richNugg)
+```
+
+
+## Code Box 7.7: Spatial correlogram for Ian's species richness data
+```{r box77}
+library(pgirmess)
+corRich = with(Myrtaceae,correlog(cbind(X,Y),logrich))
+plot(corRich,xlim=c(0,150),ylim=c(-0.05,0.2))
+abline(h=0,col="grey90")
+
+Myrtaceae$resid = residuals(ft_richAdd)
+corRichResid = with(Myrtaceae,correlog(cbind(X,Y),resid))
+plot(corRichResid,xlim=c(0,150),ylim=c(-0.05,0.2))
+abline(h=0,col="grey90")
+```
+
+
+## Exercise 7.5: Egg size when Dads incubate
+*Terje wondered whether egg size was specifically limited by male body size. So he collected data on 71 species of shorebird where the male incubates the egg, measuring egg size, and size of adult males and females... What sort of model might be appropriate here?*
+
+We could try a linear model for egg size as a function of female and male bird size. 
+
+*Can see you see any potential problems satisfying independence assumptions?*
+
+A potential issue is that there is a phylogenetic signal in many traits: if shorebird species are more closely related, we can expect their egg sizes to be more similar.
+
+Code Box 7.8: Phylogenetic tree of 71 shorebird species
+
+```{r box 78,fig.width=8,fig.height=9}
+library(caper)
+data(shorebird)
+shore4d=phylobase::phylo4d(shorebird.tree,shorebird.data)
+library(phylosignal)
+barplot.phylo4d(shore4d,c("Egg.Mass","F.Mass","M.Mass"))
+```
+
+
+## Code Box 7.9: Exploratory analysis of egg size data}\label{code:eggEDA}
+
+```{r box79}
+library(GGally)
+ggpairs(log(shorebird.data[,2:4]))
+```
+
+## Code Box 7.10: Comparative analysis of egg size data
+
+```{r box710}
+library(caper)
+shorebird = comparative.data(shorebird.tree, shorebird.data,
+                   Species, vcv=TRUE)
+pgls_egg = pgls(log(Egg.Mass) ~ log(F.Mass)+log(M.Mass),
+                data=shorebird)
+summary(pgls_egg)
+```
+
+## Code Box 7.11: Residual diagnostics for egg size data
+
+```{r box711,fig.width=8,fig.height=8}
+par(mfrow=c(2,2))
+plot(pgls_egg)
+res.df = data.frame(Species = shorebird.data$Species,
+                res = residuals(pgls_egg))
+res4d = phylobase::phylo4d(shorebird.tree,res.df)
+res.pg = phyloCorrelogram(res4d,trait="res")
+```
+
+```{r box711 otherplot,fig.width=6}
+plot(res.pg)
+```
+
+## Exercise 7.6: Comparative analysis of egg size data revisited
+
+*Refit the model allowing $\lambda$ to be estimated from the data (using `lambda="ML"`), or allowing $\delta$ to be estimated from the data.*
+
+```{r ex76 lambda}
+pgls_eggL = pgls(log(Egg.Mass) ~ log(F.Mass)+log(M.Mass), lambda="ML",
+                data=shorebird)
+summary(pgls_eggL)
+```
+
+*Does this change results and their interpretation?*
+
+Nope -- results are pretty much the same as previously.
+
+*Now fit a linear model ignoring phylogeny, via `lm`. What happens here?*
+```{r ex76 lm}
+lm_egg = lm(log(Egg.Mass) ~ log(F.Mass)+log(M.Mass), data=shorebird.data)
+summary(lm_egg)
+```
+
+The slopes move further from zero and everything becomes more significant. In particular, while there was no effect of female mass previously, now it is strongly significant.
+
+
+*Is this what you would expect?*
+
+Yes this is expected because phylogenetic relatedness introduces positive dependence, leading to under-estimation of uncertainty and a higher chance of false positives.
+
+*Look at the log-likelihood (using the `logLik` function) to help decide which of these models is a better fit to the data.*
+
+```{r ex76 ll}
+logLik(lm_egg)
+logLik(pgls_eggL)
+```
+
+Something seems to be wrong with the `df` calculation in the `pgls` model, but the main thing to see here is that the log-likelihood is substantially higher for the `pgls` model, suggesting it is a much better fit to the data.

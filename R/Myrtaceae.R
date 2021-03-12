@@ -1,0 +1,36 @@
+#' Species richness of \emph{Myrtaceae} plants
+#'
+#' Data derived from NSW National Parks and Wildlife Service resources on species
+#' richness for members of the  \emph{Myrtaceae} family (eucalypts and relates species)
+#' in 1000 monitoring transects west of Sydney in the Greater Blue Mountains World
+#' Heritage Area. Also included is soil type classified into 9 categories, and a few
+#' climate variables derived from Worldclim.
+#' 
+#' @docType data
+#'
+#' @usage data(Myrtaceae)
+#'
+#' @format A dataframe containing (amongst other things):\describe{
+#' \item{X}{Easting of the site (in km).}
+#' \item{Y}{Nothing of the site (in km).}
+#' \item{richness}{Total number of \emph{Mrtaceae} species observed at this site.}
+#' \item{TMP_MAX}{Annual average of daily maximum temperature (degrees Celsius).} 
+#' \item{TMP_MIN}{Annual average of daily minimum temperature (degrees Celsius).} 
+#' \item{RAIN_ANN}{Annual precipitation (in millimetres).} 
+#' \item{soil}{Soil type, classified into nine categories.} 
+#' \item{aspect}{Aspect of the site (in degrees, 0=360=due North).} 
+#' }
+#'
+#' @keywords datasets
+#'
+#' @examples
+#' data(Myrtaceae)
+#' library(ggplot2)
+#' ggplot(Myrtaceae, aes(x=X, y=Y))+geom_point(aes(color=richness))+
+#'   theme_classic()+xlab("West<-->East (km)")+ylab("South<-->North (km)")+
+#'   scale_color_gradient(low="lightgreen",high="black",
+#'                       breaks=scales::breaks_width(2))+
+#'   labs(color="Species richness [log(y+1)-scale]")+theme(legend.position="top")+
+#'   guides(color = guide_colorbar(title.position = "top",ticks=FALSE,
+#'                                barwidth=15,barheight=0.5))+coord_fixed()
+"Myrtaceae"

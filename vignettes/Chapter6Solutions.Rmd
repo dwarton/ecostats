@@ -30,7 +30,7 @@ The 4-7 samples at each estuary are the replicates, so they shouldn't be added t
 
 
 ## code for Fig 6.1
-```{r fig6.1, fig.width=6}
+```{r fig6.1, fig.width=6, fig.height=4}
 library(ecostats)
 data(estuaries)
 plot(Total~Estuary,data=estuaries,col=c(4,2,2,4,2,4,2))
@@ -133,7 +133,7 @@ We get the same point estimate for the `Treatment:Time` effect, but the standard
 
 ## Exercise 6.4: Estuary data in different zones
 
-```{r ex64 plot, fig.width=8}
+```{r ex64 plot, fig.width=8, fig.height=4}
 data(estuaryZone)
 cols=c("blue","red","lightblue","pink")
 plot(Total~interaction(Estuary,Zone),data=estuaryZone,col=cols[c(1,2,2,1,2,1,2,3,4,4,3,4,3,4)])
@@ -171,5 +171,71 @@ anova(lme_Z,lme_MplusZ)
 ```
 
 There is strong evidence that total abundance is different between Modified and Pristine estuaries. The boxplot suggests abundance is higher in Modified estuaries, and looking at the data, this appears to be mostly due to high counts of `Balanus.variegatus`, especially in outer modified zones.
+
+
+## Code Box 6.6: Using the parametric bootstrap to compute the standard error of the `Mod` fixed effect in Exercise 6.1.
+
+```{r box6.6, message=FALSE}
+nBoot=500
+bStat=rep(NA,nBoot)
+ft_estu = lmer(Total~Mod+(1|Estuary),data=estuaries)
+for(iBoot in 1:nBoot)
+{
+   estuaries$TotalSim=unlist(simulate(ft_estu))
+   ft_i = lmer(TotalSim~Mod+(1|Estuary),data=estuaries)
+   bStat[iBoot] = fixef(ft_i)[2]
+}
+sd(bStat) #standard error of Mod effect
+```
+
+And if we compare this to the standard error from `summary`:
+```{r summft_estu}
+summary(ft_estu)
+```
+
+we see the estimated standard error is `4.287`, which is pretty close to the value we got by simulation.
+
+
+## Code Box 6.7: A parametric bootstrap to test for an effect of Estuary in Exercise 6.1.
+
+```{r box67, message=FALSE}
+ft_noestu = lm(Total~Mod,data=estuaries)
+library(ecostats)
+anovaPB(ft_noestu,ft_estu,n.sim=99)
+```
+
+So we have no evidence of an `Estuary` effect.
+
+
+## Exercise 6.6: Accurate inferences about the estuary data
+
+_Use the parametric bootstrap to get a formal test for a `zone:mod` interaction._
+
+We can just run the old analysis and change from `anova` to `anovaPB`:
+```{r ex66 interaction, message=FALSE}
+lme_MZ = lmer(Total~Zone*Mod + (Zone|Estuary), data=estuaryZone, REML=FALSE )
+lme_MplusZ = lmer(Total~Zone+Mod + (Zone|Estuary), data=estuaryZone, REML=FALSE )
+anovaPB(lme_MplusZ,lme_MZ,n.sim=99)
+```
+
+There is no evidence of an interaction.
+
+(Ignore the warnings in the output -- this is random stuff that was thrown up in bootstrap resamples that didn't get a good fit.)
+
+_How do results compare to those from when you were using the `anova` function?_
+
+Results are similar to what we saw before. The only thing that is different is the $P$-value, but it is very similar (suggesting there was no need for a parametric bootstrap here!).
+
+_This would all have been so much easier if there wasn't a random effect in the model... do we really need `Estuary` in there?_
+
+```{r ex66 estuary, message=FALSE}
+lme_MZ = lmer(Total~Zone*Mod + (Zone|Estuary), data=estuaryZone, REML=FALSE )
+lme_MZnoest = lm(Total~Zone+Mod, data=estuaryZone)
+anovaPB(lme_MZnoest,lme_MZ,n.sim=99)
+```
+
+We have no evidence of an `Estuary` effect either!
+
+
 
 

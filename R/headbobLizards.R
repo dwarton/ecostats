@@ -1,0 +1,33 @@
+#' Headbob displays of \emph{Anolis} lizards
+#'
+#' Displays of 14 male \emph{Anolis} lizards were recorded in Puerto Rican forest (Ord \emph{et al. 2016),
+#' along with key environmental characteristics. These lizards bob their head up
+#' and down (and do push-ups) in attempts to attract the attention of females, and
+#' advertise territory ownership to other males.
+#' How fast a lizard bobs its head was recorded, and it was of interest to understand
+#' which environmental features (out of temperature, light and noisiness) were 
+#' related to head bobbing speed.
+
+#' @docType data
+#'
+#' @usage data(headbobLizards)
+#'
+#' @format A dataframe containing:\describe{
+#' \item{LizardID}{A factor indicating Which lizard we are talking about. There is one observation per lizard (but more were originally collected).}
+#' \item{TemperatureC}{Temperature, in degrees Celsius, at the location where lizard was first observed.}
+#' \item{AmbientLight}{Ambient light recorded using a handheld sensor pointed towards the bobbing is happening.}
+#' \item{Bg_noise_max}{Visual background noise measured using video analysis.}
+#' \item{Hbspd_max}{Maximum head-bobbing speed.}
+#' \item{time}{Date and time of observation.}
+#' }
+#'
+#' @keywords datasets
+#'
+#' @references Ord, T. J., Charles, G. K., Palmer, M. & Stamps, J. A. (2016). Plasticity in
+#' social communication and its implications for the colonization of novel
+#' habitats. Behavioral Ecology \bold{27}, 341-351
+#' 
+#' @examples
+#' data(headbobLizards)
+#' plot(Hbspd_max~Bg_noise_max, data=headbobLizards)
+"headbobLizards"
