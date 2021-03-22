@@ -16,271 +16,256 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Exercise 7.1: Biological control of aphids over time
-
-_Is there an effect of the netting treatment on changes in aphid numbers across the sampling times?_
-
-_What sort of model is appropriate here?_
-
-Because we now have repeated measures in time, we have longitudinal data and should consider the methods of Section 7.1.1.
-
-## Code Box 7.1: R code to produce Figure 7.2.
-
-```{r box71, fig.width=8,fig.height=7}
+## Code Box 8.1: Fitting a spline smoother to the Mauna Loa annual data of Exercise 8.1 on `R`.
+```{r box81}
+library(mgcv)
 library(ecostats)
-data(aphids)
-cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours
-par(mfrow=c(2,1),mar=c(3,3,1.5,1),mgp=c(2,0.5,0),oma=c(0,0,0.5,0))
-with(aphids$oat, interaction.plot(Time,Plot,logcount,legend=FALSE,
-  col=cols[Treatment], lty=1, ylab="Counts [log(y+1) scale]",
-  xlab="Time (days since treatment)") )
-legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
-mtext("(a)",3,adj=0,line=0.5,cex=1.4)
-with(aphids$oat, interaction.plot(Time,Treatment,logcount, col=cols,
-  lty=1, legend=FALSE, ylab="Counts [log(y+1) scale]",
-  xlab="Time (days since treatment)"))
-legend("topright",c("Excluded","Present"),col=cols,lty=1)
-mtext("(b)",3,adj=0,line=0.5,cex=1.4)
+data(maunaloa)
+maunaJan = maunaloa[maunaloa$month==1,]
+ft_maunagam=gam(co2~s(year), data=maunaJan)
+summary(ft_maunagam)
 ```
 
-## Code Box 7.2: Choosing a longitudinal model for the aphid data
-
-```{r box72}
-library(lme4)
-aphid_int = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(1|Plot),
-    data=aphids$oat,REML=FALSE) # random intercepts model
-aphid_slope = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(Time|Plot),
-    data=aphids$oat, REML=FALSE) # random slopes model
-library(nlme) # refit random intercepts model in nlme to get a ACF:
-aphid_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
-    random=~1|Plot, data=aphids$oat, method="ML")
-plot(ACF(aphid_int2),alpha=0.05) # only works for nlme-fitted mixed models
-# now try a model with a temporally structured random effect:
-aphid_CAR1 = update(aphid_int2,correlation=corCAR1(,form=~Time|Plot))
-BIC(aphid_int,aphid_int2,aphid_slope,aphid_CAR1)
+## Code Box 8.2: Residual plot from a GAM of the annual Mauna Loa data of Exercise 8.1
+```{r box82}
+plotenvelope(ft_maunagam)
 ```
 
+*Do you think assumptions are satisfied?*
 
-## Code Box 7.3: Exploring the random intercept fit to the aphids data
+It generally looks good, although there are a couple of lines of points fanning out on the residuals vs fits plot for `co2<320`.  (The method of taking measurements actually changed in 1974, at about `co2=330`, so it is possible that this could be artefacts due to changes in the measurement or recording process for data in the 1950's and 1960's.)
 
-```{r box73}
-print(aphid_int)
-anova(aphid_int)
+
+## Code Box 8.3: Comparing curves for the Mauna Loa data.
+
+```{r box83 bic}
+maunaJan$year00 = pmax(2000,maunaJan$year)
+ft_maunaPiece = lm(co2~year+year00,data=maunaJan)
+ft_maunagam20 = gam(co2~s(year,k=20), data=maunaJan)
+summary(ft_maunagam20)$edf # this gam added about 6 extra knots:
+BIC(ft_maunaPiece,ft_maunagam,ft_maunagam20)
 ```
 
-## Code Box 7.4: Exploring the random slopes fit to the aphids data
-
-```{r box74}
-print(aphid_slope)
-anova(aphid_slope)
-aphid_noTreatS = lmer(logcount~Time+I(Time^2)+(Time|Plot),
-    data=aphids$oat, REML=FALSE)
-anova(aphid_noTreatS,aphid_slope)
+```{r box83 validation}
+isTrain = which(maunaJan$year<=2006)
+datTrain = maunaJan[isTrain,]
+datTest = maunaJan[-isTrain,]
+ft_piece = lm(co2~year+year00,dat=datTrain)
+ft_gam = gam(co2~s(year),dat=datTrain)
+ft_gam20 = gam(co2~s(year,k=20),dat=datTrain)
+pr_piece = predict(ft_piece,newdata=datTest)
+pr_gam = predict(ft_gam,newdata=datTest)
+pr_gam20 = predict(ft_gam20,newdata=datTest)
+preds = cbind( predict(ft_piece,newdata=datTest),
+    predict(ft_gam,newdata=datTest), predict(ft_gam20,newdata=datTest) )
+print( apply((datTest$co2-preds)^2,2,sum)) # getting SS by column
 ```
 
-## Exercise 7.2: Biological control of aphids in a wheat field
-*Repeat the above longitudinal analyses for data from the wheat field. Which longitudinal model better handles repeated measures in this case?*
+## Exercise 8.2: Eucalypt richness as a function of the environment
+*How does \emph{Myrtaceae} species richness vary from one area to the next, and what are the main environmental correlates of richness? [Ian] thinks species richness could respond to temperature and rainfall in a non-linear fashion, and may interact. What sort of model should Ian consider using?*
 
-```{r ex72plot, fig.width=8,fig.height=4}
-data(aphids)
-cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours
-par(mar=c(3,3,1.5,1),mgp=c(2,0.5,0),oma=c(0,0,0.5,0))
-with(aphids$wheat, interaction.plot(Time,Plot,logcount,legend=FALSE,
-  col=cols[Treatment], lty=1, ylab="Counts [log(y+1) scale]",
-  xlab="Time (days since treatment)") )
-legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
+He could try a GAM, as in Code Box 8.4. Note that this doesn't allow him to account for spatial autocorrelation at the same time, maybe he could try `gamm` as a way forward.
+
+## Code Box 8.4: Handling interactions in a GAM, when modelling Ian's richness data as a function of minimum temperature and rainfall, for Exercise 8.2
+
+```{r box84, fig.width=6,fig.height=6}
+data(Myrtaceae)
+ft_tmprain=gam(log(richness+1)~te(TMP_MIN,RAIN_ANN),data=Myrtaceae)
+vis.gam(ft_tmprain,theta=-135) #rotating the plot to find a nice view
+summary(ft_tmprain)$edf
 ```
 
-As before we don't see a lot of lines crossing over so expect some correlation. We also see a similar pattern with aphid counts reducing over time, but possibly being higher without bird exlcusion 2-5 weeks into the trial. 
-
-```{r ex72 long}
-library(lme4)
-aphidw_int = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(1|Plot),
-    data=aphids$wheat,REML=FALSE) # random intercepts model
-aphidw_slope = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(Time|Plot),
-    data=aphids$wheat, REML=FALSE) # random slopes model
-library(nlme) # refit random intercepts model in nlme to get a ACF:
-aphidw_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
-    random=~1|Plot, data=aphids$wheat, method="ML")
-plot(ACF(aphidw_int2),alpha=0.05) # only works for nlme-fitted mixed models
-# now try a model with a temporally structured random effect:
-aphidw_CAR1 = update(aphidw_int2,correlation=corCAR1(,form=~Time|Plot))
-BIC(aphidw_int,aphidw_int2,aphidw_slope,aphidw_CAR1)
+```{r box84 quad}
+ft_tmprain2=gam(log(richness+1)~s(TMP_MIN)+s(RAIN_ANN)+TMP_MIN*RAIN_ANN,
+      data=Myrtaceae)
+summary(ft_tmprain2)
 ```
 
-As before the random intercept model seems to be favoured.
+## Exercise 8.3: Smoothers for climate effects on plant height
+*[Angela] would like to know how plant height relates to climate -- in particular, are there interactions between predictors, and is the relationship non-linear?*
 
-*Is there evidence that bird exclusion improves biological control of aphids?*
+```{r ex83}
+data(globalPlants)
 
-```{r ex72 birds}
-aphidw_noTr = lmer(logcount~Time+I(Time^2)+(1|Plot),
-    data=aphids$wheat,REML=FALSE) # random intercepts model
-anova(aphidw_noTr,aphidw_int)
+ft_1temprain = gam(log(height)~temp+rain, dat=globalPlants) #linear model
+ft_2tempPlusrain = gam(log(height)~poly(temp,2)+poly(rain,2), dat=globalPlants) #quadratic, no interaction
+ft_2temprain = gam(log(height)~poly(temp,2)+poly(rain,2)+rain:temp, dat=globalPlants) #quadratic, interactions
+ft_stempPlusrain = gam(log(height)~s(temp)+s(rain), dat=globalPlants) #smoother+no interaction
+ft_stemprain = gam(log(height)~s(temp)+s(rain)+rain:temp, dat=globalPlants) #smoother+interaction
+BIC(ft_1temprain,ft_2tempPlusrain,ft_2temprain,ft_stempPlusrain,ft_stemprain)
 ```
 
-There is marginal evidence of a treatment effect.
+And the winner is a linear model.
 
 
-## Exercise 7.3: Biological control of aphids across both fields!
-*Construct a single, larger model to test for an effect of biological exclusion, and to check if this effect differs across fields.*
-
-```{r ex73 prep}
-aphids$oat$field   = "oat"
-aphids$wheat$field = "wheat"
-aphids$wheat$Plot=paste0("W",aphids$wheat$Plot) #making sure we have different names for different Plots across fields
-aphids$all         = rbind(aphids$oat,aphids$wheat)
-aphids$all$field   = factor(aphids$all$field)
-str(aphids$all)
+## Code Box 8.5: Residual plot with a smoother to diagnose a model.
+```{r box85, fig.width=5}
+data(globalPlants)
+globalPlants$logHt = log(globalPlants$height)
+ft_heightlm = lm(logHt~lat,dat=globalPlants)
+plot(ft_heightlm,which=1)
+ft_temp = gam(logHt~s(temp), dat=globalPlants)
+ecostats::plotenvelope(ft_temp, which=1, main="")
 ```
 
-We will need a mixed model that allows effects to be different across fields (and times)
-```{r ex73 anova}
-aphida_int = lmer(logcount~field*Time*Treatment+field*I(Time^2)*Treatment+(1|Plot),
-    data=aphids$all,REML=FALSE) # random intercepts model
-aphida_noTr = lmer(logcount~field*Time+field*I(Time^2)+(1|Plot),
-    data=aphids$all,REML=FALSE) # random intercepts model
-anova(aphida_noTr,aphida_int)
-```
+## Exercise 8.4: Nonlinear predictors of species richness?
+*Refit the model using smoothers for each environmental variable and compare to a model with additive quadratic terms (assume conditional independence for the moment).*
 
-In the combined model there is some evidence of a treatment effect.
-
-
-## Exercise 7.4: Eucalypt richness as a function of the environment
-*Ian wanted to know: how does \emph{Myrtaceae} species richness vary from one area to the next, and what are the main environmental correlates of richness?... Plotting richness against spatial location, he found spatial clusters of high or low species richness (Figure~\ref{fig:richnessMap})... What sort of analysis method should Ian consider using?*
-
-He should be looking at fitting a spatial model, along the lines of Code Box 7.5.
-
-## Code Box 7.5: Model selection to choose predictors, and a spatial model, for Ian's richness data
-
-```{r box75}
+```{r ex84 smooth}
 data(Myrtaceae)
 Myrtaceae$logrich=log(Myrtaceae$richness+1)
-ft_rich = lm(logrich~soil+poly(TMP_MAX,TMP_MIN,RAIN_ANN,degree=2),
+ft_richAdd = lm(logrich~soil+poly(TMP_MAX,degree=2)+
+     poly(TMP_MIN,degree=2)+poly(RAIN_ANN,degree=2), data=Myrtaceae)
+ft_richSmooth = gam(logrich~soil+s(TMP_MAX)+s(TMP_MIN)+s(RAIN_ANN),
+                    data=Myrtaceae)
+BIC(ft_richAdd,ft_richSmooth)
+```
+
+It looks like the model with additive terms is a better fit.
+
+*We could try refitting the model to account for this, using the `gamm` function in the `mgcv` package. Do you think this would make any difference to our conclusion? Justify your argument.*
+
+I'm not going to try refitting, I don't think it would make any difference. The main thing that happens if you have spatial structure in your data that you haven't accounted for is that you get *false confidence*: standard errors and *P*-values are too small. In a model selection context, this means that you can end up saying terms should be in the model that you don't actually need in there, so you end up with an overly complicated  model. But in this case, we have already concluded that we don't need the more complicated model, with the extra smoother terms in it.
+
+
+
+## Exercise 8.5: Carbon dioxide measurements at Mauna Loa observatory
+*We would like to model the dataset to characterise the key trends within as well as across years, taking into account that carbon dioxide does not follow a linear trend over time, and that there is a periodic seasonal oscillation... What sort of model would you use?*
+
+We can fit an additive model with a smoother for the long-term trend, and harmonics (sin/cos terms) for the seasonal trend.
+
+
+## Code Box 8.6: A simple model for the Mauna Loa monthly data with a cyclical predictor
+```{r box86, fig.width=7}
+data(maunaloa)
+library(mgcv)
+ft_cyclic=gam(co2~s(DateNum)+sin(month/12*2*pi)+cos(month/12*2*pi),
+  data=maunaloa)
+plot(maunaloa$co2~maunaloa$Date,type="l",
+  ylab=expression(CO[2]),xlab="Time")
+points(predict(ft_cyclic)~maunaloa$Date,type="l",col="red",lwd=0.5)
+```
+
+
+## Code Box 8.7: Residual plots across time and season for the Mauna Loa monthly data
+
+```{r box87, fig.width=9}
+par(mfrow=c(1,2))
+plot(residuals(ft_cyclic)~maunaloa$Date,type="l", xlab="Time")
+plot(residuals(ft_cyclic)~sin(maunaloa$month/12*2*pi),
+       type="l",xlab="Season")
+```
+
+
+Here is some code to produce a simulated dataset from this model, for comparison:
+```{r box87 sim, fig.width=9}
+maunaloa$simCO2 = unlist(simulate(ft_cyclic))
+ft_simCyclic=gam(simCO2~s(DateNum)+sin(month/12*2*pi)+cos(month/12*2*pi),
+  data=maunaloa)
+par(mfrow=c(1,2))
+plot(residuals(ft_simCyclic)~maunaloa$Date,type="l", xlab="Time")
+plot(residuals(ft_simCyclic)~sin(maunaloa$month/12*2*pi),
+       type="l",xlab="Season")
+```
+
+
+## Code Box 8.8: Another model for the Mauna Loa monthly data, with an extra sine curve in there to better handle irregularities in the seasonal effect}\label{code:maunaAnotherModel}
+
+```{r box88, fig.width=9}
+ft_cyclic2=gam(co2~s(DateNum)+sin(month/12*2*pi)+cos(month/12*2*pi)+
+       sin(month/12*4*pi)+cos(month/12*4*pi),data=maunaloa)
+par(mfrow=c(1,2))
+plot(residuals(ft_cyclic2)~maunaloa$Date,type="l", xlab="Time")
+plot(residuals(ft_cyclic2)~sin(maunaloa$month/12*2*pi),
+       type="l",xlab="Season")
+```
+
+
+## Code Box 8.9: Mauna Loa model with autocorrelation}\label{code:maunaAutoModel}
+
+```{r box89}
+ft_gamm = gamm(co2~s(DateNum)+sin(month/12*2*pi)+cos(month/12*2*pi)+
+                sin(month/12*4*pi)+cos(month/12*4*pi),correlation=corAR1(),
+                data=maunaloa)
+acf(residuals(ft_gamm$gam))
+acf(residuals(ft_gamm$lme,type="normalized"))
+```
+
+## Exercise 8.6: Mauna Loa monthly data -- an extra term in seasonal trend?
+*We tried modelling the trend by fitting sine curves with two frequencies... Is this sufficient, or should we add another frequency too, like `month/12*6*pi` (for curves with three cycles a year)?*
+
+```{r ex86, fig.width=9}
+ft_cyclic3=gam(co2~s(DateNum)+sin(month/12*2*pi)+cos(month/12*2*pi)+
+       sin(month/12*4*pi)+cos(month/12*4*pi) +
+       + sin(month/12*6*pi)+cos(month/12*6*pi), data=maunaloa)
+ft_cyclic4=gam(co2~s(DateNum)+sin(month/12*2*pi)+cos(month/12*2*pi)+
+       sin(month/12*4*pi)+cos(month/12*4*pi) +
+       + sin(month/12*6*pi)+cos(month/12*6*pi)+
+         sin(month/12*8*pi)+cos(month/12*8*pi), data=maunaloa)
+par(mfrow=c(1,2))
+plot(residuals(ft_cyclic4)~maunaloa$Date,type="l", xlab="Time")
+plot(residuals(ft_cyclic4)~sin(maunaloa$month/12*2*pi),
+       type="l",xlab="Season")
+BIC(ft_cyclic,ft_cyclic2,ft_cyclic3,ft_cyclic4)
+```
+
+According to BIC, 2 harmonics is the winner, there isn't much to gain from adding a third or fourth.
+
+
+## Exercise 8.7: Mauna Loa annual data -- temporal autocorrelation?}
+*Consider the annual Mauna Loa monthly data of Code Box 8.1, which uses the measurements from January only... Is there evidence of temporal autocorrelation in this dataset?*
+
+```{r ex87}
+maunaJan = maunaloa[maunaloa$month==1,]
+ft_gammJan = gamm(co2~s(year),correlation=corAR1(), data=maunaJan)
+acf(residuals(ft_gammJan$gam))
+acf(residuals(ft_gammJan$lme,type="normalized"))
+ft_gammJan$lme
+```
+
+There isn't really an autocorrelation signal here -- the lags represent years now rather than months, and consecutive years (lag 1) have a correlation of less than 0.1 so it looks like not much is happening. The mixed effects model doesn't really do much here. The estimated autocorrelation is surprisingly large given this (0.26) but it is much smaller than in the monthly analysis (0.76) and decays to negligible levels quickly (correlation at two years is 0.26^2=0.07).
+
+
+## Exercise 8.8: Aspect as a predictor of species richness
+*Consider Ian's species richness data... How would you enter `aspect` into the model?*
+This is a cyclical variable so we would add `cos` and `sin` terms to the model.
+
+```{r ex88 aspect}
+data(Myrtaceae)
+summary(Myrtaceae$aspect)
+```
+
+It seems to have been entered in degrees so has period 360. Maybe we can consider two harmonics to try to account for non-sinusoidal response. We will keep soil, temperature and rainfall variables from previously:
+
+```{r ex88 period}
+data(Myrtaceae)
+Myrtaceae$logrich=log(Myrtaceae$richness+1)
+ft_richAsp = lm(logrich~soil+poly(TMP_MAX,degree=2)+
+     poly(TMP_MIN,degree=2)+poly(RAIN_ANN,degree=2)+
+               cos(aspect*2*pi/360)+sin(aspect*2*pi/360)+cos(aspect*4*pi/360)+sin(aspect*4*pi/360),
      data=Myrtaceae)
 ft_richAdd = lm(logrich~soil+poly(TMP_MAX,degree=2)+
      poly(TMP_MIN,degree=2)+poly(RAIN_ANN,degree=2), data=Myrtaceae)
-BIC(ft_rich,ft_richAdd)
+BIC(ft_richAsp,ft_richAdd)
 ```
 
-```{r box75 spatial}
+It looks like there isn't really an `aspect` signal in the data, BIC is much smaller without any aspect terms being in the model.
+
+*Recall that species richness had some spatial structure to it. Refit the model using the `gls` function from the `nlme` package to account for spatially structured correlation. Did this change your inferences about `aspect` in any appreciable way?*
+
+Well it won't change our inferences because ignoring spatial correlation risks giving you false confidence in the importance of terms, but we already decided that `aspect` is not important. But anyway. We decided last time around that an exponential model with a nugget effect did OK:
+
+```{r ex88 spatial}
 library(nlme)
-richForm = logrich~soil+poly(TMP_MAX,degree=2)+poly(TMP_MIN,degree=2)+
-       poly(RAIN_ANN,degree=2)
-ft_richExp = gls(richForm,data=Myrtaceae,correlation=corExp(form=~X+Y))
-ft_richNugg = gls(richForm,data=Myrtaceae,
+ft_richNugg = gls(logrich~soil+poly(TMP_MAX,degree=2)+poly(TMP_MIN,degree=2)+
+       poly(RAIN_ANN,degree=2),data=Myrtaceae,
          correlation=corExp(form=~X+Y,nugget=TRUE))
-BIC(ft_richExp,ft_richNugg)
+ft_richAspNugg = gls(logrich~soil+poly(TMP_MAX,degree=2)+poly(TMP_MIN,degree=2)+
+       poly(RAIN_ANN,degree=2)+ cos(aspect*2*pi/360)+sin(aspect*2*pi/360)+cos(aspect*4*pi/360)+sin(aspect*4*pi/360),data=Myrtaceae,
+         correlation=corExp(form=~X+Y,nugget=TRUE))
+BIC(ft_richNugg)
+BIC(ft_richAspNugg)
 ```
 
+As expected, this did not change inference in any appreciable way!
 
-## Code Box 7.6: Inferences from spatial and non-spatial models for Ian's richness data
-
-```{r box76} 
-ft_richNugg
-anova(ft_richAdd)
-anova(ft_richNugg)
-```
-
-
-## Code Box 7.7: Spatial correlogram for Ian's species richness data
-```{r box77}
-library(pgirmess)
-corRich = with(Myrtaceae,correlog(cbind(X,Y),logrich))
-plot(corRich,xlim=c(0,150),ylim=c(-0.05,0.2))
-abline(h=0,col="grey90")
-
-Myrtaceae$resid = residuals(ft_richAdd)
-corRichResid = with(Myrtaceae,correlog(cbind(X,Y),resid))
-plot(corRichResid,xlim=c(0,150),ylim=c(-0.05,0.2))
-abline(h=0,col="grey90")
-```
-
-
-## Exercise 7.5: Egg size when Dads incubate
-*Terje wondered whether egg size was specifically limited by male body size. So he collected data on 71 species of shorebird where the male incubates the egg, measuring egg size, and size of adult males and females... What sort of model might be appropriate here?*
-
-We could try a linear model for egg size as a function of female and male bird size. 
-
-*Can see you see any potential problems satisfying independence assumptions?*
-
-A potential issue is that there is a phylogenetic signal in many traits: if shorebird species are more closely related, we can expect their egg sizes to be more similar.
-
-Code Box 7.8: Phylogenetic tree of 71 shorebird species
-
-```{r box 78,fig.width=8,fig.height=9}
-library(caper)
-data(shorebird)
-shore4d=phylobase::phylo4d(shorebird.tree,shorebird.data)
-library(phylosignal)
-barplot.phylo4d(shore4d,c("Egg.Mass","F.Mass","M.Mass"))
-```
-
-
-## Code Box 7.9: Exploratory analysis of egg size data}\label{code:eggEDA}
-
-```{r box79}
-library(GGally)
-ggpairs(log(shorebird.data[,2:4]))
-```
-
-## Code Box 7.10: Comparative analysis of egg size data
-
-```{r box710}
-library(caper)
-shorebird = comparative.data(shorebird.tree, shorebird.data,
-                   Species, vcv=TRUE)
-pgls_egg = pgls(log(Egg.Mass) ~ log(F.Mass)+log(M.Mass),
-                data=shorebird)
-summary(pgls_egg)
-```
-
-## Code Box 7.11: Residual diagnostics for egg size data
-
-```{r box711,fig.width=8,fig.height=8}
-par(mfrow=c(2,2))
-plot(pgls_egg)
-res.df = data.frame(Species = shorebird.data$Species,
-                res = residuals(pgls_egg))
-res4d = phylobase::phylo4d(shorebird.tree,res.df)
-res.pg = phyloCorrelogram(res4d,trait="res")
-```
-
-```{r box711 otherplot,fig.width=6}
-plot(res.pg)
-```
-
-## Exercise 7.6: Comparative analysis of egg size data revisited
-
-*Refit the model allowing $\lambda$ to be estimated from the data (using `lambda="ML"`), or allowing $\delta$ to be estimated from the data.*
-
-```{r ex76 lambda}
-pgls_eggL = pgls(log(Egg.Mass) ~ log(F.Mass)+log(M.Mass), lambda="ML",
-                data=shorebird)
-summary(pgls_eggL)
-```
-
-*Does this change results and their interpretation?*
-
-Nope -- results are pretty much the same as previously.
-
-*Now fit a linear model ignoring phylogeny, via `lm`. What happens here?*
-```{r ex76 lm}
-lm_egg = lm(log(Egg.Mass) ~ log(F.Mass)+log(M.Mass), data=shorebird.data)
-summary(lm_egg)
-```
-
-The slopes move further from zero and everything becomes more significant. In particular, while there was no effect of female mass previously, now it is strongly significant.
-
-
-*Is this what you would expect?*
-
-Yes this is expected because phylogenetic relatedness introduces positive dependence, leading to under-estimation of uncertainty and a higher chance of false positives.
-
-*Look at the log-likelihood (using the `logLik` function) to help decide which of these models is a better fit to the data.*
-
-```{r ex76 ll}
-logLik(lm_egg)
-logLik(pgls_eggL)
-```
-
-Something seems to be wrong with the `df` calculation in the `pgls` model, but the main thing to see here is that the log-likelihood is substantially higher for the `pgls` model, suggesting it is a much better fit to the data.

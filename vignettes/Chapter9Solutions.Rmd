@@ -1,0 +1,101 @@
+---
+title: "Chapter 9 - Design-based inference - Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 9 - Design-Based Inference - Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 9.1: Smoking in pregnancy
+*Consider again the guinea pig experiment... How can we make inferences about the treatment effect, without assuming normality?*
+
+Design-based inference allows us to relax distributional assumptions. Specifically, if we use a permutation test as in Code Box 9.1, or a bootstrap test as in Code Box 9.3, we do not assume normality.
+
+## Exercise 9.2: Three example permutations of treatment labels in the guinea pig data
+
+*Does the observed statistic of 2.67 seem large compared to these values? What does this tell you?*
+
+The three statistics obtained by permuting data were 0.76, -2.09 and -1.08. These are all smaller than 2.67, suggesting that 2.67 is unusually large compared to what we would expect if there were no treatment effect. However, to say something more precise about how unusual this is we should do many more permutations...
+
+
+## Code behind Figure 9.1
+
+```{r fig91, fig.width=6}
+library(ecostats)
+data(guineapig)
+ft_guinea = lm(errors~treatment,data=guineapig)
+tObs = summary(ft_guinea)$coef[2,3] #store observed t-statistic
+
+nPerm = 1000
+tStats = rep(NA,nPerm)
+tStats[1] = tObs
+for(iPerm in 2:nPerm)
+{
+  guineapig$treatPerm = sample(guineapig$treatment) #permute treatment labels
+  ft_guineaPerm = lm(errors~treatPerm,data=guineapig) #re-fit model
+  tStats[iPerm] = summary(ft_guineaPerm)$coef[2,3] #store t-stat
+}
+par(cex=1.2,lwd=1.5)
+hist(tStats,main="Null distribution of t under permutation",xlab="t")
+abline(v=tObs,col="red") #put a red line on plot for observed t-stat
+p = mean( tStats >= tObs ) #compute P-value
+print(p)
+```
+
+## Code Box 9.1: A permutation test for the guinea pig data using `mvabund`
+
+```{r box91}
+library(mvabund)
+data(guineapig)
+ft_guinea = manylm(errors~treatment,data=guineapig)
+anova(ft_guinea)
+```
+
+
+## Code Box 9.2: Permutation test for a relationship between latitude and plant height
+
+```{r box92}
+data(globalPlants)
+ft_height = manylm(height~lat, data=globalPlants)
+anova(ft_height)
+```
+
+
+## Code Box 9.3: Using the `mvabund` package for a bootstrap test of guinea pig data
+
+```{r box93}
+library(mvabund)
+ft_guinea = manylm(errors~treatment, data=guineapig)
+anova(ft_guinea, resamp="residual")
+```
+
+# David to fix ugly mvabund bug!?
+
+
+## Exercise 9.3: Case resampling in the guinea pig data
+
+*We can... resample cases... Below are three examples.*
+
+C  N  N  N  C  N  N  C  N  N  C  C  N  N  C  C  N  N  N  N
+10 33 28 33 47 66 33 26 63 66 36 20 38 28 35 15 66 33 43 26
+
+N  N  N  N  C  N  N  N  N  N  C  C  C  C  N  C  C  C  N  C
+33 89 34 89 35 43 38 33 23 63 10 26 11 10 43 47 10 19 66 35
+
+N  N  C  C  N  N  N  C  N  C  N  C  N  N  N  C  C  C  C  C
+66 66 19 47 63 43 43 20 33 15 28 26 89 38 43 47 20 20 11 20
+
+*Count the number of Controls in each case resampled dataset. Did you get the number you expected to?*
+
+OK so the first one has 8 Control sites, second one has 9 Control sites, third has 10 Control sites. This is not expected in the sense that the original study was planned with 10 Control and 10 Treatment guinea pigs, so we have messed with the design by doing case resampling :(
+
