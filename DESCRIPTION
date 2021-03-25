@@ -15,6 +15,7 @@ Suggests:
     knitr,
     rmarkdown,
     DAAG,
+    dplyr,
     MASS,
     caper,
     car,

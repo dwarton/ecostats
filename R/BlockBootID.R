@@ -72,12 +72,14 @@ BlockBootID = function (x ,
   }
 
     if (block_L > 0) {
+      lookup_table=NA
+      lookup.coords=NA
       if (is.na(lookuptables.folderpath) ==FALSE){ #check if a lookup table has been created to speed things up, if it has load it, and check the lookup table is for data with same x,y, coordinates
         load_file_if_exists(paste0(lookuptables.folderpath,"lookup_table","_L",block_L,"_grid_space_",Grid_space,"_",shape,".RData"))
         
-        if(exists("lookup.coords")){
+        if(is.na(lookup.coords)==FALSE){
           if( identical ( lookup.coords$lookup.x , x ) == FALSE |  identical ( lookup.coords$lookup.y , y ) == FALSE ){
-            rm(lookup_table,lookup.coords,envir=.GlobalEnv)
+            lookup_table=NA
           }
         }
       }
@@ -87,6 +89,7 @@ BlockBootID = function (x ,
         x = x,
         y = y,
         nBoot = nBoot,
+        lookup_table = lookup_table,
         block_L = block_L ,
         Grid_space = Grid_space,
         area_or_sites = "sites",
@@ -108,3 +111,47 @@ BlockBootID = function (x ,
   ;
   new_sample
 }
+
+create_moving_block_lookup = function(x, y, block_L, Grid_space, Grid, shape,...){
+  
+  if(missing(Grid)) {
+    Grid = create_Grid(Grid_space = Grid_space, x = x , y = y)
+  }
+  sites = data.frame( x, y , ind = 1:length(x))
+  ind = list()
+  l = 1
+  if(shape == "disc"){
+    for ( i in 1:dim(Grid)[1]){
+      ref_point_x = Grid[i,"x"]
+      ref_point_y = Grid[i,"y"]
+      
+      # a square around the reference point of area (2BlockL)^2 
+      x1 = Grid [ i , "x" ] - block_L
+      x2 = Grid [ i , "x" ] + block_L
+      y1 = Grid [ i , "y" ] - block_L
+      y2 = Grid [ i , "y" ] + block_L
+      #subset to get only the sites within a disc of the reference point
+      sites_in_square = sites[sites$x>x1 & sites$x<=x2 & sites$y>y1 & sites$y<=y2,c("x","y","ind")]
+      sites_in_square$site_dist = sqrt ( ( sites_in_square$x - ref_point_x)^2  + (sites_in_square$y - ref_point_y)^2 )
+      sites_in_block = sites_in_square[ sites_in_square$site_dist<block_L,]
+      if (length (sites_in_block$ind) > 0){
+        ind[[l]]=sites_in_block$ind
+        l=l+1}
+    }
+  }
+  if(shape == "square"){
+    for ( i in 1:dim(Grid)[1]){
+      x1 = Grid [ i , "x" ] - block_L/2
+      x2 = Grid [ i , "x" ] + block_L/2
+      y1 = Grid [ i , "y" ] - block_L/2
+      y2 = Grid [ i , "y" ] + block_L/2
+      sites_in_block = sites[ x>x1 & x<=x2 & y>y1 & y<=y2,]
+      if (length (sites_in_block$ind) > 0){
+        ind[[l]]=sites_in_block$ind
+        l=l+1}
+    }
+  }
+  return(ind)
+}
+
+

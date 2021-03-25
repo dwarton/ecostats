@@ -5,7 +5,17 @@
 \alias{windFarms}
 \title{Data from wind farm study}
 \format{
-
+A list containing three objects:\describe{
+\item{X}{A data frame with descriptors of location and time of sampling. These include:
+ `Year`, a factor giving year of sampling, only 2003 and 2010 measurements are available here;
+ `Zone`, a factor giving zone of sampling, \code{WF} for wind farm, \code{N} for Northern zone,
+   \code{S} for Southern zone;
+ `Station`, a factor indicating station ID;
+ `Impact`, a factor indicating whether sampling is `Before` or `After` wind farm construction.
+ }
+\item{abund}{A data frame containing abundances of 16 different fish taxa.}
+\item{totalAbund}{The total abundance of fish at each site.}
+}
 }
 \usage{
 data(windFarms)
