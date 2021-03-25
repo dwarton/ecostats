@@ -16,11 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-The Eco-Stats package contains functions and data supporting the Eco-Stats text (Warton, in press, Springer), and eventually, solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
+The Eco-Stats package contains functions and data supporting the Eco-Stats text (Warton, in press, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, also applicable to multivariate linear models, and a parametric bootstrap function that can be used in place of an `anova` call for hypothesis testing via simulation, for many types of model fits. Datasets mentioned in the package are included here (where not available elsewhere) and vignettes work through code chunks and exercises from the textbook, one chapter at a time.
 
 ## Simulation envelopes in plots
 
-The command `plotenvelope` will standard residual plots for most model objects, but will add global envelopes around points (for quantile plots) and around smoothers (for residual plots) constructed via simulation. These are constructed using the `GET` package as global envelopes, that is, when model assumptions are correct, 95% of quantile plot envelopes (at confidence level 95%) should contain _all_ datapoints.
+The command `plotenvelope` will take standard residual plots for most model objects, but add global envelopes around points (for quantile plots) and around smoothers (for residual plots) constructed via simulation. These are constructed using the `GET` package as global envelopes, that is, when model assumptions are correct, 95% of quantile plot envelopes (at confidence level 95%) should contain _all_ datapoints.
 
 ```{r, echo=TRUE, results='asis'}
 library(ecostats)

@@ -18,7 +18,13 @@ A dataframe containing:\describe{
 data(headbobLizards)
 }
 \description{
-
+Displays of 14 male \emph{Anolis} lizards were recorded in Puerto Rican forest (Ord \emph{et al. 2016}),
+along with key environmental characteristics. These lizards bob their head up
+and down (and do push-ups) in attempts to attract the attention of females, and
+advertise territory ownership to other males.
+How fast a lizard bobs its head was recorded, and it was of interest to understand
+which environmental features (out of temperature, light and noisiness) were 
+related to head bobbing speed.
 }
 \examples{
 data(headbobLizards)

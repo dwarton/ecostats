@@ -1,0 +1,100 @@
+---
+title: "Chapter 10 - Analysing discrete data - the generalised linear model - Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 10 - Analysing discrete data - the generalised linear model - Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 10.1: Crabs on seaweed
+*David and Alistair... observed the following presence (`+`) / absence (`-`)} patterns for crabs (across 10 replicates):*
+Time           5  5  5  5  5  5  5  5  5  5 ... 10
+Distance (m)   0  0  0  0  0  2  2  2  2  2 ... 10
+Crabs          -  +  +  -  -  -  -  +  -  - ... +
+*They would like to know if there is any evidence of a difference in crab presence patterns with Distance of Isolation. How should they analyse the data?*
+
+They are looking for evidence of a difference at different values of `Dist` so will be wanting to do a hypothesis test. Because they have presence-absence data they should be thinking of a generalised linear model with binomial response, as in Code Box 10.1.
+
+
+## Exercise 10.2: Do offshore wind farms affect fish communities?
+*Lena and colleagues... [were] collecting paired data before and after wind farm construction, at 36 stations in each of three zones (`Wind Farm`, `North`, or `South`):*
+
+Zone         Impact    Station    Abundance
+----------   -------   --------   ----------
+Wind Farm    Before    WF1        0
+Wind Farm    After     WF1        0
+South        Before    S1         5
+South        After     S1         0
+North        Before    N1         0
+North        After     N1         0
+Wind Farm    Before    WF2        1
+Wind Farm    After     WF2        1
+...          ...       ...        ...
+North        After     N36        0
+---------    -------   --------   ----------
+
+*Lena wants to know if there is any evidence of a change in eel abundance at wind farm stations, as compared to others, following construction of the wind farm. How should she analyse the data?*
+
+She is looking for evidence of a difference across different values of `Zone` when `Impact=After` so will be wanting to do a hypothesis test. This is a BACI design, so she would be particularly interested in the `Zone:Impact` interaction. Because she has count data with plenty of zeros, this should be analysed using a generalised linear model (assuming a negative binomial or Poisson response, as in Code Box 10.1).
+
+
+## Exercise 10.3: Invertebrate response to bush regeneration}
+*Anthony wants to evaluate how well invertebrate communities are re-establishing following bush regeneration efforts.*
+
+ Treatment |    Count
+ --------- |  -------
+ C         |        0
+ R         |        3
+ R         |        1
+ R         |        3
+ C         |        1
+ R         |        2
+ R         |       12
+ R         |        1
+ R         |       18
+ R         |        0
+
+*He wants to know if there is any evidence that bush regeneration is working. How should he analyse the data?*
+
+He is looking for evidence of an effect of revegetation so will be wanting to do a hypothesis test for a `Treatment` effect. Because he has count data, with zeros, this should be analysed using a generalised linear model (assuming a negative binomial or Poisson response, as in Code Box 10.1).
+
+
+## Code Box 10.1: Example GLM fits for Exercises 10.1-3.}
+For Exercise 10.1:
+```{r box10.1.1}
+library(ecostats)
+data(seaweed)
+seaweed$CrabPres = seaweed$Crab>0
+ft_crab = glm(CrabPres~Time*Dist, family=binomial("cloglog"),
+             data=seaweed)
+```
+
+For Exercise 10.2:
+\begin{verbatim}
+```{r box10.1.2}
+data(windFarms)
+eels = windFarms$abund[,16]
+ft_eels = glm(eels~Station+Year*Zone,family="poisson",
+             data=windFarms$X)
+```
+
+For Exercise 10.3:
+```{r box10.1.3}
+data(reveg)
+Haplotaxida=reveg$abund[,12]
+library(mvabund)
+worms = reveg$abund$Haplotaxida
+ft_worms = manyglm(worms~treatment,family="negative.binomial", data=reveg)
+```
+
+

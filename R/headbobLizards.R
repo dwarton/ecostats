@@ -1,6 +1,6 @@
 #' Headbob displays of \emph{Anolis} lizards
 #'
-#' Displays of 14 male \emph{Anolis} lizards were recorded in Puerto Rican forest (Ord \emph{et al. 2016),
+#' Displays of 14 male \emph{Anolis} lizards were recorded in Puerto Rican forest (Ord \emph{et al. 2016}),
 #' along with key environmental characteristics. These lizards bob their head up
 #' and down (and do push-ups) in attempts to attract the attention of females, and
 #' advertise territory ownership to other males.

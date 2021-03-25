@@ -1,0 +1,37 @@
+#' Data from wind farm study
+#'
+#' Data from a study of the effect of offshore wind farms on fish communities 
+#' (Bergström et al. 2013), with measurements before (2003) and after (2010) wind 
+#' farm installation at 36 different sites in three zones -- two affected by wind farms,
+#' and two control zones. Abundances have been recorded for 16 different taxa.
+#'
+#' @docType data
+#'
+#' @usage data(windFarms)
+#'
+#' @format A list containing three objects:\describe{
+#' \item{X}{A data frame with descriptors of location and time of sampling. These include:
+#'  \describe{
+#'  \item{Year}{A factor giving year of sampling, only 2003 and 2010 measurements are available here.}
+#'  \item{Zone}{A factor giving zone of sampling, \code{WF} for wind farm, \code{N} for Northern zone
+#'    \code{S} for Southern zone.}
+#'  \item{Station}{A factor indicating station ID.}
+#'  \item{Impact}{A factor indicating whether sampling is `Before` or `After` wind farm construction.
+#'  }}
+#' \item{abund}{A data frame containing abundances of 16 different fish taxa.}
+#' \item{totalAbund}{The total abundance of fish at each site.}
+#' }
+#'
+#' @keywords datasets
+#'
+#' @references Bergström, L., Sundqvist, F., & Bergström, U. (2013). Effects of 
+#' an offshore wind farm on temporal and spatial patterns in the demersal fish community. 
+#' Marine Ecology Progress Series 485, 199–210.
+#'
+#' @examples
+#' data(windFarms)
+#' eels =windFarms$abund[,14] 
+#' plot(eels~interaction(Impact,Zone), data=windFarms$X, horizontal=TRUE,
+#'   las=1, xlab="",ylab="Eel abundance")
+#' 
+"windFarms"
