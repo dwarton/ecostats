@@ -18,9 +18,22 @@ knitr::opts_chunk$set(
 
 ## Exercise 10.1: Crabs on seaweed
 *David and Alistair... observed the following presence (`+`) / absence (`-`)} patterns for crabs (across 10 replicates):*
-Time           5  5  5  5  5  5  5  5  5  5 ... 10
-Distance (m)   0  0  0  0  0  2  2  2  2  2 ... 10
-Crabs          -  +  +  -  -  -  -  +  -  - ... +
+
+Time       Distance (m)         Crabs
+---------  -------------        ----------
+5          0                    -
+5          0                    +
+5          0                    +
+5          0                    -
+5          0                    -
+5          2                    -
+5          2                    -
+5          2                    +
+5          2                    -
+5          2                    -
+...        ...                  ...
+10         10                   +
+
 *They would like to know if there is any evidence of a difference in crab presence patterns with Distance of Isolation. How should they analyse the data?*
 
 They are looking for evidence of a difference at different values of `Dist` so will be wanting to do a hypothesis test. Because they have presence-absence data they should be thinking of a generalised linear model with binomial response, as in Code Box 10.1.
@@ -97,4 +110,37 @@ worms = reveg$abund$Haplotaxida
 ft_worms = manyglm(worms~treatment,family="negative.binomial", data=reveg)
 ```
 
+## Code for Fig. 10.5
+```{r fig10.5,fig.height=8,fig.width=8}
+data(reveg)
+library(mvabund)
+revegMV=mvabund(reveg$abund)
+treatment=reveg$treatment
+meanvar.plot(revegMV~treatment,legend=T,col=c("darkorange","darkgreen"),main="Poisson")
+x=10^(seq(-1,3.8,length=100))
+lines(x,x,type="l",col="red")
 
+meanvar.plot(revegMV~treatment,legend=T,col=c("darkorange","darkgreen"), main="Negative binomial")
+x=10^(seq(-1,3.8,length=100))
+points(x,x+x^2,type="l",col="darkblue")
+```
+
+## Code Box 10.2: A summary of a GLM fit to the crab presence-absence data of Exercise 10.1
+
+```{r box 10.2}
+data(seaweed)
+seaweed$CrabPres = seaweed$Crab>0
+seaweed$Dist = as.factor(seaweed$Dist)
+ft_crab = glm(CrabPres~Time*Dist, family=binomial("cloglog"),
+             data=seaweed)
+summary(ft_crab)
+```
+
+
+## Code Box 10.3: Dunn-Smyth residual plots for the crab data, using the `mvabund` package
+```{r box10.3}
+library(mvabund)
+ftMany.crab = manyglm(CrabPres~Time*Dist,family=binomial("cloglog"),
+             data=seaweed)
+plot(ftMany.crab)
+```
