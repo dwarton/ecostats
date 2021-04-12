@@ -28,9 +28,10 @@
 #' library(ggplot2)
 #' ggplot(Myrtaceae, aes(x=X, y=Y))+geom_point(aes(color=richness))+
 #'   theme_classic()+xlab("West<-->East (km)")+ylab("South<-->North (km)")+
-#'   scale_color_gradient(low="lightgreen",high="black",
-#'                       breaks=scales::breaks_width(2))+
+#'   scale_color_gradient(low="lightgreen",high="black")+
 #'   labs(color="Species richness [log(y+1)-scale]")+theme(legend.position="top")+
 #'   guides(color = guide_colorbar(title.position = "top",ticks=FALSE,
 #'                                barwidth=15,barheight=0.5))+coord_fixed()
+#'                                
+
 "Myrtaceae"
