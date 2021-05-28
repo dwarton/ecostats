@@ -144,3 +144,80 @@ ftMany.crab = manyglm(CrabPres~Time*Dist,family=binomial("cloglog"),
              data=seaweed)
 plot(ftMany.crab)
 ```
+
+
+## Exercise 10.4: Counts of Ostracods in habitat configuration experiment.
+
+*What sort of model would you use for Ostracod counts?*
+
+```{r ex10.4,fig.width=6,fig.height=6}
+data(seaweed)
+with(seaweed,boxplot(Ost~Dist))
+```
+
+As this is a count variable with plenty of small counts (and zeros in each category), I am thinking a GLM. To start with we could consider a Poisson regression, if there were no overdispersion, or negative binomial regression.
+
+The terms to add to the model I guess are `Time` and `Dist`, as orthogonal factors. As previously `Wmass` might also be useful.
+
+*How would you check assumptions?*
+
+Look for a fan-shape on a residual plot to check the mean-variance assumption, as in Code Box 10.4.
+
+
+## Code Box 10.4: Assumption checking for Ostracod counts of Exercise 10.4.}
+
+```{r box10.4, fig.width=7}
+ft_countOst=manyglm(Ost~log(Wmass)+Time*Dist,data=seaweed,
+             family="poisson")
+plot(ft_countOst,which=1:2) # for a normal quantile plot as well
+```
+
+## Exercise 10.5: Checking the Poisson assumption on the wind farm data.
+
+*Refit the model using the `manyglm` function, and hence construct a residual plot*
+
+```{r ex10.5, fig.width=7}
+data(windFarms)
+eels = windFarms$abund[,16]
+ft_eels = manyglm(eels~Station+Year*Zone,family="poisson",
+             data=windFarms$X)
+plot(ft_eels, which=1:2)
+```
+
+*Does the Poisson assumption look reasonable?*
+
+There is no evidence of a fan shape, residuals are close to a straight line on the normal quantile plot, so it looks pretty good to me.
+
+
+## Exercise 10.6: Checking the Poisson assumption for the worm counts.}\label{ex:revegResids}
+
+*Refit the model using the `manyglm` function under the Poisson assumption, and hence construct a residual plot.*
+
+```{r box 10.6Poisson, fig.width=7}
+data(reveg)
+Haplotaxida=reveg$abund[,12]
+worms = reveg$abund$Haplotaxida
+ft_worms = manyglm(worms~treatment,family=poisson(), data=reveg)
+plot(ft_worms, which=1:2)
+```
+
+*Also fit a negative binomial to the data and construct a residual plot.*
+```{r box 10.6NB, fig.width=7}
+ft_wormsNB = manyglm(worms~treatment,family="negative.binomial", data=reveg)
+plot(ft_wormsNB, which=1:2)
+```
+
+*Can you see any differences between plots?*
+
+It is hard to see anything here, but the Poisson model fans out more and has a few residuals away from the line.
+
+*Compare BIC for the two models, using the `BIC` function.*
+
+```{r ex10.6 bic}
+BIC(ft_worms, ft_wormsNB)
+```
+
+*Which model has the better fit to the worm counts?*
+
+Well BIC suggests the negative binomial model is way better, corroborating the result from the normal quantile plots.
+
