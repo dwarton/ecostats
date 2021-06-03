@@ -31,14 +31,15 @@
 #' @param transform a character vector pointing to a function that should be applied to both
 #'  axes of the normal quantile plot. The most common use is to set \code{transform="pnorm"}
 #'  for a PP-plot.
-#' @param sim.method How should residuals be simulated? The default \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
+#' @param sim.method How should residuals be simulated? The default for most objects is \code{"refit"}, which constructs new responses (via \code{\link{simulate}}),
 #' refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
 #' This is computationally intensive but gives a robust answer. This is the only suitable option if
 #' residuals are not expected to be normal when assumptions are satisfied (like when using \code{\link[stats]{glm}} with a non-Gaussian family). 
 #' Alternatively, \code{"norm"} simulates from a normal distribution, matches means and variances (and covariances for multivariate responses) to the observed residuals.
 #' The \code{"stand.norm"} option sets means to zero and variances to one, which is appropriate when residuals
 #' should be standard normal when assumptions are satisfied (as for any object fitted using the \code{mvabund}
-#' package, for example). These options are faster but more approximate than \code{"refit"}.
+#' package, for example). These options are faster but more approximate than \code{"refit"}, in fact \code{"stand.norm"} is 
+#' used as the default for \code{\link[mvabund]{manyglm}} objects, for computational reasons.
 #' @param main the plot title (if a plot is produced). A vector of three titles, one for each plot.
 #'  If only one value is given that will be used for all plots.
 #' @param xlab \code{x} axis label (if a plot is produced). A vector of three labels, one for each plot.
@@ -46,15 +47,18 @@
 #' @param ylab \code{y} axis label (if a plot is produced). A vector of three labels, one for each plot.
 #'  If only one value is given that will be used for all plots.
 #' @param col color of points
-#' @param line.col color of the line on diagnostic plots about which points should show no trend if model assumptions are satisfied.
-#' Defaults to "olivedrab". Because it's cool. If \code{add.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").
+#' @param line.col a vector of length three containing the colors of the lines on the three diagnostic plots.
+#' Defaults to "slateblue4" for smoothers and to "olivedrab" otherwise. Because it's cool.
 #' @param envelope.col color of the global envelope around the expected trend. All data points should always stay within this envelope
 #' (and will for a proportion \code{conf.level} of datasets satisfying model assumptions). If a smoother has been used on
 #' the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay
 #' within the envelope.
-#' @param add.smooth logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
-#' scale-location plots, and the global envelope is around the \emph{smoother} not the data. No smoother is added to the normal quantile plot.
+#' @param add.smooth logical defaults to \code{TRUE}, which adds a smoother to residual vs fits and
+#' scale-location plots, and computes a global envelope around the \emph{smoother} rather than the data (\code{add.smooth=FALSE}). No smoother is added to the normal quantile plot.
 #' @param plot.it logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.
+#' @param fitMin the minimum fitted value to use in plots, any fitted value less than this will be truncated to
+#' \code{fitMin}. This is useful for generalised linear models, where small fitted values correspond to
+#' predictions that are numerically zero. The default is to set \code{fitMin} to \code{-6} for GLMs, otherwise no truncation (\code{-Inf}).
 #' @param ... further arguments sent through to \code{plot}
 #' 
 #' @details
@@ -97,12 +101,12 @@
 #' new responses from the fitted model, refit the model and recompute residuals and fitted values. 
 #' This directly assesses whether trends in observed trends depart from what would be expected if the fitted model
 #' were correct, without any further assumptions. For complex models or large datasets this would however be super-slow.
-#' A fast, more approximate alternative (\code{sim.method="norm"}) is to  simulate new (multivariate) normal residuals 
+#' A fast, more approximate alternative (\code{sim.method="norm"}) is to simulate new (multivariate) normal residuals 
 #' repeatedly and use these to assess whether trends in the observed data depart from what would be expected
 #' for independent (multivariate) normal residuals. If residuals are expected to be standard
 #' normal, a more refined check is to simulate from the standard normal using (\code{sim.method="stand.norm"}).
-#' This might for example be useful when diagnosing a model fitted using the \code{mvabund} package,
-#' since this calculates Dunn-Smyth residuals, which are approximately standard normal when assumptions are satisfied.  
+#' This might for example be useful when diagnosing a model fitted using the \code{mvabund} package (Wang et al. 2012),
+#' since this calculates Dunn-Smyth residuals (Dunn & Smyth 1996), which are approximately standard normal when assumptions are satisfied.  
 #' If \code{y} is a \code{glm} with non-Gaussian family then residuals will not be normal and \code{"refit"} is the
 #' only appropriate option, hence other choices will be overridden with a warning reporting that this
 #' has been done. 
@@ -128,13 +132,18 @@
 #' this is the sorted residuals.}
 #' \item{\code{lo}}{The lower bound on the global envelope, for each value of \code{x}.}
 #' \item{\code{hi}}{The upper bound on the global envelope, for each value of \code{x}.}
-#' \item{\code{p.value}}{A \emph{P}-value for the test that the observed smoother or data is not unusually far
-#' from what was expected, computed in \code{\link[GET]{global_envelope_test}}.} 
+#' \item{\code{p.value}}{A \emph{P}-value for the test that observed smoother or data are consistent with what
+#' would be expected if the fitted model were correct, computed in \code{\link[GET]{global_envelope_test}}.} 
 #' }
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' @references 
+#' 
+#' Dunn, P. K., & Smyth, G. K. (1996), Randomized quantile residuals. J. Comp. Graphical Stat. 5, 236-244. doi:10.1080/10618600.1996.10474708
+#' 
 #' Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
+#' 
+#' Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} – an \code{R} package for model‐based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
 #' 
 #' @seealso \code{\link{cpredict}}, \code{\link{cresiduals}}, \code{\link{qqenvelope}}
 #' @examples
@@ -151,8 +160,8 @@
 #' # check normality assumption:
 #' plotenvelope(iris_mlm,n.sim=99,which=2)
 #' 
-#' # A few more plots, with envelopes around smoothers: (this will take several seconds to run)
-#' \donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=TRUE)
+#' # A few more plots, with envelopes around data not smoothers:
+#' \donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=FALSE)
 #' # Note violation on the scale/location plot.}
 #' 
 #' @importFrom grDevices adjustcolor 
@@ -160,12 +169,13 @@
 #' @importFrom stats cor fitted formula lm model.frame model.matrix model.response predict qnorm qqnorm quantile residuals residuals.lm rnorm rstandard runif sd update var
 
 #' @export
-plotenvelope = function (y, which = 1:2, sim.method="refit", 
+plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm"), 
                        n.sim=199, conf.level=0.95, type="st", transform = NULL, 
                        main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
                        ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), col=par("col"), 
-                       line.col=if(add.smooth) "slateblue4" else "olivedrab", envelope.col = adjustcolor(line.col, 0.1), add.smooth=FALSE,
-                       plot.it = TRUE, ...) 
+                       line.col=if(add.smooth) c("slateblue4","olivedrab","slateblue4") else rep("olivedrab",3), 
+                       envelope.col = adjustcolor(line.col, 0.1), add.smooth=TRUE,
+                       plot.it = TRUE, fitMin=if(inherits(y,"glm")|inherits(y,"manyglm")) -6 else -Inf, ...) 
 {
   ### which plots to construct? And clean up arguments
   show = rep(FALSE, 6)
@@ -198,25 +208,28 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   } 
 
   # define predict function to be cpredict for mlm, otherwise predict
-  predFunction = 
-  if(inherits(object,"mlm")) 
+  predFunction = if(inherits(object,"mlm")) 
     cpredict
-  else
-  {
-    predict
-  } 
-  y = resFunction(object)
+  else 
+    function(x){ pmax(predict(x), fitMin) }
+
+    y = resFunction(object)
   x = predFunction(object)
+
+  # set defaults for sim.method ("stand.norm" for manyglm, otherwise "refit")
+  if(all(sim.method==c("refit","norm","stand.norm"))) 
+    sim.method = if(inherits(object,"manyglm")) "stand.norm" else "refit"
 
   # if it's a non-Gaussian GLM, change sim.method to "refit" with warning if required
   if(inherits(object,"glm")) 
   {
-    if(sim.method!="refit" & object$family$family!="gaussian")
+    if(object$family$family!="gaussian")
     {
+      if(sim.method[1]!="refit")
+        warning("A GLM for non-Gaussian data has been detected. Residuals will not be Gaussian when the model is correct, so sim.method has been changed to refit")
       sim.method="refit"
-      warning("A GLM for non-Gaussian data has been detected. Residuals will not be Gaussian when the model is correct, so sim.method has been changed to refit")
     }
-  }
+  } 
   
   # check if it is multivariate data, if so set a flag for later and vectorise res
   if(length(dim(y))>1)
@@ -224,8 +237,8 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     n.resp = dim(y)[2]
     n.rows = dim(y)[1]
     is.mva = TRUE
-    mu     = switch(sim.method, "stand.norm" = rep(0, n.resp), colMeans(y) )
-    Sigma  = switch(sim.method, "stand.norm" = cor(y), var(y) )
+    mu     = switch(sim.method[1], "stand.norm" = rep(0, n.resp), colMeans(y) )
+    Sigma  = switch(sim.method[1], "stand.norm" = cor(y), var(y) )
     if(col==par("col"))
       col  = rep(1:n.resp,each=n.rows)
   }
@@ -233,15 +246,15 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   {
     is.mva = FALSE
     n.resp = 1
-    mu     = switch(sim.method,"stand.norm" = 0, mean(y))
-    sigma  = switch(sim.method,"stand.norm" = 1, sd(y))
+    mu     = switch(sim.method[1],"stand.norm" = 0, mean(y))
+    sigma  = switch(sim.method[1],"stand.norm" = 1, sd(y))
   }
   
   ### now simulate new residuals and get fitted values too ###
   n.obs=length(y)
   
   # simulate to get limits around these
-  if(sim.method=="refit")
+  if(sim.method[1]=="refit")
   {
     modelF = model.frame(object)
     yNew   = simulate(object,n.sim)
@@ -334,12 +347,12 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       }
       # add envelope and line
       polygon(xPred[c(1:nPred,nPred:1)], c(cr$lo,cr$hi[nPred:1]), 
-              col=envelope.col, border=NA)
+              col=envelope.col[1], border=NA)
       # add smooth, if applicable
       if(add.smooth)
-        lines(xPred,resObs,col=line.col)
+        lines(xPred,resObs,col=line.col[1])
       else
-        lines(range(x),c(0,0),col=line.col,...)
+        lines(range(x),c(0,0),col=line.col[1],...)
       # add data
       points(x, y, col=col, ...)
       
@@ -375,16 +388,25 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
         # make qqplot
         plot(qq.x$x, qq.x$y, col=col, main=main[2], 
              xlab=xlab[2], ylab=ylab[2], ...)
-        #add a qq line as is done in qqline, but limited to range of data
+        #add a qq line.
+        # this is done as in qqline, but limited to range of data, unless sim.method="stand.norm"
         probs=c(0.25,0.75)
         qs=quantile(qq.x$y,probs)
         xs=qnorm(probs)
-        slope=diff(qs)/diff(xs)
-        int=qs[1]-slope*xs[1]
-        lines(range(qq.x$x),int+slope*range(qq.x$x),col=line.col)
+        if(sim.method[1]=="stand.norm")
+        {
+          slope = 1
+          int = 0
+        }
+        else
+        {
+          slope=diff(qs)/diff(xs)
+          int=qs[1]-slope*xs[1]
+        }
         # add envelope
         polygon(sort(qq.x$x)[c(1:n.obs,n.obs:1)], c(cr$lo,cr$hi[n.obs:1]), 
-                col=envelope.col, border=NA)
+                col=envelope.col[2], border=NA)
+        lines(range(qq.x$x),int+slope*range(qq.x$x),col=line.col[2])
       }
     
       # return a list with qq values and limits, ordered same way as input data
@@ -454,11 +476,11 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       }
       # add envelope and line
       polygon(xPred[c(1:nPred,nPred:1)], c(cr$lo,cr$hi[nPred:1]), 
-              col=envelope.col, border=NA)
+              col=envelope.col[3], border=NA)
 #      lines(range(xObs),median(yAbs)*c(1,1),col=line.col,...)
       # add smooth, if applicable
       if(add.smooth)
-        lines(xPred,resObs,col=line.col,...)
+        lines(xPred,resObs,col=line.col[3],...)
       # add data
       points(x, yAbs, col=col, ...)
       
@@ -469,7 +491,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   }
   
   
-  # an envelope around points on res vs fits plot
+  # an envelope around points on res vs fits plot - used in simulation work for faster comp times
   if (show[4L])
   {
     # get observed smoother

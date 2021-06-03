@@ -7,7 +7,7 @@
 plotenvelope(
   y,
   which = 1:2,
-  sim.method = "refit",
+  sim.method = c("refit", "norm", "stand.norm"),
   n.sim = 199,
   conf.level = 0.95,
   type = "st",
@@ -16,10 +16,12 @@ plotenvelope(
   xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
   ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))),
   col = par("col"),
-  line.col = if (add.smooth) "slateblue4" else "olivedrab",
+  line.col = if (add.smooth) c("slateblue4", "olivedrab", "slateblue4") else
+    rep("olivedrab", 3),
   envelope.col = adjustcolor(line.col, 0.1),
-  add.smooth = FALSE,
+  add.smooth = TRUE,
   plot.it = TRUE,
+  fitMin = if (inherits(y, "glm") | inherits(y, "manyglm")) -6 else -Inf,
   ...
 )
 }
@@ -37,14 +39,15 @@ from that code. A global envelope is included with each plot around where we exp
 the data (or the smoother, if requested, for plots 1 and 3) when model assumptions are satisfied.
 If not fully captured by the global envelope, there is some evidence that the model assumptions are not satisfied.}
 
-\item{sim.method}{How should residuals be simulated? The default \code{"refit"} option constructs new responses (via \code{\link{simulate}}),
+\item{sim.method}{How should residuals be simulated? The default for most objects is \code{"refit"}, which constructs new responses (via \code{\link{simulate}}),
 refits the model (via \code{\link{update}}), then recomputes residuals, often known as a \emph{parametric bootstrap}.
 This is computationally intensive but gives a robust answer. This is the only suitable option if
 residuals are not expected to be normal when assumptions are satisfied (like when using \code{\link[stats]{glm}} with a non-Gaussian family). 
 Alternatively, \code{"norm"} simulates from a normal distribution, matches means and variances (and covariances for multivariate responses) to the observed residuals.
 The \code{"stand.norm"} option sets means to zero and variances to one, which is appropriate when residuals
 should be standard normal when assumptions are satisfied (as for any object fitted using the \code{mvabund}
-package, for example). These options are faster but more approximate than \code{"refit"}.}
+package, for example). These options are faster but more approximate than \code{"refit"}, in fact \code{"stand.norm"} is 
+used as the default for \code{\link[mvabund]{manyglm}} objects, for computational reasons.}
 
 \item{n.sim}{the number of simulated sets of residuals to be generated, to which
 the observed residuals will be compared. The default is 199 datasets.}
@@ -71,18 +74,22 @@ If only one value is given that will be used for all plots.}
 
 \item{col}{color of points}
 
-\item{line.col}{color of the line on diagnostic plots about which points should show no trend if model assumptions are satisfied.
-Defaults to "olivedrab". Because it's cool. If \code{add.smooth=TRUE} this is the color of the smoother (defaulting to "slateblue4").}
+\item{line.col}{a vector of length three containing the colors of the lines on the three diagnostic plots.
+Defaults to "slateblue4" for smoothers and to "olivedrab" otherwise. Because it's cool.}
 
 \item{envelope.col}{color of the global envelope around the expected trend. All data points should always stay within this envelope
 (and will for a proportion \code{conf.level} of datasets satisfying model assumptions). If a smoother has been used on
 the residual vs fits or scale-location plot, the envelope is constructed around the smoother, that is, the smoother should always stay
 within the envelope.}
 
-\item{add.smooth}{logical defaults to \code{FALSE} (no smoother). If \code{TRUE}, a smoother is drawn on residual vs fits and
-scale-location plots, and the global envelope is around the \emph{smoother} not the data. No smoother is added to the normal quantile plot.}
+\item{add.smooth}{logical defaults to \code{TRUE}, which adds a smoother to residual vs fits and
+scale-location plots, and computes a global envelope around the \emph{smoother} rather than the data (\code{add.smooth=FALSE}). No smoother is added to the normal quantile plot.}
 
 \item{plot.it}{logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.}
+
+\item{fitMin}{the minimum fitted value to use in plots, any fitted value less than this will be truncated to
+\code{fitMin}. This is useful for generalised linear models, where small fitted values correspond to
+predictions that are numerically zero. The default is to set \code{fitMin} to \code{-6} for GLMs, otherwise no truncation (\code{-Inf}).}
 
 \item{...}{further arguments sent through to \code{plot}}
 }
@@ -95,8 +102,8 @@ the range of fitted values. For plot 2, this is sorted normal quantiles correspo
 this is the sorted residuals.}
 \item{\code{lo}}{The lower bound on the global envelope, for each value of \code{x}.}
 \item{\code{hi}}{The upper bound on the global envelope, for each value of \code{x}.}
-\item{\code{p.value}}{A \emph{P}-value for the test that the observed smoother or data is not unusually far
-from what was expected, computed in \code{\link[GET]{global_envelope_test}}.} 
+\item{\code{p.value}}{A \emph{P}-value for the test that observed smoother or data are consistent with what
+would be expected if the fitted model were correct, computed in \code{\link[GET]{global_envelope_test}}.} 
 }
 }
 \description{
@@ -150,12 +157,12 @@ The default method (\code{sim.method="refit"}) uses a \emph{parametric bootstrap
 new responses from the fitted model, refit the model and recompute residuals and fitted values. 
 This directly assesses whether trends in observed trends depart from what would be expected if the fitted model
 were correct, without any further assumptions. For complex models or large datasets this would however be super-slow.
-A fast, more approximate alternative (\code{sim.method="norm"}) is to  simulate new (multivariate) normal residuals 
+A fast, more approximate alternative (\code{sim.method="norm"}) is to simulate new (multivariate) normal residuals 
 repeatedly and use these to assess whether trends in the observed data depart from what would be expected
 for independent (multivariate) normal residuals. If residuals are expected to be standard
 normal, a more refined check is to simulate from the standard normal using (\code{sim.method="stand.norm"}).
-This might for example be useful when diagnosing a model fitted using the \code{mvabund} package,
-since this calculates Dunn-Smyth residuals, which are approximately standard normal when assumptions are satisfied.  
+This might for example be useful when diagnosing a model fitted using the \code{mvabund} package (Wang et al. 2012),
+since this calculates Dunn-Smyth residuals (Dunn & Smyth 1996), which are approximately standard normal when assumptions are satisfied.  
 If \code{y} is a \code{glm} with non-Gaussian family then residuals will not be normal and \code{"refit"} is the
 only appropriate option, hence other choices will be overridden with a warning reporting that this
 has been done. 
@@ -187,13 +194,17 @@ iris_mlm=lm(Y~Species,data=iris)
 # check normality assumption:
 plotenvelope(iris_mlm,n.sim=99,which=2)
 
-# A few more plots, with envelopes around smoothers: (this will take several seconds to run)
-\donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=TRUE)
+# A few more plots, with envelopes around data not smoothers:
+\donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=FALSE)
 # Note violation on the scale/location plot.}
 
 }
 \references{
+Dunn, P. K., & Smyth, G. K. (1996), Randomized quantile residuals. J. Comp. Graphical Stat. 5, 236-244. doi:10.1080/10618600.1996.10474708
+
 Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
+
+Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} – an \code{R} package for model‐based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
 }
 \seealso{
 \code{\link{cpredict}}, \code{\link{cresiduals}}, \code{\link{qqenvelope}}
