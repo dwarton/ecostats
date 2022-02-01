@@ -169,7 +169,7 @@
 #' @importFrom stats cor fitted formula lm model.frame model.matrix model.response predict qnorm qqnorm quantile residuals residuals.lm rnorm rstandard runif sd update var
 
 #' @export
-plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm"), 
+plotenvelope = function (y, which = 1:2, sim.method="refit", 
                        n.sim=199, conf.level=0.95, type="st", transform = NULL, 
                        main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
                        ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), col=par("col"), 
@@ -191,8 +191,8 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
     stop("y must be an object obtained by fitting a model to data, it cannot be the dataset itself")
   else
   {
-    object = y
-    y      = model.response(model.frame(object))
+    object=y
+    yResp     = model.response(model.frame(object))
   }
   
   # define residual function to be cresiduals for mlm, rstandard for lm, otherwise residuals
@@ -213,8 +213,10 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
   else 
     function(x){ pmax(predict(x), fitMin) }
 
-    y = resFunction(object)
+  y = resFunction(object)
   x = predFunction(object)
+  
+  y[y==Inf] = 2*max(y[y<Inf]) #deal with any probs with infinite resids
 
   # set defaults for sim.method ("stand.norm" for manyglm, otherwise "refit")
   if(all(sim.method==c("refit","norm","stand.norm"))) 
@@ -236,9 +238,12 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
   {
     n.resp = dim(y)[2]
     n.rows = dim(y)[1]
-    is.mva = TRUE
+    if(n.resp>1)
+      is.mva = TRUE
+    else
+      is.mva = FALSE
     mu     = switch(sim.method[1], "stand.norm" = rep(0, n.resp), colMeans(y) )
-    Sigma  = switch(sim.method[1], "stand.norm" = cor(y), var(y) )
+    Sigma  = switch(sim.method[1], "stand.norm" = cor(y), var(y) ) 
     if(col==par("col"))
       col  = rep(1:n.resp,each=n.rows)
   }
@@ -256,19 +261,48 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
   # simulate to get limits around these
   if(sim.method[1]=="refit")
   {
-    modelF = model.frame(object)
-    yNew   = simulate(object,n.sim)
+    # get a model frame with everything in it and update on original data.
+    # This is done to set up the framework to use for simulating - all we would need to do then is change first element of mf (response).
+    mf <- match.call(call=object$call)
+    m <- match(c("formula", "data", "subset", 
+                 "weights", "na.action", "etastart", 
+                 "mustart", "offset"), names(mf), 0L)
+    mf <- mf[c(1L, m)]
+#    mf$drop.unused.levels <- TRUE
+    mf[[1L]] <- quote(stats::model.frame)
+    modelF <- try( eval(mf, parent.frame()), silent=TRUE )
+    
+    # if for some reason this didn't work (mgcv::gam objects cause grief) then just call model.frame on object:    
+    if(inherits(modelF, "try-error"))
+      modelF = model.frame(object)
+
+    # if there is an offset, add it, as a separate argument when updating
+    offs=try(model.offset(modelF))
+    if(inherits(offs,"try-error"))
+      objectY = update(object,data=modelF)
+    else
+      objectY = update(object,data=modelF,offset=offs)
+    
+    # simulate new data as a matrix
+        yNew   = simulate(objectY,n.sim)
     if(is.mva) # for multivariate data, vectorise res for each sim dataset
       yNew = apply(yNew,3,cbind)
     resids = fits = matrix(NA,nrow(yNew),ncol(yNew))
-#    logLiks=rep(NA,n.sim)
     for(i.sim in 1:n.sim)
     {
-      modelF[1]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(y))
-      newFit         = try(update(object,data=modelF))
+      modelF[1]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
+      if(inherits(offs,"try-error"))
+        newFit         = try(update(objectY,data=modelF))
+      else
+        newFit         = try(update(objectY,data=modelF,offset=offs))
       resids[,i.sim] = resFunction(newFit)
-      fits[,i.sim]   = predFunction(newFit)
-#      logLiks[i.sim] = logLik(newFit)
+      ftt   = try(predFunction(newFit)) #using try for fitted values because eel data occasionally failed(!?)
+      if(inherits(ftt,"try-error"))
+        fits[,i.sim] = x
+      else
+        fits[,i.sim] = ftt
+
+      if(inherits(fits[,i.sim],"try-error"))
       # if no variation in preds, add v small random noise to avoid error later
       if(var(fits[,i.sim])<1.e-8) fits[,i.sim] = fits[,i.sim] + 1.e-6*rnorm(n.obs)
     }
@@ -287,6 +321,14 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
       resids = matrix(rnorm(n.obs*n.sim,mean=mu,sd=sigma),ncol=n.sim)
     fits = matrix(rep(x,n.sim),ncol=n.sim)
   }
+  
+  # for smoothers, check df is not larger than the model permits
+  if(add.smooth)
+  {
+    nXs = length(unique(x))
+    kStart = if(nXs<11) max(nXs-3,1) else -1 
+  }
+  
   out=vector("list",3)
   
   ### plot 1 - residuals vs fits plot ###
@@ -299,7 +341,13 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
       nPred = 500
       xPred = seq(min(x),max(x),length=nPred)
       # get smoother for observed data
-      gam.yx=mgcv::gam(c(y)~s(c(x)))
+      if(nXs>3) 
+        gam.yx=mgcv::gam(c(y)~s(c(x),k=kStart))
+      if(nXs==3)
+        gam.yx = lm(c(y)~c(x)+I(c(x^2)))
+      if(nXs==2)  
+        gam.yx=lm(c(y)~c(x))
+      
       resObs=as.vector(predict(gam.yx,newdata=data.frame(x=xPred)))
 
       # get smoothers for simulated data
@@ -307,7 +355,12 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
       for(i.sim in 1:n.sim)
       {
         xiSim=fits[,i.sim]
-        gam.yxi=mgcv::gam(resids[,i.sim]~s(xiSim))
+        if(nXs>3)
+          gam.yxi = mgcv::gam(resids[,i.sim]~s(xiSim,k=kStart))
+        if(nXs==3)
+          gam.yxi = lm(resids[,i.sim]~xiSim+I(xiSim^2))
+        if(nXs==2)
+          gam.yxi = lm(resids[,i.sim]~xiSim)
         residFn[,i.sim]=predict(gam.yxi,newdata=data.frame(xiSim=xPred))
       }
     }
@@ -423,21 +476,31 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
     yAbs    = sqrt(abs(y))
     residsAbs = sqrt(abs(resids))
     # get observed smoother
-    if(add.smooth)
+    if(add.smooth==TRUE)
     {
       nPred = 500
       xPred = seq(min(x),max(x),length=nPred)
       # get smoother for observed data
-      gam.yx=mgcv::gam(c(yAbs)~s(c(x)))
+      if(nXs>3)
+        gam.yx=mgcv::gam(c(yAbs)~s(c(x),k=kStart))
+      if(nXs==3)
+        gam.yx=lm(c(yAbs)~c(x)+I(c(x^2)))
+      if(nXs==2)
+        gam.yx=lm(c(yAbs)~c(x))
       resObs=as.vector(predict(gam.yx,newdata=data.frame(x=xPred)))
       
       # get smoothers for simulated data
       residFn=matrix(NA,nPred,n.sim)
       for(i.sim in 1:n.sim)
       {
-        xiSim          = fits[,i.sim]
-        gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim))
-        residFn[,i.sim] = predict(gam.yxi,newdata=data.frame(xiSim=xPred))
+        xiSim            = fits[,i.sim]
+        if(nXs>3)
+          gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim,k=kStart))
+        if(nXs==3)
+          gam.yxi        = lm(residsAbs[,i.sim]~xiSim+I(xiSim^2))
+        if(nXs==2)
+          gam.yxi        = lm(residsAbs[,i.sim]~xiSim)
+        residFn[,i.sim]  = predict(gam.yxi,newdata=data.frame(xiSim=xPred))
       }
     }
     else
@@ -464,7 +527,7 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
     if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
     {
       # make axes and scales as appropriate
-      if(add.smooth) #for smoother, keep ylim to data only
+      if(add.smooth==TRUE) #for smoother, keep ylim to data only
       {
         plot(x,yAbs, main=main[3], 
              xlab=xlab[3], ylab=ylab[3], type="n", ...)
@@ -479,7 +542,7 @@ plotenvelope = function (y, which = 1:2, sim.method=c("refit","norm","stand.norm
               col=envelope.col[3], border=NA)
 #      lines(range(xObs),median(yAbs)*c(1,1),col=line.col,...)
       # add smooth, if applicable
-      if(add.smooth)
+      if(add.smooth==TRUE)
         lines(xPred,resObs,col=line.col[3],...)
       # add data
       points(x, yAbs, col=col, ...)

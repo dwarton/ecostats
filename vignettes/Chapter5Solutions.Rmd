@@ -1,10 +1,10 @@
 ---
-title: "Chapter 5 - Model selection - Exercise solutions and Code Boxes"
+title: "Chapter 5 -- Model selection -- Exercise solutions and Code Boxes"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 5 - Model selection - Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 5 -- Model selection -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -108,7 +108,7 @@ print( c(rss_r,rss_rs) )
 
 ## Code Box 5.2: 5-fold cross-validation for the data of Exercise 5.1
 
-```{r box52}
+```{r box52, fig.height=6, fig.width=8}
 library(DAAG)
 ft_r = lm(log(height)~rain,dat=globalPlants)
 ft_rs = lm(log(height)~rain+rain.seas,dat=globalPlants)
@@ -319,6 +319,7 @@ summary(ft_climStand)
 *Compare the $R^2$ results of Code Boxes 5.7-5.8. Which table(s) do you think Angela should report when describing variable importance?*
 
 This is a tough one -- I guess the main story is that:
+
 1. a rain variable (whether `rain` or `rain.wetm`) explains a big hcunk of variation
 2. `temp` explains a fair bit of variation even after rain variables are in the model
 
@@ -458,7 +459,7 @@ ft_tempLessRain = lm(logHt~temp+rain+rain.seas+rain.wetqr+rain.dryqr+rain.warmqr
 ft_Lstep = step(ft_temp, scope=formula(ft_tempLessRain), direction="forward")
 
 XlessRain=model.matrix(ft_tempLessRain)[,-1]
-lasso_Lrain=cv.glmnet(XlessRain,globalPlants$logHt,penalty.factor=c(0,rep(1,8)))
+lasso_Lrain=cv.glmnet(XlessRain,globalPlants$logHt,penalty.factor=c(0,rep(1,6)))
 plot(lasso_Lrain)
 ft_Llasso=glmnet(XlessRain,globalPlants$logHt,lambda=lasso_Lrain$lambda.min)
 ft_Llasso$beta

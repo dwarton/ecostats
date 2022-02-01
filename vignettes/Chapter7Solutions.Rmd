@@ -1,10 +1,10 @@
 ---
-title: "Chapter 7 - Correlated samples in times, space, phylogeny... - Exercise solutions and Code Boxes"
+title: "Chapter 7 -- Correlated samples in times, space, phylogeny... -- Exercise solutions and Code Boxes"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 7 - Correlated samples in times, space, phylogeny... - Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 7 -- Correlated samples in times, space, phylogeny... -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -218,7 +218,7 @@ barplot.phylo4d(shore4d,c("Egg.Mass","F.Mass","M.Mass"))
 
 ## Code Box 7.9: Exploratory analysis of egg size data}\label{code:eggEDA}
 
-```{r box79}
+```{r box79, fig.width=7, fig.height=7}
 library(GGally)
 ggpairs(log(shorebird.data[,2:4]))
 ```

@@ -1,10 +1,10 @@
 ---
-title: "Chapter 4 - Linear models - anything goes - Exercise solutions and Code Boxes"
+title: "Chapter 4 -- Linear models -- anything goes -- Exercise solutions and Code Boxes"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 4 - Linear models - anything goes - Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 4 -- Linear models -- anything goes -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,8 +19,9 @@ knitr::opts_chunk$set(
 ## Exercise 4.1: Ravens and gunshots
 
 We assume:
-- that we have a random sample of paired differences (most importantly, paired differences are independent of each other)
-- the paired differences are approixamtely normal.
+
+* that we have a random sample of paired differences (most importantly, paired differences are independent of each other)
+* the paired differences are approixamtely normal.
 
 
 ```{r ravens check}
@@ -79,12 +80,13 @@ The residual vs fits plot has a fan-shaped pattern, suggesting that transformati
 
 *Is there an effect of distance of isolation after controlling for wet mass?*
 
-*Q's* - this is a hypothesis test, for an effect on `Total` of `Dist` after controlling for `Wmass`.
+*Q's* -- this is a hypothesis test, for an effect on `Total` of `Dist` after controlling for `Wmass`.
 
 *P's* We have three variables of interest:
-- `Total` is the quantitative response
-- `Dist` is a factor (0, 2 or 10)
-- `Wmass` is a quantitative variable, to be use as a covariate
+
+* `Total` is the quantitative response
+* `Dist` is a factor (0, 2 or 10)
+* `Wmass` is a quantitative variable, to be use as a covariate
 
 We can get all three variables onto the same graph using a scatterplot, with different colours for different treatment levels, as in Code Box 4.4.
 
@@ -115,9 +117,9 @@ Remaining assumptions can be checked using diagnostic plots.
 plotenvelope(lmMassDist)
 ```
 
-- *normality* - normal quantile plot is close to a straight line so this is OK
-- *equal variance* - no fan shape on residual vs fits plot so this seems OK
-- *linearity* - no U-shape on residual vs fits plot so this seems OK
+* *normality* - normal quantile plot is close to a straight line so this is OK
+* *equal variance* - no fan shape on residual vs fits plot so this seems OK
+* *linearity* -- no U-shape on residual vs fits plot so this seems OK
 
 
 ## Code Box 4.6: ANCOVA with the order of terms switched.
@@ -138,15 +140,16 @@ drop1(lmMassDist,test="F")
 
 ## Exercise 4.6: Snails, isolation and time
 
-**Q's** - here is the research question:
+**Q's** -- here is the research question:
 *Does invertebrate density change with isolation? Does the isolation effect vary with time period?*
 
 We want to test a specific hypothesis (no effect of `Dist`, no interaction of `Dist` with `Time`).
 
 **P's** There are three variables involved in this research question:
-- `Total` is invertebrate density (quantitative)
-- `Dist` is a factor (0, 2 or 10)
-- `Time` is also a factor (5 or 10 weeks)
+
+* `Total` is invertebrate density (quantitative)
+* `Dist` is a factor (0, 2 or 10)
+* `Time` is also a factor (5 or 10 weeks)
 
 Given previous information we could also add `logWmass` as another covariate...
 
@@ -165,9 +168,10 @@ plot(Total ~ interaction(Dist,Time), data=seaweed, log="y") ## and as usual use 
  ft_seaweedFact=lm(logTot~Time*Dist, data=seaweed)
  plotenvelope(ft_seaweedFact)
 ```
-- *independence*: if plots were randomly allocated to treatments then this will be satisfied
-- *normality*: the normal quantile plot is close to a straight line so this looks OK
-- *equal variance*: no fan-shape on the residual vs fits plot so this looks OK
+
+* *independence*: if plots were randomly allocated to treatments then this will be satisfied
+* *normality*: the normal quantile plot is close to a straight line so this looks OK
+* *equal variance*: no fan-shape on the residual vs fits plot so this looks OK
 There is no linearity/additivity assumption in a factorial ANOVA
 
 
@@ -184,8 +188,8 @@ Note we used `Time*Dist` because `Time` is not the variable of primary interest,
 ```{r seaweed interplot}
  library(dplyr)
  seaweed$Time = as.factor(seaweed$Time) 
- by.DistTime = group_by(seaweed,Dist,Time)
- distTimeMeans = summarise(by.DistTime, logTotal=mean(log(Total)))
+ by_DistTime = group_by(seaweed,Dist,Time)
+ distTimeMeans = summarise(by_DistTime, logTotal=mean(log(Total)))
  distTimeMeans
  library(ggplot2)
  library(ggthemes) #loads special themes

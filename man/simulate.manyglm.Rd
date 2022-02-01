@@ -24,7 +24,7 @@ from the \code{ecoCopula} package, on a \code{cord} object constructed under def
 it fits a copula latent variable model with two latent variables, then uses this to simulate new data.
 }
 \seealso{
-\code{\link[mvabund]{manyglm}}, \code{\link[mvabund]{cord}}, \code{\link[mvabund]{simulate.cord}}
+\code{\link[mvabund]{manyglm}}, \code{\link[ecoCopula]{cord}}, \code{\link[ecoCopula]{simulate.cord}}
 }
 \author{
 David Warton <david.warton@unsw.edu.au>

@@ -1,0 +1,334 @@
+---
+title: "Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 14 -- Multivariate abundances --- inference about environmental associations -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 14.1: Revegetation and invertebrate counts
+*In Anthony’s revegetation study (Exercise 10.3), he classified anything that fell into his pitfall traps to Order, and thus counted the abundance of each of 24 invertebrate Orders across ten sites. He wants to know: Is there evidence of a change in invertebrate communities due to revegetation efforts?*
+
+*What type of response variable(s) does he have? How should Anthony analyse his data?*
+
+He has a multivariate abundance dataset, with 24 correlated counts of invertebrates in different Orders. He needs to use some GLM approach that can handle correlation and many responses, like `manyglm` from the `mvabund` package. 
+
+
+## Exercise 14.2: Invertebrates settling on seaweed
+*In Exercise 1.13, David and Alistair looked at invertebrate epifauna settling on algal beds (seaweed) with different levels of isolation (0, 2, or 10 metre buffer) from each other, at two sampling times (5 and 10 weeks). They observed presence/absence patterns of 16 different types of invertebrate (across 10 replicates). They would like to know if there is any evidence of a difference in invertebrate presence/absence patterns with Distance of Isolation.*
+
+*How should they analyse the data?*
+
+They have a multivariate abundance dataset, with 16 correlated presence/absence measurements of invertebrates. They need to use some GLM approach that can handle correlation and many responses, like `manyglm` from the `mvabund` package. 
+
+
+## Exercise 14.3: Do offshore wind farms affect fish communities?
+*As in Exercise 10.2, Lena studied the effects of an offshore wind farm on fish communities, by collecting paired data before and after wind farm construction, at 36 stations in each of three zones (wind farm, North, or South). She counted how many fish were caught at each station, classified into 16 different taxa. Lena wants to know if there is any evidence of a change in fish communities at wind farm stations, as compared to others, following construction of the wind farm.* 
+
+*How should she analyse the data?*
+
+She has a multivariate abundance dataset, with 16 correlated counts of different fish species. She needs to use some GLM approach that can handle correlation and many responses, like `manyglm` from the `mvabund` package. 
+
+## Code Box 14.1: Using mvabund to test for an effect of revegetation in Exercise 12.2
+```{r code14.1}
+library(ecostats)
+library(mvabund)
+data(reveg)
+reveg$abundMV=mvabund(reveg$abund)
+ft_reveg=manyglm(abundMV~treatment+offset(log(pitfalls)),
+family="negative.binomial", data=reveg) # offset included as in Exercise 10.9
+anova(ft_reveg)
+```
+
+## Exercise 14.4: Testing for an effect of isolation on invertebrates in seaweed
+*Consider the `seaweed` dataset from David’s and Alistair’s study of invertebrate epifauna settling on algal beds with different levels of isolation (0, 2 or 10 metre buffer) at different sampling times (5 and 10 weeks), with varying seaweed biomass in each patch.*
+
+*What sort of model is appropriate for this dataset? Fit this model and call it `ft_epiAlt` and run `anova(ft_epiAlt)`. (This might take a couple of minutes to run.)*
+
+Previous experience suggests anything beyond second-order interactions does not seem to matter -- you could fit more but it would take longer. Because of the warning that this will take a long time to run I will set `nBoot=99` for a quicker, rough answer:
+
+```{r ex14.4an}
+data(seaweed)
+seaweed$Dist = as.factor(seaweed$Dist)
+# set up presence-absence response:
+seaweed$PA = mvabund(seaweed[,6:21])
+seaweed$PA[seaweed$PA>1] = 1
+
+#fit model
+ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family=binomial("cloglog"), data=seaweed)
+anova(ft_epiAlt,nBoot=99)
+```
+
+*Now fit a model under the null hypothesis that there is no effect of Distance of isolation, and call it `ft_epiNull`. Run `anova(ft_epiNull, ft_epiAlt)`. This second anova took much less time to fit – why? Is there evidence of an effect of distance of isolation on presence/absence patterns in the invertebrate community?*
+
+To see if there is an effect of `Dist` I guess we could remove it from the model entirely and see if that does anything:
+```{r ex14.4anNull}
+ft_epiNull = manyglm(PA~Wmass+Size+Time,family=binomial("cloglog"), data=seaweed)
+anova(ft_epiNull, ft_epiAlt, nBoot=99)
+```
+
+*This second `anova` took much less time to fit – why?*
+
+Because it only has to test one hypothesis, not seven, so took about a seventh of the time!
+
+*Is there evidence of an effect of distance of isolation on presence/absence patterns in the invertebrate community?*
+
+No :(
+
+## Code Box 14.2: Checking assumptions for the revegetation model of Code Box 14.1
+
+To get this working we currently need to store offset, pre-transformed, in workspace :( 
+```{r code14.2, fig.width=9,fig.height=3.3}
+logPit=log(reveg$pitfalls)
+par(mfrow=c(1,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
+ft_reveg=manyglm(abundMV~treatment,offset=logPit,family="negative.binomial", data=reveg)
+plotenvelope(ft_reveg, which=1:3)
+```
+
+## Code Box 14.3: Checking mean-variance assumptions for a Poisson
+revegetation model
+```{r code14.3, fig.width=9, fig.height=3.3}
+ft_revegP=manyglm(abundMV~treatment, offset=logPit, family="poisson", data=reveg)
+par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plotenvelope(ft_revegP, which=1:3, sim.method="stand.norm")
+```
+
+```{r code14.3MV, fig.width=6, fig.height=5}
+meanvar.plot(reveg$abundMV~reveg$treatment)
+abline(a=0,b=1,col="darkgreen")
+```
+
+*How's the Poisson assumption looking?*
+
+It is in all sorts of trouble, there is a very strong fan-shape on the residuals vs fits plot, points drift well outside the simulation envelope on the nromal quantile plot (with many residuals larger than 5 or less than -5) and a strong increasing trend on the residual vs fits plot. These are all symptomatic of overdispersion, confirmed by the sample mean-variance plot, where points tend to fall above the one-to-one line at large means.
+
+
+## Exercise 14.5: Checking assumptions for the habitat configuration data
+*What assumptions were made?*
+
+We assumed:
+
+* observations are conditionally independent
+* data are Bernoulli
+* the cloglog of the mean is a linear function of predictors
+* residuals have constant correlation
+
+*Where possible, check these assumptions.*
+
+```{r ex14.5, fig.width=9, fig.height=3.3, warning=FALSE}
+par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family=binomial("cloglog"), data=seaweed)
+plotenvelope(ft_epiAlt, which=1:3)
+```
+
+*Do assumptions seem reasonable?*
+
+Yes it all looks good to me. This is not unexpected because presence-absence data are by definition Bernoulli, the only potential issues could be if there were higher order interactions or violations of te independence assumption.
+
+
+## Exercise 14.6: Checking assumptions for the wind farm data
+*Consider Lena’s offshore wind farm study (Exercise 14.3). Fit an appropriate model to the data. Make sure you include a Station main effect (to account for the paired sampling design).*
+
+
+```{r ex14.6}
+data(windFarms)
+ft_wind=manyglm(mvabund(windFarms$abund)~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
+```
+
+*What assumptions were made?*
+
+We assumed:
+
+* observations are conditionally independent
+* data are Poisson
+* the log of the mean is a linear function of predictors
+* residuals have constant correlation
+
+*Where possible, check these assumptions.*
+
+Used "stand.norm"  because this model takes a while to fit. 
+```{r ex14.6assumptions, fig.width=9, fig.height=3.3, warning=FALSE}
+par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plotenvelope(ft_wind, which=1:3, sim.method="stand.norm")
+```
+
+
+*Do assumptions seem reasonable? In particular, think about whether there is evidence that the counts are overdispersed compared to the Poisson.*
+
+Things generally look OK, but there is a weird downward kink on the scale-location plot, weakly suggestive of under-dispersion. This could be a weird artifact though so let's repeat using `"refit"`, but with a smaller value of `n.sim` so it doesn't take too long:
+```{r ex14.6refit, fig.width=9, fig.height=3.3, warning=FALSE}
+par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plotenvelope(ft_wind, which=1:3, n.sim=39)
+```
+
+So the weird kink in the scale-location plot happened in simulated data too, so it is nothing really to worry about. It seems to be an artifact, probably because of overfitting of the data by including a `Station` term in the model means that there is a parameter for every two observations in the data!. (If a random effect were used instead, this effect would have been weaker. But it isn't really a problem)
+
+
+## Code Box 14.4: A manyglm analysis of the revegetation data, using a
+statistic accounting for correlation
+```{r code 14.4}
+anova(ft_reveg,test="wald",cor.type="shrink")
+```
+
+## Exercise 14.7: Testing for an effect of offshore wind farms (slowly)
+*Fit models [to Lena's windfarm data] under the null and alternative hypotheses of interest. Run an anova to compare these two models, with just 19 bootstrap resamples, to estimate computation time.*
+
+The null model in this case has no `Year:Zone` term... there could still be year-to-year variation, but it should not affect different Zones in different ways.
+```{r ex14.7}
+windMV = mvabund(windFarms$abund)
+ft_wind=manyglm(windMV~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
+ft_windNull=manyglm(windMV~Station+Year, family="poisson", data=windFarms$X)
+anova(ft_windNull, ft_wind, nBoot=19)
+```
+This took 12 seconds for me.
+
+*Remove zerotons and singletons from the dataset using: `windMV = mvabund( windFarms$abund[,colSums(windFarms$abund>0)>1] )` Now fit a model to this new response variable, again with just 19 bootstrap resamples.*
+
+```{r ex14.7Singletons}
+windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
+ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
+ft_windNull1=manyglm(windMV1~Station+Year, family="poisson", data=windFarms$X)
+anova(ft_windNull1, ft_wind1, nBoot=19)
+```
+
+*Did this run take less time?*
+Yes, but not much less, it took 10 seconds for me.
+
+*How do results compare?*
+Results were almost identical, with the same test statistic (to two decimal places).
+
+*How long do you think it would take to fit a model with 999 bootstrap resamples, for an accurate 𝑃-value?*
+
+As a rough estimate, multiply the time you just got by 50. For me this is about 500 seconds, so I would expect it to take about eight minutes.
+
+It is curious that this didn't change computation time all that much. Looking at number of non-zero values in `windMV`:
+```{r ex14.7ColSums}
+colSums(windFarms$abund>0)
+```
+we see that only three of the 16 species had one or less presence  A couple more had three counts, removing these as well:
+
+```{r ex14.7Tripletons}
+windMV3 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>3])
+ft_wind3=manyglm(windMV3~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
+ft_windNull3=manyglm(windMV3~Station+Year, family="poisson", data=windFarms$X)
+anova(ft_windNull3, ft_wind3, nBoot=19)
+```
+
+This is only slightly quicker, which is a tad surprising. The test statistic is only slightly smaller, so we can see clearly that the action is happening for the more abundant species -- this is not surprising, there is not enough information in any of the rare species to detect an interaction!
+
+## Code Box 14.5: Analysing ordinal data from the habitat configuration study using manyany
+```{r code14.5, warning=FALSE}
+habOrd = counts = round(seaweed[,6:21]*seaweed$Wmass)
+ habOrd[counts>0 & counts<10] = 1
+habOrd[counts>=10] = 2
+library(ordinal)
+for(iVar in 1:dim(habOrd)[2]) #clm needs each response to be a factor
+  habOrd[,iVar]=factor(habOrd[,iVar],levels=c("0","1","2"))
+summary(habOrd) # Amphipods are all "2" which would return an error in clm
+habOrd=habOrd[,-1] #remove Amphipods
+manyOrd=manyany("clm",habOrd,abund~Dist*Time*Size,data=seaweed)
+manyOrdNull=manyany("clm",habOrd,abund~Time*Size,data=seaweed)
+anova(manyOrdNull, manyOrd)
+```
+
+*What hypothesis has been tested here? Is there any evidence against it?*
+
+We tested for an effect of distance on abundance, when classified into a three-level ordinal factor. There is no evidence of a `Dist` effect.
+
+## Code Box 14.6: A compositional analysis of Anthony’s revegetation
+data
+```{r code 14.6}
+ft_comp=manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg, composition=TRUE)
+anova(ft_comp,nBoot=99)
+```
+
+*Which term measures the effect of treatment on relative abundance? Is there evidence of an effect on relative abundance?*
+
+`cols:treatment`. There is evidence of an effect of relative abundance.
+
+
+## Code Box 14.7: A faster compositional analysis of Anthony’s revegetation data
+```{r code 14.7}
+ft_null = manyglm(abundMV~cols+rows+offset(log(pitfalls)),
+data=ft_comp$data)
+ft_alt = manyglm(abundMV~cols+rows+treatment:cols
++offset(log(pitfalls)), data=ft_comp$data)
+anova(ft_null,ft_alt,nBoot=99,block=ft_comp$rows)
+```
+
+## Code Box 14.8: Quick-and-dirty compositional analysis of Anthony’s revegetation data
+```{r code14.8}
+ft_reveg0 = manyglm(abundMV~1+offset(log(pitfalls)), data=reveg)
+QDrows0 = log(rowSums(abundMV)) - log( rowSums(fitted(ft_reveg0)) )
+ft_row0=manyglm(abundMV~1+offset(QDrows0), data=reveg)
+ft_reveg = manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg)
+QDrows = log(rowSums(abundMV)) - log( rowSums(fitted(ft_reveg)) )
+ft_row=manyglm(abundMV~treatment+offset(QDrows), data=reveg)
+anova(ft_row0,ft_row)
+```
+
+*This was over ten times quicker than Code Box 14.7 (note that it used ten times as many resamples), but results are slightly different -- the test statistic is slightly smaller, and the $P$-value larger. Why do you think this might be the case?*
+
+The quick-and-dirty offset approach only roughly approximates the row effect, so it would be expected to lose some efficiency (leading to a smaller test statistic and a larger $P$-value).
+
+
+## Code Box 14.9: Posthoc testing for the bush regeneration data
+```{r code14.9}
+an_reveg = anova(ft_reveg,p.uni="adjusted")
+an_reveg
+```
+
+## Code Box 14.10: Exploring indicator taxa most strongly associated with the treatment effect in Anthony’s revegetation data
+
+```{r code4.10}
+sortedRevegStats = sort(an_reveg$uni.test[2,],decreasing=T,
+index.return=T)
+sortedRevegStats$x[1:5]
+sum(sortedRevegStats$x[1:5])/an_reveg$table[2,3]
+coef(ft_reveg)[,sortedRevegStats$ix[1:5]]
+ft_reveg$stderr[,sortedRevegStats$ix[1:5]]
+```
+
+## Exercise 14.8: Indicator species for offshore wind farms?
+*Which fish species are most strongly associated with offshore wind farms, in Lena’s study? Reanalyse the data to obtain univariate test statistics and univariate $P$-values that have been adjusted for multiple testing.*
+
+```{r ex14.8}
+data(windFarms)
+windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
+ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
+an_wind1 = anova(ft_wind1,p.uni="adjusted",nBoot=99)
+sortedWindStats = sort(an_wind1$uni.test[4,], decreasing=T, index.return=T)
+sortedWindStats$x[1:5]
+an_wind1$uni.p[4,sortedWindStats$ix[1:5]]
+```
+
+*Is there evidence that any species clearly have a Zone:Year interaction, after adjusting for multiple testing?*
+
+Yes it looks like we have evidence of an effect in `Tanglake` (Viviparous Eelpout) and `Torsk` (cod).
+
+*What proportion of the total `Zone:Year` effect is attributable to these potential indicator species?*
+
+```{r ex14.8prop}
+sum(sortedWindStats$x[1:2])/an_wind1$table[4,3]
+```
+So 63\% of the `Zone:Year` effect is just these two species.
+
+*Plot the abundance of each potential indicator species against Zone and Year.*
+```{r ex14.8plot}
+plot(windMV1~interaction(windFarms$X$Zone,windFarms$X$Year),var.subset=sortedWindStats$ix[1:4])
+```
+
+*What is the nature of the wind farm effect for each species? Do you think these species are good indicators of an effect of wind farms?*
+
+It is hard to say. I guess there has been a big increase in Ellpout in 2010, perhaps more so in wind farms than in North Zone. Cod numbers seemed to increase in 2010 for South Zone and not wind farms. Interaction plots might be a better way to see this...
+

@@ -1,0 +1,153 @@
+---
+title: "Chapter 13 -- Allometric line-fitting -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 13 -- Allometric line-fitting -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 13.1: Brain size-body size relationships
+
+*Does brain size scale as the 2/3 power of body size?*
+
+*How should we analyse the data to answer this research question?*
+
+We are primarily interested in the slope coefficient, and do not have a predictor and a response, rather we have two response variables. So we want to avoid regression to the mean and should look at this as a multivariate problem, and use principal components analysis (or related methods).
+
+## Exercise 13.2: Leaf economics and environment
+
+*How steep is the slope of the line representing the leaf economics spectrum? It is steeper than one? Does the steepness of the line vary across environments?*
+
+*What method should [Ian] use to do this?*
+
+We are primarily interested in the slope coefficients, and do not have a predictor and a response, rather we have two response variables. So we want to avoid regression to the mean and should look at this as a multivariate problem, and use principal components analysis (or related methods) and generalisations designed to compare slopes of several such axes.
+
+
+## Code Box 13.1: Linear models of the brain size-body size data
+```{r code13.1}
+library(MASS)
+data(Animals)
+ftBrainBody=lm(log(brain)~log(body),data=Animals)
+confint(ftBrainBody)
+```
+This confidence interval does not cover `2/3` so suggests the data do not fit the 2/3 power law.
+
+
+```{r code13.1Flipped}
+ftBodyBrain=lm(log(body)~log(brain),data=Animals)
+confint(ftBodyBrain)
+```
+Flipping `x` and `y` axes, this confidence interval *does* cover `3/2`, which suggests that the data *do* fit the 2/3 power law!
+
+## Code Box 13.2: Testing if the brain-body mass slope is 2/3
+```{r box13.2}
+library(smatr)
+sma_brainBody = sma(brain~body, data=Animals,log="xy",slope.test=2/3)
+sma_brainBody
+```
+
+Here we got $r=-0.07$, $P=0.71$ and conclude there is no evidence against the 2/3 power law.  Note that `2/3` is towards the centre of the confidence interval for the SMA slope.
+
+Reversing the axes:
+```{r code13.2flipped}
+sma(body~brain, data=Animals,log="xy",slope.test=3/2)
+```
+
+We get exactly the same test results: $r=-0.07$, $P=0.71$ and reach the same conclusion. Note that `3/2` is towards the centre of the confidence interval for the SMA slope.
+
+*Is this what you would have expected? Is there evidence against the 2/3 power law?*
+
+This is as expected, (S)MA is invariant under flipping of `x` and `y`. As above there is no evidence against the 2/3 power law.
+
+
+## Code Box 13.3: Comparing allometric slopes for Ian’s data using `smatr`
+```{r code13.3, fig.width=6, fig.height=4}
+data(leaflife)
+leafSlopes = sma(longev~lma*site, log="xy", data=leaflife)
+summary(leafSlopes)
+plot(leafSlopes)
+```
+
+
+## Code Box 13.4: Comparing elevations of allometric lines for Ian’s low soil nutrients data using `smatr`
+
+```{r code13.4}
+leaf_low_soilp = subset(leaflife, soilp == "low")
+leafElev = sma(longev~lma+rain, log="xy", data=leaf_low_soilp)
+leafElev
+```
+
+## Code Box 13.5: Residual plots for brain-body size relationship
+```{r code13.5,fig.width=8,fig.height=4}
+par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plot(sma_brainBody,which="residual") # residual plot
+abline(a=0,b=0,col="red")
+qqnorm(residuals(sma_brainBody))
+qqline(residuals(sma_brainBody), col="red")
+```
+
+## Code Box 13.6: Robust SMA for brain-body size relationship
+```{r code13.6, fig.width=6, fig.height=6}
+sma_brainBodyRobust = sma(brain~body, data=Animals,log="xy",
+slope.test=2/3,robust=TRUE)
+sma_brainBodyRobust
+plot(brain~body,data=Animals,log="xy")
+abline(sma_brainBody, col="red")
+abline(sma_brainBodyRobust, col="blue")
+```
+
+*Notice that this line is slightly steeper than previously, because it is less sensitive to the outliers below the line, also note that the confidence interval is narrower. Is this what you expected to happen?*
+
+Yes -- the outliers were towards the bottom-right, so giving them less weight in analysis should drag the line up towards the rest of the data. It makes sense that CIs are narrower because outliers make variances and covariances inefficient estimators, so by using a method that can better handle outliers we can get more precise estimates.
+
+
+## Exercise 13.3: Outlier sensitivity for the brain-body mass data
+*Repeat the analyses of the brain-body mass data, in Code Boxes 13.2 and 13.6, excluding the three dinosaur species from analysis by using `data=AnimalsSnipped[-c(6,16,26),]`.*
+```{r ex13.3}
+AnimalsSnipped=Animals[-c(6,16,26),]
+sma_brainBody = sma(brain~body, data=AnimalsSnipped,log="xy",slope.test=2/3)
+sma_brainBody
+```
+
+This suddenly gives a significant effect ($r=0.50$, $P=0.01$), with the slope having jumped up from `0.64` to `0.78`. Using robust methods:
+
+```{r ex13.3robust}
+sma_brainBodyRobust = sma(brain~body, data=AnimalsSnipped,log="xy",
+slope.test=2/3,robust=TRUE)
+sma_brainBodyRobust
+```
+*Is robust SMA less sensitive to the dinosaur outliers? Is this what you expected?*
+
+The results changed in both cases, but in a less dramatic way when using robust SMA. The robust SMA slope only changed from `0.75` to `0.77` on outlier removal, whereas the regular SMA slope changed from `0.64` to `0.78`. In both cases there is significant evidence against the 2/3 power law after outlier removal, but in the robust case, this change was less dramatic. It is expected that robust SMA would be less sensitive to outliers.
+
+
+## Exercise 13.4: Robust allometric line fitting for Ian’s leaf data
+
+*Repeat the analysis of Ian’s leaf economics data, as in Code Boxes 13.3-13.4, using robust=TRUE. Do results work out differently?*
+
+```{r ex13.4Slope}
+leafSlopes = sma(longev~lma*site, log="xy", data=leaflife, robust=TRUE)
+summary(leafSlopes)
+```
+
+This result is fairly similar, although there is stronger evidence now that the slopes are not the same, perhaps because the slope for group 1 is now noticeably steeper.
+
+```{r ex13.4elev}
+leaf_low_soilp = subset(leaflife, soilp == "low")
+leafElev = sma(longev~lma+rain, log="xy", data=leaf_low_soilp, robust=TRUE)
+leafElev
+```
+
+When comparing elevation of lines fitted to low soil nutrient sites, there does not seem to be evidence of a difference due to rainfall.
+
+

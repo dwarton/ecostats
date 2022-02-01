@@ -7,7 +7,7 @@
 plotenvelope(
   y,
   which = 1:2,
-  sim.method = c("refit", "norm", "stand.norm"),
+  sim.method = "refit",
   n.sim = 199,
   conf.level = 0.95,
   type = "st",

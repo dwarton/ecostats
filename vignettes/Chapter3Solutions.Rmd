@@ -1,10 +1,10 @@
 ---
-title: "Chapter 3 - Regression with multiple predictor variables - Exercise solutions and Code Boxes"
+title: "Chapter 3 -- Regression with multiple predictor variables -- Exercise solutions and Code Boxes"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 3 - Regression with multiple predictor variables - Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 3 -- Regression with multiple predictor variables -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -180,10 +180,11 @@ In terms of minding our P's and Q's:
 **Q's** our research question suggests we are primarily interested in seeing if there is an effect of latitude after controlling for climate, hence primary interest is in the bottom row of the above summmary table.
 
 **P's**
-- *(conditional) independence* requires randomly sampled sites. This wasn't actually done so we are left waving our arms and thinking hard about possible sources of dependence... sites tended to be relatively far apart geographically so are unlikely to exhibit dependence. We could check for this using a spatial correlogram (see Chapter 7).
-- *normality* no trend on normal quantile plot suggests no evidence against this assumption
-- *equal variance* no fan-shape pattern on residual vs fits plot suggests this looks OK
-- *linearity* no U-shape on residual vs fits plots suggests this looks reasonable.
+
+* *(conditional) independence* requires randomly sampled sites. This wasn't actually done so we are left waving our arms and thinking hard about possible sources of dependence... sites tended to be relatively far apart geographically so are unlikely to exhibit dependence. We could check for this using a spatial correlogram (see Chapter 7).
+* *normality* no trend on normal quantile plot suggests no evidence against this assumption
+* *equal variance* no fan-shape pattern on residual vs fits plot suggests this looks OK
+* *linearity* no U-shape on residual vs fits plots suggests this looks reasonable.
 
 After adding *temp* to the model, there is no longer any evidence of a latitudinal effect. So latitudinal variation in height can be explained by climate, in the sense that there is no evidence of a latitudinal effect after controlling for climate.
 
@@ -204,10 +205,14 @@ Small means have small variances.  There is a boundary at zero and data are bein
 
 There is also a suggestion of non-normality when checking assumptions on the fitted ANOVA model:
 ```{r seaweed logre plot}
- plotenvelope(ft_habconf,which=1:2)
+ plotenvelope(ft_habconf,which=1:3)
 ```
 
-We can try to address this using log-transformation:
+Notice that in the quantile plot that points get close to the lower bound in the middle of the plot and get near the top of it at large values -- this is mildly suggestive of skew. We similarly see an increaing trend in the scale-location plot, although it does stay within its simulatin bounds. Notice these are only subtle patterns and not particularly strong.
+
+(As an aside, note there is no envelope visible on the residual vs fits plot -- this is because we are fitting an ANOVA model, which will have no mean trend on the res vs fits plot at all fitted values, that is, it is always a flat line at zero. Put another way, non-linearity isn't an assumption to worry about in ANOVA models.)
+
+We can try to address the suggestion of skew this using log-transformation:
 
 ```{r seaweed trans}
  seaweed$logTot = log(seaweed$Total)

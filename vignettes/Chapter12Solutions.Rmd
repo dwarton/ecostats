@@ -1,0 +1,251 @@
+---
+title: "Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 12.1: Flower size and shape
+*How do these three species of Iris differ in terms of flower size and shape?*
+
+*What sort of graph should Edgar produce to visualise how species differ in flower size and shape?*
+
+He has more than two response variables so I guess as well as plotting each response one-at-a-time he could try plotting them simultaneously using ordination (factor analysis, for example). In either plot he would want to label different species differently to see variation across species.
+
+
+## Exercise 12.2: Bush regeneration and invertebrate counts
+*Is there evidence of a change in invertebrate communities due to bush regeneration
+efforts?*
+
+*What sort of graph should Anthony produce to visualise the effects of bush
+regeneration on invertebrate communities?*
+
+Anthony has a bunch of response variables so I guess as well as plotting each response one-at-a-time he could try plotting them simultaneously using ordination. He has counts so will need something that works for non-Gaussian responses like generalised latent variable models. In either plot he would want to label different species differently to see variation between revegetated and control plots.
+
+## Code Box 12.1: Plotting the bush regeneration data of Exercise 12.1 using `mvabund`.
+```{r code12.1,fig.width=6,fig.height=7}
+library(mvabund)
+library(ecostats)
+data(reveg)
+reveg$abundMV=mvabund(reveg$abund) #to treat data as multivariate
+plot(abundMV~treatment, data=reveg)
+```
+
+*Can you see any taxa that seem to be associated with bush regeneration?*
+
+There seem to be less invertebrates in control plots for *Collembola*, *Acarina*, *Coloeptera*, *Amphipoda* and maybe a few Orders.
+
+
+## Code Box 12.2: A PCA of Edgar's *Iris* data
+
+```{r code12.2, fig.width=6, fig.height=6}
+data("iris")
+pc = princomp(iris[,1:4],cor=TRUE)
+pc
+loadings(pc)
+biplot( pc, xlabs=rep("\u00B0",dim(iris)[1]) )
+```
+
+
+## Code Box 12.3: Factor analysis of the Iris data
+```{r code12.3}
+library(psych)
+fa_iris <- fa(iris[,1:4], nfactors=2, fm="ml", rotate="varimax")
+loadings(fa_iris)
+```
+
+*How do results compare to the principal components analysis?*
+
+They look awfully similar. The second factor looks a little different, and is flipped around the other way (so big vlues mean *narrow* sepals), but it also has postive loadings for petal variables. So this could be interpreted as a measure of how large petals are relative to sepal width: big scores for large petals with narrow sepals, low scores for small petals with wide sepals. Recall that previously, the second PC was pretty much just a measure of how wide sepals were, now it is relative to petal size.
+
+
+## Code Box 12.4: Assumption checking for a factor analysis of the Iris data
+```{r code 12.4,fig.width=7,fig.height=7}
+par(mfrow=c(2,2),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
+for(iVar in 1:4)
+{
+  irisIvar = iris[,iVar]
+  plotenvelope(lm(irisIvar~fa_iris$scores), which=1, col=iris$Species, main=print(names(iris)[iVar]))
+}
+```
+```{r code 12.4matrix,fig.width=7,fig.height=7}
+plot(iris[,1:4],col=iris$Species)
+```
+
+## Exercise 12.4: A factor analysis for Anthony’s data(?)
+*Load Anthony’s revegetation data (stored as `reveg` in the `ecostats` package) and do a factor analysis (with two factors). *
+
+```{r ex12.4}
+data(reveg)
+library(psych)
+fa_reveg <- try(fa(reveg$abund, nfactors=2, fm="ml", rotate="varimax"))
+```
+
+*You might not be able to get a solution when using maximum likelihood estimation (fm="ml"), in which case, try fitting using without specifying the fm argument (which tries to minimise residuals).*
+
+```{r ex12.4Resid}
+fa_reveg <- fa(reveg$abund, nfactors=2)
+```
+
+This returned some concerning warnings but did fit the model :)
+
+*Check some assumptions, by fitting a linear model to some of the response variables, as a function of factor scores.*
+
+```{r ex12.4plots, fig.width=8,fig.height=6}
+par(mfrow=c(3,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
+for(iVar in 1:9)
+  plotenvelope(lm(reveg$abund[,iVar]~fa_reveg$scores), which=2,main=print(names(reveg$abund)[iVar]))
+for(iVar in 1:9)
+  plotenvelope(lm(reveg$abund[,iVar]~fa_reveg$scores), which=3,main=print(names(reveg$abund)[iVar]))
+```
+
+*Can you see any issues with factor analysis assumptions?*
+
+With only ten observations it is always hard to see issues, and scale-location plots have huge error bars on them!  But we have points outside their normal quantile simulation envelopes in several of these plots, and most have a suggestion of right-skew (the occasional large value). Note also that fitted values go below zero for many species which is most concerning considering we are modelling counts!
+
+
+## Code Box 12.5: Choosing the number of factors for the iris data
+```{r code12.5scree, fig.width=5, fig.height=4}
+plot(fa_iris$values,type="l")
+```
+
+```{r code12.5BICs}
+nFactors=3 # to compare models with up to 3 factors
+BICs = rep(NA,nFactors) # define the vector that BIC values go in
+names(BICs) = 1:nFactors # name its values according to #factors
+for(iFactors in 1:nFactors) {
+  fa_iris <- fa(iris[,1:4], nfactors=iFactors, fm="ml", rotate="varimax")
+  BICs[iFactors] = fa_iris$objective - log(fa_iris$nh) * fa_iris$dof
+}
+BICs
+```
+
+*How many factors are supported by the data?*
+
+One, this has the smallest BIC.
+
+
+## Code Box 12.6: A generalised latent variable model for Anthony’s revegetation data
+```{r code12.6}
+data(reveg)
+library(gllvm)
+reveg_LVM = gllvm(reveg$abund, num.lv=2, family="negative.binomial", trace=TRUE, jitter.var=0.2)
+logLik(reveg_LVM)
+```
+Repeating this several times usually returns an answer of `-689.3`, so we can be confident this is (close to) the maximum likelihood solution. To get a biplot
+of this solution:
+```{r code12.6bi, fig.width=6, fig.height=6}
+ordiplot(reveg_LVM, col=as.numeric(reveg$treatment), biplot=TRUE,
+ind.spp=12)
+```
+
+```{r code12.6plot, fig.width=9}
+par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plot(reveg_LVM,which=c(1,2,5))
+```
+
+## Exercise 12.5: Checking analysis decisions for Anthony’s revegetation data
+
+*In Code Box 12.6, a negative binomial model was fitted, using two latent variables. Are two latent variables needed, or should we use more, or less? Fit a few models varying the number of latent variables. Which model fits the data best, according to BIC?*
+```{r ex12.5bic}
+reveg_LVM1 = gllvm(reveg$abund, num.lv=1, family="negative.binomial", trace=TRUE, jitter.var=0.2)
+reveg_LVM2 = gllvm(reveg$abund, num.lv=2, family="negative.binomial", trace=TRUE, jitter.var=0.2)
+reveg_LVM3 = gllvm(reveg$abund, num.lv=3, family="negative.binomial", trace=TRUE, jitter.var=0.2)
+reveg_LVM4 = gllvm(reveg$abund, num.lv=4, family="negative.binomial", trace=TRUE, jitter.var=0.2)
+reveg_LVM5 = gllvm(reveg$abund, num.lv=5, family="negative.binomial", trace=TRUE, jitter.var=0.2)
+BIC(reveg_LVM1,reveg_LVM2,reveg_LVM3,reveg_LVM4,reveg_LVM5)
+```
+
+Looks like the one latent variable model is the winner!
+
+*Fit a Poisson model to the data and check assumptions. Are there any signs of overdispersion?*
+
+I'll go with a one latent variable model, on account of this looking the best in the above.
+```{r ex12.5, fig.width=9}
+reveg_LVM1 = gllvm(reveg$abund, num.lv=1, family="poisson", trace=TRUE, jitter.var=0.2)
+par(mfrow=c(1,3))
+plot(reveg_LVM1,which=c(1,2,5))
+```
+
+Wow this does not look good! There is a clear fan-shape in the residual vs fits plot, which also shows up as an increasing trend in the scale-location plot. Points on the normal quantile plot are well outside bounds on both sides, frequently falling below -5 or above 5 (when we would expect most values between -3 and 3). These are all strong signs of overdispersion.
+
+
+## Code Box 12.7: A non-metric multi-dimensional scaling ordination of Anthony’s data
+```{r code12.7, fig.height=6, fig.width=6}
+library(vegan)
+ord_mds=metaMDS(reveg$abund)
+plot(ord_mds$points,pch=as.numeric(reveg$treatment),col=reveg$treatment)
+```
+
+## Exercise 12.6: MDS ordinations of coral data
+
+```{r ex12.6load}
+library(mvabund)
+data(tikus)
+tikusAbund = tikus$abund[1:20,] # for 1981 and 1983 data only
+tikusAbund = tikusAbund[,apply(tikusAbund,2,sum)>0] # remove zerotons
+```
+
+*Construct an MDS plot of the data, using the Bray-Curtis distance (default), and colour-code symbols by year of sampling.*
+```{r ex12.6ordination, fig.height=6, fig.width=6}
+tikus_mds=metaMDS(tikusAbund)
+plot(tikus_mds$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
+```
+
+*Does this plot agree with the Warwick et al. (1990) interpretation? [Warwick et al. (1990) used this dataset and MDS ordinations to argue that stress increases dispersion in coral communities]*
+
+Yes it does, 1981 (before El Niño disturbance) the points are close together in the middle of the ordination, 1983 (post disturbance) they are spread out around the same point but way further apart, suggesting a change in dispersion.
+
+*Construct another MDS plot using the Euclidean distance on `log(y+1)`-transformed data.*
+
+```{r ex12.6EucOrdination, fig.height=6, fig.width=6}
+tikus_mdsEuc=metaMDS(log(tikusAbund+1),distance="euclidean")
+plot(tikus_mdsEuc$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
+```
+
+*Does this plot agree with the Warwick et al. (1990) interpretation?*
+
+Nope -- this says the opposite, with much lower dispersion post disturbance. It is suggestive of a location effect as well, that is, a change in mean abundance not just variability.
+
+*Use the `plot.mvabund` function to plot each coral response variable as a function of time. What is the main pattern that you see?*
+
+```{r ex12.6plot, fig.width=7,fig.height=8}
+tikusMV = mvabund(tikusAbund)
+plot(tikusMV~tikus$x$time[1:20])
+```
+
+*Convert the data into presence-absence and use the gllvm package to construct an ordination*
+```{r ex12.6PA, fig.height=6, fig.width=6}
+tikusPA = tikusAbund
+tikusPA[tikusPA>1]=1
+tikus_LVM = gllvm(tikusPA, num.lv=2, family="binomial", trace=TRUE, jitter.var=0.2)
+ordiplot.gllvm(tikus_LVM, s.col=as.numeric(tikus$x$time), biplot=TRUE, ind.spp=12)
+```
+
+*Do assumptions appear reasonable? How would you interpret this plot?*
+```{r ex12.6 assumptions, fig.width=9,fig.height=3.5}
+par(mfrow=c(1,3))
+plot(tikus_LVM,which=c(1,2,5))
+```
+
+## Code Box 12.8: Studying each observation separately for the Iris data
+```{r code12.8, fig.width=7,fig.height=5}
+by(iris, iris$Species, function(dat){ apply(dat[,1:4],2,mean) } )
+par(mfrow=c(2,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plot(Sepal.Length~Species,data=iris,xlab="")
+plot(Sepal.Width~Species,data=iris,xlab="")
+plot(Petal.Length~Species,data=iris,xlab="")
+plot(Petal.Width~Species,data=iris,xlab="")
+```
+

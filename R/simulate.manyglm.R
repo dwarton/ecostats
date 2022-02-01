@@ -15,25 +15,44 @@
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' 
-#' @seealso \code{\link[mvabund]{manyglm}}, \code{\link[mvabund]{cord}}, \code{\link[mvabund]{simulate.cord}}
+#' @seealso \code{\link[mvabund]{manyglm}}, \code{\link[ecoCopula]{cord}}, \code{\link[ecoCopula]{simulate.cord}}
 #'
 #' @method simulate manyglm
 #' @importFrom stats simulate
-#' @importFrom mvabund manyglm
-#' @importFrom ecoCopula cord
+#' @importFrom MASS rnegbin
 #' @export
 simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...) 
 {
-  cordObject = cord(object)
-  simLong    = simulate(cordObject,nsim=nsim,seed=seed,newdata=newdata)
-  if(nsim>1)
+  if(ncol(fitted(object))>1)
   {
-    
-    nDims=dim(object$residuals)
-    simData = array(simLong,c(nDims[1],nsim,nDims[2]))
-    simData = aperm(simData,c(1,3,2))
+    cordObject = ecoCopula::cord(object)
+    simLong    = ecoCopula:::simulate.cord(cordObject,nsim=nsim,seed=seed,newdata=newdata)
+    if(nsim>1)
+    {
+      nDims=dim(object$residuals)
+      simData = array(simLong,c(nDims[1],nsim,nDims[2]))
+      simData = aperm(simData,c(1,3,2))
+    }
+    else
+      simData=simLong
   }
-  else
-    simData=simLong
+  else #refit as a glm and use simulate from there
+  {
+    fam = switch(object$family,
+                 "binomial(link=logit)"=binomial(),
+                 "binomial(link=cloglog)"=binomial("cloglog"),
+                 "poisson"=poisson(),
+                 "gaussian"=gaussian(),
+                 "gamma"=Gamma(link='log'),
+                 "negative.binomial"=MASS::negative.binomial(theta=object$theta[iVar]))    
+    offs = model.offset(model.frame(object))
+    if(is.null(offs))
+      object.i = glm(object$formula, family=fam, data=newdata)
+    else
+      object.i = glm(object$formula, family=fam, data=newdata, offset=offs)
+    object.i$coefficients = coef(object)
+    simData = simulate(object.i,nsim=nsim,seed=seed)
+  }
+  
   return(simData)
 }

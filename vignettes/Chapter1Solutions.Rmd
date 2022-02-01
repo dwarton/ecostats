@@ -1,10 +1,10 @@
 ---
-title: "Chapter 1 - 'STATS 101' Revision -- Exercise solutions and Code Boxes"
+title: "Chapter 1 -- 'STATS 101' Revision -- Exercise solutions and Code Boxes"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 1 - 'STATS 101' Revision -- Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 1 -- 'STATS 101' Revision -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -63,8 +63,10 @@ barplot(c(65,44),names.arg=c("females","males"))
 ## Exercise 1.5: Ravens and gunshots
 
 As in Exercise 1.3, we have two variables:
-- \# ravens which is a discrete, quantitative variable.
-- Sampling time which is a categorical variable taking two levels (before and after).
+
+* \# ravens which is a discrete, quantitative variable.
+* Sampling time which is a categorical variable taking two levels (before and after).
+
 (You could argue that _location_ is also a variable, it is categorical, and will be used to analyse the data using a linear model in Chapter 4.)
 
 
@@ -86,8 +88,9 @@ boxplot(ravens1$delta,ylab="After-Before differences")
 ## Exercise 1.6: Pregnancy and smoking
 
 There are two variables:
-- `errors` is quantitative
-- `treatment` is categorical with two levels (control and nicotine treatment)
+
+* `errors` is quantitative
+* `treatment` is categorical with two levels (control and nicotine treatment)
 
 The research question is *what is the effect of a mother's smoking during pregnancy on the resulting offspring?*. In the context of this experiment, this means estimating the size of the change in average \#errors in treatment vs control. So this is an estimation problem, we can use confidence intervals for average difference.
 
@@ -168,8 +171,9 @@ qqenvelope(logAfter-logBefore)
 Angela is interested in (interval) estimation -- to understand *how* height is related to latitude.
 
 There are two variables:
-- `height` is quantitative
-- `latitude` is quantitative
+
+* `height` is quantitative
+* `latitude` is quantitative
 
 ## Exercise 1.12: Transform plant height?
 
@@ -193,8 +197,9 @@ This has removed the boundary and seems to have removed the strong right-skew.
 The research question is *Does invertebrate density change with isolation?* meaning that we have a specific hypothesis of interest (no change) and we are looking for evidence against this hypothesis. So a hypothesis test is appropriate here.
 
 There are two variables:
-- invertebrate density is quantitative and is the response variable of interest.
-- isolation is an experimental factor taking three levels (0, 2 or 10 metres)
+
+* invertebrate density is quantitative and is the response variable of interest.
+* isolation is an experimental factor taking three levels (0, 2 or 10 metres)
 
 I would use comparative boxplots, like this:
 

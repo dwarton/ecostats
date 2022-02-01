@@ -1,10 +1,10 @@
 ---
-title: "Chapter 2 - An importance equivalence result - Exercise solutions and Code Boxes"
+title: "Chapter 2 -- An importance equivalence result -- Exercise solutions and Code Boxes"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 2 - An importance equivalence result - Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 2 -- An importance equivalence result -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -33,7 +33,7 @@ See Code Box 2.1, $P$-value is about 0.008. This means that the test statistic i
 ```
 
 
-## Code Box 2.2: Smoking and pregnancy - checking assumptions
+## Code Box 2.2: Smoking and pregnancy -- checking assumptions
 The normal quantile plots of Figure 2.1 were generated using the below code.
 ```{r guineapig qqplots}
 qqenvelope(guineapig$errors[guineapig$treatment=="N"])
@@ -50,8 +50,9 @@ While all the points lie in the simulation envelope, there is a clear curve on b
 The research question is *how it [IBI] related to catchment area* which is an estimation question, we want to estimate the relationship between IBI and catchment area.
 
 There are two variables:
-- *catchment area* is quantitative
-- *Water quality (IBI)* is quantitative
+
+* *catchment area* is quantitative
+* *Water quality (IBI)* is quantitative
 
 I would use a scatterplot:
 
@@ -100,16 +101,17 @@ to what we might expect for datasets that satisfy model assumptions:
  plotenvelope(fit_qual, which=1:2)
 ```
 
-Assumptions look reasonable here - there is no trend in the residual vs fits plot, and the normal quantile plot is close to a straight line. Points are all well within their simulation envelopes, suggesting that departures are also small compared to what would be expected if the model were correct.
+Assumptions look reasonable here -- there is no trend in the residual vs fits plot, and the normal quantile plot is close to a straight line. Points are all well within their simulation envelopes, suggesting that departures are also small compared to what would be expected if the model were correct.
 
 
 ## Exercise 2.4: Water quality{ assumption checks
 
 There are four regression assumptions:
-- (conditional) *independence*: this cannot be checked using these plots, and depends primarily on the study design
-- *Normality* can be checked using the normal quantile plot of residuals, and it looks pretty good here.
-- *Equal variance* can be checked by looking for a fan shape in the residual vs fits plot, and there is no such trend here.
-- *Linearity* can be checked by looking for a U-shape in the residual vs fits plot, and there is no pattern so there are no concerns about this assumption here.
+
+* (conditional) *independence*: this cannot be checked using these plots, and depends primarily on the study design
+* *Normality* can be checked using the normal quantile plot of residuals, and it looks pretty good here.
+* *Equal variance* can be checked by looking for a fan shape in the residual vs fits plot, and there is no such trend here.
+* *Linearity* can be checked by looking for a U-shape in the residual vs fits plot, and there is no pattern so there are no concerns about this assumption here.
 
 
 ## Code Box 2.5: Two-sample t-test output for the smoking-pregnant data, again
@@ -165,6 +167,14 @@ It will actually be slightly easier to check assumptions using a linear model, s
  by(guineapig$logErrors,guineapig$treatment,sd)
 ```
 We are doing much better with assumptions: plots look better, standard deviations are more similar. Results became slightly more significant, which is not unexpected, as data are closer to normal (which usually means that tests based on linear models have more power).
+
+Notice that there is no noticeable smoother or envelope on the residual vs fits plot -- that is because for t-test (and later on, one-way or factorial ANOVA designs) the mean of the residuals is exactly zero for all fitted values. Trying to assess the trend on this plot for non-linearity is not really useful, the only thing to worry about here is a fan shape. This would also show up on a smoother through the scale-location plot as an increasing trend:
+
+```{r guineapigs ttest log-transform slplot}
+ plotenvelope(ft_logGuineapigs,which=3)
+```
+
+but there is no increasing trend so we are all good :)
 
 
 ## Exercise 2.7: Influential value in the water quality data

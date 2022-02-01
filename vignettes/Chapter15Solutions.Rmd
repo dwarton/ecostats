@@ -1,0 +1,304 @@
+---
+title: "Chapter 15 -- Predicting multivariate abundances -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 15 -- Predicting multivariate abundances -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 15.1: Predicting fish communities at wind farms?
+*Consider again Lena’s wind farm study (Exericise 14.3). She would like to predict what fish occur where. What type of model should she use, to get the best predictions?*
+
+The focus here is prediction so she should be using some model designed to have good predictive performance. One thing that might help is putting random effects on terms, that take different values for different species, to borrow strength across species.
+
+## Exercise 15.2: Which environmental variables predict hunting spider communities?
+*Petrus set up 28 pitfall traps on sand dunes, in different environmental conditions (in the open, under shrubs, etc) and classified all hunting spiders that fell into the trap to species. He measured six environmental variables characterising each site. He would like to know: Which environmental variables best predict hunting spider communities?*
+
+*What analysis approach should he use?*
+
+This is a variable selection problem, he should be using multivariate model selection techniques. One approach is to construct models designed to be pretty good for prediction, and choose the one with best predictive performance. For example, he could fit mixed models, with random effects for different species, and use cross-validation to see which set of predictors gives the model has best predictive performance.
+
+## Code Box 15.1: Predictive likelihood for the wind farm data
+`To calculate a predictive likelihood on test data, we need to decide how many rows
+should be assigned to the training set, and assign them in such a way that the training
+and test sets are (approximately) independent. Notice that because Lena collected the
+data in a paired design, with two sampling times at each station, random Stations need
+to be chosen as the test sample, not random rows of data. The pair of rows in the dataset
+corresponding to each station are jointly allocated to test or training data at random,
+giving independent training and test sets if fish communities at different stations are
+independent. Half of stations will be assigned to test data, and half to training.
+```{r code15.1}
+library(ecostats)
+data(windFarms)
+set.seed(5) # use this seed to get the same results as below:
+nStations = length(levels(as.factor(windFarms$X$Station)))
+isTestStn = sample(nStations,nStations/2)
+isTest = windFarms$X$Station %in% levels(windFarms$X$Station)[isTestStn]
+library(mvabund)
+windMV = mvabund(windFarms$abund)
+windFt_Train=manyglm(windMV[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMV[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+```
+*What do these results tell us about which model is preferred?*
+
+These results suggest the main effect model is better.
+
+
+## Exercise 15.3: Cross-validation for wind farm data and rare species
+*Repeat the analyses of Code Box 15.1 but after removing rare species (observed less than 10 times), using the following code:*
+```{r ex15.3}
+notRare=colSums(windMV>0)>10
+windMVnotRare=mvabund(windFarms$abund[,notRare])
+```
+
+```{r ex15.3val}
+windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+```
+
+*Did you get a similar answer?*
+
+Nope -- now the model with an interaction term looks better!
+
+*Note that so far we have only considered one test sample, and there is randomness in the choice of training/test split. Repeat the analyses of Code Box 15.1 as well as those you have done here, with and without rare species, multiple times (which is a form of cross-validation).*
+
+```{r code15.1R2}
+set.seed(1) # use this seed to get the same results as below:
+nStations = length(levels(as.factor(windFarms$X$Station)))
+isTestStn = sample(nStations,nStations/2)
+isTest = windFarms$X$Station %in% levels(windFarms$X$Station)[isTestStn]
+windFt_Train=manyglm(windMV[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMV[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+
+windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+```
+
+```{r code15.1R3}
+set.seed(2) # use this seed to get the same results as below:
+nStations = length(levels(as.factor(windFarms$X$Station)))
+isTestStn = sample(nStations,nStations/2)
+isTest = windFarms$X$Station %in% levels(windFarms$X$Station)[isTestStn]
+library(mvabund)
+windMV = mvabund(windFarms$abund)
+windFt_Train=manyglm(windMV[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMV[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+
+windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+```
+
+
+```{r code15.1R4}
+set.seed(3) # use this seed to get the same results as below:
+nStations = length(levels(as.factor(windFarms$X$Station)))
+isTestStn = sample(nStations,nStations/2)
+isTest = windFarms$X$Station %in% levels(windFarms$X$Station)[isTestStn]
+library(mvabund)
+windMV = mvabund(windFarms$abund)
+windFt_Train=manyglm(windMV[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMV[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+
+windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+      data=windFarms$X[isTest==FALSE,],family="poisson")
+prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
+predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
+predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
+c(sum(predLogL),sum(predLogL_Int))
+```
+*Which set of results tends to be more reliable (less variable) – the ones with or without the rare species? Why do you think this happened?*
+
+Without the rare species, the results are more reliable, in relative terms (the difference in predictive likelihoods is typically 5-10) and in absolute terms (the predictive likelihood is usually in the mid -700's). With rare species, it bounces around a lot more, with the smaller model (main effects only) sometimes having better predictive performance. This is likely because rare species with all absences in one treatment combination can blow up the predictive likelihood (if they are predicted to have a mean of zero, but have some non-zero cases in test data).
+
+## Code Box 15.2: Fitting a mixed model to the wind farm data
+```{r code15.2}
+windComp = manyglm(windMV~Zone*Year,data=windFarms$X,composition=TRUE)
+library(glmmTMB)
+wind_glmm = glmmTMB(windMV~Year*Zone+diag(Year*Zone|cols),
+family=poisson(), data=windComp$data)
+summary(wind_glmm)
+```
+
+## Exercise 15.4: Predictive likelihood for wind farm mixed model
+*Calculate the predictive likelihood for the mixed model fitted to the wind farm data (Code Box 15.2), following the method in Code Box 15.1.*
+
+```{r ex15.4}
+set.seed(5) # use this seed to get the same results as below:
+nStations = length(levels(as.factor(windFarms$X$Station)))
+isTestStn = sample(nStations,nStations/2)
+isTest = windComp$data$Station %in% levels(windComp$data$Station)[isTestStn]
+wind_glmm = glmmTMB(windMV~Year*Zone+diag(Year*Zone|cols),
+  family=poisson(), data=windComp$data[isTest==FALSE,])
+prGLMM_Test = predict(wind_glmm, newdata=windComp$data[isTest==TRUE,], type="response")
+predGLMM = sum(dpois(windComp$data$windMV[isTest==TRUE],lambda=prGLMM_Test,log=TRUE))
+```
+
+*Did this have better predictive performance? Why do you think this happened?*
+
+This did waaaay better than `manyglm`. Probably because it was borrowing strength across species to better predict rare ones, not overfitting quite as badly.
+
+
+## Code Box 15.3: Fitting a LASSO to the wind farm data via glmnet
+
+```{r code 15.3, fig.width=6, fig.height=4}
+library(glmnet)
+X = model.matrix(windMV~Year*Zone*cols,data=windComp$data)
+y = windComp$data$windMV
+windLasso = glmnet(X,y, family="poisson")
+isTest = windComp$data$Station %in%
+levels(windComp$data$Station)[isTestStn]
+windLassoTrain = glmnet(X[isTest==FALSE,], y[isTest==FALSE], family="poisson")
+prLassoTest = predict(windLassoTrain,X[isTest,],type="response")
+predLLlasso=colSums(dpois(windComp$data$windMV[isTest],prLassoTest,
+log=TRUE))
+plot(windLassoTrain$lambda,predLLlasso,type="l",log="x")
+isBestLambda = which(predLLlasso==max(predLLlasso))
+```
+
+
+```{r code 15.3beta, fig.width=6, fig.height=4}
+matplot(windLasso$lambda,t(windLasso$beta),type="n", log="x")
+matlines(windLasso$lambda,t(windLasso$beta))
+```
+
+## Code Box 15.4: Fitting a group-LASSO to the wind farm data
+```{r code15.4, fig.width=6, fig.height=4}
+library(grplasso)
+windLambdaTrain = lambdamax(windMV~Year*Zone*cols, data=windComp$data,
+  subset=isTest==FALSE, model = PoissReg()) * 0.7^(0:19)
+windGrplasso = grplasso(windMV~Year*Zone*cols, data=windComp$data,
+  lambda=windLambdaTrain, subset=isTest==FALSE, model = PoissReg())
+prGrpTest = predict(windGrplasso,newdata=windComp$data[isTest,], type="response")
+predLLgrplasso = colSums(dpois(windComp$data$windMV[isTest], prGrpTest,log=TRUE))
+plot(windGrplasso$lambda,predLLgrplasso,log="x",type="l")
+isBestLambdaGrplasso = which(predLLgrplasso==max(predLLgrplasso))
+```
+
+```{r code15.4beta, fig.width=6, fig.height=4}
+matplot(windGrplasso$lambda,t(windGrplasso$coefficients),type="n",log="x")
+matlines(windGrplasso$lambda,t(windGrplasso$coefficients))
+```
+
+## Exercise 15.5: Comparing predictive likelihoods for the wind farm data
+*Compare the predictive log-likelihoods from Code Box 15.1 and Figures 15.1c-d. These models were all applied using the same test dataset. Which model seems to fit the data better? Why do you think this is?*
+
+```{r ex15.5}
+c(sum(predLogL),sum(predLogL_Int), max(predLLlasso), max(predLLgrplasso))
+```
+
+The LASSO models fit way better, as expected.  These models shrink parameters together, borrowing strength across taxa. The two LASSO fits did about as well as each other.
+
+## Code Box 15.5: Reduced rank regression for the wind farm data
+```{r code15.5, fig.width=6, fig.height=4}
+library(VGAM)
+wind_RR2=rrvglm(as.matrix(windFarms$abund)~Year*Zone, family=poissonff, data=windFarms$X, Rank=2)
+wind_manyglm = manyglm(windMV~Year*Zone, data=windFarms$X, family=poisson())
+c( BIC(wind_RR2), sum(BIC(wind_manyglm)))
+zoneyear = interaction(windFarms$X$Zone,windFarms$X$Year)
+matplot(as.numeric(zoneyear),latvar(wind_RR2),pch=c(1,19))
+```
+
+*Which model fits better, according to BIC?*
+
+The reduced rank approach fits better.
+
+## Code Box 15.6: Using the LASSO for Petrus’s spider data
+```{r code15.6, fig.width=8, fig.height=8}
+library(mvabund)
+data(spider)
+spid.trait = traitglm(spider$abund,spider$x,method="cv.glm1path")
+library(lattice)
+a = max( abs(spid.trait$fourth.corner) )
+colort = colorRampPalette(c("blue","white","red"))
+plot.4th = levelplot(t(as.matrix(spid.trait$fourth.corner)),
+xlab="Environmental Variables", ylab="Species",
+col.regions=colort(100), at=seq(-a, a, length=100),
+scales = list( x= list(rot = 45)) )
+print(plot.4th)
+```
+
+*Which environmental variables seem to have the strongest effect on spider abundances?*
+
+`soil.dry` has some strongly negative coefficients, `fallen.leaves` and `herb.layer` also have some strong (but positive) interactions.
+
+## Code Box 15.7: Mixed model prediction of spider abundances
+`To fit a mixed model, shrinking coefficients together across taxa, we will first put data
+in long format, then use glmmTMB:
+```{r code15.7}
+spidXY = data.frame(scale(spider$x),spider$abund) # scale standardises data!
+library(reshape2)
+spiderLong = melt(id=1:6,spidXY,variable.name="cols")
+Xformula = paste(colnames(spider$x),collapse="+")
+fullFormula = formula(paste0("value~cols+",Xformula,"+(",Xformula,"|cols)"))
+library(glmmTMB)
+spid_glmm = glmmTMB(fullFormula,family=nbinom2(),data=spiderLong)
+summary(spid_glmm)
+```
+
+There are some convergence warnings here, which is fair enough because there are only 12 species but heaps of correlated terms in this model. Results seem to be reasonably stable on multiple runs, tweaking some settings, so we'll go with this fit.
+
+*Which predictors seem to be most important to spider community composition?*
+
+The largest variance component, by some margin, is for `soil.dry` (about 1.8), followed by `herb.layer` and `reflection`.
