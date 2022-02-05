@@ -228,16 +228,14 @@ This is only slightly quicker, which is a tad surprising. The test statistic is 
 
 ## Code Box 14.5: Analysing ordinal data from the habitat configuration study using manyany
 ```{r code14.5, warning=FALSE}
-habOrd = counts = round(seaweed[,6:21]*seaweed$Wmass)
+habOrd = counts = as.matrix( round(seaweed[,6:21]*seaweed$Wmass))
  habOrd[counts>0 & counts<10] = 1
 habOrd[counts>=10] = 2
 library(ordinal)
-for(iVar in 1:dim(habOrd)[2]) #clm needs each response to be a factor
-  habOrd[,iVar]=factor(habOrd[,iVar],levels=c("0","1","2"))
 summary(habOrd) # Amphipods are all "2" which would return an error in clm
 habOrd=habOrd[,-1] #remove Amphipods
-manyOrd=manyany("clm",habOrd,abund~Dist*Time*Size,data=seaweed)
-manyOrdNull=manyany("clm",habOrd,abund~Time*Size,data=seaweed)
+manyOrd=manyany(habOrd~Dist*Time*Size,"clm",data=seaweed)
+manyOrdNull=manyany(habOrd~Time*Size,"clm",data=seaweed)
 anova(manyOrdNull, manyOrd)
 ```
 
@@ -269,10 +267,10 @@ anova(ft_null,ft_alt,nBoot=99,block=ft_comp$rows)
 ## Code Box 14.8: Quick-and-dirty compositional analysis of Anthony’s revegetation data
 ```{r code14.8}
 ft_reveg0 = manyglm(abundMV~1+offset(log(pitfalls)), data=reveg)
-QDrows0 = log(rowSums(abundMV)) - log( rowSums(fitted(ft_reveg0)) )
+QDrows0 = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg0)) )
 ft_row0=manyglm(abundMV~1+offset(QDrows0), data=reveg)
 ft_reveg = manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg)
-QDrows = log(rowSums(abundMV)) - log( rowSums(fitted(ft_reveg)) )
+QDrows = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg)) )
 ft_row=manyglm(abundMV~treatment+offset(QDrows), data=reveg)
 anova(ft_row0,ft_row)
 ```
