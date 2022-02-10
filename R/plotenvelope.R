@@ -276,12 +276,14 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     if(inherits(modelF, "try-error"))
       modelF = model.frame(object)
 
+    modF = cbind(model.response(modelF),modelF[-1])
+    
     # if there is an offset, add it, as a separate argument when updating
-    offs=try(model.offset(modelF))
+    offs=try(model.offset(modF))
     if(inherits(offs,"try-error"))
-      objectY = update(object,data=modelF)
+      objectY = update(object,data=modF)
     else
-      objectY = update(object,data=modelF,offset=offs)
+      objectY = update(object,data=modF,offset=offs)
     
     # simulate new data as a matrix
         yNew   = simulate(objectY,n.sim)
@@ -290,11 +292,11 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     resids = fits = matrix(NA,nrow(yNew),ncol(yNew))
     for(i.sim in 1:n.sim)
     {
-      modelF[1]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
+      modFi            = cbind( matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp)), modelF[-1] )
       if(inherits(offs,"try-error"))
-        newFit         = try(update(objectY,data=modelF))
+        newFit         = try(update(objectY,data=modFi))
       else
-        newFit         = try(update(objectY,data=modelF,offset=offs))
+        newFit         = try(update(objectY,data=modFi,offset=offs))
       resids[,i.sim] = resFunction(newFit)
       ftt   = try(predFunction(newFit)) #using try for fitted values because eel data occasionally failed(!?)
       if(inherits(ftt,"try-error"))

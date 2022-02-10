@@ -59,7 +59,10 @@ simulate.mlm = function (object, nsim = 1, seed = NULL, ...)
   val <- replicate(nsim,ftd+mvtnorm::rmvnorm(n,sigma=vars))
   colnames(val)=nm[[2]]
   rownames(val) <- nm[[1]]
-  dimnames(val)[[3]] <- paste0("sim_",1:nsim)
+  if(nsim==1)
+    val=val[,,1]
+  else
+    dimnames(val)[[3]] <- paste0("sim_",1:nsim)
   attr(val, "seed") <- RNGstate
   val
 }

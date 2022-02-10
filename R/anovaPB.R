@@ -84,7 +84,8 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
   # get the observed stat
   targs <- match.call(expand.dots = FALSE)
   anovaFn=anova
-  statObs=try(anova(targs[[2]],targs[[3]],...)) #using targs[[c(2,3)]] instead of c(objectNull,object) so user names for models are in output 
+#  statObs=try(anova(targs[[2]],targs[[3]],...)) #using targs[[c(2,3)]] instead of c(objectNull,object) so user names for models are in output 
+  statObs=try(anova(objectNull,object,...)) 
   if(inherits(statObs,"try-error"))
   {
     # OK so if that didn't work, let's define a new anova function via logLik
@@ -104,7 +105,7 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
     colRef=3
     
     # add model details so the printed output looks nice
-    modelnamelist <- as.character(c(targs[[2]], targs[[3]]))
+    modelnamelist <- c(deparse(targs[[2]]), deparse(targs[[3]]))
     Xnames <- list(paste(deparse(formula(objectNull),width.cutoff=500), collapse = "\n"),
                    paste(deparse(formula(object),width.cutoff=500), collapse = "\n"))
     topnote <- paste(modelnamelist, ": ", Xnames, sep = "", collapse = "\n")
@@ -116,14 +117,37 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
   # set up for the bootstrap: assign a stats vector and get the model frame
   stats = rep(NA,n.sim+1)
   stats[1]=statObs[rowRef,colRef]
-  mf = model.frame(object)
+#  mf = model.frame(object)
+  mf <- match.call(call=object$call)
+  m <- match(c("formula", "data", "subset", 
+               "weights", "na.action", "etastart", 
+               "mustart", "offset"), names(mf), 0L)
+  mf <- mf[c(1L, m)]
+  #    mf$drop.unused.levels <- TRUE
+  mf[[1L]] <- quote(stats::model.frame)
+  modelF <- try( eval(mf, parent.frame()), silent=TRUE )
   
+  # if for some reason this didn't work (mgcv::gam objects cause grief) then just call model.frame on object:    
+  if(inherits(modelF, "try-error"))
+    modelF = model.frame(object)
+  
+  # if there is an offset, add it, as a separate argument when updating
+  offs=try(model.offset(modelF))
+
   # now n.sim times, simulate new response, refit models and get anova again
   for(iBoot in 1:n.sim+1)
   {
-    mf[1]        = simulate(objectNull)
-    objectiNull  = update(objectNull, data=mf)
-    objecti      = update(object, data=mf)
+    modelFi      = cbind(simulate(objectNull), modelF[-1])
+    if(inherits(offs,"try-error"))
+    {
+      objectiNull  = update(objectNull, data=modelFi)
+      objecti      = update(object, data=modelFi)
+    }
+    else
+    {
+      objectiNull = update(object,data=modelFi,offset=offs)
+      objecti = update(object,data=modelFi,offset=offs)
+    }    
     stats[iBoot] = anovaFn(objectiNull,objecti,...)[rowRef,colRef]
   }  
   
