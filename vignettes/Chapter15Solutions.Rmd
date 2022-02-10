@@ -29,15 +29,7 @@ The focus here is prediction so she should be using some model designed to have 
 This is a variable selection problem, he should be using multivariate model selection techniques. One approach is to construct models designed to be pretty good for prediction, and choose the one with best predictive performance. For example, he could fit mixed models, with random effects for different species, and use cross-validation to see which set of predictors gives the model has best predictive performance.
 
 ## Code Box 15.1: Predictive likelihood for the wind farm data
-`To calculate a predictive likelihood on test data, we need to decide how many rows
-should be assigned to the training set, and assign them in such a way that the training
-and test sets are (approximately) independent. Notice that because Lena collected the
-data in a paired design, with two sampling times at each station, random Stations need
-to be chosen as the test sample, not random rows of data. The pair of rows in the dataset
-corresponding to each station are jointly allocated to test or training data at random,
-giving independent training and test sets if fish communities at different stations are
-independent. Half of stations will be assigned to test data, and half to training.
-```{r code15.1}
+```{r code15.1, warning=FALSE}
 library(ecostats)
 data(windFarms)
 set.seed(5) # use this seed to get the same results as below:
@@ -63,21 +55,21 @@ These results suggest the main effect model is better.
 
 ## Exercise 15.3: Cross-validation for wind farm data and rare species
 *Repeat the analyses of Code Box 15.1 but after removing rare species (observed less than 10 times), using the following code:*
-```{r ex15.3}
+```{r ex15.3, warning=FALSE}
 notRare=colSums(windMV>0)>10
 windMVnotRare=mvabund(windFarms$abund[,notRare])
 ```
 
-```{r ex15.3val}
-windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+```{r ex15.3val, warning=FALSE}
+windFt_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+windFt_Int_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
-prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
-predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
-predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
-c(sum(predLogL),sum(predLogL_Int))
+prWind_TestRare = predict(windFt_TrainRare,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_TestRare = predict(windFt_Int_TrainRare, newdata=windFarms$X[isTest,], type="response")
+predLogLRare = dpois(windMVnotRare[isTest,],lambda=prWind_TestRare,log=TRUE)
+predLogL_IntRare = dpois(windMVnotRare[isTest,],lambda=prWind_Int_TestRare,log=TRUE)
+c(sum(predLogLRare),sum(predLogL_IntRare))
 ```
 
 *Did you get a similar answer?*
@@ -86,7 +78,7 @@ Nope -- now the model with an interaction term looks better!
 
 *Note that so far we have only considered one test sample, and there is randomness in the choice of training/test split. Repeat the analyses of Code Box 15.1 as well as those you have done here, with and without rare species, multiple times (which is a form of cross-validation).*
 
-```{r code15.1R2}
+```{r code15.1R2, warning=FALSE}
 set.seed(1) # use this seed to get the same results as below:
 nStations = length(levels(as.factor(windFarms$X$Station)))
 isTestStn = sample(nStations,nStations/2)
@@ -101,18 +93,18 @@ predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
 predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
 c(sum(predLogL),sum(predLogL_Int))
 
-windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+windFt_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+windFt_Int_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
-prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
-predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
-predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
-c(sum(predLogL),sum(predLogL_Int))
+prWind_TestRare = predict(windFt_TrainRare,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_TestRare = predict(windFt_Int_TrainRare, newdata=windFarms$X[isTest,], type="response")
+predLogLRare = dpois(windMVnotRare[isTest,],lambda=prWind_TestRare,log=TRUE)
+predLogL_IntRare = dpois(windMVnotRare[isTest,],lambda=prWind_Int_TestRare,log=TRUE)
+c(sum(predLogLRare),sum(predLogL_IntRare))
 ```
 
-```{r code15.1R3}
+```{r code15.1R3, warning=FALSE}
 set.seed(2) # use this seed to get the same results as below:
 nStations = length(levels(as.factor(windFarms$X$Station)))
 isTestStn = sample(nStations,nStations/2)
@@ -129,19 +121,19 @@ predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
 predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
 c(sum(predLogL),sum(predLogL_Int))
 
-windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+windFt_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+windFt_Int_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
-prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
-predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
-predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
-c(sum(predLogL),sum(predLogL_Int))
+prWind_TestRare = predict(windFt_TrainRare,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_TestRare = predict(windFt_Int_TrainRare, newdata=windFarms$X[isTest,], type="response")
+predLogLRare = dpois(windMVnotRare[isTest,],lambda=prWind_TestRare,log=TRUE)
+predLogL_IntRare = dpois(windMVnotRare[isTest,],lambda=prWind_Int_TestRare,log=TRUE)
+c(sum(predLogLRare),sum(predLogL_IntRare))
 ```
 
 
-```{r code15.1R4}
+```{r code15.1R4, warning=FALSE}
 set.seed(3) # use this seed to get the same results as below:
 nStations = length(levels(as.factor(windFarms$X$Station)))
 isTestStn = sample(nStations,nStations/2)
@@ -158,19 +150,19 @@ predLogL = dpois(windMV[isTest,],lambda=prWind_Test,log=TRUE)
 predLogL_Int = dpois(windMV[isTest,],lambda=prWind_Int_Test,log=TRUE)
 c(sum(predLogL),sum(predLogL_Int))
 
-windFt_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
+windFt_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year+Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-windFt_Int_Train=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
+windFt_Int_TrainRare=manyglm(windMVnotRare[isTest==FALSE,]~Year*Zone,
       data=windFarms$X[isTest==FALSE,],family="poisson")
-prWind_Test = predict(windFt_Train,newdata=windFarms$X[isTest,], type="response")
-prWind_Int_Test = predict(windFt_Int_Train, newdata=windFarms$X[isTest,], type="response")
-predLogL = dpois(windMVnotRare[isTest,],lambda=prWind_Test,log=TRUE)
-predLogL_Int = dpois(windMVnotRare[isTest,],lambda=prWind_Int_Test,log=TRUE)
-c(sum(predLogL),sum(predLogL_Int))
+prWind_TestRare = predict(windFt_TrainRare,newdata=windFarms$X[isTest,], type="response")
+prWind_Int_TestRare = predict(windFt_Int_TrainRare, newdata=windFarms$X[isTest,], type="response")
+predLogLRare = dpois(windMVnotRare[isTest,],lambda=prWind_TestRare,log=TRUE)
+predLogL_IntRare = dpois(windMVnotRare[isTest,],lambda=prWind_Int_TestRare,log=TRUE)
+c(sum(predLogLRare),sum(predLogL_IntRare))
 ```
 *Which set of results tends to be more reliable (less variable) – the ones with or without the rare species? Why do you think this happened?*
 
-Without the rare species, the results are more reliable, in relative terms (the difference in predictive likelihoods is typically 5-10) and in absolute terms (the predictive likelihood is usually in the mid -700's). With rare species, it bounces around a lot more, with the smaller model (main effects only) sometimes having better predictive performance. This is likely because rare species with all absences in one treatment combination can blow up the predictive likelihood (if they are predicted to have a mean of zero, but have some non-zero cases in test data).
+Without the rare species, the results are more reliable, with predictive likelihood usually in the mid -700's, and the interaction model consistently performing better (although sometimes narrowly so). With rare species, it bounces around a lot more, with the smaller model (main effects only) sometimes having better predictive performance. This is likely because rare species with all absences in one treatment combination can blow up the predictive likelihood (if they are predicted to have a mean of zero, but have some non-zero cases in test data).
 
 ## Code Box 15.2: Fitting a mixed model to the wind farm data
 ```{r code15.2}
@@ -185,14 +177,12 @@ summary(wind_glmm)
 *Calculate the predictive likelihood for the mixed model fitted to the wind farm data (Code Box 15.2), following the method in Code Box 15.1.*
 
 ```{r ex15.4}
-set.seed(5) # use this seed to get the same results as below:
-nStations = length(levels(as.factor(windFarms$X$Station)))
-isTestStn = sample(nStations,nStations/2)
 isTest = windComp$data$Station %in% levels(windComp$data$Station)[isTestStn]
 wind_glmm = glmmTMB(windMV~Year*Zone+diag(Year*Zone|cols),
   family=poisson(), data=windComp$data[isTest==FALSE,])
 prGLMM_Test = predict(wind_glmm, newdata=windComp$data[isTest==TRUE,], type="response")
 predGLMM = sum(dpois(windComp$data$windMV[isTest==TRUE],lambda=prGLMM_Test,log=TRUE))
+c(predGLMM,sum(predLogL))
 ```
 
 *Did this have better predictive performance? Why do you think this happened?*
@@ -251,7 +241,7 @@ c(sum(predLogL),sum(predLogL_Int), max(predLLlasso), max(predLLgrplasso))
 The LASSO models fit way better, as expected.  These models shrink parameters together, borrowing strength across taxa. The two LASSO fits did about as well as each other.
 
 ## Code Box 15.5: Reduced rank regression for the wind farm data
-```{r code15.5, fig.width=6, fig.height=4}
+```{r code15.5, fig.width=6, fig.height=4, warning=FALSE}
 library(VGAM)
 wind_RR2=rrvglm(as.matrix(windFarms$abund)~Year*Zone, family=poissonff, data=windFarms$X, Rank=2)
 wind_manyglm = manyglm(windMV~Year*Zone, data=windFarms$X, family=poisson())
@@ -265,7 +255,7 @@ matplot(as.numeric(zoneyear),latvar(wind_RR2),pch=c(1,19))
 The reduced rank approach fits better.
 
 ## Code Box 15.6: Using the LASSO for Petrus’s spider data
-```{r code15.6, fig.width=8, fig.height=8}
+```{r code15.6, fig.width=8, fig.height=8, warning=FALSE}
 library(mvabund)
 data(spider)
 spid.trait = traitglm(spider$abund,spider$x,method="cv.glm1path")
@@ -284,8 +274,6 @@ print(plot.4th)
 `soil.dry` has some strongly negative coefficients, `fallen.leaves` and `herb.layer` also have some strong (but positive) interactions.
 
 ## Code Box 15.7: Mixed model prediction of spider abundances
-`To fit a mixed model, shrinking coefficients together across taxa, we will first put data
-in long format, then use glmmTMB:
 ```{r code15.7}
 spidXY = data.frame(scale(spider$x),spider$abund) # scale standardises data!
 library(reshape2)

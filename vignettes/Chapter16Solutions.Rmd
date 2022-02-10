@@ -127,7 +127,7 @@ He wants to know *why* species vary in their environmental response, so a good i
 library(gllvm)
 data(spider)
 X = spider$x[,c("soil.dry","herb.layer")]
-ft_trait = gllvm(spider$abund, X, spider$trait, randomX=~X, family="negative.binomial")
+ft_trait = gllvm(spider$abund, X, spider$trait, randomX=~soil.dry+herb.layer, family="negative.binomial")
 logLik(ft_trait)
 library(lattice)
 a = max( abs(ft_trait$fourth.corner) )
@@ -186,11 +186,11 @@ levels=levels(spider$trait$colour)) #set to first level of factor
 nMarks = nlevels(spider$trait$marks)
 newTraits$marks[1:nMarks]=levels(spider$trait$marks)
 # create a new env dataset where the only thing that varies is soil:
-newEnv = spider$x[1:2,c("soil.dry","herb.layer")]
+newEnv = as.matrix( spider$x[1:2,c("soil.dry","herb.layer")] )
 newEnv[,"soil.dry"]=range(scale(spider$x[,"soil.dry"]))
 newEnv[,"herb.layer"]=0
 #make predictions and plot:
-newPreds = predict(ft_trait,newX=newEnv,newTR=newTraits,type="response")
+newPreds = predict(ft_trait,newX=newEnv,newTR=newTraits,type="response", level=0)
 matplot(newEnv[,1], newPreds[,1:nMarks],type="l", log="y")
 legend("topright",levels(newTraits$marks),lty=1:nMarks,col=1:nMarks)
 ```
@@ -221,9 +221,10 @@ newEnv$Bare.ground = mean(newEnv$Bare.ground)
 newEnv$Shrub.cover = mean(newEnv$Shrub.cover)
 newEnv$Volume.lying.CWD = mean(newEnv$Volume.lying.CWD)
 newEnv$Feral.mammal.dung = mean(newEnv$Feral.mammal.dung)
+newEnv=as.matrix(newEnv)
 #make predictions and plot:
-newPreds = predict(ft_anttrait,newX=newEnv,newTR=newTraits,type="response")
-matplot(newEnv$Canopy.cover, newPreds[,1:nPoly],type="l", ylab="Mean abundance", xlab="Canopy cover", log="y")
+newPreds = predict(ft_anttrait,newX=newEnv,newTR=newTraits,type="response", level=0)
+matplot(newEnv[,"Canopy.cover"], newPreds[,1:nPoly],type="l", ylab="Mean abundance", xlab="Canopy cover", log="y")
 legend("topright",levels(newTraits$Polymorphism),lty=1:nPoly,col=1:nPoly)
 ```
 
@@ -244,10 +245,10 @@ an_spider4th$D[2]/sum(an_spider4th$D)
 *Consider again Heloise’s ant data. What proportion of the variation in environmental response is explained by the measured species traits?*
 
 ```{r ex16.7}
-ft_antspp = gllvm(antTraits$abund, envMat, family="negative.binomial", starting.val="zero")
-ft_anttrait = gllvm(antTraits$abund, envMat, antTraits$traits, family="negative.binomial", starting.val="zero")
+ft_antspp = gllvm(antTraits$abund, envMat, family="negative.binomial")
+ft_anttrait = gllvm(antTraits$abund, envMat, antTraits$traits, family="negative.binomial")
 mainFormula=as.formula(paste("~", paste(colnames(envMat),collapse="+")))
-ft_antmain = gllvm(antTraits$abund, envMat, antTraits$traits, family="negative.binomial", formula=mainFormula, starting.val="zero")
+ft_antmain = gllvm(antTraits$abund, envMat, antTraits$traits, family="negative.binomial", formula=mainFormula)
 an_ant4th = anova(ft_antmain, ft_anttrait, ft_antspp)
 an_ant4th
 an_ant4th$D[2]/sum(an_ant4th$D)

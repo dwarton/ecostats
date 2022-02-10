@@ -105,9 +105,9 @@ This returned some concerning warnings but did fit the model :)
 ```{r ex12.4plots, fig.width=8,fig.height=6}
 par(mfrow=c(3,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 for(iVar in 1:9)
-  plotenvelope(lm(reveg$abund[,iVar]~fa_reveg$scores), which=2,main=print(names(reveg$abund)[iVar]))
+  plotenvelope(lm(reveg$abund[,iVar]~fa_reveg$scores), which=2,main=names(reveg$abund)[iVar])
 for(iVar in 1:9)
-  plotenvelope(lm(reveg$abund[,iVar]~fa_reveg$scores), which=3,main=print(names(reveg$abund)[iVar]))
+  plotenvelope(lm(reveg$abund[,iVar]~fa_reveg$scores), which=3,main=names(reveg$abund)[iVar])
 ```
 
 *Can you see any issues with factor analysis assumptions?*
@@ -167,13 +167,13 @@ reveg_LVM5 = gllvm(reveg$abund, num.lv=5, family="negative.binomial", trace=TRUE
 BIC(reveg_LVM1,reveg_LVM2,reveg_LVM3,reveg_LVM4,reveg_LVM5)
 ```
 
-Looks like the one latent variable model is the winner!
+For me two latent variable models was the winner!
 
 *Fit a Poisson model to the data and check assumptions. Are there any signs of overdispersion?*
 
-I'll go with a one latent variable model, on account of this looking the best in the above.
+I'll go with two latent variable models, on account of this looking the best in the above.
 ```{r ex12.5, fig.width=9}
-reveg_LVM1 = gllvm(reveg$abund, num.lv=1, family="poisson", trace=TRUE, jitter.var=0.2)
+reveg_LVM1 = gllvm(reveg$abund, num.lv=2, family="poisson", trace=TRUE, jitter.var=0.2)
 par(mfrow=c(1,3))
 plot(reveg_LVM1,which=c(1,2,5))
 ```

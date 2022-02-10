@@ -52,7 +52,7 @@ A multivariate analysis would be the way to go here.
 
 The response variables are abundance of the three most abundant genera of hunting spider. Some sort of multivariate analyis would be appropriate, but given that we are dealing with abundances, something that accounts for the mean-variance relationship might be needed.
 
-## Code Box 11.1: 
+## Code Box 11.1: Sample variance-covariance matrices on `R`
 
 ```{r box11.1leaf}
 library(smatr)
@@ -67,7 +67,7 @@ data("iris")
 var(iris[,1:4])
 ```
 
-Code Box 11.2: Fitting a multivariate linear model to the leaf economics data.
+## Code Box 11.2: Fitting a multivariate linear model to the leaf economics data.
 ```{r box11.2}
 library(smatr)
 data(leaflife)
@@ -90,7 +90,7 @@ legend("bottomright",legend=c("high rain, high soilp",
 The red dots look to be higher than the black dots, and the blue dots look to be higher than the green dots.  This suggests that at low rainfall, thicker leaves (larger mass per unit area) are needed to achieve the same longevity. Or equivalently, at low rainfall, leaves of a given LMA don't live as long.
 
 
-## Code Box 11.3 Checking multivariate linear model assumptions for leaf economics data
+## Code Box 11.3: Checking multivariate linear model assumptions for leaf economics data
 ```{r box11.3,fig.width=8,fig.height=3.5}
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 library(ecostats)

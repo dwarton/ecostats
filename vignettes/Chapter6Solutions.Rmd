@@ -53,7 +53,7 @@ There is some evidence of an effect of `Mod`, since the estimated coefficient is
 
 ## Code Box 6.2: Residual plots from a mixed model for Exercise 6.1
 
-```{r code62}
+```{r code62, warning=FALSE}
 ft_estu = lmer(Total~Mod+(1|Estuary),data=estuaries)
 scatter.smooth(residuals(ft_estu)~fitted(ft_estu),
     xlab="Fitted values",ylab="Residuals")

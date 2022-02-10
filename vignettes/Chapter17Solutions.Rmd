@@ -27,13 +27,12 @@ He is clearly after methods for studying co-occurrence, so he wants to do covari
 
 ## Code Box 17.1: Estimating co-occurrence patterns using a copula model
 ```{r code17.1, fig.width=8, fig.height=4}
-library(ecoCopula)
 library(mvabund)
-par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
 data(spider)
+library(ecoCopula)
+par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
 spiderAbund = mvabund(spider$abund)
-spiderX = data.frame(spider$x)
-spider_glmInt = manyglm(spiderAbund~soil.dry,data=spiderX)
+spider_glmInt = manyglm(spiderAbund~1,data=spider$x)
 ord_spiderInt = cord(spider_glmInt)
 plot(ord_spiderInt, biplot=TRUE) #for a biplot
 # now plot a correlation matrix
@@ -46,7 +45,7 @@ corrplot(ord_spiderInt$sigma[sortVars, sortVars], type="lower", diag=FALSE, meth
 ## Code Box 17.2: Co-occurrence patterns explained by environmental variables
 ```{r code17.2, fig.width=8, fig.height=4}
 par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
-spider_glmX = manyglm(spiderAbund~.,data=spiderX)
+spider_glmX = manyglm(spiderAbund~.,data=spider$x)
 ord_spiderX=cord(spider_glmX)
 plot(ord_spiderX,biplot=TRUE)
 corrplot(ord_spiderX$sigma[sortVars,sortVars],type="lower",diag=FALSE, method="square")
@@ -63,7 +62,7 @@ c(absCor, 1-absCor[2]/absCor[1])
 ```{r ex17.2, fig.width=8, fig.height=4}
 par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
 spiderPA=pmin(spiderAbund,1)
-spiderPA_glmInt = manyglm(spiderPA~1,data=spiderX, family="cloglog")
+spiderPA_glmInt = manyglm(spiderPA~1,data=spider$x, family="cloglog")
 ord_spiderPAInt=cord(spiderPA_glmInt)
 plot(ord_spiderPAInt, biplot=TRUE) #for a biplot
 # now plot a correlation matrix
@@ -80,14 +79,14 @@ Correlations tend to be smaller, they range from about -0.4 up to 0.4.
 
 ```{r code17.2variation, fig.width=8, fig.height=4}
 par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
-spiderPA_glmX = manyglm(spiderPA~.,data=spiderX, family="cloglog")
+spiderPA_glmX = manyglm(spiderPA~.,data=spider$x, family="cloglog")
 ord_spiderPAX = cord(spiderPA_glmX)
 plot(ord_spiderPAX, biplot=TRUE)
 corrplot(ord_spiderPAX$sigma[sortVars,sortVars], type="lower", diag=FALSE, method="square")
 ss = c(sum(ord_spiderPAInt$loadings^2), sum(ord_spiderPAX$loadings^2))
 c(ss, 1-ss[2]/ss[1])
 absCor = c( sum(abs(ord_spiderPAInt$sigma)),
-sum( abs(ord_spiderPAX$sigma)) ) - ncol(spider$PA)
+sum( abs(ord_spiderPAX$sigma)) ) - ncol(spiderPA)
 c(absCor, 1-absCor[2]/absCor[1])
 ```
 *Is this what you expected?*
@@ -105,11 +104,9 @@ I guess you would conclude here that most (more than two thirds) of co-occurrenc
 ```{r ex17.3}
 library(ade4)
 data(aviurba)
-abund=aviurba$fau
-for(iVar in 1:ncol(abund))
-  abund[,iVar]=factor(abund[,iVar])
+abund=mvabund(aviurba$fau)
 library(ordinal)
-ft_birdsInt=manyany("clm", abund, abund~1, family="ordinal", data=aviurba$mil)
+ft_birdsInt=manyany(abund~1, "clm", family="ordinal", data=aviurba$mil)
 ```
 
 *Use cord to fit a latent variable model and estimate the correlation matrix.*
@@ -126,9 +123,9 @@ Looks like nothing much is happening here!
 
 *Add fields to the model, to study the extent to which presence or absence of fields explains co-occurrence patterns. Calculate the sum of squared loadings, for latent variable models with and without fields as a predictor.*
 
-```{r ex17.3X, fig.width=8, fig.height=4}
+```{r ex17.3X, fig.width=8, fig.height=4, warning=FALSE}
 par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
-ft_birdsX=manyany("clm", abund, abund~fields, family="ordinal", data=aviurba$mil)
+ft_birdsX=manyany(abund~fields, "clm", family="ordinal", data=aviurba$mil)
 ord_birdsX=cord(ft_birdsX)
 plot(ord_birdsX,biplot=TRUE)
 corrplot(ord_birdsX$sigma[sortBirdVars,sortBirdVars],type="lower",diag=FALSE, method="square")
@@ -160,7 +157,7 @@ c(absCor, 1-absCor[2]/absCor[1])
 
 ```{r ex17.4, fig.width=8,fig.height=4}
 par(mfrow=c(1,2),mgp=c(1.75,0.75,0),mar=c(3,3,1,1))
-spider_glmSoil = manyglm(spiderAbund~soil.dry,data=spiderX)
+spider_glmSoil = manyglm(spiderAbund~soil.dry,data=spider$x)
 ord_spiderSoil=cord(spider_glmSoil)
 corrplot(ord_spiderInt$sigma[sortVars,sortVars],type="lower",diag=FALSE, method="square")
 corrplot(ord_spiderSoil$sigma[sortVars,sortVars],type="lower",diag=FALSE, method="square")
