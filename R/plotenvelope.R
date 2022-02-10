@@ -263,7 +263,10 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   {
     # get a model frame with everything in it and update on original data.
     # This is done to set up the framework to use for simulating - all we would need to do then is change first element of mf (response).
-    mf <- match.call(call=object$call)
+    if( inherits(object,c("lmerMod","glmerMod")) )
+      mf <- match.call(call=object@call)
+    else
+      mf <- match.call(call=object$call)
     m <- match(c("formula", "data", "subset", 
                  "weights", "na.action", "etastart", 
                  "mustart", "offset"), names(mf), 0L)
@@ -273,13 +276,14 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     modelF <- try( eval(mf, parent.frame()), silent=TRUE )
     
     # if for some reason this didn't work (mgcv::gam objects cause grief) then just call model.frame on object:    
-    if(inherits(modelF, "try-error"))
+    # also, do this for lme4 because it is so not a team player 
+    if(inherits(modelF, "try-error") | inherits(object,c("lmerMod","glmerMod")) )
       modelF = model.frame(object)
 
     modF = cbind(model.response(modelF),modelF[-1])
     
     # if there is an offset, add it, as a separate argument when updating
-    offs=try(model.offset(modF))
+    offs=try(model.offset(modelF))
     if(inherits(offs,"try-error"))
       objectY = update(object,data=modF)
     else
