@@ -1,7 +1,6 @@
 ## ecostats: Code and Data Accompanying the Eco-Stats Text
 
-[![Build Status](https://travis-ci.org/dwarton/ecostats.svg)](https://travis-ci.org/dwarton/ecostats)
-[![CI](https://github.com/dwarton/ecostats/workflows/ci/badge.svg)](https://github.com/dwarton/ecostats/actions?query=workflow%3Aci)
+[![ci](https://github.com/dwarton/ecostats/workflows/ci/badge.svg)](https://github.com/dwarton/ecostats/actions?query=workflow%3Aci)
 [![License](http://img.shields.io/badge/license-LGPL%20%28%3E=%202.1%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) =======
 [![CRAN](http://www.r-pkg.org/badges/version/ecostats)](https://CRAN.R-project.org/package=ecostats) 
 [![Downloads](http://cranlogs.r-pkg.org/badges/ecostats?color=brightgreen)](https://www.r-pkg.org/pkg/ecostats)
