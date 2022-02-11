@@ -280,27 +280,37 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     if(inherits(modelF, "try-error") | inherits(object,c("lmerMod","glmerMod")) )
       modelF = model.frame(object)
 
-    modF = cbind(model.response(modelF),modelF[-1])
-    
-    # if there is an offset, add it, as a separate argument when updating
-    offs=try(model.offset(modelF))
-    if(inherits(offs,"try-error"))
-      objectY = update(object,data=modF)
+    # if response has brackets in its name, it is some sort of expression,
+    # put quotes around it so it works (?)
+    respName   = names(modelF)[1]
+    if(regexpr("(",respName,fixed=TRUE)>0)
+    {
+      newResp    = sprintf("`%s`", respName) #putting quotes around response name
+      fm.update  = reformulate(".", response = newResp)
+    }
     else
-      objectY = update(object,data=modF,offset=offs)
+      fm.update  = reformulate(".")
+
+        # if there is an offset, add it, as a separate argument when updating
+    modelF$offs=try(model.offset(modelF))
+    if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
+      objectY = update(object, formula = fm.update, data=modelF)
+    else
+      objectY = update(object, formula = fm.update, data=modelF,offset=offs)
     
+
     # simulate new data as a matrix
-        yNew   = simulate(objectY,n.sim)
+    yNew   = simulate(objectY,n.sim)
     if(is.mva) # for multivariate data, vectorise res for each sim dataset
       yNew = apply(yNew,3,cbind)
     resids = fits = matrix(NA,nrow(yNew),ncol(yNew))
     for(i.sim in 1:n.sim)
     {
-      modFi            = cbind( matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp)), modelF[-1] )
-      if(inherits(offs,"try-error"))
-        newFit         = try(update(objectY,data=modFi))
+      modelF[[1]]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
+      if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
+        newFit         = try(update(objectY, formula=fm.update, data=modelF))
       else
-        newFit         = try(update(objectY,data=modFi,offset=offs))
+        newFit         = try(update(objectY, formula=fm.update, data=modelF, offset=offs))
       resids[,i.sim] = resFunction(newFit)
       ftt   = try(predFunction(newFit)) #using try for fitted values because eel data occasionally failed(!?)
       if(inherits(ftt,"try-error"))
@@ -310,7 +320,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
 
       if(inherits(fits[,i.sim],"try-error"))
       # if no variation in preds, add v small random noise to avoid error later
-      if(var(fits[,i.sim])<1.e-8) fits[,i.sim] = fits[,i.sim] + 1.e-6*rnorm(n.obs)
+        if(var(fits[,i.sim])<1.e-8) fits[,i.sim] = fits[,i.sim] + 1.e-6*rnorm(n.obs)
     }
   }
   else  
@@ -394,10 +404,15 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
     {
       # make axes and scales as appropriate
+      loPlot = cr$lo
+      hiPlot = cr$hi
       if(add.smooth) #for smoother, keep ylim to data only
       {
         plot(x,y, main=main[1], 
              xlab=xlab[1], ylab=ylab[1], type="n", ...)
+        eps=0.025*(max(y)-min(y)) # truncate envelope so it just goes a little bit outside the data
+        loPlot[cr$lo<min(y)] = min(y)-eps
+        hiPlot[cr$hi>max(y)] = max(y)+eps
       }
       else #otherwise ylim should cover envelope
       {
@@ -405,7 +420,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
              xlab=xlab[1], ylab=ylab[1], type="n", ...)
       }
       # add envelope and line
-      polygon(xPred[c(1:nPred,nPred:1)], c(cr$lo,cr$hi[nPred:1]), 
+      polygon(xPred[c(1:nPred,nPred:1)], c(loPlot,hiPlot[nPred:1]), 
               col=envelope.col[1], border=NA)
       # add smooth, if applicable
       if(add.smooth)
@@ -462,8 +477,15 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
           slope=diff(qs)/diff(xs)
           int=qs[1]-slope*xs[1]
         }
+        #truncate limits outside of data range so polygon actually bloody plots 
+        loPlot = cr$lo
+        hiPlot = cr$hi
+        eps=0.025*(max(y)-min(y))
+        loPlot[cr$lo<min(y)] = min(y)-eps
+        hiPlot[cr$hi>max(y)] = max(y)+eps
+
         # add envelope
-        polygon(sort(qq.x$x)[c(1:n.obs,n.obs:1)], c(cr$lo,cr$hi[n.obs:1]), 
+        polygon(sort(qq.x$x)[c(1:n.obs,n.obs:1)], c(loPlot,hiPlot[n.obs:1]), 
                 col=envelope.col[2], border=NA)
         lines(range(qq.x$x),int+slope*range(qq.x$x),col=line.col[2])
       }
@@ -533,18 +555,24 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
     {
       # make axes and scales as appropriate
+      loPlot = cr$lo
+      hiPlot = cr$hi
       if(add.smooth==TRUE) #for smoother, keep ylim to data only
       {
-        plot(x,yAbs, main=main[3], 
+        plot(x, yAbs, main=main[3], 
              xlab=xlab[3], ylab=ylab[3], type="n", ...)
+        #truncate limits outside of data range so polygon actually bloody plots 
+        eps=0.025*(max(yAbs)-min(yAbs))
+        loPlot[cr$lo<min(yAbs)] = min(yAbs)-eps
+        hiPlot[cr$hi>max(yAbs)] = max(yAbs)+eps
       }
       else #otherwise ylim should cover envelope
       {
-        plot(c(x,xPred,xPred), c(yAbs,cr$lo,cr$hi), main=main[3], 
+        plot(c(x,xPred,xPred),c(yAbs,cr$lo,cr$hi), main=main[3], 
              xlab=xlab[3], ylab=ylab[3], type="n", ...)
       }
       # add envelope and line
-      polygon(xPred[c(1:nPred,nPred:1)], c(cr$lo,cr$hi[nPred:1]), 
+      polygon(xPred[c(1:nPred,nPred:1)], c(loPlot,hiPlot[nPred:1]), 
               col=envelope.col[3], border=NA)
 #      lines(range(xObs),median(yAbs)*c(1,1),col=line.col,...)
       # add smooth, if applicable

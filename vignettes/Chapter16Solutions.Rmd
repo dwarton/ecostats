@@ -77,7 +77,7 @@ Oh that's odd -- the estimated trend is almost identical for these two groups.
 This doesn't seem worthwhile when there are no differences in response across these archetypes!!
 
 ## Code Box 16.3: Choosing the number of archetypes for Petrus’s spider data
-```{r code16.3}
+```{r code16.3, message=FALSE}
 nClust=rep(2:6,3)
 bics = rep(NA, length(nClust))
 for(iClust in 1:length(nClust))
@@ -104,18 +104,20 @@ As in Maths Box 16.1, mixture model likelihoods can be messy with multiple maxim
 
 OK I'm going for BIC as above.
 
-```{r ex16.3}
-nClust=rep(2:6,3)
+```{r ex16.3, message=FALSE}
+nClust=rep(1:5,3)
 bics = rep(NA, length(nClust))
 for(iClust in 1:length(nClust))
 {
-  fti_Mix = species_mix(abundMat~treatment, data=revegDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
+  fti_Mix = species_mix(abundMat~treatment, data=revegDF, 
+    family="negative.binomial", nArchetypes=nClust[iClust])
   bics[iClust] = BIC(fti_Mix)
 }
 plot(bics~nClust, ylab="BIC", xlab="# archetypes")
 ```
 
-Something has gone very wrong here!
+Well it looks like there should be two archetypes (presumably, one of these is increasing with revegetation, the other not).
+
 
 ## Exercise 16.4: Understanding why spiders vary in environmental response
 *Consider again Petrus’s hunting spider data of Exercise 15.2... He wants to know the extent to which species traits explain interspecific variation in environmental response. What approach should he use to answer this question?*

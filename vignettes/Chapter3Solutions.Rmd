@@ -208,9 +208,9 @@ There is also a suggestion of non-normality when checking assumptions on the fit
  plotenvelope(ft_habconf,which=1:3)
 ```
 
-Notice that in the quantile plot that points get close to the lower bound in the middle of the plot and get near the top of it at large values -- this is mildly suggestive of skew. We similarly see an increaing trend in the scale-location plot, although it does stay within its simulatin bounds. Notice these are only subtle patterns and not particularly strong.
+Notice that in the quantile plot that points get close to the lower bound in the middle of the plot and get near the top of it at large values -- this is mildly suggestive of skew. We similarly see an increasing trend in the scale-location plot, although it does stay within its simulatin bounds. Notice these are only subtle patterns and not particularly strong.
 
-(As an aside, note there is no envelope visible on the residual vs fits plot -- this is because we are fitting an ANOVA model, which will have no mean trend on the res vs fits plot at all fitted values, that is, it is always a flat line at zero. Put another way, non-linearity isn't an assumption to worry about in ANOVA models.)
+(As an aside, note there is no envelope visible on the residual vs fits plot. This happens because we are fitting an ANOVA model, which ends up with a residuals mean exactly equal to zero for all treatments, hence no mean trend on the res vs fits plot for all fitted values, just a flat line at zero. Put another way, non-linearity isn't an assumption to worry about in ANOVA models, the fitted model goes exactly through the mean of each treatment.)
 
 We can try to address the suggestion of skew this using log-transformation:
 

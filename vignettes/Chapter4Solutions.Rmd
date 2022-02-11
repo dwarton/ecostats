@@ -355,7 +355,7 @@ All good so far, no obvious trend, except that `Dist=0` seems to have lower tota
 
 
 ```{r seaweed anova3}
-ft_seaweed3 = lm(logTot~Size*Time*Dist,data=seaweed)
+ft_seaweed3 = lm(log(Total)~Size*Time*Dist,data=seaweed)
 plotenvelope(ft_seaweed3,which=1:3)
 anova(ft_seaweed3)
 ```

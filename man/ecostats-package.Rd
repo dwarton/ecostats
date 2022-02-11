@@ -6,7 +6,7 @@
 \alias{ecostats-package}
 \title{ecostats: Code and Data Accompanying the Eco-Stats Text}
 \description{
-Functions and data supporting the Eco-Stats text (Warton, forthcoming, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
+Functions and data supporting the Eco-Stats text (Warton, 2022, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
 }
 \author{
 \strong{Maintainer}: David Warton \email{david.warton@unsw.edu.au}
@@ -14,6 +14,7 @@ Functions and data supporting the Eco-Stats text (Warton, forthcoming, Springer)
 Other contributors:
 \itemize{
   \item Christopher Chung [contributor]
+  \item Mark Donoghoe [contributor]
   \item Eve Slavich [contributor]
 }
 

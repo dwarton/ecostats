@@ -81,6 +81,9 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
     stop(paste("Whoah, the first object fitted a larger model than the second object...","\n", 
   " it should be a smaller 'null' model fit, nested in the second object."))
 
+  # get dimnames of response
+  respDimnames     = dimnames( model.response(model.frame(object)) )
+  
   # get the observed stat
   targs <- match.call(expand.dots = FALSE)
   anovaFn=anova
@@ -105,7 +108,8 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
     colRef=3
     
     # add model details so the printed output looks nice
-    modelnamelist <- c(deparse(targs[[2]]), deparse(targs[[3]]))
+    modelnamelist = c(deparse(substitute(objectNull)),
+                      deparse(substitute(object)))
     Xnames <- list(paste(deparse(formula(objectNull),width.cutoff=500), collapse = "\n"),
                    paste(deparse(formula(object),width.cutoff=500), collapse = "\n"))
     topnote <- paste(modelnamelist, ": ", Xnames, sep = "", collapse = "\n")
@@ -118,7 +122,10 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
   stats = rep(NA,n.sim+1)
   stats[1]=statObs[rowRef,colRef]
 #  mf = model.frame(object)
-  mf <- match.call(call=object$call)
+  if( inherits(object,c("lmerMod","glmerMod")) )
+    mf <- match.call(call=object@call)
+  else
+    mf <- match.call(call=object$call)
   m <- match(c("formula", "data", "subset", 
                "weights", "na.action", "etastart", 
                "mustart", "offset"), names(mf), 0L)
@@ -128,29 +135,39 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
   modelF <- try( eval(mf, parent.frame()), silent=TRUE )
   
   # if for some reason this didn't work (mgcv::gam objects cause grief) then just call model.frame on object:    
-  if(inherits(modelF, "try-error"))
-    modelF = model.frame(object)
-  
+  if(inherits(modelF, "try-error") | inherits(object,c("lmerMod","glmerMod")) )
+      modelF = model.frame(object)
+
   # if there is an offset, add it, as a separate argument when updating
   offs=try(model.offset(modelF))
 
+  # if response has brackets in its name, it is some sort of expression,
+  # put quotes around it so it works (?)
+  respName   = names(modelF)[1]
+  if(regexpr("(",respName,fixed=TRUE)>0)
+  {
+    newResp    = sprintf("`%s`", respName)
+    fm.update  = reformulate(".", response = newResp)
+  }
+  else
+    fm.update  = reformulate(".")
+    
   # now n.sim times, simulate new response, refit models and get anova again
   for(iBoot in 1:n.sim+1)
   {
-    modelFi      = cbind(simulate(objectNull), modelF[-1])
-    if(inherits(offs,"try-error"))
+    modelF[[1]]   = as.matrix(simulate(objectNull), dimnames=respDimnames) #matrix to fix lme4 issues
+    if(inherits(offs,"try-error") | is.null(offs))
     {
-      objectiNull  = update(objectNull, data=modelFi)
-      objecti      = update(object, data=modelFi)
+      objectiNull  = update(objectNull, formula=fm.update, data=modelF)
+      objecti      = update(object, formula=fm.update, data=modelF)
     }
     else
     {
-      objectiNull = update(object,data=modelFi,offset=offs)
-      objecti = update(object,data=modelFi,offset=offs)
+      objectiNull = update(object, formula=fm.update, data=modelF,offset=offs)
+      objecti = update(object, formula=fm.update, data=modelF,offset=offs)
     }    
     stats[iBoot] = anovaFn(objectiNull,objecti,...)[rowRef,colRef]
   }  
-  
   # now take the original anova table, get rid of unneeded columns, stick on P-value
   statReturn=statObs[,1:colRef] #get rid of the extra columns we don't need
   statReturn$'P-value'=NA

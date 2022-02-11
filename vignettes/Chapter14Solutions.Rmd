@@ -87,18 +87,15 @@ No :(
 
 ## Code Box 14.2: Checking assumptions for the revegetation model of Code Box 14.1
 
-To get this working we currently need to store offset, pre-transformed, in workspace :( 
 ```{r code14.2, fig.width=9,fig.height=3.3}
-logPit=log(reveg$pitfalls)
 par(mfrow=c(1,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
-ft_reveg=manyglm(abundMV~treatment,offset=logPit,family="negative.binomial", data=reveg)
+ft_reveg=manyglm(abundMV~treatment,offset=log(pitfalls),family="negative.binomial", data=reveg)
 plotenvelope(ft_reveg, which=1:3)
 ```
 
-## Code Box 14.3: Checking mean-variance assumptions for a Poisson
-revegetation model
+## Code Box 14.3: Checking mean-variance assumptions for a Poisson revegetation model
 ```{r code14.3, fig.width=9, fig.height=3.3}
-ft_revegP=manyglm(abundMV~treatment, offset=logPit, family="poisson", data=reveg)
+ft_revegP=manyglm(abundMV~treatment, offset=log(pitfalls), family="poisson", data=reveg)
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_revegP, which=1:3, sim.method="stand.norm")
 ```
@@ -171,7 +168,9 @@ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wind, which=1:3, n.sim=39)
 ```
 
-So the weird kink in the scale-location plot happened in simulated data too, so it is nothing really to worry about. It seems to be an artifact, probably because of overfitting of the data by including a `Station` term in the model -- this means that there is a parameter for every two observations in the data! (If a random effect were used instead, this effect would have been weaker. But it isn't really a problem)
+(You can ignore the error messages - this seemed to happen because predicted values were numerically zero.)
+
+Anyway, the weird kink in the scale-location plot happened in simulated data too, so it is nothing really to worry about. It seems to be an artifact, probably because of overfitting of the data by including a `Station` term in the model -- this means that there is a parameter for every two observations in the data! (If a random effect were used instead, this effect would have been weaker. But it isn't really a problem)
 
 
 ## Code Box 14.4: A manyglm analysis of the revegetation data, using a

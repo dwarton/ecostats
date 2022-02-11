@@ -45,8 +45,8 @@ simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...
                  "gaussian"=gaussian(),
                  "gamma"=Gamma(link='log'),
                  "negative.binomial"=MASS::negative.binomial(theta=object$theta[iVar]))    
-    offs = model.offset(model.frame(object))
-    if(is.null(offs))
+    newdata$offs = model.offset(model.frame(object$formula,data=newdata))
+    if(is.null(newdata$offs))
       object.i = glm(object$formula, family=fam, data=newdata)
     else
       object.i = glm(object$formula, family=fam, data=newdata, offset=offs)

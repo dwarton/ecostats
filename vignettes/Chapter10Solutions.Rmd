@@ -369,7 +369,9 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ants_NB,which=1:3)
 ```
 
-The diagnostic plots for the Poisson model showed serious problems, but we have no such issues here. So the negative binomial regression is a much better fit to the data.  It produced (much!) larger $P$-values because there is a lot of overdispersion in the data, which a Poisson model is unable to account for.
+Whereas the diagnostic plots for the Poisson model showed serious problems, we have no such issues here. So the negative binomial regression is a much better fit to the data.  It produced (much!) larger $P$-values because there is a lot of overdispersion in the data, which a Poisson model is unable to account for.
+
+(Note that the simulation envelopes cover a broad range!  This is because of the small sample size. When comparing these plots to those for the Poisson fit, notice that the y-axis scale on the negative binomial plot is much smaller -- the envelopes actually have similar width in both sets of plots, they only look different because the axes have different scales.)
 
 
 ## Exercise 10.9: Worm counts with different numbers of pitfall traps

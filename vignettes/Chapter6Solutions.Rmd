@@ -193,7 +193,7 @@ And if we compare this to the standard error from `summary`:
 summary(ft_estu)
 ```
 
-we see the estimated standard error is `4.287`, which is pretty close to the value we got by simulation.
+we see the estimated standard error is `r summary(ft_estu)$coef[2,2]`, which is pretty close to the value we got by simulation (`r sd(bStat)`).
 
 
 ## Code Box 6.7: A parametric bootstrap to test for an effect of Estuary in Exercise 6.1.

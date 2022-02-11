@@ -168,7 +168,7 @@ It will actually be slightly easier to check assumptions using a linear model, s
 ```
 We are doing much better with assumptions: plots look better, standard deviations are more similar. Results became slightly more significant, which is not unexpected, as data are closer to normal (which usually means that tests based on linear models have more power).
 
-Notice that there is no noticeable smoother or envelope on the residual vs fits plot -- that is because for t-test (and later on, one-way or factorial ANOVA designs) the mean of the residuals is exactly zero for all fitted values. Trying to assess the trend on this plot for non-linearity is not really useful, the only thing to worry about here is a fan shape. This would also show up on a smoother through the scale-location plot as an increasing trend:
+Notice that there is no noticeable smoother or envelope on the residual vs fits plot -- that is because for a t-test (and later on, one-way or factorial ANOVA designs) the mean of the residuals is exactly zero for all fitted values. Trying to assess the trend on this plot for non-linearity is not really useful, the only thing to worry about here is a fan shape. This would also show up on a smoother through the scale-location plot as an increasing trend:
 
 ```{r guineapigs ttest log-transform slplot}
  plotenvelope(ft_logGuineapigs,which=3)

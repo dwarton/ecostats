@@ -3,14 +3,15 @@ Title: Code and Data Accompanying the Eco-Stats Text
 Version: 0.2.4
 Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
             person("Christopher", "Chung", role = "ctb"),
+            person("Mark", "Donoghoe", role = "ctb"),
             person("Eve", "Slavich", role = "ctb")
             )
-Description: Functions and data supporting the Eco-Stats text (Warton, forthcoming, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
+Description: Functions and data supporting the Eco-Stats text (Warton, 2022, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
 License: LGPL (>= 2.1)
 Imports: GET, MASS, mgcv, mvtnorm
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     knitr,
     rmarkdown,
