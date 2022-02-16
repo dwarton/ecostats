@@ -33,7 +33,7 @@ install_github("skiptoniam/ecomix")
 library(ecomix)
 library(mvabund)
 data(spider)
-SpiderDF=data.frame(spider$x)
+SpiderDF=spider$x
 SpiderDF$abund=as.matrix(spider$abund)
 spiderFormula = abund ~ soil.dry + bare.sand + fallen.leaves + moss +
 herb.layer + reflection
