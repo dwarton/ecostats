@@ -141,7 +141,6 @@ summary(ft_crab)
 library(mvabund)
 ftMany_crab = manyglm(CrabPres~Time*Dist,family=binomial("cloglog"),
              data=seaweed)
-
 plotenvelope(ftMany_crab)
 ```
 

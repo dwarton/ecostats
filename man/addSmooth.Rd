@@ -5,8 +5,8 @@
 \title{addSmooth Add a smoother to a plot, with pointwise confidence band}
 \usage{
 addSmooth(
-  X,
-  Y,
+  x,
+  y,
   conf.level = 0.05,
   line.col = "slateblue4",
   envelope.col = adjustcolor(line.col, alpha.f = 0.1),
@@ -14,6 +14,10 @@ addSmooth(
 )
 }
 \arguments{
+\item{x}{is the \code{x} co-ordinates for the plot, _e.g._ the fitted values in a plot of residuals vs fitted values.}
+
+\item{y}{is the \code{y} co-ordinates for the plot}
+
 \item{conf.level}{the confidence level to use in constructing the confidence band around the smoother.}
 
 \item{line.col}{color of smoother. Defaults to "slateblue4".}
@@ -24,10 +28,6 @@ the residual vs fits or scale-location plot, the envelope is constructed around 
 within the envelope.}
 
 \item{...}{further arguments sent through to \code{lines} and \code{polygon}.}
-
-\item{x}{is the \code{x} co-ordinates for the plot, _e.g._ the fitted values in a plot of residuals vs fitted values.}
-
-\item{y}{is the \code{y} co-ordinates for the plot}
 }
 \value{
 A smoother is added to the existing plot, with confidence band. In addition, a data frame is invisibly

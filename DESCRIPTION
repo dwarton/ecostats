@@ -1,7 +1,7 @@
 Package: ecostats
 Title: Code and Data Accompanying the Eco-Stats Text
-Version: 1.0.0
-Date: 2022-02-11
+Version: 1.1.0
+Date: 2022-02-21
 Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
             person("Christopher", "Chung", role = "ctb"),
             person("Mark", "Donoghoe", role = "ctb"),
@@ -16,20 +16,32 @@ RoxygenNote: 7.1.2
 Suggests: 
     knitr,
     rmarkdown,
-    DAAG,
-    dplyr,
+    ade4,
     caper,
     car,
+    corrplot,
+    DAAG,
+    devtools,
+    DHARMa,
+    dplyr,
+    ecoCopula,
+    ecomix,
+    gclus,
     GGally,
     ggplot2,
     ggthemes,
     glmnet,
+    gllvm,
+    glmmTMB,
+    GPArotation,
     lattice,
     leaps,
     lme4,
+    MCMCglmm,
     multcomp,
     mvabund,
     nlme,
+    ordinal,
     permute,
     pgirmess,
     phylobase,
@@ -37,5 +49,6 @@ Suggests:
     psych,
     reshape2,
     smatr,
-    testthat
+    testthat,
+    vegan
 VignetteBuilder: knitr

@@ -166,7 +166,7 @@
 #' 
 #' @importFrom grDevices adjustcolor 
 #' @importFrom graphics plot points lines par polygon
-#' @importFrom stats cor fitted formula lm model.frame model.matrix model.response predict qnorm qqnorm quantile residuals residuals.lm rnorm rstandard runif sd update var
+#' @importFrom stats cor fitted formula lm model.frame model.matrix model.offset model.response predict qnorm qqnorm quantile reformulate residuals residuals.lm rnorm rstandard runif sd update var
 
 #' @export
 plotenvelope = function (y, which = 1:2, sim.method="refit", 

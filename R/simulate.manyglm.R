@@ -2,7 +2,10 @@
 #'
 #' Simulates new responses for a manyglm object.
 #'
-#' @param formula a \code{manyglm} object from the \code{mvabund} package.
+#' @param object a \code{manyglm} object from the \code{mvabund} package.
+#' @param nsim number of simulated datasets to generate.
+#' @param seed a seed for random number generation (defaults to NULL)
+#' @param newdata a new dataset with predictors to simulate new values for. Defaults to data model was fitted to.
 #' @param ... additional optional arguments.
 #'
 #' @details
@@ -18,11 +21,12 @@
 #' @seealso \code{\link[mvabund]{manyglm}}, \code{\link[ecoCopula]{cord}}, \code{\link[ecoCopula]{simulate.cord}}
 #'
 #' @method simulate manyglm
-#' @importFrom stats simulate
+#' @importFrom stats binomial Gamma gaussian glm model.offset poisson simulate
 #' @importFrom MASS rnegbin
 #' @export
 simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...) 
 {
+
   if(ncol(fitted(object))>1)
   {
     cordObject = ecoCopula::cord(object)
@@ -38,19 +42,24 @@ simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...
   }
   else #refit as a glm and use simulate from there
   {
-    fam = switch(object$family,
-                 "binomial(link=logit)"=binomial(),
-                 "binomial(link=cloglog)"=binomial("cloglog"),
-                 "poisson"=poisson(),
-                 "gaussian"=gaussian(),
-                 "gamma"=Gamma(link='log'),
-                 "negative.binomial"=MASS::negative.binomial(theta=object$theta[iVar]))    
+    # sort out family so it works with cord or glm
+    if(is.character(object$family))
+    {
+      fam = switch(object$family,
+                   "binomial(link=logit)"=binomial(),
+                   "binomial(link=cloglog)"=binomial("cloglog"),
+                   "poisson"=poisson(),
+                   "gaussian"=gaussian(),
+                   "gamma"=Gamma(link='log'),
+                   "negative.binomial"=MASS::negative.binomial(theta=object$theta[1]))    
+    }
+    # detect and offset to use if required
     newdata$offs = model.offset(model.frame(object$formula,data=newdata))
     if(is.null(newdata$offs))
       object.i = glm(object$formula, family=fam, data=newdata)
     else
       object.i = glm(object$formula, family=fam, data=newdata, offset=offs)
-    object.i$coefficients = coef(object)
+    object.i$coefficients = coef(object) # overwrite parameters in case they have been messed with
     simData = simulate(object.i,nsim=nsim,seed=seed)
   }
   

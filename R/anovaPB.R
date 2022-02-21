@@ -139,7 +139,7 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
       modelF = model.frame(object)
 
   # if there is an offset, add it, as a separate argument when updating
-  offs=try(model.offset(modelF))
+  modelF$offs=try(model.offset(modelF))
 
   # if response has brackets in its name, it is some sort of expression,
   # put quotes around it so it works (?)
@@ -156,7 +156,7 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
   for(iBoot in 1:n.sim+1)
   {
     modelF[[1]]   = as.matrix(simulate(objectNull), dimnames=respDimnames) #matrix to fix lme4 issues
-    if(inherits(offs,"try-error") | is.null(offs))
+    if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
     {
       objectiNull  = update(objectNull, formula=fm.update, data=modelF)
       objecti      = update(object, formula=fm.update, data=modelF)

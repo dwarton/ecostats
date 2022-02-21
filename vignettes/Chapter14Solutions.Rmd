@@ -65,7 +65,7 @@ seaweed$PA = mvabund(seaweed[,6:21])
 seaweed$PA[seaweed$PA>1] = 1
 
 #fit model
-ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family=binomial("cloglog"), data=seaweed)
+ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family="cloglog", data=seaweed)
 anova(ft_epiAlt,nBoot=99)
 ```
 
@@ -73,7 +73,7 @@ anova(ft_epiAlt,nBoot=99)
 
 To see if there is an effect of `Dist` I guess we could remove it from the model entirely and see if that does anything:
 ```{r ex14.4anNull}
-ft_epiNull = manyglm(PA~Wmass+Size+Time,family=binomial("cloglog"), data=seaweed)
+ft_epiNull = manyglm(PA~Wmass+Size+Time,family="cloglog", data=seaweed)
 anova(ft_epiNull, ft_epiAlt, nBoot=99)
 ```
 

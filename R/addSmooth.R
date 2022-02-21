@@ -45,19 +45,17 @@
 #' plot(log(height)~lat,data=globalPlants)
 #' with(globalPlants, addSmooth(lat,log(height)) )
 #' 
-#' @importFrom mgcv gam predict.gam 
 #' @importFrom graphics plot points lines par polygon
 
 #' @export
-addSmooth=function(X,Y,conf.level=0.05,line.col="slateblue4", envelope.col = adjustcolor(line.col, alpha.f = 0.1), ...)
+addSmooth=function(x,y,conf.level=0.05,line.col="slateblue4", envelope.col = adjustcolor(line.col, alpha.f = 0.1), ...)
 {
-  require(mgcv)
   nPoints  = 500
-  dat      = data.frame(X=as.vector(X),Y=as.vector(Y))
-  ftGAM    = gam(Y~X,data=dat)
+  dat      = data.frame(X=as.vector(x),Y=as.vector(y))
+  ftGAM    = mgcv::gam(Y~X,data=dat)
   Xpred    = seq(min(dat$X),max(dat$X),length=nPoints)
   smoothDF = data.frame(X=Xpred)
-  prGAM    = predict.gam(ftGAM,newdata=smoothDF,se.fit=TRUE)
+  prGAM    = mgcv::predict.gam(ftGAM,newdata=smoothDF,se.fit=TRUE)
 
   zAlpha   = qnorm(1-conf.level/2)
   smoothDF$Yhat = prGAM$fit

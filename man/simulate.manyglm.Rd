@@ -7,9 +7,15 @@
 \method{simulate}{manyglm}(object, nsim = 1, seed = NULL, newdata = object$data, ...)
 }
 \arguments{
-\item{...}{additional optional arguments.}
+\item{object}{a \code{manyglm} object from the \code{mvabund} package.}
 
-\item{formula}{a \code{manyglm} object from the \code{mvabund} package.}
+\item{nsim}{number of simulated datasets to generate.}
+
+\item{seed}{a seed for random number generation (defaults to NULL)}
+
+\item{newdata}{a new dataset with predictors to simulate new values for. Defaults to data model was fitted to.}
+
+\item{...}{additional optional arguments.}
 }
 \value{
 Simulates a data frame of new values for responses. If multiple datasets are requested, these are
