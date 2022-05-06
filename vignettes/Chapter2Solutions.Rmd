@@ -27,9 +27,9 @@ See Code Box 2.1, $P$-value is about 0.008. This means that the test statistic i
 ## Code Box 2.1 A two-sample t-test of the data from the guinea pig experiment
 
 ```{r guineapig}
- require(ecostats)
+ library(ecostats)
  data(guineapig)
- t.test(errors~treatment, data=guineapig, alternative="less", var.equal=TRUE)
+ t.test(errors~treatment, data=guineapig, var.equal=TRUE, alternative="less")
 ```
 
 

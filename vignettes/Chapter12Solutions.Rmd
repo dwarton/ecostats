@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ## Exercise 12.1: Flower size and shape
 *How do these three species of Iris differ in terms of flower size and shape?*
 

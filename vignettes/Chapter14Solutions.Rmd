@@ -242,6 +242,12 @@ anova(manyOrdNull, manyOrd)
 
 We tested for an effect of distance on abundance, when classified into a three-level ordinal factor. There is no evidence of a `Dist` effect.
 
+The `ordinal` package has a bug in it (in version 2019.12) so it conflicts with `lme4` (specifically it overwrites the `ranef` function), [issue posted on Github] (https://github.com/runehaubo/ordinal/issues/48). So if you are running analyses using both packages, you need to _detach the `ordinal` package_ before continuing...
+
+```{r detach ordinal}
+detach("package:ordinal", unload=TRUE)
+```
+
 ## Code Box 14.6: A compositional analysis of Anthony’s revegetation
 data
 ```{r code 14.6}
@@ -267,10 +273,10 @@ anova(ft_null,ft_alt,nBoot=99,block=ft_comp$rows)
 ```{r code14.8}
 ft_reveg0 = manyglm(abundMV~1+offset(log(pitfalls)), data=reveg)
 QDrows0 = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg0)) )
-ft_row0=manyglm(abundMV~1+offset(QDrows0), data=reveg)
+ft_row0=manyglm(abundMV~1+offset(log(pitfalls))+offset(QDrows0), data=reveg)
 ft_reveg = manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg)
 QDrows = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg)) )
-ft_row=manyglm(abundMV~treatment+offset(QDrows), data=reveg)
+ft_row=manyglm(abundMV~treatment+offset(log(pitfalls))+offset(QDrows), data=reveg)
 anova(ft_row0,ft_row)
 ```
 

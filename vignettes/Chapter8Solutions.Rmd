@@ -35,6 +35,8 @@ plotenvelope(ft_maunagam)
 
 It generally looks good, although there are a couple of lines of points fanning out on the residuals vs fits plot for `co2<320`.  (The method of taking measurements actually changed in 1974, at about `co2=330`, so it is possible that this could be artefacts due to changes in the measurement or recording process for data in the 1950's and 1960's.)
 
+Note the simulation envelope around the trend line in the residual vs fits plot is hard to see -- this is because it falls very close to the horizontal line at zero. The smoother against year was actually fitted such that the residual trend would be a horizontal line at zero.
+
 
 ## Code Box 8.3: Comparing curves for the Mauna Loa data.
 
@@ -268,4 +270,14 @@ BIC(ft_richAspNugg)
 ```
 
 As expected, this did not change inference in any appreciable way!
+
+## Code Box 8.10: A third model for the Mauna Loa data, adding an AR(1) random effect to account for temporal autocorrelation within years
+```{r code8.10}
+ft_gamm<-gamm(co2~s(DateNum)+sin(month/12*2*pi) + cos(month/12*2*pi)
++ sin(month/12*4*pi) + cos(month/12*4*pi),
+correlation=corAR1(form=~1|year),data=datmauna)
+summary(ft_gamm$gam)
+summary(ft_gamm)
+```
+
 

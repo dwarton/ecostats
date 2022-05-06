@@ -30,6 +30,7 @@
 #' # construct full conditional residuals:
 #' cresiduals(iris.mlm)
 #'
+#' @import stats
 #' @export
 cresiduals=function(object, standardize = TRUE, ...)
 { 

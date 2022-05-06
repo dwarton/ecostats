@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ## Exercise 13.1: Brain size-body size relationships
 
 *Does brain size scale as the 2/3 power of body size?*

@@ -165,10 +165,10 @@
 #' # Note violation on the scale/location plot.}
 #' 
 #' @importFrom grDevices adjustcolor 
-#' @importFrom graphics plot points lines par polygon
-#' @importFrom stats cor fitted formula lm model.frame model.matrix model.offset model.response predict qnorm qqnorm quantile reformulate residuals residuals.lm rnorm rstandard runif sd update var
-
+#' @import graphics
+#' @import stats
 #' @export
+
 plotenvelope = function (y, which = 1:2, sim.method="refit", 
                        n.sim=199, conf.level=0.95, type="st", transform = NULL, 
                        main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
@@ -209,12 +209,16 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
 
   # define predict function to be cpredict for mlm, otherwise predict
   predFunction = if(inherits(object,"mlm")) 
-    cpredict
+#    cpredict
+#  else
+#    fitted
+    function(obj, xMin){ pmax(cpredict(obj), xMin) }
   else 
-    function(x){ pmax(predict(x), fitMin) }
+    function(obj, xMin){ pmax(predict(obj), xMin) }
+    
 
   y = resFunction(object)
-  x = predFunction(object)
+  x = predFunction(object, fitMin)
   
   y[y==Inf] = 2*max(y[y<Inf]) #deal with any probs with infinite resids
 
@@ -292,6 +296,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       fm.update  = reformulate(".")
 
         # if there is an offset, add it, as a separate argument when updating
+    offs=NULL
     modelF$offs=try(model.offset(modelF))
     if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
       objectY = update(object, formula = fm.update, data=modelF)
@@ -312,7 +317,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       else
         newFit         = try(update(objectY, formula=fm.update, data=modelF, offset=offs))
       resids[,i.sim] = resFunction(newFit)
-      ftt   = try(predFunction(newFit)) #using try for fitted values because eel data occasionally failed(!?)
+      ftt   = try(predFunction(newFit, fitMin)) #using try for fitted values because eel data occasionally failed(!?)
       if(inherits(ftt,"try-error"))
         fits[,i.sim] = x
       else

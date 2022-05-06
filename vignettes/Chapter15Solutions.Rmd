@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ## Exercise 15.1: Predicting fish communities at wind farms?
 *Consider again Lena’s wind farm study (Exericise 14.3). She would like to predict what fish occur where. What type of model should she use, to get the best predictions?*
 

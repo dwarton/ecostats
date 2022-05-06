@@ -20,8 +20,9 @@
 #' 
 #' @seealso \code{\link[mvabund]{manyglm}}, \code{\link[ecoCopula]{cord}}, \code{\link[ecoCopula]{simulate.cord}}
 #'
-#' @method simulate manyglm
-#' @importFrom stats binomial Gamma gaussian glm model.offset poisson simulate
+#' @import stats 
+#' @import mvabund 
+#' @import ecoCopula 
 #' @importFrom MASS rnegbin
 #' @export
 simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...) 
@@ -30,7 +31,7 @@ simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...
   if(ncol(fitted(object))>1)
   {
     cordObject = ecoCopula::cord(object)
-    simLong    = ecoCopula:::simulate.cord(cordObject,nsim=nsim,seed=seed,newdata=newdata)
+    simLong    = ecoCopula::simulate.cord(cordObject,nsim=nsim,seed=seed,newdata=newdata)
     if(nsim>1)
     {
       nDims=dim(object$residuals)
@@ -53,6 +54,7 @@ simulate.manyglm = function (object, nsim=1, seed=NULL, newdata=object$data, ...
                    "gamma"=Gamma(link='log'),
                    "negative.binomial"=MASS::negative.binomial(theta=object$theta[1]))    
     }
+    offs=NULL
     # detect and offset to use if required
     newdata$offs = model.offset(model.frame(object$formula,data=newdata))
     if(is.null(newdata$offs))

@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ## Exercise 5.1: Plant height and climate
 
 *Which climate variables best explain plant height?*
@@ -129,7 +130,7 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=3) # 5 fold CV
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 ```
 
-## Code Box 5.3: Computing IC's on \texttt{R} for Exercise 5.1
+## Code Box 5.3: Computing Information Criteria on `R` for Exercise 5.1
 ```{r box53}
 ft_r = lm(log(height)~rain,dat=globalPlants)
 ft_rs = lm(log(height)~rain+rain.seas,dat=globalPlants)

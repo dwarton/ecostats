@@ -45,7 +45,7 @@
 #' plot(log(height)~lat,data=globalPlants)
 #' with(globalPlants, addSmooth(lat,log(height)) )
 #' 
-#' @importFrom graphics plot points lines par polygon
+#' @import graphics
 
 #' @export
 addSmooth=function(x,y,conf.level=0.05,line.col="slateblue4", envelope.col = adjustcolor(line.col, alpha.f = 0.1), ...)

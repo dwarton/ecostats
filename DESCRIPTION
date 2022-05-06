@@ -1,7 +1,7 @@
 Package: ecostats
 Title: Code and Data Accompanying the Eco-Stats Text
-Version: 1.1.0
-Date: 2022-02-21
+Version: 1.1.1
+Date: 2022-05-06
 Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
             person("Christopher", "Chung", role = "ctb"),
             person("Mark", "Donoghoe", role = "ctb"),
@@ -9,10 +9,11 @@ Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role 
             )
 Description: Functions and data supporting the Eco-Stats text (Warton, 2022, Springer), and solutions to exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a function for diagnostic plots of multivariate linear models. Datasets mentioned in the package are included here (where not available elsewhere) and vignette solutions to textbook exercises will be forthcoming at a later time.
 License: LGPL (>= 2.1)
-Imports: GET, MASS, mgcv, mvtnorm
+Imports: ecoCopula, GET, graphics, grDevices, MASS, mgcv, mvtnorm, stats
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
+Depends: R (>= 3.5.0), mvabund (>= 4.2)
 Suggests: 
     knitr,
     rmarkdown,
@@ -24,8 +25,6 @@ Suggests:
     devtools,
     DHARMa,
     dplyr,
-    ecoCopula,
-    ecomix,
     gclus,
     GGally,
     ggplot2,
@@ -34,12 +33,12 @@ Suggests:
     gllvm,
     glmmTMB,
     GPArotation,
+    grplasso,
     lattice,
     leaps,
     lme4,
     MCMCglmm,
     multcomp,
-    mvabund,
     nlme,
     ordinal,
     permute,
@@ -50,5 +49,6 @@ Suggests:
     reshape2,
     smatr,
     testthat,
-    vegan
+    vegan,
+    VGAM
 VignetteBuilder: knitr

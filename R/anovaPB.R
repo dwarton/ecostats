@@ -70,7 +70,7 @@
 #' rpois_int = glm(y~1,family=poisson())
 #' anovaPB(rpois_int,rpois_glm,n.sim=99)
 #' 
-#' @importFrom stats anova coef logLik model.frame printCoefmat simulate update
+#' @import stats
 
 #' @export
 
@@ -139,6 +139,7 @@ anovaPB=function(objectNull, object, n.sim=999, colRef = switch(class(object)[1]
       modelF = model.frame(object)
 
   # if there is an offset, add it, as a separate argument when updating
+  offs=NULL
   modelF$offs=try(model.offset(modelF))
 
   # if response has brackets in its name, it is some sort of expression,

@@ -34,8 +34,7 @@
 #' # simulate new responses:
 #' simulate(iris.mlm)
 #'
-#' @method simulate mlm
-#' @importFrom stats simulate
+#' @import stats
 #' @export
 simulate.mlm = function (object, nsim = 1, seed = NULL, ...) 
 {

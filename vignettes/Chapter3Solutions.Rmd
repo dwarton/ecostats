@@ -52,9 +52,9 @@ Note the code is almost the same as for simple linear regression -- just add an 
 ```{r avPlots}
 library(car)
 avPlots(ft_heightLat, terms = ~lat, xlab="Latitude", ylab="Height",
-grid=F) ##left plot
+grid=FALSE) ##left plot
 avPlots(ft_heightRainLat, terms = ~lat, xlab="Latitude|rain",
-ylab="Height|rain", grid=F) ## right plot
+ylab="Height|rain", grid=FALSE) ## right plot
 ```
 
 ## Code Box 3.4: Tests of multiple parameters on R using the anova function
@@ -67,8 +67,7 @@ ylab="Height|rain", grid=F) ## right plot
  
 ##  Code Box 3.5: Multi-collinearity example -- adding rainfall in the wettest month (rain.wetm) to a model that already has annual precipitation (rain).
 
-Note that standard errors are larger and suddenly everything is non-signicant.
-
+Note that standard errors are larger and suddenly everything is non-significant.
 
 ```{r anovaClim probs}
  ft_climproblems=lm(height~rain+rain.wetm+lat,data=globalPlants)
@@ -140,15 +139,15 @@ lm.
 ```{r seaweed anova}
  data(seaweed)
  seaweed$Dist = factor(seaweed$Dist)
- ft_habconf=lm(Total~Dist,data=seaweed)
- anova(ft_habconf)
+ ft_seaweed=lm(Total~Dist,data=seaweed)
+ anova(ft_seaweed)
 ```
 There is strong evidence of a `Dist` effect.
 
 ## Code Box 3.9: Running confint on the seaweed data doesn't give us what we
 want.
 ```{r seaweed confint}
- confint(ft_habconf)
+ confint(ft_seaweed)
 ```
 
 ## Code Box 3.10: Analysis of variance of the seaweed data of Exercise 1.13 with Tukey's multiple comparisons via the multcomp package.
@@ -156,7 +155,7 @@ want.
 ```{r seaweed multcomp}
  library(multcomp)
  contDist = mcp(Dist="Tukey") # telling R to compare on the Dist factor
- compDist = glht(ft_habconf, linfct=contDist) # run multiple comparisions
+ compDist = glht(ft_seaweed, linfct=contDist) # run multiple comparisions
  summary(compDist)
  plot(compDist)
 ```

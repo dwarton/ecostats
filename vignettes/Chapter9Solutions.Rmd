@@ -122,8 +122,8 @@ anova(ft_heightRL, resamp="perm.resid")
 ## Code Box 9.5: Plant height data -- checking assumptions
 
 ```{r box95, fig.width=4, fig.height=3.5}
-ft_height = lm(height~lat, data=globalPlants)
-plotenvelope(ft_height)
+ft_heightRLlm = lm(height~lat, data=globalPlants)
+plotenvelope(ft_heightRLlm)
 ```
 
 
@@ -187,7 +187,8 @@ Results are similar, but the test statistic is slightly larger and slightly more
  data(snowmelt)
  snowmelt$logFlow = log(snowmelt$flow)
  snowmelt$logFlow[snowmelt$logFlow==-Inf]=NA
- ft_logsnow = lm(logFlow~elev+snow, data=snowmelt)
+ snowReduced = na.omit(snowmelt[,c("logFlow","snow","elev")]) #this line not normally needed, lm can handle NA's, but seems needed because of a weird conflict with MCMCglmm code in Chapter 11 solutions
+ ft_logsnow = lm(logFlow~elev+snow, data=snowReduced)
  plotenvelope(ft_logsnow)
  summary(ft_logsnow)
  confint(ft_logsnow)
@@ -196,7 +197,7 @@ Results are similar, but the test statistic is slightly larger and slightly more
 Repeating using resampling:
 ```{r ex49 re}
 library(mvabund)
-mft_logsnow = manylm(logFlow~elev+snow, data=snowmelt)
+mft_logsnow = manylm(logFlow~elev+snow, data=snowReduced)
 summary(mft_logsnow)
 confint(mft_logsnow)
 ```

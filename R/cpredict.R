@@ -36,6 +36,7 @@
 #' # predict each response conditionally on the values of all other responses:
 #' cpredict(iris.mlm)
 #' 
+#' @import stats
 #' @export
 cpredict = function(object, standardize=TRUE, ...)
 {

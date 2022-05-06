@@ -66,6 +66,9 @@ BIC(aphid_int,aphid_int2,aphid_slope,aphid_CAR1)
 ```{r box73}
 print(aphid_int)
 anova(aphid_int)
+aphid_noTreat = lmer(logcount~Time+I(Time^2)+(1|Plot),
+   data=aphids$oat, REML=FALSE)
+anova(aphid_noTreat,aphid_int)
 ```
 
 ## Code Box 7.4: Exploring the random slopes fit to the aphids data

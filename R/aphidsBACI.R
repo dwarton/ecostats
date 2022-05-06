@@ -6,13 +6,12 @@
 #' in \code{\link{aphids}}, here we provide just two sampling times, 3 days and 30 days after netting.
 #' OK, this is not quite a BACI design, 3 days after netting is not quite "before" but effects at this 
 #' point should be negligible...
-#'
+#' 
 #' There were eight plots, four with plastic netting to exclude birds, and four without. Aphid abundance 
 #' was counted on 5 shoots per plot. The expectation was that aphid numbers would decrease on bird 
 #' exclusion, because an important food source to tree sparrows is aphid predators, hoverflies and 
 #' ladybird beetles, so presence of birds may be limit the effectiveness of a biological control of aphids.
 #'
-#' @details
 #' @docType data
 #'
 #' @usage data(aphidsBACI)

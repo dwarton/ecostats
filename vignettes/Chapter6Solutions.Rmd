@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ## Exercise 6.1: Effects of water pollution on subtidal marine micro-invertebrates
 
 *What factors are there? Fixed or random?*

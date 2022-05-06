@@ -86,7 +86,6 @@ He is looking for evidence of an effect of revegetation so will be wanting to do
 For Exercise 10.1:
 ```{r box10.1.1}
 library(ecostats)
-library(MASS)
 data(seaweed)
 seaweed$CrabPres = seaweed$Crab>0
 ft_crab = glm(CrabPres~Time*Dist, family=binomial("cloglog"),
@@ -181,6 +180,7 @@ plotenvelope(ft_countOst,which=1:3) # for a scale-location plot as well
 
 
 ```{r box10.4b, fig.width=8}
+library(MASS) #this line is currently needed to deal with a bug but prob redundant soon
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 ft.countOstNB=manyglm(Ost~logWmass+Time*Dist,data=seaweed)
 plotenvelope(ft.countOstNB,which=1:3)

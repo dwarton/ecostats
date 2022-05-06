@@ -20,7 +20,10 @@ The Eco-Stats package contains functions and data supporting the Eco-Stats text 
 
 ## Simulation envelopes in plots
 
-The command `plotenvelope` will take standard residual plots for most model objects, but add global envelopes around points (for quantile plots) and around smoothers (for residual plots) constructed via simulation. These are constructed using the `GET` package as global envelopes, that is, when model assumptions are correct, 95% of quantile plot envelopes (at confidence level 95%) should contain _all_ datapoints.
+The command `plotenvelope` will take a fitted object and construct standard residual plots with global envelopes added around points (for quantile plots) and around smoothers (for residual plots), constructed via simulation. These are constructed using the `GET` package as global envelopes, which is important for interpretation -- it means that when model assumptions are correct, 95% of quantile plot envelopes (at confidence level 95%) should contain the data (or smoother) over the _whole_ plot. (Pointwise envelopes would have been easier to construct, but are much harder to interpret because they don't control the chance of missing the data globally, across the whole plot. A 95% pointwise envelope, constructed when assumptions are satisfied, might for example miss _some_ of the data 60% of the time.)
+
+`plotenvelope` will work on lots of different  types of fitted objects -- pretty much anything that comes with a `simulate` function that behaves in a standard way. A `simulate.mlm` and `simulate.manyglm` functions have been written in this package specifically so that `plotenvelope` also works for multivariate models fitted using `lm` or `mvabund::manyglm`.
+
 
 ```{r, echo=TRUE, results='asis'}
 library(ecostats)
@@ -38,10 +41,26 @@ y=rnorm(20)
 qqenvelope(y)
 ```
 
+## `anova` tests using a parametric bootstrap
+
+The command `anovaPB` computes analysis of variance (or deviance) tables for two fitted model objects, but with the \emph{P}-value estimated using a parametric bootstrap -- by repeatedly simulating new responses from the fitted model under the null hypothesis. This will work on lots of different  types of fitted objects -- like `plotenvelope`, it should work on pretty much anything that comes with a `simulate` function that behaves in a standard way. These fitted models also need to respond to either `anova` or `logLik`.
+
+While the interface is written to be a lot like `anova`, it requires two fitted objects to be specified -- the first being a fit under the null hypothesis, and the second being the fit under the alternative.
+
+```{r anovaPB, echo=TRUE, results='asis'}
+# generate random Poisson data and a predictor:
+y = rpois(50,lambda=1)
+x = 1:50
+# fit a Poisson regressions with and without x:
+rpois_glm = glm(y~x,family=poisson())
+rpois_int = glm(y~1,family=poisson())
+# use the parametric bootstrap to test for an effect of x (will usually be non-significant)
+anovaPB(rpois_int,rpois_glm,n.sim=99)
+```
 
 ## Datasets
 
-All datasets used in the Eco-Stats text, where not available elsewhere, are supplied here:
+All datasets used in the Eco-Stats text, where not available elsewhere, are supplied in this package. For example:
 ```{r, echo=TRUE, results='asis'}
  data(aphids)
  cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours

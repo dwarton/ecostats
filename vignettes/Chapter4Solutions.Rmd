@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
 ## Exercise 4.1: Ravens and gunshots
 
 We assume:
@@ -53,7 +55,7 @@ We will use a linear model, with `location` included as a blocking factor to con
 ```{r ravens lm}
  library(reshape2)
  crowLong = melt(crowGun,measure.vars = c("Before","After"),
-variable.name="time",value.name="ravens")
+                 variable.name="time",value.name="ravens")
  head(crowLong)
  ravenlm = lm(ravens~site+time,data=crowLong)
  anova(ravenlm)
@@ -175,7 +177,9 @@ plot(Total ~ interaction(Dist,Time), data=seaweed, log="y") ## and as usual use 
 There is no linearity/additivity assumption in a factorial ANOVA
 
 
-```{r seaweed anova}
+## Code Box 4.9: Factorial ANOVA of Snails, Isolation, and Time
+```{r code4.9}
+ft_seaweedFact = lm(logTot~Time*Dist,data=seaweed)
 anova(ft_seaweedFact)
 ```
 
@@ -204,6 +208,8 @@ Alternatively, for a simpler plot without the data points on it, try:
 interaction.plot(seaweed$Dist, seaweed$Time, ft_seaweedFact$fitted,
       xlab="Isolation of patch", ylab="Total density [log]", trace.label="Time")
 ```
+
+## Code Box 4.11: Uh oh... `anova` gone wrong
 ```{r seaweed no factor}
 data(seaweed)
 ft_nofactor=lm(log(Total)~Time*Dist,data=seaweed)
@@ -288,7 +294,8 @@ appropriate linear model, being sure to check your assumptions.
 ```{r snowmelt}
  data(snowmelt)
  plot(flow~snow,data=snowmelt)
- ft_snow = lm(flow~elev+snow, data=snowmelt)
+ snowReduced = na.omit(snowmelt[,c("flow","snow","elev")]) #this line not normally needed, lm can handle NA's, but seems needed because of a weird conflict with MCMCglmm
+ ft_snow = lm(flow~elev+snow, data=snowReduced)
  plotenvelope(ft_snow)
 ```
 
@@ -296,9 +303,9 @@ This doesn't look great, there is the occasional large value for flowering time,
 
 ```{r snowmelt log}
  plot(flow~snow,data=snowmelt,log="y")
- snowmelt$logFlow = log(snowmelt$flow)
- snowmelt$logFlow[snowmelt$logFlow==-Inf]=NA
- ft_logsnow = lm(logFlow~elev+snow, data=snowmelt)
+ snowReduced$logFlow = log(snowReduced$flow)
+ snowReduced2 = snowReduced[snowReduced$logFlow>-Inf,] # look it's a bit naughty, removing the infinite value, but no biggie as only one value
+ ft_logsnow = lm(logFlow~elev+snow, data=snowReduced2)
  plotenvelope(ft_logsnow)
  summary(ft_logsnow)
  confint(ft_logsnow)
@@ -372,3 +379,4 @@ anova(ft_seaweedW3)
 ```
 
 We get pretty much the same results. `Wmass` seems to be an important covariate, but after controlling for it, there is still a strong `Dist` main effect and not much else happening.
+

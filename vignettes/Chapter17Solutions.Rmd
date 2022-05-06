@@ -139,6 +139,13 @@ c(absCor, 1-absCor[2]/absCor[1])
 The proportion of co-occurrence patterns that can be explained is relatively small, so I guess we can say that `fields` is not a major driver of co-occurrence patterns of birds.
 
 
+The `ordinal` package has a bug in it (in version 2019.12) so it conflicts with `lme4` (specifically it overwrites the `ranef` function), [issue posted on Github] (https://github.com/runehaubo/ordinal/issues/48). So if you are running analyses using both packages, you need to _detach the `ordinal` package_ before continuing...
+
+```{r detach ordinal}
+detach("package:ordinal", unload=TRUE)
+```
+
+
 ## Code Box 17.3: A copula graphical model for Petrus’s spider data
 ```{r code17.3, fig.width=8,fig.height=4}
 par(mfrow=c(1,2),mgp=c(1.75,0.75,0),mar=c(3,3,1,1))
