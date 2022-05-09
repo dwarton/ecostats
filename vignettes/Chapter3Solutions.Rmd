@@ -204,7 +204,7 @@ Small means have small variances.  There is a boundary at zero and data are bein
 
 There is also a suggestion of non-normality when checking assumptions on the fitted ANOVA model:
 ```{r seaweed logre plot}
- plotenvelope(ft_habconf,which=1:3)
+ plotenvelope(ft_seaweed,which=1:3)
 ```
 
 Notice that in the quantile plot that points get close to the lower bound in the middle of the plot and get near the top of it at large values -- this is mildly suggestive of skew. We similarly see an increasing trend in the scale-location plot, although it does stay within its simulatin bounds. Notice these are only subtle patterns and not particularly strong.
