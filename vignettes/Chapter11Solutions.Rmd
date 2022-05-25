@@ -229,7 +229,7 @@ _Is there evidence that different spider genera respond in different ways to the
 Yes!
 
 
-## Code fot Figure 11.4
+## Code for Figure 11.4
 
 To simplify referencing of parameters let's refit with no intercept in the model
 ```{r fig11.4, fig.width=6, fig.height=6}

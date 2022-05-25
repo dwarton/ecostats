@@ -145,6 +145,8 @@
 #' 
 #' Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} – an \code{R} package for model‐based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
 #' 
+#' Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
+#'
 #' @seealso \code{\link{cpredict}}, \code{\link{cresiduals}}, \code{\link{qqenvelope}}
 #' @examples
 #' # fit a Poisson regression to random data:

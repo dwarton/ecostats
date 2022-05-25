@@ -22,6 +22,8 @@
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' 
+#' @references Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
+#'
 #' @seealso \code{\link{cpredict}}, \code{\link{lm}}, \code{\link{plotenvelope}}, \code{\link{residuals}}, \code{\link{rstandard}}
 #' @examples
 #' data(iris)

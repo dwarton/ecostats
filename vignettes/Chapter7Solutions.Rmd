@@ -165,7 +165,8 @@ ft_richAdd = lm(logrich~soil+poly(TMP_MAX,degree=2)+
 BIC(ft_rich,ft_richAdd)
 ```
 
-```{r box75 spatial}
+_The below code chunk takes several minutes to evaluate so it has not been run_
+```{r box75 spatial, eval = FALSE}
 library(nlme)
 richForm = logrich~soil+poly(TMP_MAX,degree=2)+poly(TMP_MIN,degree=2)+
        poly(RAIN_ANN,degree=2)
@@ -178,7 +179,8 @@ BIC(ft_richExp,ft_richNugg)
 
 ## Code Box 7.6: Inferences from spatial and non-spatial models for Ian's richness data
 
-```{r box76} 
+_The below code chunk has not been run because of its reliance on the previous code chunk_
+```{r box76, eval=FALSE} 
 ft_richNugg
 anova(ft_richAdd)
 anova(ft_richNugg)

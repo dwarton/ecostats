@@ -257,7 +257,8 @@ It looks like there isn't really an `aspect` signal in the data, BIC is much sma
 
 Well it won't change our inferences because ignoring spatial correlation risks giving you false confidence in the importance of terms, but we already decided that `aspect` is not important. But anyway. We decided last time around that an exponential model with a nugget effect did OK:
 
-```{r ex88 spatial}
+_This code chunk is not run, because it will take several minutes:_
+```{r ex88 spatial, eval=FALSE}
 library(nlme)
 ft_richNugg = gls(logrich~soil+poly(TMP_MAX,degree=2)+poly(TMP_MIN,degree=2)+
        poly(RAIN_ANN,degree=2),data=Myrtaceae,
@@ -270,5 +271,3 @@ BIC(ft_richAspNugg)
 ```
 
 As expected, this did not change inference in any appreciable way!
-`
-

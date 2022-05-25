@@ -48,6 +48,7 @@
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' @references 
 #' Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
+#' Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
 #' 
 #' @seealso \code{\link{qqnorm}}, \code{\link{qqline}}, \code{\link{plotenvelope}}
 #' @examples

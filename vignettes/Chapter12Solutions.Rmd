@@ -250,3 +250,8 @@ plot(Petal.Length~Species,data=iris,xlab="")
 plot(Petal.Width~Species,data=iris,xlab="")
 ```
 
+#remove this chunk once gllvm has been updated on CRAN:
+```{r bugfixForGllvm, echo=FALSE} 
+detach("package:gllvm", unload=TRUE)
+library(stats) #to get old predict function up and running again (I hope)
+```

@@ -3,12 +3,14 @@
 
 #' Code and Data Accompanying the Eco-Stats Text
 #'
-#' Functions and data supporting the Ecostats text (Warton 2022, Springer), and solutions to 
+#' Functions and data supporting the Ecostats text (Warton 2022), and solutions to 
 #' exercises. Functions include tools for using simulation envelopes in diagnostic plots, and a
 #' function for diagnostic plots of multivariate linear models. Datasets mentioned in the text
 #' are included here (where not available elsewhere) and vignette solutions to textbook exercises.
 #'
 #' @docType package
+#' 
+#' @references Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
 #' 
 #' @examples
 #' # spaghetti plot of longitudinal data from bird exclusion field experiment:

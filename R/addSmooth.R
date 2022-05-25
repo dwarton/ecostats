@@ -40,6 +40,9 @@
 #' 
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' @seealso \code{\link{plotenvelope}}
+#'
+#' @references Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
+#'
 #' @examples
 #' data(globalPlants)
 #' plot(log(height)~lat,data=globalPlants)

@@ -25,20 +25,27 @@ He wants to understand *how* taxa vary in environmental response, so he could us
 
 ## Code Box 16.1: Fitting a Species Archetype Model to Petrus’s spider data
 
-```{r code16.1 loadecoMix}
+Run the below lines to install `ecomix`:
+```{r code16.1 loadecoMix,eval=FALSE}
 library(devtools)
 install_github("skiptoniam/ecomix")
 ```
+
+Code to fit `ecomix` will only be run if it is installed (the if statement is included because CRAN policies require vignettes to be able to be run only using packages that can be installed from CRAN)
+
 ```{r code16.1}
-library(ecomix)
+is_ecomix_installed = require(ecomix)
 library(mvabund)
 data(spider)
 SpiderDF=spider$x
 SpiderDF$abund=as.matrix(spider$abund)
 spiderFormula = abund ~ soil.dry + bare.sand + fallen.leaves + moss +
 herb.layer + reflection
-ft_Mix = species_mix(spiderFormula, data=SpiderDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
-coef(ft_Mix)$beta
+if(is_ecomix_installed)
+{
+  ft_Mix = species_mix(spiderFormula, data=SpiderDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
+  coef(ft_Mix)$beta
+}
 ```
 
 *Which predictors vary the most across archetypes (hence across taxa)? Is this what you saw in Code Box 15.7?*
@@ -48,7 +55,8 @@ coef(ft_Mix)$beta
 
 ## Code Box 16.2: Minding your P’s and Q’s for Petrus’s Species Archetype Model
 ```{r code16.2, fig.width=8,fig.height=4}
-plot(ft_Mix, type="link")
+if(is_ecomix_installed)
+  plot(ft_Mix, type="link")
 ```
 
 *Do model assumptions seem reasonable here?*
@@ -64,8 +72,11 @@ library(ecostats)
 data(reveg)
 revegDF=data.frame(reveg)
 revegDF$abundMat=as.matrix(reveg$abund)
-ft_revegMix = species_mix(abundMat~treatment, data=revegDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
-coef(ft_revegMix)$beta
+if(is_ecomix_installed)
+{
+  ft_revegMix = species_mix(abundMat~treatment, data=revegDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
+  coef(ft_revegMix)$beta
+}
 ```
 
 *Explain what the main two types of response to revegetation were, across invertebrate taxa.*
@@ -77,17 +88,22 @@ Oh that's odd -- the estimated trend is almost identical for these two groups.
 This doesn't seem worthwhile when there are no differences in response across these archetypes!!
 
 ## Code Box 16.3: Choosing the number of archetypes for Petrus’s spider data
-```{r code16.3, message=FALSE}
-nClust=rep(2:6,3)
-bics = rep(NA, length(nClust))
-for(iClust in 1:length(nClust))
+
+_This code chunk has not been run, as it takes a minute or so to complete_
+```{r code16.3, message=FALSE, eval=FALSE}
+if(is_ecomix_installed)
 {
-  fti_Mix = species_mix(spiderFormula, data=SpiderDF,
-    family="negative.binomial", nArchetypes=nClust[iClust],
-    control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2))
-  bics[iClust] = BIC(fti_Mix)
+  nClust=rep(2:6,3)
+  bics = rep(NA, length(nClust))
+  for(iClust in 1:length(nClust))
+  {
+    fti_Mix = species_mix(spiderFormula, data=SpiderDF,
+      family="negative.binomial", nArchetypes=nClust[iClust],
+      control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2))
+    bics[iClust] = BIC(fti_Mix)
+  }
+  plot(bics~nClust, ylab="BIC", xlab="# archetypes")
 }
-plot(bics~nClust, ylab="BIC", xlab="# archetypes")
 ```
 
 *How many archetypes would you use?*
@@ -105,16 +121,20 @@ As in Maths Box 16.1, mixture model likelihoods can be messy with multiple maxim
 
 OK I'm going for BIC as above.
 
-```{r ex16.3, message=FALSE}
-nClust=rep(1:5,3)
-bics = rep(NA, length(nClust))
-for(iClust in 1:length(nClust))
+_This code chunk has not been run, as it takes a minute or so to complete_
+```{r ex16.3, message=FALSE, eval=FALSE}
+if(is_ecomix_installed)
 {
-  fti_Mix = species_mix(abundMat~treatment, data=revegDF, 
-    family="negative.binomial", nArchetypes=nClust[iClust])
-  bics[iClust] = BIC(fti_Mix)
+  nClust=rep(1:5,3)
+  bics = rep(NA, length(nClust))
+  for(iClust in 1:length(nClust))
+  {
+    fti_Mix = species_mix(abundMat~treatment, data=revegDF, 
+      family="negative.binomial", nArchetypes=nClust[iClust])
+    bics[iClust] = BIC(fti_Mix)
+  }
+  plot(bics~nClust, ylab="BIC", xlab="# archetypes")
 }
-plot(bics~nClust, ylab="BIC", xlab="# archetypes")
 ```
 
 Well it looks like there should be two archetypes (presumably, one of these is increasing with revegetation, the other not).
@@ -258,3 +278,9 @@ an_ant4th$D[2]/sum(an_ant4th$D)
 
 So it looks like about a quarter of interspecific variation can be explained by traits, which is not super, especially considering that the trait model uses a quarter as many parameters. This suggests we are not really onto a winner here...
 
+
+#remove this chunk once gllvm has been updated on CRAN:
+```{r bugfixForGllvm, echo=FALSE} 
+detach("package:gllvm", unload=TRUE)
+library(stats)
+```

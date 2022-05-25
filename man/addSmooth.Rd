@@ -65,6 +65,9 @@ plot(log(height)~lat,data=globalPlants)
 with(globalPlants, addSmooth(lat,log(height)) )
 
 }
+\references{
+Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
+}
 \seealso{
 \code{\link{plotenvelope}}
 }

@@ -60,6 +60,7 @@
 #' @author David Warton <david.warton@@unsw.edu.au>
 #' @references 
 #' Davison A.C. & Hinkley D. V. (1997) Bootstrap methods and their application, Cambridge University Press.
+#' Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
 #' 
 #' @seealso \code{\link[stats]{anova}}
 #' @examples

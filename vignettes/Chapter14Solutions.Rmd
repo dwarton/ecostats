@@ -305,7 +305,8 @@ ft_reveg$stderr[,sortedRevegStats$ix[1:5]]
 ## Exercise 14.8: Indicator species for offshore wind farms?
 *Which fish species are most strongly associated with offshore wind farms, in Lena’s study? Reanalyse the data to obtain univariate test statistics and univariate $P$-values that have been adjusted for multiple testing.*
 
-```{r ex14.8}
+_This code chunk has not been run as it takes several minutes_
+```{r ex14.8, eval=FALSE}
 data(windFarms)
 windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
@@ -321,13 +322,14 @@ Yes it looks like we have evidence of an effect in `Tanglake` (Viviparous Eelpou
 
 *What proportion of the total `Zone:Year` effect is attributable to these potential indicator species?*
 
-```{r ex14.8prop}
+_This code chunk has not been run as it is reliant on the previous code chunk_
+```{r ex14.8prop, eval=FALSE}
 sum(sortedWindStats$x[1:2])/an_wind1$table[4,3]
 ```
 So 63\% of the `Zone:Year` effect is just these two species.
 
 *Plot the abundance of each potential indicator species against Zone and Year.*
-```{r ex14.8plot,fig.width=5,fig.height=8}
+```{r ex14.8plot,fig.width=5,fig.height=8, eval=FALSE}
 plot(windMV1~interaction(windFarms$X$Zone,windFarms$X$Year),var.subset=sortedWindStats$ix[1:4])
 ```
 
