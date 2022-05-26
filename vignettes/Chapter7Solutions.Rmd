@@ -94,7 +94,7 @@ with(aphids$wheat, interaction.plot(Time,Plot,logcount,legend=FALSE,
 legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
 ```
 
-As before we don't see a lot of lines crossing over so expect some correlation. We also see a similar pattern with aphid counts reducing over time, but possibly being higher without bird exlcusion 2-5 weeks into the trial. 
+As before we don't see a lot of lines crossing over so expect some correlation. We also see a similar pattern with aphid counts reducing over time, but possibly being higher without bird exclusion 2-5 weeks into the trial. 
 
 ```{r ex72 long}
 library(lme4)
@@ -107,7 +107,10 @@ aphidw_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
     random=~1|Plot, data=aphids$wheat, method="ML")
 plot(ACF(aphidw_int2),alpha=0.05) # only works for nlme-fitted mixed models
 # now try a model with a temporally structured random effect:
-aphidw_CAR1 = update(aphidw_int2,correlation=corCAR1(,form=~Time|Plot))
+# for some reason this one returns non-convergence unless I make Tiem a (numerical) factor:
+aphidsTimenFac=glmmTMB::numFactor(aphids$wheat$Time) 
+aphidw_CAR1 = update(aphidw_int2,correlation=corCAR1(,form=~aphidsTimenFac|Plot))
+
 BIC(aphidw_int,aphidw_int2,aphidw_slope,aphidw_CAR1)
 ```
 
