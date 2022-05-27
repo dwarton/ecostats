@@ -34,7 +34,7 @@ install_github("skiptoniam/ecomix")
 Code to fit `ecomix` will only be run if it is installed (the if statement is included because CRAN policies require vignettes to be able to be run only using packages that can be installed from CRAN)
 
 ```{r code16.1}
-is_ecomix_installed = require(ecomix)
+is_ecomix_installed = requireNamespace("ecomix", quietly = TRUE)
 library(mvabund)
 data(spider)
 SpiderDF=spider$x
@@ -43,7 +43,7 @@ spiderFormula = abund ~ soil.dry + bare.sand + fallen.leaves + moss +
 herb.layer + reflection
 if(is_ecomix_installed)
 {
-  ft_Mix = species_mix(spiderFormula, data=SpiderDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
+  ft_Mix = ecomix::species_mix(spiderFormula, data=SpiderDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
   coef(ft_Mix)$beta
 }
 ```
@@ -74,7 +74,7 @@ revegDF=data.frame(reveg)
 revegDF$abundMat=as.matrix(reveg$abund)
 if(is_ecomix_installed)
 {
-  ft_revegMix = species_mix(abundMat~treatment, data=revegDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
+  ft_revegMix = ecomix::species_mix(abundMat~treatment, data=revegDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
   coef(ft_revegMix)$beta
 }
 ```
@@ -97,7 +97,7 @@ if(is_ecomix_installed)
   bics = rep(NA, length(nClust))
   for(iClust in 1:length(nClust))
   {
-    fti_Mix = species_mix(spiderFormula, data=SpiderDF,
+    fti_Mix = ecomix::species_mix(spiderFormula, data=SpiderDF,
       family="negative.binomial", nArchetypes=nClust[iClust],
       control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2))
     bics[iClust] = BIC(fti_Mix)
@@ -129,7 +129,7 @@ if(is_ecomix_installed)
   bics = rep(NA, length(nClust))
   for(iClust in 1:length(nClust))
   {
-    fti_Mix = species_mix(abundMat~treatment, data=revegDF, 
+    fti_Mix = ecomix::species_mix(abundMat~treatment, data=revegDF, 
       family="negative.binomial", nArchetypes=nClust[iClust])
     bics[iClust] = BIC(fti_Mix)
   }
