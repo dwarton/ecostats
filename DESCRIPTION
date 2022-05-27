@@ -51,5 +51,5 @@ Suggests:
     testthat,
     vegan,
     VGAM
-Additional_repositories: https://github.com/dwarton/drat
+Additional_repositories: https://dwarton.github.io/drat
 VignetteBuilder: knitr
