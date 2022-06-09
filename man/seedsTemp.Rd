@@ -28,6 +28,6 @@ plot(propGerm/(1-propGerm)~Test.Temp,data=seedsTemp,log="y",
  ylab="Germination rate [logit scale]", xlab="Temperature (Celsius)")
 }
 \references{
-Sentinella, AT, Warton, DI, Sherwin, WB, Offord, CA, Moles, AT. (2020) Tropical plants do not have narrower temperature tolerances, but are more at risk from warming because they are close to their upper thermal limits. Global Ecol Biogeogr. \bold{29}, 1387– 1398.
+Sentinella, AT, Warton, DI, Sherwin, WB, Offord, CA, Moles, AT. (2020) Tropical plants do not have narrower temperature tolerances, but are more at risk from warming because they are close to their upper thermal limits. Global Ecol Biogeogr. \bold{29}, 1387-1398.
 }
 \keyword{datasets}

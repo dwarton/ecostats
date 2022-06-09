@@ -57,7 +57,7 @@ at random along a lattice specified via \code{Grid_space}.
 The most computationally intensive part of this process is working out which observations 
 belong in which blocks. If repeated analyses are to be undertaken in the same spatial domain 
 using the same sites, it is best to run this process only once and save the result as a set of
-lookup tables via the function \bold{Eve to advise what function to use}.
+lookup tables.
 Then the path to the directory containing these tables is specified via \code{lookuptables.folderpath}
 and the whole thing runs heaps faster.
 }

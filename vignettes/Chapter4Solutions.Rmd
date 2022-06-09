@@ -23,10 +23,10 @@ knitr::opts_chunk$set(
 We assume:
 
 * that we have a random sample of paired differences (most importantly, paired differences are independent of each other)
-* the paired differences are approixamtely normal.
+* the paired differences are approixmately normal.
 
 
-```{r ravens check}
+```{r ravens check, fig.width=4, fig.height=4}
  library(ecostats)
  data(ravens)
  qqenvelope(ravens$delta[ravens$treatment==1])
@@ -71,14 +71,15 @@ ft_crowAfter = lm(After~site+treatment,data=crowAfter)
 anova(ft_crowAfter)
 ```
 To check assumptions we could look at diagnostic plots:
-```{r ravens block assumptions}
+```{r ravens block assumptions, fig.width=8, fig.height=4}
+ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
  plotenvelope(ft_crowAfter)
 ```
 
 The residual vs fits plot has a fan-shaped pattern, suggesting that transformation might be a good idea here!
 
 
-# Exercise 4.3: Seaweed, snails and seaweed mass
+## Exercise 4.3: Seaweed, snails and seaweed mass
 
 *Is there an effect of distance of isolation after controlling for wet mass?*
 
@@ -94,7 +95,7 @@ We can get all three variables onto the same graph using a scatterplot, with dif
 
 
 ## Code Box 4.4: Scatterplot of data from Exercise 4.3.
-```{r seaweed plot}
+```{r seaweed plot, fig.width=4, fig.height=4}
  data(seaweed)
  seaweed$Dist = factor(seaweed$Dist)
  plot(Total~Wmass, data=seaweed, col=Dist, 
@@ -115,9 +116,12 @@ We can get all three variables onto the same graph using a scatterplot, with dif
 *Independence* can be guaranteed by randomly allocating `Dist` treatments to plots.
 
 Remaining assumptions can be checked using diagnostic plots.
-```{r seaweed plt}
-plotenvelope(lmMassDist)
+```{r seaweed plt, fig.width=8, fig.height=4}
+par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+plotenvelope(lmMassDist, n.sim=99)
 ```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 * *normality* - normal quantile plot is close to a straight line so this is OK
 * *equal variance* - no fan shape on residual vs fits plot so this seems OK
@@ -159,17 +163,20 @@ Comparative boxplots would be a good way to start, as in Code Box 4.8.
 
 
 ## Code Box 4.8: A comparative boxplot of snail density at each of the six possible combinations of sampling time and distance of isolation.
-```{r seaweed compBox}
+```{r seaweed compBox, fig.width=4, fig.height=4}
 plot(Total ~ interaction(Dist,Time), data=seaweed, log="y") ## and as usual use xlabel, ylabel to name axes
 ```
 
 
 ## Exercise 4.7: Factorial ANOVA assumptions
 
-```{r seaweed fact}
+```{r seaweed fact, fig.width=8, fig.height=4}
+ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
  ft_seaweedFact=lm(logTot~Time*Dist, data=seaweed)
- plotenvelope(ft_seaweedFact)
+ plotenvelope(ft_seaweedFact, n.sim=99)
 ```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 * *independence*: if plots were randomly allocated to treatments then this will be satisfied
 * *normality*: the normal quantile plot is close to a straight line so this looks OK
@@ -189,7 +196,7 @@ Note we used `Time*Dist` because `Time` is not the variable of primary interest,
 
 
 ## Code Box 4.10: R code for the interaction plot in Figure 4.1.
-```{r seaweed interplot}
+```{r seaweed interplot, fig.width=5, fig.height=4}
  library(dplyr)
  seaweed$Time = as.factor(seaweed$Time) 
  by_DistTime = group_by(seaweed,Dist,Time)
@@ -204,7 +211,7 @@ Note we used `Time*Dist` because `Time` is not the variable of primary interest,
 ```
 
 Alternatively, for a simpler plot without the data points on it, try:
-```{r seaweed interplot2}
+```{r seaweed interplot2, fig.width=5, fig.height=4}
 interaction.plot(seaweed$Dist, seaweed$Time, ft_seaweedFact$fitted,
       xlab="Isolation of patch", ylab="Total density [log]", trace.label="Time")
 ```
@@ -296,8 +303,10 @@ appropriate linear model, being sure to check your assumptions.
  plot(flow~snow,data=snowmelt)
  snowReduced = na.omit(snowmelt[,c("flow","snow","elev")]) #this line not normally needed, lm can handle NA's, but seems needed because of a weird conflict with MCMCglmm
  ft_snow = lm(flow~elev+snow, data=snowReduced)
- plotenvelope(ft_snow)
+ plotenvelope(ft_snow, n.sim=99)
 ```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 This doesn't look great, there is the occasional large value for flowering time, and a suggestion of non-linearity (note from the scatterplot that at early snowmelt dates there is a strong decreasing relationship, but it can't continue to increase at the same rate because then flowering time would become negative). Try log-transforming flowering time...
 
@@ -306,10 +315,12 @@ This doesn't look great, there is the occasional large value for flowering time,
  snowReduced$logFlow = log(snowReduced$flow)
  snowReduced2 = snowReduced[snowReduced$logFlow>-Inf,] # look it's a bit naughty, removing the infinite value, but no biggie as only one value
  ft_logsnow = lm(logFlow~elev+snow, data=snowReduced2)
- plotenvelope(ft_logsnow)
+ plotenvelope(ft_logsnow, n.sim=99)
  summary(ft_logsnow)
  confint(ft_logsnow)
 ```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 So as snowmelt date increases by 10 days, log(flowering time) decreases by between 0.12 and 0.09 (meaning about a 9-12% decrease).
 
@@ -321,7 +332,7 @@ So as snowmelt date increases by 10 days, log(flowering time) decreases by betwe
 *Is there an effect of the netting treatment on changes in aphid numbers across the sampling
 times?*
 
-```{r aphid netting}
+```{r aphid netting, fig.width=4, fig.height=4}
 data(aphidsBACI)
 str(aphidsBACI)
 plot(logcount~interaction(Time,Treatment),data=aphidsBACI)
@@ -331,10 +342,13 @@ OK log(count) looks fine, different treatments have similar variation.  Eyeballi
 
 When building a model, we need to take into account the pairing of the data -- Ingo and friends took repeated measures in each plot, so we include `Plot` as a blocking variable to account for this. This in turn means there is no need for a `Treatment` main effect, because different plots received different treatments.
 
-```{r aphid lm}
+```{r aphid lm, fig.width=8, fig.height=4}
+ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 lm_aphids = lm(logcount~Plot+Time+Treatment:Time,data=aphidsBACI)
-plotenvelope(lm_aphids,which=1:3)
+plotenvelope(lm_aphids,which=1:3, n.sim=99)
 ```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 This all looks fine to me. The term if interest is `Treatment:Time`, which tells us if changes in aphids over time varied due to the bird exclusion treatment:
 
@@ -348,7 +362,7 @@ I guess the reason for this is that the levels of replication were low -- there 
 
 ## Exercise 4.11: Seaweed, snails and three factors
 
-```{r seaweed 3}
+```{r seaweed 3, fig.width=6, fig.height=4}
 data(seaweed)
 str(seaweed)
 seaweed$logTot = log(seaweed$Total)
@@ -360,12 +374,14 @@ legend("topleft",legend=paste0("Dist=",levels(seaweed$Dist)),pch=15,col=2:4,pt.c
 
 All good so far, no obvious trend, except that `Dist=0` seems to have lower total abundance at most times/sizes. Will analyse as a three-way ANOVA
 
-
-```{r seaweed anova3}
+```{r seaweed anova3, fig.width=8, fig.height=4}
+ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 ft_seaweed3 = lm(log(Total)~Size*Time*Dist,data=seaweed)
-plotenvelope(ft_seaweed3,which=1:3)
+plotenvelope(ft_seaweed3,which=1:3, n.sim=99)
 anova(ft_seaweed3)
 ```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 From the plots, we can't see any problems with assumptions.
 

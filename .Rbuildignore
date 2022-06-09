@@ -2,3 +2,12 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github
+^vignettes/Chapter5Solutions\.Rmd\.orig$
+^vignettes/Chapter7Solutions\.Rmd\.orig$
+^vignettes/Chapter10Solutions\.Rmd\.orig$
+^vignettes/Chapter11Solutions\.Rmd\.orig$
+^vignettes/Chapter12Solutions\.Rmd\.orig$
+^vignettes/Chapter14Solutions\.Rmd\.orig$
+^vignettes/Chapter15Solutions\.Rmd\.orig$
+^vignettes/Chapter16Solutions\.Rmd\.orig$
+^vignettes/precompile\.R$

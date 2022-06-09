@@ -144,7 +144,8 @@ the problem of diagnostic testing of spatial processes (Myllymäki et al 2017), 
 well be applied here, by treating the set of residuals (ordered according to the x-axis) as point-wise evaluations of a function.
 For residual vs fits and scale-location plots, if \code{do.smooth=TRUE}, global envelopes are constructed for
 the \emph{smoother}, not for the data, hence we are looking to see if the smoother
-is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} package.
+is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} 
+package with maximum likelihood estimation (\code{method="ML"}).
 
 Note that the global envelopes only tell you if there is evidence of violation of model
 assumptions -- they do not tell you whether the violations are large enough to worry about. For example, in linear models,
@@ -204,7 +205,7 @@ Dunn, P. K., & Smyth, G. K. (1996), Randomized quantile residuals. J. Comp. Grap
 
 Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
 
-Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} – an \code{R} package for model‐based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
+Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} - an \code{R} package for model-based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
 
 Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
 }

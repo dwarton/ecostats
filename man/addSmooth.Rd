@@ -14,7 +14,7 @@ addSmooth(
 )
 }
 \arguments{
-\item{x}{is the \code{x} co-ordinates for the plot, _e.g._ the fitted values in a plot of residuals vs fitted values.}
+\item{x}{is the \code{x} co-ordinates for the plot, \emph{e.g.} the fitted values in a plot of residuals vs fitted values.}
 
 \item{y}{is the \code{y} co-ordinates for the plot}
 
@@ -40,7 +40,7 @@ returned with the following components:\describe{
 }
 \description{
 Adds a smoother to a plot of \code{y} against \code{x}, and a confidence band around the smoother with pointwise coverage
-(*not* global, unlike \code{\link{plotenvelope}}). The smoother is constructed using \code{\link[mgcv]{gam}}
+(\bold{not} global, unlike \code{\link{plotenvelope}}). The smoother is constructed using \code{\link[mgcv]{gam}}
 and confidence bands use Wald intervals, extracting the standard error from \code{\link[mgcv]{predict.gam}}.
 }
 \details{
@@ -51,7 +51,7 @@ by simulating multiple realizations of residuals (and fitted values) in situatio
 assumptions are satisfied, and plotting a global simulation envelope around these at level \code{conf.level}.
 
 This function adds a smoother to a plot of \code{y} against \code{x} using \code{\link[mgcv]{gam}}, and a confidence band 
-around the smoother with pointwise coverage (*not* global, unlike \code{\link{plotenvelope}}) using Wald intervals
+around the smoother with pointwise coverage (\bold{not} global, unlike \code{\link{plotenvelope}}) using Wald intervals
 that take the standard error of predicted values from \code{\link[mgcv]{predict.gam}}.
 
 When constructing a plot to diagnose model fit, \code{\link{plotenvelope}} is preferred, because this constructs

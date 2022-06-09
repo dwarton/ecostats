@@ -27,7 +27,7 @@ plot(flow~snow,data=snowmelt, log="y")
 \references{
 Wheeler, J. A., Cortés, A. J., Sedlacek, J., Karrenberg, S., van Kleunen, M.,
 Wipf, S., Hoch G., Bossdorf, O. & Rixen C. (2016) The snow and the willows: earlier
-spring snowmelt reduces performance in the low‐lying alpine shrub \emph{Salix herbacea}.
+spring snowmelt reduces performance in the low-lying alpine shrub \emph{Salix herbacea}.
 Journal of Ecology \bold{104}, 1041-50.
 }
 \keyword{datasets}

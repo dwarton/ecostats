@@ -17,9 +17,9 @@ A dataframe containing a whole bunch of stuff, the main things being:\describe{
 data(globalPlants)
 }
 \description{
-Data inspired by a worldwide study of plant height and its association with climate and latitude (Moles *et al.* 2009).
+Data inspired by a worldwide study of plant height and its association with climate and latitude (Moles \emph{et al.} 2009).
 Height is recorded for one dominant plant at each of 178 sites, along with dozens of climatic variables extracted from BIOCLIM.
-Sites, climate data and species lists come from Moles *et al.* (2009) but height data are not actually field measurements,
+Sites, climate data and species lists come from Moles \emph{et al.} (2009) but height data are not actually field measurements,
 due to data unavailability. Instead height has been taken from species descriptions available on Google, accessed 7/1/21.
 }
 \examples{

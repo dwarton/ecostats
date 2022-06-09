@@ -1,7 +1,7 @@
 ---
 title: "Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "`r Sys.Date()`"
+date: "2022-06-09"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes}
@@ -9,12 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 ## Exercise 16.1: Understanding how spiders vary in environmental response
 *Consider again Petrus’s hunting spider data of Exercise 15.2. He established (e.g. in Code Box 15.7) that different species respond differently to environmental gradients, especially so for soil dryness, herb layer and reflectance. He would like to know what the main types of environmental response were, across species.*
@@ -26,14 +21,16 @@ He wants to understand *how* taxa vary in environmental response, so he could us
 ## Code Box 16.1: Fitting a Species Archetype Model to Petrus’s spider data
 
 Run the below lines to install `ecomix`:
-```{r code16.1 loadecoMix,eval=FALSE}
+
+```r
 library(devtools)
 install_github("skiptoniam/ecomix")
 ```
 
 Code to fit `ecomix` will only be run if it is installed (the if statement is included because CRAN policies require vignettes to be able to be run only using packages that can be installed from CRAN)
 
-```{r code16.1}
+
+```r
 is_ecomix_installed = requireNamespace("ecomix", quietly = TRUE)
 library(mvabund)
 data(spider)
@@ -46,6 +43,49 @@ if(is_ecomix_installed)
   ft_Mix = ecomix::species_mix(spiderFormula, data=SpiderDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
   coef(ft_Mix)$beta
 }
+#> SAM modelling
+#> There are 2 archetypes to group the species into
+#> There are 28 site observations for 12 species
+#> The model for the archetype (grouping) is ~soil.dry + bare.sand + fallen.leaves + moss + herb.layer + reflection
+#> The model for the species is ~1
+#> You are implementing a negative.binomial Species Archetype Model.
+#> Using ECM algorithm to find starting values; using 5 refits
+#> ECM restart 1 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
+#> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
+#> ECM restart 2 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
+#> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
+#> ECM restart 3 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
+#> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
+#> ECM restart 4 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
+#> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
+#> ECM restart 5 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
+#> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
+#> initial  value 834.997322 
+#> iter  10 value 821.805630
+#> iter  20 value 818.658041
+#> iter  30 value 817.420228
+#> iter  40 value 781.755656
+#> iter  50 value 778.215211
+#> final  value 777.933344 
+#> converged
+#>              soil.dry   bare.sand fallen.leaves       moss herb.layer reflection
+#> Archetype1  1.5628882 -0.05472053    -0.2785304 -0.1449823  0.7081129 -0.4731397
+#> Archetype2 -0.1067054  0.22426193    -0.2855950  0.4186594  0.5893706  0.4760833
 ```
 
 *Which predictors vary the most across archetypes (hence across taxa)? Is this what you saw in Code Box 15.7?*
@@ -54,10 +94,14 @@ if(is_ecomix_installed)
 
 
 ## Code Box 16.2: Minding your P’s and Q’s for Petrus’s Species Archetype Model
-```{r code16.2, fig.width=8,fig.height=4}
+
+```r
 if(is_ecomix_installed)
   plot(ft_Mix, type="link")
+#> Infinite residuals removed from residual plots: 82 in total.
 ```
+
+![plot of chunk code16.2](figure/code16.2-1.png)
 
 *Do model assumptions seem reasonable here?*
 
@@ -67,7 +111,8 @@ This generally looks good, no fan-shape in residual vs fits plot, points close(i
 ## Exercise 16.2: Archetypal revegetation response
 *Consider again Anthony’s revegetation study. We would like to better characterise how different invertebrate orders respond to the revegetation treatment. Fit a Species Archetype Model with two archetypes.*
 
-```{r ex16.2}
+
+```r
 library(ecostats)
 data(reveg)
 revegDF=data.frame(reveg)
@@ -77,6 +122,51 @@ if(is_ecomix_installed)
   ft_revegMix = ecomix::species_mix(abundMat~treatment, data=revegDF, family="negative.binomial", nArchetypes=2, control=list(init_method='kmeans',ecm_refit=5, ecm_steps=2) )
   coef(ft_revegMix)$beta
 }
+#> SAM modelling
+#> There are 2 archetypes to group the species into
+#> There are 10 site observations for 24 species
+#> The model for the archetype (grouping) is ~treatment
+#> The model for the species is ~1
+#> You are implementing a negative.binomial Species Archetype Model.
+#> Using ECM algorithm to find starting values; using 5 refits
+#> ECM restart 1 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
+#> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
+#> ECM restart 2 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
+#> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
+#> ECM restart 3 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
+#> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
+#> ECM restart 4 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
+#> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
+#> ECM restart 5 of 5
+#> Initialising starting values
+#> Initial groups parameter estimates by K-means clustering
+#> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
+#> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
+#> initial  value 745.015688 
+#> iter  10 value 740.900796
+#> iter  20 value 740.884813
+#> iter  30 value 740.865771
+#> iter  40 value 740.817682
+#> iter  50 value 739.833832
+#> iter  60 value 728.725117
+#> iter  70 value 728.591056
+#> final  value 728.590862 
+#> converged
+#>            treatmentImpact
+#> Archetype1        1.463471
+#> Archetype2        1.463359
 ```
 
 *Explain what the main two types of response to revegetation were, across invertebrate taxa.*
@@ -90,7 +180,8 @@ This doesn't seem worthwhile when there are no differences in response across th
 ## Code Box 16.3: Choosing the number of archetypes for Petrus’s spider data
 
 _This code chunk has not been run, as it takes a minute or so to complete_
-```{r code16.3, message=FALSE, eval=FALSE}
+
+```r
 if(is_ecomix_installed)
 {
   nClust=rep(2:6,3)
@@ -122,7 +213,8 @@ As in Maths Box 16.1, mixture model likelihoods can be messy with multiple maxim
 OK I'm going for BIC as above.
 
 _This code chunk has not been run, as it takes a minute or so to complete_
-```{r ex16.3, message=FALSE, eval=FALSE}
+
+```r
 if(is_ecomix_installed)
 {
   nClust=rep(1:5,3)
@@ -146,29 +238,63 @@ Well it looks like there should be two archetypes (presumably, one of these is i
 He wants to know *why* species vary in their environmental response, so a good idea would be to include predictors on species (species traits) and to use a fourth corner model to understand the extent to which interspecific variation in environmental response can be explained by these traits.
 
 ## Code Box 16.4: A fourth corner model for spider data using traitglm
-```{r code16.4}
+
+```r
 library(gllvm)
+#> 
+#> Attaching package: 'gllvm'
+#> The following object is masked from 'package:vegan':
+#> 
+#>     ordiplot
+#> The following objects are masked from 'package:VGAM':
+#> 
+#>     AICc, nobs, predict, vcov
+#> The following objects are masked from 'package:stats4':
+#> 
+#>     nobs, vcov
+#> The following object is masked from 'package:mvabund':
+#> 
+#>     coefplot
+#> The following objects are masked from 'package:stats':
+#> 
+#>     nobs, predict, simulate, vcov
 data(spider)
 X = spider$x[,c("soil.dry","herb.layer")]
 ft_trait = gllvm(spider$abund, X, spider$trait, randomX=~soil.dry+herb.layer, family="negative.binomial")
 logLik(ft_trait)
+#> 'log Lik.' -711.2906 (df=60)
 library(lattice)
 a = max( abs(ft_trait$fourth.corner) )
 colort = colorRampPalette(c("blue","white","red"))
 plot.4th = levelplot(ft_trait$fourth.corner, col.regions=colort(100),
            at=seq(-a, a, length=100), scales = list( x=list(rot = 45)) )
 print(plot.4th)
+```
+
+![plot of chunk code16.4](figure/code16.4-1.png)
+
+```r
 coefplot(ft_trait)
 ```
+
+![plot of chunk code16.4](figure/code16.4-2.png)
 
 ## Exercise 16.5: Heloise’s ants
 *Heloise collected counts of 41 species of ants at 30 sites across south-eastern Australia, stored as `antTraits` in the `mvabund` package. She also recorded five environmental variables at each site, and five functional traits for each species. She would like to know if these traits explain why ant species differ in environmental response. Fit a fourth corner model to this dataset.*
 
-```{r ex16.5}
+
+```r
 data(antTraits)
 envMat = as.matrix(antTraits$env)
+```
+
+_(The below code chunk takes about a minute to run.)_
+
+
+```r
 ft_anttrait = gllvm(antTraits$abund, envMat, antTraits$traits, randomX=~envMat, family="negative.binomial", starting.val="zero")
 logLik(ft_anttrait)
+#> 'log Lik.' -1919.352 (df=223)
 library(lattice)
 a = max( abs(ft_anttrait$fourth.corner) )
 colort = colorRampPalette(c("blue","white","red"))
@@ -176,8 +302,15 @@ plot_4th = levelplot(t(as.matrix(ft_anttrait$fourth.corner)),
   col.regions=colort(100), at=seq(-a, a, length=100),
   scales = list( x= list(rot = 45)) )
 print(plot_4th)
+```
+
+![plot of chunk ex16.5](figure/ex16.5-1.png)
+
+```r
 coefplot(ft_anttrait)
 ```
+
+![plot of chunk ex16.5](figure/ex16.5-2.png)
 
 This doesn't always produce a `coefplot` because of infinite values -- this is symptomatic of non-convergence. Make sure you end up with a `logLik` value of about `-2300` or better, if this doesn't happen then re-run. I ended up using `starting.val="zero"` which usually gave better fits (it doesn't always but did this time around).
 
@@ -187,7 +320,9 @@ A big one seems to be `Canopy.cover:polymorphism`. `Canopy.cover:Pilosity` also 
 
 *Don't forget to check your P's and Q's!*
 
-```{r ex16.5assumptions, fig.width=8,fig.height=5}
+_The below code chunk has not been evaluated because it is a function of the previous one_
+
+```r
 par(mfrow=c(1,2),mgp=c(1.75,0.75,0),mar=c(3,3,1,1))
 plot(ft_anttrait, which=1:2)
 ```
@@ -197,7 +332,8 @@ This looks good to me. The points on the normal quantile plot don't all stay in 
 
 ## Code Box 16.5: A fourth corner interaction plot for Petrus’s spider data
 
-```{r code16.5, fig.width=5,fig.height=5}
+
+```r
 nVars = dim(spider$abund)[2]
 newTraits = spider$trait
 # set factors not of interest here to be a constant value
@@ -217,13 +353,18 @@ matplot(newEnv[,1], newPreds[,1:nMarks],type="l", log="y")
 legend("topright",levels(newTraits$marks),lty=1:nMarks,col=1:nMarks)
 ```
 
+![plot of chunk code16.5](figure/code16.5-1.png)
+
 
 ## Exercise 16.6: A fourth corner interaction plot for Heloise’s ants
 *Recall that fourth corner model you fitted to Heloise’s data in Exercise 16.5. For an interaction of your choice, construct a plot to visualise how the environment-abundance association changes for different values of the functional trait.*
 
 I'm going with `Canopy.cover:Polymorphism`, as the one with the biggest (and only significant) interaction term:
 
-```{r ex16.6, fig.width=5,fig.height=5}
+_The below code chunk has not been evaluated because it is a function of the previous one_
+
+
+```r
 nVars = dim(antTraits$abund)[2]
 newTraits = antTraits$traits
 #set length vars to their mean
@@ -254,33 +395,49 @@ We can see there that when there is no polymorphism, abundance is relatively hig
 
 
 ## Code Box 16.6: Quantifying how effectively traits explain 𝛽-diversity
-```{r code16.6}
+
+```r
 ft_spp = gllvm(spider$abund, X, family="negative.binomial")
 ft_trait = gllvm(spider$abund, X, spider$trait, family="negative.binomial")
 ft_main = gllvm(spider$abund, X, spider$trait, family="negative.binomial", formula=~soil.dry+herb.layer)
 an_spider4th = anova(ft_main, ft_trait, ft_spp)
+#> Model  1 :  ~ soil.dry + herb.layer 
+#> Model  2 :  y ~ soil.dry + herb.layer + (soil.dry + herb.layer):(length + colour + marks) 
+#> Model  3 :  y ~ X
 an_spider4th
+#>   Resid.Df        D Df.diff     P.value
+#> 1      287  0.00000       0            
+#> 2      279 40.12996       8 3.02999e-06
+#> 3      265 76.84430      14 1.08408e-10
 an_spider4th$D[2]/sum(an_spider4th$D)
+#> [1] 0.3430666
 ```
 
 ## Exercise 16.7: Variation explained by traits for Heloise’s ants
 *Consider again Heloise’s ant data. What proportion of the variation in environmental response is explained by the measured species traits?*
 
-```{r ex16.7}
+
+```r
 ft_antspp = gllvm(antTraits$abund, envMat, family="negative.binomial")
 ft_anttrait = gllvm(antTraits$abund, envMat, antTraits$traits, family="negative.binomial")
 mainFormula=as.formula(paste("~", paste(colnames(envMat),collapse="+")))
 ft_antmain = gllvm(antTraits$abund, envMat, antTraits$traits, family="negative.binomial", formula=mainFormula)
 an_ant4th = anova(ft_antmain, ft_anttrait, ft_antspp)
+#> Warning in anova.gllvm(ft_antmain, ft_anttrait, ft_antspp): This test was not designed for tests with a df.diff larger than 20 so the P-value should be treated as approximate.
+#> Model  1 :  ~ Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung 
+#> Model  2 :  y ~ Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung + (Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung):(Femur.length + No.spines + Pilosity + Polymorphism + Webers.length) 
+#> Model  3 :  y ~ X
 an_ant4th
+#>   Resid.Df         D Df.diff     P.value
+#> 1     1062   0.00000       0            
+#> 2     1022  75.73794      40 0.000548758
+#> 3      862 271.85048     160 8.23701e-08
 an_ant4th$D[2]/sum(an_ant4th$D)
+#> [1] 0.2178955
 ```
 
 So it looks like about a quarter of interspecific variation can be explained by traits, which is not super, especially considering that the trait model uses a quarter as many parameters. This suggests we are not really onto a winner here...
 
 
 #remove this chunk once gllvm has been updated on CRAN:
-```{r bugfixForGllvm, echo=FALSE} 
-detach("package:gllvm", unload=TRUE)
-library(stats)
-```
+

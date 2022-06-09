@@ -35,7 +35,7 @@ plotenvelope(ft_maunagam)
 
 It generally looks good, although there are a couple of lines of points fanning out on the residuals vs fits plot for `co2<320`.  (The method of taking measurements actually changed in 1974, at about `co2=330`, so it is possible that this could be artefacts due to changes in the measurement or recording process for data in the 1950's and 1960's.)
 
-Note the simulation envelope around the trend line in the residual vs fits plot is hard to see -- this is because it falls very close to the horizontal line at zero. The smoother against year was actually fitted such that the residual trend would be a horizontal line at zero.
+Note the simulation envelope around the trend line in the residual vs fits plot is hard to see -- this is because it falls very close to the horizontal line at zero. This happens because of the way the smoother against year is fitted -- it is done in such a way that the residual trend is (nearly) completely removed.
 
 
 ## Code Box 8.3: Comparing curves for the Mauna Loa data.

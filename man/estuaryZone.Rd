@@ -31,6 +31,6 @@ plot(Total~interaction(Estuary,Zone),data=estuaryZone,col=cols[c(1,2,2,1,2,1,2,3
 \references{
 Clark, G. F., Kelaher, B. P., Dafforn, K. A., Coleman, M. A., Knott, N. A., 
 Marzinelli, E. M., & Johnston, E. L. (2015). What does impacted look like? high diversity and
-abundance of epibiota in modified estuaries. Environmental Pollution 196, 12-20.
+abundance of epibiota in modified estuaries. Environmental Pollution \bold{196}, 12-20.
 }
 \keyword{datasets}

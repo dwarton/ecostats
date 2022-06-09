@@ -1,7 +1,7 @@
 ---
 title: "Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "`r Sys.Date()`"
+date: "2022-06-09"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 14 -- Multivariate abundances --- inference about environmental associations -- Exercise solutions and Code Boxes}
@@ -9,12 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 ## Exercise 14.1: Revegetation and invertebrate counts
 *In Anthony’s revegetation study (Exercise 10.3), he classified anything that fell into his pitfall traps to Order, and thus counted the abundance of each of 24 invertebrate Orders across ten sites. He wants to know: Is there evidence of a change in invertebrate communities due to revegetation efforts?*
@@ -40,7 +35,8 @@ They have a multivariate abundance dataset, with 16 correlated presence/absence 
 She has a multivariate abundance dataset, with 16 correlated counts of different fish species. She needs to use some GLM approach that can handle correlation and many responses, like `manyglm` from the `mvabund` package. 
 
 ## Code Box 14.1: Using mvabund to test for an effect of revegetation in Exercise 12.2
-```{r code14.1}
+
+```r
 library(ecostats)
 library(mvabund)
 data(reveg)
@@ -48,6 +44,20 @@ reveg$abundMV=mvabund(reveg$abund)
 ft_reveg=manyglm(abundMV~treatment+offset(log(pitfalls)),
 family="negative.binomial", data=reveg) # offset included as in Exercise 10.9
 anova(ft_reveg)
+#> Time elapsed: 0 hr 0 min 8 sec
+#> Analysis of Deviance Table
+#> 
+#> Model: abundMV ~ treatment + offset(log(pitfalls))
+#> 
+#> Multivariate test:
+#>             Res.Df Df.diff   Dev Pr(>Dev)  
+#> (Intercept)      9                         
+#> treatment        8       1 78.25     0.02 *
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
 ## Exercise 14.4: Testing for an effect of isolation on invertebrates in seaweed
@@ -57,7 +67,8 @@ anova(ft_reveg)
 
 Previous experience suggests anything beyond second-order interactions does not seem to matter -- you could fit more but it would take longer. Because of the warning that this will take a long time to run I will set `nBoot=99` for a quicker, rough answer:
 
-```{r ex14.4an}
+
+```r
 data(seaweed)
 seaweed$Dist = as.factor(seaweed$Dist)
 # set up presence-absence response:
@@ -67,14 +78,48 @@ seaweed$PA[seaweed$PA>1] = 1
 #fit model
 ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family="cloglog", data=seaweed)
 anova(ft_epiAlt,nBoot=99)
+#> Time elapsed: 0 hr 0 min 16 sec
+#> Analysis of Deviance Table
+#> 
+#> Model: PA ~ (Wmass + Size + Time) * Dist
+#> 
+#> Multivariate test:
+#>             Res.Df Df.diff   Dev Pr(>Dev)  
+#> (Intercept)     56                         
+#> Wmass           55       1  6.66     0.93  
+#> Size            54       1 36.98     0.02 *
+#> Time            53       1 32.35     0.04 *
+#> Dist            51       2 28.26     0.79  
+#> Wmass:Dist      49       2 33.29     0.25  
+#> Size:Dist       47       2 26.77     0.10 .
+#> Time:Dist       45       2 32.56     0.07 .
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 99 iterations via PIT-trap resampling.
 ```
 
 *Now fit a model under the null hypothesis that there is no effect of Distance of isolation, and call it `ft_epiNull`. Run `anova(ft_epiNull, ft_epiAlt)`. This second anova took much less time to fit – why? Is there evidence of an effect of distance of isolation on presence/absence patterns in the invertebrate community?*
 
 To see if there is an effect of `Dist` I guess we could remove it from the model entirely and see if that does anything:
-```{r ex14.4anNull}
+
+```r
 ft_epiNull = manyglm(PA~Wmass+Size+Time,family="cloglog", data=seaweed)
 anova(ft_epiNull, ft_epiAlt, nBoot=99)
+#> Time elapsed: 0 hr 0 min 3 sec
+#> Analysis of Deviance Table
+#> 
+#> ft_epiNull: PA ~ Wmass + Size + Time
+#> ft_epiAlt: PA ~ (Wmass + Size + Time) * Dist
+#> 
+#> Multivariate test:
+#>            Res.Df Df.diff   Dev Pr(>Dev)
+#> ft_epiNull     53                       
+#> ft_epiAlt      45       8 115.2     0.41
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 99 iterations via PIT-trap resampling.
 ```
 
 *This second `anova` took much less time to fit – why?*
@@ -87,23 +132,44 @@ No :(
 
 ## Code Box 14.2: Checking assumptions for the revegetation model of Code Box 14.1
 
-```{r code14.2, fig.width=9,fig.height=3.3}
+
+```r
 par(mfrow=c(1,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 ft_reveg=manyglm(abundMV~treatment,offset=log(pitfalls),family="negative.binomial", data=reveg)
 plotenvelope(ft_reveg, which=1:3)
 ```
 
+![plot of chunk code14.2](figure/code14.2-1.png)
+
+*What do you reckon?*
+
+Assumptions seem reasonable here.
+
+
 ## Code Box 14.3: Checking mean-variance assumptions for a Poisson revegetation model
-```{r code14.3, fig.width=9, fig.height=3.3}
+
+```r
 ft_revegP=manyglm(abundMV~treatment, offset=log(pitfalls), family="poisson", data=reveg)
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_revegP, which=1:3, sim.method="stand.norm")
 ```
 
-```{r code14.3MV, fig.width=6, fig.height=5}
+![plot of chunk code14.3](figure/code14.3-1.png)
+
+
+```r
 meanvar.plot(reveg$abundMV~reveg$treatment)
+#> START SECTION 2 
+#> Plotting if overlay is TRUE
+#> using grouping variable reveg$treatment 7 mean values were 0 and could 
+#> 										not be included in the log-plot
+#> using grouping variable reveg$treatment 10 variance values were 0 and could not 
+#> 										be included in the log-plot
+#> FINISHED SECTION 2
 abline(a=0,b=1,col="darkgreen")
 ```
+
+![plot of chunk code14.3MV](figure/code14.3MV-1.png)
 
 *How's the Poisson assumption looking?*
 
@@ -122,11 +188,14 @@ We assumed:
 
 *Where possible, check these assumptions.*
 
-```{r ex14.5, fig.width=9, fig.height=3.3, warning=FALSE}
+
+```r
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family=binomial("cloglog"), data=seaweed)
 plotenvelope(ft_epiAlt, which=1:3)
 ```
+
+![plot of chunk ex14.5](figure/ex14.5-1.png)
 
 *Do assumptions seem reasonable?*
 
@@ -137,7 +206,8 @@ Yes it all looks good to me. This is not unexpected because presence-absence dat
 *Consider Lena’s offshore wind farm study (Exercise 14.3). Fit an appropriate model to the data. Make sure you include a Station main effect (to account for the paired sampling design).*
 
 
-```{r ex14.6}
+
+```r
 data(windFarms)
 ft_wind=manyglm(mvabund(windFarms$abund)~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ```
@@ -154,50 +224,195 @@ We assumed:
 *Where possible, check these assumptions.*
 
 Used "stand.norm"  because this model takes a while to fit. 
-```{r ex14.6assumptions, fig.width=9, fig.height=3.3, warning=FALSE}
+
+
+```r
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wind, which=1:3, sim.method="stand.norm")
 ```
 
+![plot of chunk ex14.6assumptions](figure/ex14.6assumptions-1.png)
+
 
 *Do assumptions seem reasonable? In particular, think about whether there is evidence that the counts are overdispersed compared to the Poisson.*
 
-Things generally look OK, but there is a weird downward kink on the scale-location plot, weakly suggestive of under-dispersion. Note the sim envelope was constructed using `"stand.norm"`, meaning we compared the smoother to what would be expected for a bunch of standard normal residuals. But the kink could be a weird artifact of the model being fitted (which has loads of parameters) so let's repeat using `"refit"`, but with a smaller value of `n.sim` so it doesn't take too long:
-```{r ex14.6refit, fig.width=9, fig.height=3.3, warning=FALSE}
+Things generally look OK, but there is a downward trend on the scale-location plot, weakly suggestive of under-dispersion. Note the sim envelope was constructed using `"stand.norm"`, meaning we compared the smoother to what would be expected for a bunch of standard normal residuals. But the kink could be a weird artifact of the model being fitted (which has loads of parameters) so let's repeat using `"refit"`, but with a smaller value of `n.sim` so it doesn't take too long (it will take a few minutes though):
+
+
+```r
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
-plotenvelope(ft_wind, which=1:3, n.sim=39)
+plotenvelope(ft_wind, which=1:3, n.sim=59)
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
+#> Error : inner loop 1; cannot correct step size
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
 ```
 
-(You can ignore the error messages - this seemed to happen because predicted values were numerically zero.)
+![plot of chunk ex14.6refit](figure/ex14.6refit-1.png)
 
-Anyway, the weird kink in the scale-location plot happened in simulated data too, so it is nothing really to worry about. It seems to be an artifact, probably because of overfitting of the data by including a `Station` term in the model -- this means that there is a parameter for every two observations in the data! (If a random effect were used instead, this effect would have been weaker. But it isn't really a problem)
+(You can ignore any error messages - these seem to happen because predicted values were numerically zero.)
+
+Anyway, the downward trend in the scale-location plot happened in simulated data too, so it is nothing really to worry about. It seems to be an artifact, probably because of overfitting of the data by including a `Station` term in the model -- this means that there is a parameter for every two observations in the data! (If a random effect were used instead, this effect would have been weaker. But it isn't really a problem.)
 
 
-## Code Box 14.4: A manyglm analysis of the revegetation data, using a
-statistic accounting for correlation
-```{r code 14.4}
+## Code Box 14.4: A manyglm analysis of the revegetation data, using a statistic accounting for correlation
+
+```r
 anova(ft_reveg,test="wald",cor.type="shrink")
+#> Time elapsed: 0 hr 0 min 5 sec
+#> Analysis of Variance Table
+#> 
+#> Model: abundMV ~ treatment
+#> 
+#> Multivariate test:
+#>             Res.Df Df.diff  wald Pr(>wald)  
+#> (Intercept)      9                          
+#> treatment        8       1 8.698      0.05 *
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming correlated response via ridge regularization 
+#>  P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
 ## Exercise 14.7: Testing for an effect of offshore wind farms (slowly)
 *Fit models [to Lena's windfarm data] under the null and alternative hypotheses of interest. Run an anova to compare these two models, with just 19 bootstrap resamples, to estimate computation time.*
 
 The null model in this case has no `Year:Zone` term... there could still be year-to-year variation, but it should not affect different Zones in different ways.
-```{r ex14.7}
+
+```r
 windMV = mvabund(windFarms$abund)
 ft_wind=manyglm(windMV~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull=manyglm(windMV~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull, ft_wind, nBoot=19)
+#> Time elapsed: 0 hr 0 min 15 sec
+#> Analysis of Deviance Table
+#> 
+#> ft_windNull: windMV ~ Station + Year
+#> ft_wind: windMV ~ Station + Year + Year:Zone
+#> 
+#> Multivariate test:
+#>             Res.Df Df.diff   Dev Pr(>Dev)  
+#> ft_windNull     70                         
+#> ft_wind         68       2 81.83     0.05 *
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 19 iterations via PIT-trap resampling.
 ```
 This took 12 seconds for me.
 
 *Remove zerotons and singletons from the dataset using: `windMV = mvabund( windFarms$abund[,colSums(windFarms$abund>0)>1] )` Now fit a model to this new response variable, again with just 19 bootstrap resamples.*
 
-```{r ex14.7Singletons}
+
+```r
 windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull1=manyglm(windMV1~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull1, ft_wind1, nBoot=19)
+#> Time elapsed: 0 hr 0 min 13 sec
+#> Analysis of Deviance Table
+#> 
+#> ft_windNull1: windMV1 ~ Station + Year
+#> ft_wind1: windMV1 ~ Station + Year + Year:Zone
+#> 
+#> Multivariate test:
+#>              Res.Df Df.diff   Dev Pr(>Dev)  
+#> ft_windNull1     70                         
+#> ft_wind1         68       2 81.83     0.05 *
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 19 iterations via PIT-trap resampling.
 ```
 
 *Did this run take less time?*
@@ -211,31 +426,93 @@ Results were almost identical, with the same test statistic (to two decimal plac
 As a rough estimate, multiply the time you just got by 50. For me this is about 500 seconds, so I would expect it to take about eight minutes.
 
 It is curious that this didn't change computation time all that much. Looking at number of non-zero values in `windMV`:
-```{r ex14.7ColSums}
-colSums(windFarms$abund>0)
-```
-we see that only three of the 16 species had one or less presence  A couple more had three counts, removing these as well:
 
-```{r ex14.7Tripletons}
+```r
+colSums(windFarms$abund>0)
+#>         Bergvar         Oxsimpa         Piggvar      Roodspotta       Rootsimpa     Sandskaadda         Sjurygg 
+#>               0              51               1               3              30               5               6 
+#>   Skrubbskaadda     Skaaggsimpa    Skaarsnultra     Stensnultra Svart.smoorbult           Torsk        Tanglake 
+#>              22               6               4              37               3             134             136 
+#>     Aakta.tunga              AL 
+#>               0              61
+```
+we see that only three of the 16 species had one or less presence.  A couple more had three counts, removing these as well:
+
+
+```r
 windMV3 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>3])
 ft_wind3=manyglm(windMV3~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull3=manyglm(windMV3~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull3, ft_wind3, nBoot=19)
+#> Time elapsed: 0 hr 0 min 11 sec
+#> Analysis of Deviance Table
+#> 
+#> ft_windNull3: windMV3 ~ Station + Year
+#> ft_wind3: windMV3 ~ Station + Year + Year:Zone
+#> 
+#> Multivariate test:
+#>              Res.Df Df.diff   Dev Pr(>Dev)  
+#> ft_windNull3     70                         
+#> ft_wind3         68       2 74.19     0.05 *
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 19 iterations via PIT-trap resampling.
 ```
 
 This is only slightly quicker, which is a tad surprising. The test statistic is only slightly smaller, so we can see clearly that the action is happening for the more abundant species -- this is not surprising, there is not enough information in any of the rare species to detect an interaction!
 
 ## Code Box 14.5: Analysing ordinal data from the habitat configuration study using manyany
-```{r code14.5, warning=FALSE}
+
+```r
 habOrd = counts = as.matrix( round(seaweed[,6:21]*seaweed$Wmass))
  habOrd[counts>0 & counts<10] = 1
 habOrd[counts>=10] = 2
 library(ordinal)
+#> 
+#> Attaching package: 'ordinal'
+#> The following objects are masked from 'package:nlme':
+#> 
+#>     ranef, VarCorr
+#> The following objects are masked from 'package:VGAM':
+#> 
+#>     dgumbel, dlgamma, pgumbel, plgamma, qgumbel, rgumbel, wine
+#> The following objects are masked from 'package:glmmTMB':
+#> 
+#>     ranef, VarCorr
+#> The following objects are masked from 'package:lme4':
+#> 
+#>     ranef, VarCorr
 summary(habOrd) # Amphipods are all "2" which would return an error in clm
+#>       Amph        Cope            Poly            Anem             Iso            Bival            Gast      
+#>  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000   Min.   :0.000   Min.   :1.000  
+#>  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:0.000   1st Qu.:2.000  
+#>  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000   Median :2.000   Median :2.000  
+#>  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877   Mean   :1.351   Mean   :1.947  
+#>  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  
+#>  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000   Max.   :2.000   Max.   :2.000  
+#>       Turb             Prawn            Urchin             Fish             Crab            Caddis       
+#>  Min.   :0.00000   Min.   :0.0000   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000  
+#>  1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.00000  
+#>  Median :0.00000   Median :0.0000   Median :0.00000   Median :0.0000   Median :0.0000   Median :0.00000  
+#>  Mean   :0.08772   Mean   :0.5263   Mean   :0.07018   Mean   :0.1754   Mean   :0.5965   Mean   :0.03509  
+#>  3rd Qu.:0.00000   3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.0000   3rd Qu.:0.00000  
+#>  Max.   :2.00000   Max.   :2.0000   Max.   :2.00000   Max.   :2.0000   Max.   :2.0000   Max.   :2.00000  
+#>       Opi              Ost            Bstar       
+#>  Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
+#>  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
+#>  Median :0.0000   Median :2.000   Median :0.0000  
+#>  Mean   :0.1404   Mean   :1.404   Mean   :0.2105  
+#>  3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  
+#>  Max.   :2.0000   Max.   :2.000   Max.   :2.0000
 habOrd=habOrd[,-1] #remove Amphipods
 manyOrd=manyany(habOrd~Dist*Time*Size,"clm",data=seaweed)
 manyOrdNull=manyany(habOrd~Time*Size,"clm",data=seaweed)
 anova(manyOrdNull, manyOrd)
+#> 
+#>              LR Pr(>LR)
+#> sum-of-LR 101.1    0.17
 ```
 
 *What hypothesis has been tested here? Is there any evidence against it?*
@@ -244,15 +521,34 @@ We tested for an effect of distance on abundance, when classified into a three-l
 
 The `ordinal` package has a bug in it (in version 2019.12) so it conflicts with `lme4` (specifically it overwrites the `ranef` function), [issue posted on Github] (https://github.com/runehaubo/ordinal/issues/48). So if you are running analyses using both packages, you need to _detach the `ordinal` package_ before continuing...
 
-```{r detach ordinal}
+
+```r
 detach("package:ordinal", unload=TRUE)
+#> Warning: 'ordinal' namespace cannot be unloaded:
+#>   namespace 'ordinal' is imported by 'ecoCopula' so cannot be unloaded
 ```
 
 ## Code Box 14.6: A compositional analysis of Anthony’s revegetation
 data
-```{r code 14.6}
+
+```r
 ft_comp=manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg, composition=TRUE)
 anova(ft_comp,nBoot=99)
+#> Time elapsed: 0 hr 0 min 25 sec
+#> Analysis of Deviance Table
+#> 
+#> Model: abundMV ~ cols + treatment + offset(log(pitfalls)) + rows + cols:(treatment + offset(log(pitfalls)))
+#> 
+#> Multivariate test:
+#>                Res.Df Df.diff   Dev Pr(>Dev)   
+#> (Intercept)       239                          
+#> cols              216      23 361.2     0.01 **
+#> treatment         215       1  14.1     0.01 **
+#> rows              206       9  25.5     0.02 * 
+#> cols:treatment    184      23  56.7     0.01 **
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments: P-value calculated using 99 iterations via PIT-trap resampling.
 ```
 
 *Which term measures the effect of treatment on relative abundance? Is there evidence of an effect on relative abundance?*
@@ -261,16 +557,31 @@ anova(ft_comp,nBoot=99)
 
 
 ## Code Box 14.7: A faster compositional analysis of Anthony’s revegetation data
-```{r code 14.7}
+
+```r
 ft_null = manyglm(abundMV~cols+rows+offset(log(pitfalls)),
 data=ft_comp$data)
 ft_alt = manyglm(abundMV~cols+rows+treatment:cols
 +offset(log(pitfalls)), data=ft_comp$data)
 anova(ft_null,ft_alt,nBoot=99,block=ft_comp$rows)
+#> Time elapsed: 0 hr 0 min 6 sec
+#> Analysis of Deviance Table
+#> 
+#> ft_null: abundMV ~ cols + rows + offset(log(pitfalls))
+#> ft_alt: abundMV ~ cols + rows + treatment:cols + offset(log(pitfalls))
+#> 
+#> Multivariate test:
+#>         Res.Df Df.diff   Dev Pr(>Dev)   
+#> ft_null    207                          
+#> ft_alt     184      23 56.74     0.01 **
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments: P-value calculated using 99 iterations via PIT-trap resampling.
 ```
 
 ## Code Box 14.8: Quick-and-dirty compositional analysis of Anthony’s revegetation data
-```{r code14.8}
+
+```r
 ft_reveg0 = manyglm(abundMV~1+offset(log(pitfalls)), data=reveg)
 QDrows0 = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg0)) )
 ft_row0=manyglm(abundMV~1+offset(log(pitfalls))+offset(QDrows0), data=reveg)
@@ -278,6 +589,21 @@ ft_reveg = manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg)
 QDrows = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg)) )
 ft_row=manyglm(abundMV~treatment+offset(log(pitfalls))+offset(QDrows), data=reveg)
 anova(ft_row0,ft_row)
+#> Time elapsed: 0 hr 0 min 8 sec
+#> Analysis of Deviance Table
+#> 
+#> ft_row0: abundMV ~ 1 + offset(log(pitfalls)) + offset(QDrows0)
+#> ft_row: abundMV ~ treatment + offset(log(pitfalls)) + offset(QDrows)
+#> 
+#> Multivariate test:
+#>         Res.Df Df.diff   Dev Pr(>Dev)  
+#> ft_row0      9                         
+#> ft_row       8       1 50.26    0.073 .
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#>  P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
 *This was over ten times quicker than Code Box 14.7 (note that it used ten times as many resamples), but results are slightly different -- the test statistic is slightly smaller, and the $P$-value larger. Why do you think this might be the case?*
@@ -286,34 +612,86 @@ The quick-and-dirty offset approach only roughly approximates the row effect, so
 
 
 ## Code Box 14.9: Posthoc testing for the bush regeneration data
-```{r code14.9}
+
+```r
 an_reveg = anova(ft_reveg,p.uni="adjusted")
+#> Time elapsed: 0 hr 0 min 7 sec
 an_reveg
+#> Analysis of Deviance Table
+#> 
+#> Model: abundMV ~ treatment + offset(log(pitfalls))
+#> 
+#> Multivariate test:
+#>             Res.Df Df.diff   Dev Pr(>Dev)  
+#> (Intercept)      9                         
+#> treatment        8       1 78.25    0.022 *
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Univariate Tests:
+#>             Acarina          Amphipoda          Araneae          Blattodea          Coleoptera          Collembola
+#>                 Dev Pr(>Dev)       Dev Pr(>Dev)     Dev Pr(>Dev)       Dev Pr(>Dev)        Dev Pr(>Dev)        Dev
+#> (Intercept)                                                                                                       
+#> treatment     8.538    0.183     9.363    0.155   0.493    0.976    10.679    0.118      9.741    0.143      6.786
+#>                      Dermaptera          Diotocardia          Diplura          Diptera          Formicidae         
+#>             Pr(>Dev)        Dev Pr(>Dev)         Dev Pr(>Dev)     Dev Pr(>Dev)     Dev Pr(>Dev)        Dev Pr(>Dev)
+#> (Intercept)                                                                                                        
+#> treatment      0.297      0.196    0.976           0    0.983    2.24    0.840    5.93    0.348      0.831    0.973
+#>             Haplotaxida          Hemiptera          Hymenoptera          Isopoda          Larvae          Lepidoptera
+#>                     Dev Pr(>Dev)       Dev Pr(>Dev)         Dev Pr(>Dev)     Dev Pr(>Dev)    Dev Pr(>Dev)         Dev
+#> (Intercept)                                                                                                          
+#> treatment         2.889    0.766     1.302    0.967       4.254    0.528   1.096    0.973  0.463    0.976       0.913
+#>                      Polydesmida          Pseudoscorpionida          Scolopendrida          Seolifera         
+#>             Pr(>Dev)         Dev Pr(>Dev)               Dev Pr(>Dev)           Dev Pr(>Dev)       Dev Pr(>Dev)
+#> (Intercept)                                                                                                   
+#> treatment      0.973       1.451    0.957             1.056    0.973         0.913    0.973      1.03    0.973
+#>             Soleolifera          Thysanoptera          Tricladida         
+#>                     Dev Pr(>Dev)          Dev Pr(>Dev)        Dev Pr(>Dev)
+#> (Intercept)                                                               
+#> treatment         4.223    0.528        1.056    0.973      2.804    0.766
+#> Arguments:
+#>  Test statistics calculated assuming uncorrelated response (for faster computation) 
+#> P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
 ## Code Box 14.10: Exploring indicator taxa most strongly associated with the treatment effect in Anthony’s revegetation data
 
-```{r code4.10}
+
+```r
 sortedRevegStats = sort(an_reveg$uni.test[2,],decreasing=T,
 index.return=T)
 sortedRevegStats$x[1:5]
+#>  Blattodea Coleoptera  Amphipoda    Acarina Collembola 
+#>  10.679374   9.741038   9.362519   8.537903   6.785946
 sum(sortedRevegStats$x[1:5])/an_reveg$table[2,3]
+#> [1] 0.5764636
 coef(ft_reveg)[,sortedRevegStats$ix[1:5]]
+#>                  Blattodea Coleoptera Amphipoda  Acarina Collembola
+#> (Intercept)     -0.3566749  -1.609438 -16.42495 1.064711   5.056246
+#> treatmentImpact -3.3068867   5.009950  19.42990 2.518570   2.045361
 ft_reveg$stderr[,sortedRevegStats$ix[1:5]]
+#>                 Blattodea Coleoptera Amphipoda   Acarina Collembola
+#> (Intercept)     0.3779645   1.004969  707.1068 0.5171539  0.4879159
+#> treatmentImpact 1.0690450   1.066918  707.1069 0.5713194  0.5453801
 ```
 
 ## Exercise 14.8: Indicator species for offshore wind farms?
 *Which fish species are most strongly associated with offshore wind farms, in Lena’s study? Reanalyse the data to obtain univariate test statistics and univariate $P$-values that have been adjusted for multiple testing.*
 
-_This code chunk has not been run as it takes several minutes_
-```{r ex14.8, eval=FALSE}
+
+```r
 data(windFarms)
 windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 an_wind1 = anova(ft_wind1,p.uni="adjusted",nBoot=99)
+#> Time elapsed: 0 hr 3 min 32 sec
 sortedWindStats = sort(an_wind1$uni.test[4,], decreasing=T, index.return=T)
 sortedWindStats$x[1:5]
+#>  Tanglake     Torsk   Oxsimpa Rootsimpa        AL 
+#> 29.019951 22.296044  6.899955  6.801339  4.819447
 an_wind1$uni.p[4,sortedWindStats$ix[1:5]]
+#>  Tanglake     Torsk   Oxsimpa Rootsimpa        AL 
+#>      0.01      0.01      0.15      0.15      0.23
 ```
 
 *Is there evidence that any species clearly have a Zone:Year interaction, after adjusting for multiple testing?*
@@ -322,14 +700,16 @@ Yes it looks like we have evidence of an effect in `Tanglake` (Viviparous Eelpou
 
 *What proportion of the total `Zone:Year` effect is attributable to these potential indicator species?*
 
-_This code chunk has not been run as it is reliant on the previous code chunk_
-```{r ex14.8prop, eval=FALSE}
+_(These code chunk has not been run as it is reliant on the previous code chunk.)_
+
+```r
 sum(sortedWindStats$x[1:2])/an_wind1$table[4,3]
 ```
 So 63\% of the `Zone:Year` effect is just these two species.
 
 *Plot the abundance of each potential indicator species against Zone and Year.*
-```{r ex14.8plot,fig.width=5,fig.height=8, eval=FALSE}
+
+```r
 plot(windMV1~interaction(windFarms$X$Zone,windFarms$X$Year),var.subset=sortedWindStats$ix[1:4])
 ```
 

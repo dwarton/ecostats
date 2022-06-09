@@ -18,7 +18,7 @@
 #'
 #' @keywords datasets
 #'
-#' @references Sentinella, AT, Warton, DI, Sherwin, WB, Offord, CA, Moles, AT. (2020) Tropical plants do not have narrower temperature tolerances, but are more at risk from warming because they are close to their upper thermal limits. Global Ecol Biogeogr. \bold{29}, 1387– 1398.
+#' @references Sentinella, AT, Warton, DI, Sherwin, WB, Offord, CA, Moles, AT. (2020) Tropical plants do not have narrower temperature tolerances, but are more at risk from warming because they are close to their upper thermal limits. Global Ecol Biogeogr. \bold{29}, 1387-1398.
 #' 
 #' @examples
 #' data(seedsTemp)

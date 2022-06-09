@@ -1,5 +1,5 @@
 ---
-title: "Eco-Stats - Code and Data Accompanying the Eco-Stats Text"
+title: "Eco-Stats -- Code and Data Accompanying the Eco-Stats Text"
 author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -25,18 +25,20 @@ The command `plotenvelope` will take a fitted object and construct standard resi
 `plotenvelope` will work on lots of different  types of fitted objects -- pretty much anything that comes with a `simulate` function that behaves in a standard way. A `simulate.mlm` and `simulate.manyglm` functions have been written in this package specifically so that `plotenvelope` also works for multivariate models fitted using `lm` or `mvabund::manyglm`.
 
 
-```{r, echo=TRUE, results='asis'}
+```{r, echo=TRUE, fig.width=8, fig.height=4}
 library(ecostats)
 data(iris)
 Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
+par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(iris.mlm,n.sim=199)
 ```
+
 For `mlm` objects, this function will compute conditional residuals and fitted values, that is, they are computed for each response conditional on all other responses being observed, via the `cpredict` and `cresiduals` functions. This is done because the full conditionals of a distribution are known to be diagnostic of joint distributions, hence any violation of the multivariate normality assumption will be expressed as a violation of assumptions of these full conditional models. The full conditionals are well-known to follow a linear model, as a function of all other responses as well as predictors.
 
 The `qqenvelope` function can be applied for a normal quantile plot, with global envelope, to either a fitted model or a sample of data:
-```{r, echo=TRUE, results='asis'}
+```{r, echo=TRUE, fig.width=4, fig.height=4}
 y=rnorm(20)
 qqenvelope(y)
 ```
@@ -47,7 +49,7 @@ The command `anovaPB` computes analysis of variance (or deviance) tables for two
 
 While the interface is written to be a lot like `anova`, it requires two fitted objects to be specified -- the first being a fit under the null hypothesis, and the second being the fit under the alternative.
 
-```{r anovaPB, echo=TRUE, results='asis'}
+```{r anovaPB}
 # generate random Poisson data and a predictor:
 y = rpois(50,lambda=1)
 x = 1:50
@@ -61,7 +63,7 @@ anovaPB(rpois_int,rpois_glm,n.sim=99)
 ## Datasets
 
 All datasets used in the Eco-Stats text, where not available elsewhere, are supplied in this package. For example:
-```{r, echo=TRUE, results='asis'}
+```{r aphidData, fig.width=6,fig.height=4}
  data(aphids)
  cols=c(rgb(1,0,0,alpha=0.5),rgb(0,0,1,alpha=0.5)) #transparent colours
  with(aphids$oat, interaction.plot(Time,Plot,logcount,legend=FALSE,

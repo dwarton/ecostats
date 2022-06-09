@@ -1,0 +1,410 @@
+---
+title: "Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 10.1: Crabs on seaweed
+*David and Alistair... observed the following presence (`+`) / absence (`-`)} patterns for crabs (across 10 replicates):*
+
+Time       Distance (m)         Crabs
+---------  -------------        ----------
+5          0                    -
+5          0                    +
+5          0                    +
+5          0                    -
+5          0                    -
+5          2                    -
+5          2                    -
+5          2                    +
+5          2                    -
+5          2                    -
+...        ...                  ...
+10         10                   +
+
+*They would like to know if there is any evidence of a difference in crab presence patterns with Distance of Isolation. How should they analyse the data?*
+
+They are looking for evidence of a difference at different values of `Dist` so will be wanting to do a hypothesis test. Because they have presence-absence data they should be thinking of a generalised linear model with binomial response, as in Code Box 10.1.
+
+
+## Exercise 10.2: Do offshore wind farms affect fish communities?
+*Lena and colleagues... [were] collecting paired data before and after wind farm construction, at 36 stations in each of three zones (`Wind Farm`, `North`, or `South`):*
+
+Zone         Impact    Station    Abundance
+----------   -------   --------   ----------
+Wind Farm    Before    WF1        0
+Wind Farm    After     WF1        0
+South        Before    S1         5
+South        After     S1         0
+North        Before    N1         0
+North        After     N1         0
+Wind Farm    Before    WF2        1
+Wind Farm    After     WF2        1
+...          ...       ...        ...
+North        After     N36        0
+---------    -------   --------   ----------
+
+*Lena wants to know if there is any evidence of a change in eel abundance at wind farm stations, as compared to others, following construction of the wind farm. How should she analyse the data?*
+
+She is looking for evidence of a difference across different values of `Zone` when `Impact=After` so will be wanting to do a hypothesis test. This is a BACI design, so she would be particularly interested in the `Zone:Impact` interaction. Because she has count data with plenty of zeros, this should be analysed using a generalised linear model (assuming a negative binomial or Poisson response, as in Code Box 10.1).
+
+
+## Exercise 10.3: Invertebrate response to bush regeneration}
+*Anthony wants to evaluate how well invertebrate communities are re-establishing following bush regeneration efforts.*
+
+ Treatment |    Count
+ --------- |  -------
+ C         |        0
+ R         |        3
+ R         |        1
+ R         |        3
+ C         |        1
+ R         |        2
+ R         |       12
+ R         |        1
+ R         |       18
+ R         |        0
+
+*He wants to know if there is any evidence that bush regeneration is working. How should he analyse the data?*
+
+He is looking for evidence of an effect of revegetation so will be wanting to do a hypothesis test for a `Treatment` effect. Because he has count data, with zeros, this should be analysed using a generalised linear model (assuming a negative binomial or Poisson response, as in Code Box 10.1).
+
+
+## Code Box 10.1: Example GLM fits for Exercises 10.1-3.}
+For Exercise 10.1:
+```{r box10.1.1}
+library(ecostats)
+data(seaweed)
+seaweed$CrabPres = seaweed$Crab>0
+ft_crab = glm(CrabPres~Time*Dist, family=binomial("cloglog"),
+             data=seaweed)
+```
+
+For Exercise 10.2:
+\begin{verbatim}
+```{r box10.1.2}
+data(windFarms)
+eels = windFarms$abund[,16]
+ft_eels = glm(eels~Station+Year*Zone,family="poisson",
+             data=windFarms$X)
+```
+
+For Exercise 10.3:
+```{r box10.1.3}
+data(reveg)
+Haplotaxida=reveg$abund[,12]
+library(mvabund)
+worms = reveg$abund$Haplotaxida
+ft_worms = manyglm(worms~treatment,family="negative.binomial", data=reveg)
+```
+
+## Code for Fig. 10.5
+```{r fig10.5,fig.height=8,fig.width=8}
+data(reveg)
+library(mvabund)
+revegMV=mvabund(reveg$abund)
+treatment=reveg$treatment
+meanvar.plot(revegMV~treatment,legend=T,col=c("darkorange","darkgreen"),main="Poisson")
+x=10^(seq(-1,3.8,length=100))
+lines(x,x,type="l",col="red")
+
+meanvar.plot(revegMV~treatment,legend=T,col=c("darkorange","darkgreen"), main="Negative binomial")
+x=10^(seq(-1,3.8,length=100))
+points(x,x+x^2,type="l",col="darkblue")
+```
+
+## Code Box 10.2: A summary of a GLM fit to the crab presence-absence data of Exercise 10.1
+
+```{r box 10.2}
+seaweed$Dist = as.factor(seaweed$Dist)
+ft_crab = glm(CrabPres~Time*Dist, family=binomial("cloglog"),
+             data=seaweed)
+summary(ft_crab)
+```
+
+
+## Code Box 10.3: Dunn-Smyth residual plots for the crab data, using the `mvabund` package
+```{r box10.3}
+library(mvabund)
+ftMany_crab = manyglm(CrabPres~Time*Dist,family=binomial("cloglog"),
+             data=seaweed)
+plotenvelope(ftMany_crab, which=1)
+```
+
+
+## Code for Figure 10.8
+```{r fig10.8}
+plotenvelope(ftMany_crab, which=1, n.sim=39)
+plotenvelope(ftMany_crab, which=1, n.sim=39)
+```
+
+(Note that `plotenvelope` was run with just `39` iterations, to speed up computation time.)
+
+## Exercise 10.4: Counts of Ostracods in habitat configuration experiment.
+
+*What sort of model would you use for Ostracod counts?*
+
+```{r ex10.4,fig.width=6,fig.height=6}
+with(seaweed,boxplot(Ost~Dist))
+```
+
+As this is a count variable with plenty of small counts (and zeros in each category), I am thinking a GLM. To start with we could consider a Poisson regression, if there were no overdispersion, or negative binomial regression.
+
+The terms to add to the model I guess are `Time` and `Dist`, as orthogonal factors. As previously `Wmass` might also be useful.
+
+*How would you check assumptions?*
+
+Look for a fan-shape on a residual plot to check the mean-variance assumption, as in Code Box 10.4.
+
+
+## Code Box 10.4: Assumption checking for Ostracod counts of Exercise 10.4.}
+
+```{r box10.4, fig.width=8}
+seaweed$logWmass = log(seaweed$Wmass)
+ft_countOst=manyglm(Ost~logWmass+Time*Dist,data=seaweed,
+             family="poisson")
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_countOst, which=1:3, n.sim=99) # for a scale-location plot as well
+```
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
+
+
+```{r box10.4b, fig.width=8}
+library(MASS) #this line is currently needed to deal with a bug but prob redundant soon
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+ft.countOstNB=manyglm(Ost~logWmass+Time*Dist,data=seaweed)
+plotenvelope(ft.countOstNB, which=1:3, n.sim=99)
+```
+
+## Exercise 10.5: Checking the Poisson assumption on the wind farm data.
+
+*Refit the model using the `manyglm` function, and hence construct a residual plot*
+
+```{r ex10.5, fig.width=8, warning=FALSE}
+data(windFarms)
+eels = windFarms$abund[,16]
+ft_eels = manyglm(eels~Station+Year*Zone,family="poisson",
+             data=windFarms$X)
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_eels, which=1:3, n.sim=99)
+```
+
+*Does the Poisson assumption look reasonable?*
+
+There is no evidence of a fan shape, residuals are close to a straight line on the normal quantile plot, so it looks pretty good to me.
+
+
+## Exercise 10.6: Checking the Poisson assumption for the worm counts.}\label{ex:revegResids}
+
+*Refit the model using the `manyglm` function under the Poisson assumption, and hence construct a residual plot.*
+
+```{r box10.6Poisson, fig.width=8}
+data(reveg)
+Haplotaxida=reveg$abund[,12]
+worms = reveg$abund$Haplotaxida
+ft_worms = manyglm(worms~treatment,family=poisson(), data=reveg)
+par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_worms, which=1:2, n.sim=99)
+```
+
+*Also fit a negative binomial to the data and construct a residual plot.*
+```{r box10.6NB, fig.width=8}
+ft_wormsNB = manyglm(worms~treatment,family="negative.binomial", data=reveg)
+par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_wormsNB, which=1:2, n.sim=99)
+```
+
+*Can you see any differences between plots?*
+
+The Poisson model fans out more and has a couple of residuals that are unusually large (see normal quantile plot). It also may have a trend line on the residual vs fits plots that slips outside its simulation envelope.
+
+*Compare BIC for the two models, using the `BIC` function.*
+
+```{r ex10.6 bic}
+BIC(ft_worms, ft_wormsNB)
+```
+
+*Which model has the better fit to the worm counts?*
+
+Well BIC suggests the negative binomial model is way better, corroborating the result from the normal quantile plots.
+
+## Code Box 10.5: `R` code using the `anova` function to test the key hypotheses of interest to David and Alistair in Exercise 10.1.
+```{r box10.5}
+anova(ft_crab, test="Chisq")
+```
+
+*Any evidence of an effect of Isolation distance on crabs?*
+
+Nope :(
+
+*Note the `Time` effect is significant here but not in Code Box 10.2.  Why do you think that might be?*
+
+Code Box 10.2 uses a Wald test, which is known to give wacky answers for separable models, see Maths Box 10.6 for details.
+
+## Exercise 10.7: Testing if there a wind farm effect
+
+*What model should be fitted, to handle the pairing structure?*
+
+We can fit a `glm` as previously but need to include `Station` as one of the predictors, to handle station-to-station variation in eel abundance:
+
+```{r ex10.7}
+ft_eelsSt = glm(eels~Station+Year+Year:Zone,family="poisson",
+             data=windFarms$X)
+```
+It would be OK to write `Year*Zone` but the `Zone` main effect is redundant because of the `Station` main effect. You could also use a mixed model with a random intercept for `Station`.
+
+*Fit the appropriate model and test for an effect of wind farm.*
+
+```{r ex10.7anova}
+anova(ft_eelsSt,test='Chisq')
+```
+
+There is marginal evidence of a Year-Zone interaction.
+
+## Code Box 10.6: Model-based inference for Anthony's worm counts from Exercise 10.3.
+```{r box10.6}
+ftmany_Hap=manyglm(Haplotaxida~treatment,family="negative.binomial",
+              data=reveg)
+anova(ftmany_Hap)
+```
+
+## Code Box 10.7: Design-based inference for David's and Alistair's crab data using `mvabund`.
+
+```{r box10.7}
+ftMany_crab = manyglm(CrabPres~Time*Dist, family=binomial("cloglog"),
+                 data=seaweed)
+anova(ftMany_crab)
+```
+
+*Any important differences from results David and Alistair previously obtained in Code Box 10.5?*
+
+Nope, looks very similar actually! I guess the `Time` effect is slightly less significant now but the conclusion doesn't really change, there is still reasonable evidence of a `Time` effect.
+
+
+## Code Box 10.8: Getting the wrong answer by ignoring overdispersion in Anthony's worm counts from Exercise 10.3.
+
+```{r box10.8glm}
+ft_wormPois = glm(Haplotaxida~treatment, family="poisson", data=reveg)
+anova(ft_wormPois,test="Chisq")
+```
+
+```{r box10.8manyglm}
+ft_wormmanyPois = manyglm(Haplotaxida~treatment,family="poisson",
+                     data=reveg)
+anova(ft_wormmanyPois)
+```
+
+## Code Box 10.9: Using an observation-level random effect for a binomial response
+```{r box10.9Load,fig.width=6}
+data(seedsTemp)
+seedsTemp$propGerm = seedsTemp$NumGerm / seedsTemp$NumSown
+plot(propGerm/(1-propGerm)~Test.Temp,data=seedsTemp,log="y")
+```
+
+```{r box10.9fit}
+library(lme4)
+seedsTemp$ID = 1:length(seedsTemp$NumGerm)
+ft_temp = glmer(cbind(NumGerm,NumSown-NumGerm)~poly(Test.Temp,2)+
+               (1|ID),data=seedsTemp,family="binomial")
+summary(ft_temp)
+```
+
+
+## Exercise 10.8: Anthony's ant data.
+*Which model do you think is more appropriate for this dataset -- a Poisson or negative binomial?*
+
+This is a hard question to answer without fitting a model.
+```{r ex10.8P,fig.width=8,fig.height=3.5}
+ants = reveg$abund$Formicidae
+ants_Poisson = glm(ants~treatment,data=reveg,family=poisson())
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ants_Poisson, which=1:3, n.sim=99)
+```
+
+OK so a Poisson fit is **spectacularly** bad. Neither smoother stays in its envelope, and the data on the normal quantile plot do not stay anywhere near their envelope.
+
+*Plot the data -- does there seem to be evidence of a treatment effect?*
+```{r ex10.8plot, fig.width=6,fig.height=6}
+with(reveg,boxplot(abund$Formicidae~treatment))
+```
+
+Not really! The ant counts in the control sites are similar to the middle of those from the revegetated sites.
+
+
+*Use the `glm` function to fit a Poisson log-linear model, and use this to test for a treatment effect. Did you get what you expected?*
+
+```{r ex10.8anova}
+anova(ants_Poisson,test='Chisq')
+```
+
+Whoah we are being told there is strongly significant evidence of a treatment effect, a claim that should be treated with suspicion (no such evidence on the boxplot above!)
+
+*Now use negative binomial regression to test for a treatment effect.*
+
+```{r ex10.8NB,fig.width=8,fig.height=3.5}
+ants = reveg$abund$Formicidae
+ants_NB = manyglm(ants~treatment,data=reveg,family="negative.binomial")
+anova(ants_NB)
+```
+
+*Notice you have got a very different answer.* 
+
+Yeah, like completely the opposite!!!
+
+*Which answer is more likely to be correct in this case?*
+
+```{r ex10.8NBplots, fig.width=8}
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ants_NB,which=1:3, n.sim=99)
+```
+
+Whereas the diagnostic plots for the Poisson model showed serious problems, we have no such issues here. So the negative binomial regression is a much better fit to the data.  It produced (much!) larger $P$-values because there is a lot of overdispersion in the data, which a Poisson model is unable to account for.
+
+(Note that the simulation envelopes cover a broad range!  This is because of the small sample size. When comparing these plots to those for the Poisson fit, notice that the y-axis scale on the negative binomial plot is much smaller -- the envelopes actually have similar width in both sets of plots, they look different mostly because the axes have different scales.)
+
+
+## Exercise 10.9: Worm counts with different numbers of pitfall traps
+
+*How can we account for the different sampling effort at different sites in our model?*
+
+Use an offset for `log(pitfalls)` as in Code Box 10.9.
+
+## Code Box 10.10: Adding an offset to the model for worm counts.
+```{r box10.10}
+ftmany_hapoffset = manyglm(Haplotaxida~treatment+offset(log(pitfalls)),
+                            family="negative.binomial", data=reveg)
+anova(ftmany_hapoffset)
+```
+
+
+## Exercise 10.10: Anthony's cockroaches
+
+*How should he analyse the data?*
+
+This looks like Exercise 10.9 and so could be analysed a similar way, assuming assumptions are all satisfied. The main difference here is that we have many zeros in the dataset (70%)...
+
+```{r ex10.10, fig.height=3.5, fig.width=8}
+roaches = reveg$abund$Blattodea
+ftMany_roaches = manyglm(roaches~treatment,offset=log(pitfalls), family="poisson", data=reveg)
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ftMany_roaches, which=1:3, n.sim=99)
+anova(ftMany_roaches)
+```
+
+Although we have many zeros in the dataset, they are all in the treatment group, meaning that our observed predictor explains these well. A Poisson model seems to fit the reasonably data well, and we can conclude that there is very strong evidence of an effect of revegetation on cockroaches (they disappeared from revegetated plots).
+
+
+
+

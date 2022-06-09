@@ -25,7 +25,7 @@
 #'
 #' @references Bergström, L., Sundqvist, F., & Bergström, U. (2013). Effects of 
 #' an offshore wind farm on temporal and spatial patterns in the demersal fish community. 
-#' Marine Ecology Progress Series 485, 199–210.
+#' Marine Ecology Progress Series 485, 199-210.
 #'
 #' @examples
 #' data(windFarms)

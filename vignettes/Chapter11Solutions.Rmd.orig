@@ -1,0 +1,341 @@
+---
+title: "Chapter 11 -- Multivariate analysis -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 11 -- Multivariate analysis -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Exercise 11.1: Leaf economics and environment
+Ian likes studying leaves. He is especially interested in "leaf economics" -- things like construction costs per unit area (`lma`), how long-lived leaves are (`longev`) and how they vary with environment. In particular:
+
+*Is there evidence that leaves vary (in their "economics" traits) across sites with different levels of rainfall and soil nutrients?*
+
+*What are the response variables?  What sort of analysis is appropriate here?*
+
+The response is leaf economics traits, collectively, which includes:
+
+* `lma` (leaf construction costs per unit area)
+* `longev` (how long leaves live for)
+
+Both of these are quantitative variables.
+
+A multivariate analysis would seem appropriate.
+
+
+## Exercise 11.2: Flower size and shape
+
+*What are the response variables?  What sort of analysis is appropriate here?*
+
+The response variables are the flower size and shape variables. These are:
+
+* length of petals
+* width of petals
+* length of sepals
+* width of sepals
+
+A multivariate analysis would be the way to go here.
+
+## Exercise 11.3: Hunting spiders and their environment
+
+*What are the response variables?  What type of analysis is appropriate here?*
+
+The response variables are abundance of the three most abundant genera of hunting spider. Some sort of multivariate analyis would be appropriate, but given that we are dealing with abundances, something that accounts for the mean-variance relationship might be needed.
+
+## Code Box 11.1: Sample variance-covariance matrices on `R`
+
+```{r box11.1leaf}
+library(smatr)
+data(leaflife)
+Yleaf=cbind(leaflife$lma,leaflife$longev)
+colnames(Yleaf)=c("lma","longev")
+var(Yleaf)
+```
+
+```{r box11.1iris}
+data("iris")
+var(iris[,1:4])
+```
+
+## Code Box 11.2: Fitting a multivariate linear model to the leaf economics data.
+```{r box11.2}
+library(smatr)
+data(leaflife)
+Yleaf = cbind(leaflife$lma,leaflife$longev)
+ft_leaf = lm(Yleaf~rain*soilp, data=leaflife)
+anova(ft_leaf, test="Wilks")
+```
+
+```{r box11.2plot, fig.width=6,fig.height=5}
+plot(leaflife$lma~leaflife$longev, xlab="Leaf longevity (years)",
+                     ylab="Leaf mass per area (mg/mm^2)",
+                     col=interaction(leaflife$rain,leaflife$soilp))
+legend("bottomright",legend=c("high rain, high soilp",
+         "low rain, high soilp", "high rain, low soilp",
+         "low rain, low soilp"), col=1:4, pch=1)
+```
+
+*What is the nature of the rainfall effect?*
+
+The red dots look to be higher than the black dots, and the blue dots look to be higher than the green dots.  This suggests that at low rainfall, thicker leaves (larger mass per unit area) are needed to achieve the same longevity. Or equivalently, at low rainfall, leaves of a given LMA don't live as long.
+
+
+## Code Box 11.3: Checking multivariate linear model assumptions for leaf economics data
+```{r box11.3,fig.width=8,fig.height=3.5}
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+library(ecostats)
+plotenvelope(ft_leaf,which=1:3,n.sim=99)
+```
+
+(Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
+
+*What do you think about the model assumptions made here?*
+
+They aren't looking great -- the residual vs fits plot has a bit of a fan shape, confirmed by the scale-location plot, which has an increasing trend that does not stay inside its simulation envelope.  This suggests that variability increases as the mean increases, so maybe we should be transforming data.
+
+
+## Code Box 11.4: A multivariate linear model for the leaf economics data using `mvabund`
+```{r box11.4}
+library(mvabund)
+ftmany_leaf = manylm(Yleaf~rain*soilp, data=leaflife)
+anova(ftmany_leaf,cor.type="R",test="LR")
+```
+
+## Exercise 11.4: Transforming Ian's leaf economics data
+
+*Repeat the analyses and assumption checks of Code Boxes 11.2-11.3 on log-transformed data. Do assumptions look more reasonable here? Are results any different?*
+
+```{r ex11.4, fig.width=8, fig.height=3.5}
+YleafLog = log(Yleaf)
+ft_leafLog = lm(YleafLog~rain*soilp, data=leaflife)
+anova(ft_leafLog, test="Wilks")
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_leafLog,which=1:3,n.sim=99)
+```
+
+*Is this what you expected to happen?*
+
+Assumptions are looking more reasonable now, there is no longer a fan-shape nor appreciable right-skew in the data. This is what I expected because (as mentioned in the question) size variables tend to make more sense when viewed on a proportional scale. MANOVA results were generally similar, although test statistics (`approx F`) for main effects were slightly larger, in keeping with the general result that you can see signals more clearly when reducing skew in data (procedures tend to be more *efficient* when their underlying assumptions are more reasonable).
+
+
+## Exercise 11.5: Transforming Edgar's data?
+
+*Fit a linear model to predict petal length from the remaining flower variables and check assumptions. Is there any evidence of lack-of-fit? (This would imply a problem with the multivariate normality assumptions.)*
+
+```{r ex11.5Un,fig.width=8,fig.height=3.5}
+data(iris)
+iris$Yflower = as.matrix(iris[,1:4])
+ft_iris = lm(Yflower~Species,data=iris)
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_iris,which=1:3,n.sim=99)
+```
+
+This doesn't look too bad, but there is a moderate fan-shape, evident in an increasing trend in the scale-location plot, which drifts outside its simulation envelope. The trend is not strong however, with the y-axis predictions ranging from 0.6 to 1 (varying over a factor of about 1.5).
+
+*Does a log-transformation help at all?*
+```{r ex11.5Log, fig.width=8,fig.height=3.5}
+iris$YfLog = as.matrix(log(iris[,1:4]))
+ft_irisLog = lm(YfLog~Species,data=iris)
+par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
+plotenvelope(ft_irisLog,which=1:3,n.sim=99)
+```
+
+Oh well that's disappointing! The log-transformation hasn't made things much better, reversing the fan-shape and the trend in the scale-location plot (although again it is not a strong trend).  Residuals now appear quite non-normal with some long tails, especially at the lower end.  The issue is largely with petal variables (blue/green), we would get a slightly better plot if we only log-transformed sepal measurements.  The main issue we saw previously - an increasing trend on the scale-location plot - is however less of an issue now (note the trend line covers a smaller range of values, from about 0.7 to 0.9).
+
+## Code Box 11.5: Preparing spider data for analysis on `lme4` or `glmmTMB`
+Petrus’s data from Exercise 11.3 are available in the `mvabund` package, but with abundances for 12 different species. First we will calculate the abundance of the three most abundant genera:
+```{r code11.5short}
+library(mvabund)
+library(reshape2)
+data(spider)
+Alop=apply(spider$abund[,1:3],1,sum)
+Pard=apply(spider$abund[,7:10],1,sum)
+Troc = spider$abund[,11]
+spidGeneraWide = data.frame(rows=1:28,scale(spider$x[,c(1,4)]), Alop,Pard,Troc)
+head(spidGeneraWide)
+```
+
+```{r code11.5long}
+spiderGeneraLong = melt(spidGeneraWide,id=c("rows","soil.dry","moss"))
+names(spiderGeneraLong)[4:5] = c("genus","abundance")
+head(spiderGeneraLong)
+```
+
+## Code Box 11.6: Fitting a hierarchical GLM to spider data on `glmmTMB`
+```{r code11.6}
+library(glmmTMB)
+spid_glmm = glmmTMB(abundance~genus+soil.dry:genus+moss:genus
+ +(0+genus|rows), family="poisson",data=spiderGeneraLong)
+summary(spid_glmm)
+```
+
+_Can you see any differences in response of different spider genera to environmental conditions?_
+
+`Pard` and `Trop` seem to increase in response to `soil.dry`, significantly so, whereas `Alop` decreases. There is a suggestion of a difference in `moss` response as well, with a difference of 0.93 in slope between `Pard` and `Troc`, which is reasonably large compared to standard errors.
+
+
+## Code Box 11.7: MCMCglmm fit to Petrus’s spider genus data
+```{r code11.7}
+library(MCMCglmm)
+set.seed(1)
+ft_MCMC = MCMCglmm(cbind(Alop,Pard,Troc)~trait+soil.dry:trait+moss:trait,
+   rcov=~us(trait):units,data=spidGeneraWide, family=rep("poisson",3))
+summary(ft_MCMC)
+```
+
+_How do results compare to the model fitted using `glmmTMB`?_
+
+Estimates of parameters in the mean model (intercepts, slopes) are quite similar and seem to have similar levels of significance also. Variance-covariance parameters for the random effects are presented in a different format however -- `MCMCglmm` directly reports values of $\boldsymbol{\Sigma}$, whereas `glmmTMB` reports variances and correlations. We can convert `MCMCglmm` values to correlations, which is best done by taking the MCMC samples, transforming each individual one, then finding the posterior mean:
+```{r code11.7corr}
+mean(ft_MCMC$VCV[,2]/sqrt(ft_MCMC$VCV[,1]*ft_MCMC$VCV[,5]))
+```
+which returns a value very similar to the correlation in the `glmmTMB` output. Note however that the variances are quite different, _e.g._ for `Alop` we have a posterior mean of 1.97 for `MCMCglmm` but an estimate of 1.38 for `glmmTMB`. The reason for this is that `glmmTMB` uses maximum likelihood, and its point estimate corresponds more closely to a posterior mode than a posterior mean. Estimating these posterior densities using histograms:
+
+```{r code11.7hists,fig.width=9,fig.height=3}
+par(mfrow=c(1,3),mgp=c(1.75,0.75,0),mar=c(3,3,1,1))
+hist(ft_MCMC$VCV[,1],breaks=15,xlab="Alop variance",main="")
+abline(v=summary(spid_glmm)$varcor$cond$rows[1,1],col="red")
+hist(ft_MCMC$VCV[,5],breaks=15,xlab="Pard variance",main="")
+abline(v=summary(spid_glmm)$varcor$cond$rows[2,2],col="red")
+hist(ft_MCMC$VCV[,9],breaks=15,xlab="Troc variance",main="")
+abline(v=summary(spid_glmm)$varcor$cond$rows[3,3],col="red")
+```
+
+The posterior modes show much closer agreement to the `glmmTMB` variance estimates, although still tending to be slightly larger.
+
+## Exercise 11.6: Different effects on different spider genera?
+_Use `spiderGeneraLong` to fit a model that assumes all spiders respond in the same way to their environment._
+```{r commonSlope}
+spid_sameResponse = glmmTMB(abundance~genus+soil.dry+moss
+ +(0+genus|rows), family="poisson",data=spiderGeneraLong)
+summary(spid_sameResponse)
+```
+
+_Now use `anova` to compare this model to `spid_glmm`._
+```{r anovaSlope}
+anova(spid_sameResponse,spid_glmm)
+```
+
+_Is there evidence that different spider genera respond in different ways to their environment?_
+
+Yes!
+
+
+## Code for Figure 11.4
+
+To simplify referencing of parameters let's refit with no intercept in the model
+```{r fig11.4, fig.width=6, fig.height=6}
+  spid_glmm0 = glmmTMB(abundance~0+genus+soil.dry:genus+moss:genus
+   +(0+genus|rows), family="poisson",data=spiderGeneraLong)
+
+  par(mgp=c(2,0.75,0),mar=c(3,3,0.5,0.5))
+  plot(log(abundance)~soil.dry,data=spiderGeneraLong,type="n",yaxt="n",
+       ylab="Abundance[log scale]",xlab="Soil dryness [standardised]")
+  yTicks = c(1,2,5,10,20,50,100)
+  axis(2,at=log(yTicks),labels=yTicks)
+  for(iVar in 1:nlevels(spiderGeneraLong$genus))
+  {
+    points(log(abundance)~soil.dry,
+           data=spiderGeneraLong[spiderGeneraLong$genus==levels(spiderGeneraLong$genus)[iVar],],col=iVar)
+    abline(spid_glmm0$fit$par[iVar], spid_glmm0$fit$par[3+iVar],col=iVar)
+  }
+  legend("topleft",levels(spiderGeneraLong$genus),col=1:3,pch=1,cex=0.9,y.intersp=1.0)
+
+```
+
+But note this plot excludes absences... there are only a few for these taxa. But in other situations with many zeros, a lot of data would be missing from a plot constructed in this way, unless you get creative!
+
+
+## Code Box 11.8: Diagnostic plots for a hierarchical GLM of Petrus’s spider data
+```{r code11.8, fig.width=8, fig.height=4}
+par(mfrow=c(1,2),mgp=c(2,0.75,0),mar=c(3,3,1,1))
+library(DHARMa)
+spidFits = predict(spid_glmm,re.form=NA)
+res_spid = qnorm( simulateResiduals(spid_glmm)$scaledResiduals )
+plot(spidFits,res_spid,col=spiderGeneraLong$genus, xlab="Fitted values", ylab="Dunn-Smyth residuals")
+abline(h=0,col="olivedrab")
+addSmooth(spidFits,res_spid) # a function in ecostats package to add smoother and confidence band
+qqenvelope(res_spid,col=spiderGeneraLong$genus)
+```
+
+_What do these plots tell us about model assumptions?_
+
+There is no evidence in these plots of violations of model assumptions.
+
+## Code Box 11.9: Diagnosing convergence in a MCMCglmm fit
+```{r code11.9, fig.width=8, fig.height=9}
+set.seed(2)
+ft_MCMC2=MCMCglmm(cbind(Alop,Pard,Troc)~trait+soil.dry:trait+moss:trait,
+rcov=~us(trait):units,data=spidGeneraWide, family=rep("poisson",3))
+set.seed(3)
+ft_MCMC3=MCMCglmm(cbind(Alop,Pard,Troc)~trait+soil.dry:trait+moss:trait,
+rcov=~us(trait):units,data=spidGeneraWide, family=rep("poisson",3))
+whichPlot=c(1:3,5:6,9) # indices of unique variance-covariance parameters
+par(mfrow=c(length(whichPlot),1),mar=c(2,0.5,1.5,0))
+for(iPlot in whichPlot)
+{
+plot.default(ft_MCMC$VCV[,iPlot],type="l",lwd=0.3,yaxt="n")
+lines(ft_MCMC2$VCV[,iPlot],col=2,lwd=0.3)
+lines(ft_MCMC3$VCV[,iPlot],col=3,lwd=0.3)
+mtext(colnames(ft_MCMC$VCV)[iPlot])
+}
+gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],
+ft_MCMC3$VCV[,whichPlot]))
+```
+
+## Exercise 11.7: Non-converging model for Petrus’s Alopecosa species
+*Try to fit a hierarchical GLM, along the lines of Code Boxes 11.6 and 11.7,
+to the three Alopecosa species.*
+
+First try using `glmmTMB`:
+```{r ex11.7tmb}
+spider3Wide = data.frame(rows=1:28, scale(spider$x[,c(1,4)]), spider$abund[,1:3])
+spider3Long = melt(spider3Wide,id=c("rows","soil.dry","moss"))
+names(spider3Long)[4:5] = c("species","abundance")
+head(spider3Long)
+
+spid_glmm3 = glmmTMB(abundance~species+soil.dry:species+moss:species
+   +(0+species|rows), family="poisson",data=spider3Long)
+
+```
+
+Uh oh, non-convergence.  Try using `MCMCglmm`:
+
+```{r ex11.7mcmc, fig.width=8, fig.height=9}
+set.seed(1)
+ft_MCMC2=try(MCMCglmm(cbind(Alopacce,Alopcune,Alopfabr)~trait+soil.dry:trait+moss:trait,
+rcov=~us(trait):units,data=spider3Wide, family=rep("poisson",3))) #this one returns an error
+set.seed(3)
+ft_MCMC=MCMCglmm(cbind(Alopacce,Alopcune,Alopfabr)~trait+soil.dry:trait+moss:trait,
+rcov=~us(trait):units,data=spider3Wide, family=rep("poisson",3))
+set.seed(5)
+ft_MCMC2=MCMCglmm(cbind(Alopacce,Alopcune,Alopfabr)~trait+soil.dry:trait+moss:trait,
+rcov=~us(trait):units,data=spider3Wide, family=rep("poisson",3))
+set.seed(6)
+ft_MCMC3=MCMCglmm(cbind(Alopacce,Alopcune,Alopfabr)~trait+soil.dry:trait+moss:trait,
+rcov=~us(trait):units,data=spider3Wide, family=rep("poisson",3))
+whichPlot=c(1:3,5:6,9) # indices of unique variance-covariance parameters
+par(mfrow=c(length(whichPlot),1),mar=c(2,0.5,1.5,0))
+for(iPlot in whichPlot)
+{
+plot.default(ft_MCMC$VCV[,iPlot],type="l",lwd=0.3,yaxt="n")
+lines(ft_MCMC2$VCV[,iPlot],col=2,lwd=0.3)
+lines(ft_MCMC3$VCV[,iPlot],col=3,lwd=0.3)
+mtext(colnames(ft_MCMC$VCV)[iPlot])
+}
+gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],
+ft_MCMC3$VCV[,whichPlot]))
+```
+
+Roughly every second run returns an error, but sometimes that doesn't happen. You can see issues however from the trace plot, where the different chains clearly do not mix -- you should not be able to distinguish a trend with colour, but for some parameters, one chain (colour) has values consistently larger than another so is clearly not sampling from the same distribution. The Gelman-Rubin statistics are not close to 1!
+

@@ -54,7 +54,8 @@ There is some evidence of an effect of `Mod`, since the estimated coefficient is
 
 ## Code Box 6.2: Residual plots from a mixed model for Exercise 6.1
 
-```{r code62, warning=FALSE}
+```{r code62, warning=FALSE, fig.width=8, fig.height=4}
+par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 ft_estu = lmer(Total~Mod+(1|Estuary),data=estuaries)
 scatter.smooth(residuals(ft_estu)~fitted(ft_estu),
     xlab="Fitted values",ylab="Residuals")
@@ -81,7 +82,7 @@ confint(ft_estu)
 
 
 ## Code Box 6.5: Prediction intervals for random effects terms in a mixed effects model
-```{r code65}
+```{r code65, fig.width=5, fig.height=4}
 rft=ranef(ft_estu,condVar=T)
 library(lattice)
 dotplot(rft)
@@ -143,7 +144,8 @@ legend("bottomright",legend=c("Mod-Inner","Prist-Inner","Mod-Outer","Pris-Outer"
 
 It looks like there is an effect of Modification, not sure if there is an interaction (the effect seems more striking in Outer than Inner zones)
 
-```{r ex64 lme}
+```{r ex64 lme, fig.width=8, fig.height=4}
+par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 library(lme4)
 lme_MZ = lmer(Total~Zone*Mod + (Zone|Estuary), data=estuaryZone )
 
@@ -194,7 +196,7 @@ And if we compare this to the standard error from `summary`:
 summary(ft_estu)
 ```
 
-we see the estimated standard error is `r summary(ft_estu)$coef[2,2]`, which is pretty close to the value we got by simulation (`r sd(bStat)`).
+we see the estimated standard error is `r summary(ft_estu)$coef[2,2]`, which is pretty close to the value we got by simulation.
 
 
 ## Code Box 6.7: A parametric bootstrap to test for an effect of Estuary in Exercise 6.1.
@@ -213,6 +215,7 @@ So we have no evidence of an `Estuary` effect.
 _Use the parametric bootstrap to get a formal test for a `zone:mod` interaction._
 
 We can just run the old analysis and change from `anova` to `anovaPB`:
+
 ```{r ex66 interaction, message=FALSE}
 lme_MZ = lmer(Total~Zone*Mod + (Zone|Estuary), data=estuaryZone, REML=FALSE )
 lme_MplusZ = lmer(Total~Zone+Mod + (Zone|Estuary), data=estuaryZone, REML=FALSE )

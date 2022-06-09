@@ -22,7 +22,7 @@
 #'
 #' @references Clark, G. F., Kelaher, B. P., Dafforn, K. A., Coleman, M. A., Knott, N. A., 
 #' Marzinelli, E. M., & Johnston, E. L. (2015). What does impacted look like? high diversity and
-#' abundance of epibiota in modified estuaries. Environmental Pollution 196, 12-20.
+#' abundance of epibiota in modified estuaries. Environmental Pollution \bold{196}, 12-20.
 #'
 #' @examples
 #' data(estuaryZone)

@@ -142,7 +142,8 @@ There is no evidence of violation of the normality assumption (the points are al
 
 ## Code Box 1.2: Normal quantile plot for the raven data
 
-```{r Code 1.2}
+```{r Code 1.2, fig.width=8,fig.height=4}
+par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
 Before = c(0, 0, 0, 0, 0, 2, 1, 0, 0, 3, 5, 0)
 After = c(2, 1, 4, 1, 0, 5, 0, 1, 0, 3, 5, 2)
 qqnorm(After-Before, main="")
@@ -154,7 +155,7 @@ qqenvelope(After-Before)
 ## Code Box 1.3: log(y + 1)-transformation of the raven data
 
 
-```{r Code 1.3}
+```{r Code 1.3, fig.width=4,fig.height=4}
 # Enter the data
 Before = c(0, 0, 0, 0, 0, 2, 1, 0, 0, 3, 5, 0)
 After = c(2, 1, 4, 1, 0, 5, 0, 1, 0, 3, 5, 2)
@@ -178,14 +179,14 @@ There are two variables:
 ## Exercise 1.12: Transform plant height?
 
 
-```{r global plants}
+```{r global plants, fig.width=4,fig.height=4}
 data(globalPlants)
 hist(globalPlants$height)
 ```
 
 The data are bunched up against zero -- plants cannot have negative height! A log-transformation might be worth a try
 
-```{r global plants logHt}
+```{r global plants logHt, fig.width=4,fig.height=4}
 hist(log(globalPlants$height))
 ```
 
@@ -203,7 +204,7 @@ There are two variables:
 
 I would use comparative boxplots, like this:
 
-```{r seaweed plot}
+```{r seaweed plot, fig.width=4,fig.height=4}
 data(seaweed)
 boxplot(Total~Dist,data=seaweed)
 ```
@@ -213,7 +214,8 @@ I used `boxplot` instead of using `plot` because `Dist` is currently a numerical
 
 ## Exercise 1.14: Transform snails?
 
-```{r seaweed transform}
+```{r seaweed transform, fig.width=8,fig.height=4}
+par(mfrow=c(1,2), mgp=c(1.75,0.75,0), mar=c(3,3,1,1))
 hist(seaweed$Total)
 hist(log(seaweed$Total))
 ```

@@ -88,7 +88,8 @@
 #' well be applied here, by treating the set of residuals (ordered according to the x-axis) as point-wise evaluations of a function.
 #' For residual vs fits and scale-location plots, if \code{do.smooth=TRUE}, global envelopes are constructed for
 #' the \emph{smoother}, not for the data, hence we are looking to see if the smoother
-#' is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} package.
+#' is wholly contained within the envelope. The smoother is constructed using \code{\link[mgcv]{gam}} from the \code{mgcv} 
+#' package with maximum likelihood estimation (\code{method="ML"}).
 #' 
 #' Note that the global envelopes only tell you if there is evidence of violation of model
 #' assumptions -- they do not tell you whether the violations are large enough to worry about. For example, in linear models,
@@ -143,7 +144,7 @@
 #' 
 #' Myllymäki, M., Mrkvička, T., Grabarnik, P., Seijo, H. and Hahn, U. (2017), Global envelope tests for spatial processes. J. R. Stat. Soc. B, 79: 381-404. doi:10.1111/rssb.12172
 #' 
-#' Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} – an \code{R} package for model‐based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
+#' Wang, Y. I., Naumann, U., Wright, S. T., & Warton, D. I. (2012), \code{mvabund} - an \code{R} package for model-based analysis of multivariate abundance data. Methods in Ecology and Evolution, 3, 471-474. doi:10.1111/j.2041-210X.2012.00190.x
 #' 
 #' Warton DI (2022) Eco-Stats - Data Analysis in Ecology, from \emph{t}-tests to multivariate abundances. Springer, ISBN 978-3-030-88442-0
 #'
@@ -282,8 +283,8 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     modelF <- try( eval(mf, parent.frame()), silent=TRUE )
     
     # if for some reason this didn't work (mgcv::gam objects cause grief) then just call model.frame on object:    
-    # also, do this for lme4 because it is so not a team player 
-    if(inherits(modelF, "try-error") | inherits(object,c("lmerMod","glmerMod")) )
+    # also, do this for lme4 and glmmTMB because random effects are not recognised by above method
+    if(inherits(modelF, "try-error") | inherits(object,c("lmerMod","glmerMod","glmmTMB")) )
       modelF = model.frame(object)
 
     # if response has brackets in its name, it is some sort of expression,
@@ -313,7 +314,10 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     resids = fits = matrix(NA,nrow(yNew),ncol(yNew))
     for(i.sim in 1:n.sim)
     {
-      modelF[[1]]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
+      if(is.mva)
+        modelF[[1]]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
+      else
+        modelF[[1]]      = yNew[,i.sim]
       if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
         newFit         = try(update(objectY, formula=fm.update, data=modelF))
       else
@@ -365,7 +369,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       xPred = seq(min(x),max(x),length=nPred)
       # get smoother for observed data
       if(nXs>3) 
-        gam.yx=mgcv::gam(c(y)~s(c(x),k=kStart))
+        gam.yx=mgcv::gam(c(y)~s(c(x),k=kStart), method="ML")
       if(nXs==3)
         gam.yx = lm(c(y)~c(x)+I(c(x^2)))
       if(nXs==2)  
@@ -379,7 +383,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       {
         xiSim=fits[,i.sim]
         if(nXs>3)
-          gam.yxi = mgcv::gam(resids[,i.sim]~s(xiSim,k=kStart))
+          gam.yxi = mgcv::gam(resids[,i.sim]~s(xiSim,k=kStart), method="ML")
         if(nXs==3)
           gam.yxi = lm(resids[,i.sim]~xiSim+I(xiSim^2))
         if(nXs==2)
@@ -517,7 +521,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       xPred = seq(min(x),max(x),length=nPred)
       # get smoother for observed data
       if(nXs>3)
-        gam.yx=mgcv::gam(c(yAbs)~s(c(x),k=kStart))
+        gam.yx=mgcv::gam(c(yAbs)~s(c(x),k=kStart), method="ML")
       if(nXs==3)
         gam.yx=lm(c(yAbs)~c(x)+I(c(x^2)))
       if(nXs==2)
@@ -530,7 +534,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       {
         xiSim            = fits[,i.sim]
         if(nXs>3)
-          gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim,k=kStart))
+          gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim,k=kStart), method="ML")
         if(nXs==3)
           gam.yxi        = lm(residsAbs[,i.sim]~xiSim+I(xiSim^2))
         if(nXs==2)
