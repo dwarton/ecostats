@@ -1,4 +1,4 @@
-## ecostats <img src="inst/figures/ecostats_hex.png" align="right" alt="" width="120" />
+## ecostats <img src="man/figures/ecostats_hex.png" align="right" alt="" width="120" />
 
 #### Code and Data Accompanying the Eco-Stats Text 
 [![ci](https://github.com/dwarton/ecostats/workflows/ci/badge.svg)](https://github.com/dwarton/ecostats/actions?query=workflow%3Aci)
