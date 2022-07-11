@@ -1,9 +1,11 @@
-## ecostats: Code and Data Accompanying the Eco-Stats Text
+## ecostats <img src="inst/figures/ecostats_hex.png" align="right" alt="" width="120" />
 
+#### Code and Data Accompanying the Eco-Stats Text 
 [![ci](https://github.com/dwarton/ecostats/workflows/ci/badge.svg)](https://github.com/dwarton/ecostats/actions?query=workflow%3Aci)
-[![License](http://img.shields.io/badge/license-LGPL%20%28%3E=%202.1%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) =======
+[![License](http://img.shields.io/badge/license-LGPL%20%28%3E=%202.1%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) <br />
 [![CRAN](http://www.r-pkg.org/badges/version/ecostats)](https://CRAN.R-project.org/package=ecostats) 
 [![Downloads](http://cranlogs.r-pkg.org/badges/ecostats?color=brightgreen)](https://www.r-pkg.org/pkg/ecostats)
+
 
 ### Author
 
