@@ -17,7 +17,13 @@ LGPL (>= 2.1)
 
 #### Installation
 
-Eventually this will appear on CRAN, in the meantime the development version appears here, with the latest bells and whistles. It can be installed from GitHub using the `devtools` package:
+You can get the latest version of `ecostats` from CRAN:
+``` r
+install.packages("ecostats")
+library(ecostats)
+```
+
+But if you want access to this development version, with the latest bells and whistles (where applicable), it can be installed from GitHub using the `devtools` package:
 
 ``` r
 devtools::install_github('dwarton/ecostats', ref='main')
