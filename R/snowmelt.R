@@ -5,7 +5,7 @@
 #' 
 #' @docType data
 #'
-#' @usage data(seaweed)
+#' @usage data(snowmelt)
 #'
 #' @format A dataframe containing:\describe{
 #' \item{id}{Plot patch ID}
