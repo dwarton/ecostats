@@ -21,7 +21,7 @@ navbar:
       text: Glossary of functions
       href: reference/index.html
     about:
-      text: About eco-stats
+      text: About ecostats
       href: articles/eco-stats.html
     github:
       icon: fab fa-github fa-lg
