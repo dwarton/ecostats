@@ -45,7 +45,7 @@ qqenvelope(y)
 
 ## `anova` tests using a parametric bootstrap
 
-The command `anovaPB` computes analysis of variance (or deviance) tables for two fitted model objects, but with the \emph{P}-value estimated using a parametric bootstrap -- by repeatedly simulating new responses from the fitted model under the null hypothesis. This will work on lots of different  types of fitted objects -- like `plotenvelope`, it should work on pretty much anything that comes with a `simulate` function that behaves in a standard way. These fitted models also need to respond to either `anova` or `logLik`.
+The command `anovaPB` computes analysis of variance (or deviance) tables for two fitted model objects, but with the ${P}$-value estimated using a parametric bootstrap -- by repeatedly simulating new responses from the fitted model under the null hypothesis. This will work on lots of different  types of fitted objects -- like `plotenvelope`, it should work on pretty much anything that comes with a `simulate` function that behaves in a standard way. These fitted models also need to respond to either `anova` or `logLik`.
 
 While the interface is written to be a lot like `anova`, it requires two fitted objects to be specified -- the first being a fit under the null hypothesis, and the second being the fit under the alternative.
 
