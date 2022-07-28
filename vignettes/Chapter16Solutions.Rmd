@@ -101,7 +101,7 @@ if(is_ecomix_installed)
 #> Infinite residuals removed from residual plots: 82 in total.
 ```
 
-![plot of chunk code16.2](figure/code16.2-1.png)
+![plot of chunk code16.2](../man/figures/code16.2-1.png)
 
 *Do model assumptions seem reasonable here?*
 
@@ -271,13 +271,13 @@ plot.4th = levelplot(ft_trait$fourth.corner, col.regions=colort(100),
 print(plot.4th)
 ```
 
-![plot of chunk code16.4](figure/code16.4-1.png)
+![plot of chunk code16.4](../man/figures/code16.4-1.png)
 
 ```r
 coefplot(ft_trait)
 ```
 
-![plot of chunk code16.4](figure/code16.4-2.png)
+![plot of chunk code16.4](../man/figures/code16.4-2.png)
 
 ## Exercise 16.5: Heloise’s ants
 *Heloise collected counts of 41 species of ants at 30 sites across south-eastern Australia, stored as `antTraits` in the `mvabund` package. She also recorded five environmental variables at each site, and five functional traits for each species. She would like to know if these traits explain why ant species differ in environmental response. Fit a fourth corner model to this dataset.*
@@ -304,13 +304,13 @@ plot_4th = levelplot(t(as.matrix(ft_anttrait$fourth.corner)),
 print(plot_4th)
 ```
 
-![plot of chunk ex16.5](figure/ex16.5-1.png)
+![plot of chunk ex16.5](../man/figures/ex16.5-1.png)
 
 ```r
 coefplot(ft_anttrait)
 ```
 
-![plot of chunk ex16.5](figure/ex16.5-2.png)
+![plot of chunk ex16.5](../man/figures/ex16.5-2.png)
 
 This doesn't always produce a `coefplot` because of infinite values -- this is symptomatic of non-convergence. Make sure you end up with a `logLik` value of about `-2300` or better, if this doesn't happen then re-run. I ended up using `starting.val="zero"` which usually gave better fits (it doesn't always but did this time around).
 
@@ -353,7 +353,7 @@ matplot(newEnv[,1], newPreds[,1:nMarks],type="l", log="y")
 legend("topright",levels(newTraits$marks),lty=1:nMarks,col=1:nMarks)
 ```
 
-![plot of chunk code16.5](figure/code16.5-1.png)
+![plot of chunk code16.5](../man/figures/code16.5-1.png)
 
 
 ## Exercise 16.6: A fourth corner interaction plot for Heloise’s ants

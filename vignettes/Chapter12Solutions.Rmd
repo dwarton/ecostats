@@ -44,7 +44,7 @@ plot(abundMV~treatment, data=reveg)
 #> (the variables with highest total abundance).
 ```
 
-![plot of chunk code12.1](figure/code12.1-1.png)
+![plot of chunk code12.1](../man/figures/code12.1-1.png)
 
 *Can you see any taxa that seem to be associated with bush regeneration?*
 
@@ -82,7 +82,7 @@ loadings(pc)
 biplot( pc, xlabs=rep("\u00B0",dim(iris)[1]) )
 ```
 
-![plot of chunk code12.2](figure/code12.2-1.png)
+![plot of chunk code12.2](../man/figures/code12.2-1.png)
 
 
 ## Code Box 12.3: Factor analysis of the Iris data
@@ -125,13 +125,13 @@ for(iVar in 1:4)
 #> [1] "Petal.Width"
 ```
 
-![plot of chunk code12.4](figure/code12.4-1.png)
+![plot of chunk code12.4](../man/figures/code12.4-1.png)
 
 ```r
 plot(iris[,1:4],col=iris$Species)
 ```
 
-![plot of chunk code12.4matrix](figure/code12.4matrix-1.png)
+![plot of chunk code12.4matrix](../man/figures/code12.4matrix-1.png)
 
 (Note that `plotenvelope` was run with just `59` iterations, to speed up computation time.)
 
@@ -184,7 +184,7 @@ for(iVar in 1:9)
 }
 ```
 
-![plot of chunk ex12.4plots](figure/ex12.4plots-1.png)
+![plot of chunk ex12.4plots](../man/figures/ex12.4plots-1.png)
 
 ```r
 for(iVar in 1:9)
@@ -194,7 +194,7 @@ for(iVar in 1:9)
 }
 ```
 
-![plot of chunk ex12.4plots](figure/ex12.4plots-2.png)
+![plot of chunk ex12.4plots](../man/figures/ex12.4plots-2.png)
 
 *Can you see any issues with factor analysis assumptions?*
 
@@ -207,7 +207,7 @@ With only ten observations it is always hard to see issues, and residual plots h
 plot(fa_iris$values,type="l")
 ```
 
-![plot of chunk code12.5scree](figure/code12.5scree-1.png)
+![plot of chunk code12.5scree](../man/figures/code12.5scree-1.png)
 
 
 ```r
@@ -262,7 +262,7 @@ ordiplot(reveg_LVM, col=as.numeric(reveg$treatment), biplot=TRUE,
 ind.spp=12)
 ```
 
-![plot of chunk code12.6bi](figure/code12.6bi-1.png)
+![plot of chunk code12.6bi](../man/figures/code12.6bi-1.png)
 
 
 ```r
@@ -270,7 +270,7 @@ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plot(reveg_LVM,which=c(1,2,5))
 ```
 
-![plot of chunk code12.6plot](figure/code12.6plot-1.png)
+![plot of chunk code12.6plot](../man/figures/code12.6plot-1.png)
 
 ## Exercise 12.5: Checking analysis decisions for Anthony’s revegetation data
 
@@ -303,7 +303,7 @@ par(mfrow=c(1,3))
 plot(reveg_LVM1,which=c(1,2,5))
 ```
 
-![plot of chunk ex12.5](figure/ex12.5-1.png)
+![plot of chunk ex12.5](../man/figures/ex12.5-1.png)
 
 Wow this does not look good! There is a clear fan-shape in the residual vs fits plot, which also shows up as an increasing trend in the scale-location plot. Points on the normal quantile plot are well outside bounds on both sides, frequently falling below -5 or above 5 (when we would expect most values between -3 and 3). These are all strong signs of overdispersion.
 
@@ -352,7 +352,7 @@ ord_mds=metaMDS(reveg$abund)
 plot(ord_mds$points,pch=as.numeric(reveg$treatment),col=reveg$treatment)
 ```
 
-![plot of chunk code12.7](figure/code12.7-1.png)
+![plot of chunk code12.7](../man/figures/code12.7-1.png)
 
 ## Exercise 12.6: MDS ordinations of coral data
 
@@ -400,7 +400,7 @@ tikus_mds=metaMDS(tikusAbund)
 plot(tikus_mds$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
 ```
 
-![plot of chunk ex12.6ordination](figure/ex12.6ordination-1.png)
+![plot of chunk ex12.6ordination](../man/figures/ex12.6ordination-1.png)
 
 *Does this plot agree with the Warwick et al. (1990) interpretation? [Warwick et al. (1990) used this dataset and MDS ordinations to argue that stress increases dispersion in coral communities]*
 
@@ -470,7 +470,7 @@ tikus_mdsEuc=metaMDS(log(tikusAbund+1),distance="euclidean")
 plot(tikus_mdsEuc$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
 ```
 
-![plot of chunk ex12.6EucOrdination](figure/ex12.6EucOrdination-1.png)
+![plot of chunk ex12.6EucOrdination](../man/figures/ex12.6EucOrdination-1.png)
 
 *Does this plot agree with the Warwick et al. (1990) interpretation?*
 
@@ -489,7 +489,7 @@ plot(tikusMV~tikus$x$time[1:20])
 #> (the variables with highest total abundance).
 ```
 
-![plot of chunk ex12.6plot](figure/ex12.6plot-1.png)
+![plot of chunk ex12.6plot](../man/figures/ex12.6plot-1.png)
 
 *Convert the data into presence-absence and use the gllvm package to construct an ordination*
 
@@ -500,7 +500,7 @@ tikus_LVM = gllvm(tikusPA, num.lv=2, family="binomial", trace=TRUE, jitter.var=0
 ordiplot.gllvm(tikus_LVM, s.col=as.numeric(tikus$x$time), biplot=TRUE, ind.spp=12)
 ```
 
-![plot of chunk ex12.6PA](figure/ex12.6PA-1.png)
+![plot of chunk ex12.6PA](../man/figures/ex12.6PA-1.png)
 
 *Do assumptions appear reasonable? How would you interpret this plot?*
 
@@ -509,7 +509,7 @@ par(mfrow=c(1,3))
 plot(tikus_LVM,which=c(1,2,5))
 ```
 
-![plot of chunk ex12.6assumptions](figure/ex12.6assumptions-1.png)
+![plot of chunk ex12.6assumptions](../man/figures/ex12.6assumptions-1.png)
 
 ## Code Box 12.8: Studying each observation separately for the Iris data
 
@@ -533,7 +533,7 @@ plot(Petal.Length~Species,data=iris,xlab="")
 plot(Petal.Width~Species,data=iris,xlab="")
 ```
 
-![plot of chunk code12.8](figure/code12.8-1.png)
+![plot of chunk code12.8](../man/figures/code12.8-1.png)
 
 #remove this chunk once gllvm has been updated on CRAN:
 

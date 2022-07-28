@@ -74,7 +74,7 @@ for(iDegree in 1:nDegree)
 legend("bottomright",c("Training data","Test data"),pch=c("o","*"),col=c("black",dgreen))
 ```
 
-![plot of chunk fig5.1-2](figure/fig5.1-2-1.png)
+![plot of chunk fig5.1-2](../man/figures/fig5.1-2-1.png)
 
 ```r
 print(err)
@@ -90,7 +90,7 @@ axis(2,c(0,2,4,6))
 legend("topright",c("Training data","Test data"),lty=1,col=c("black",dgreen))
 ```
 
-![plot of chunk fig5.1-2](figure/fig5.1-2-2.png)
+![plot of chunk fig5.1-2](../man/figures/fig5.1-2-2.png)
 
 ## Code Box 5.1: Using validation for model selection using Angela's plant height data
 
@@ -123,7 +123,7 @@ ft_rs = lm(log(height)~rain+rain.seas,dat=globalPlants)
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE) # 5 fold CV
 ```
 
-![plot of chunk box52](figure/box52-1.png)
+![plot of chunk box52](../man/figures/box52-1.png)
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE) # 5 fold CV
@@ -135,7 +135,7 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
-![plot of chunk box52](figure/box52-2.png)
+![plot of chunk box52](../man/figures/box52-2.png)
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -144,7 +144,7 @@ print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE,seed=1) # 5 fold CV
 ```
 
-![plot of chunk box52](figure/box52-3.png)
+![plot of chunk box52](../man/figures/box52-3.png)
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=1) # 5 fold CV
@@ -156,7 +156,7 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=1) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
-![plot of chunk box52](figure/box52-4.png)
+![plot of chunk box52](../man/figures/box52-4.png)
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -165,7 +165,7 @@ print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE,seed=2) # 5 fold CV
 ```
 
-![plot of chunk box52](figure/box52-5.png)
+![plot of chunk box52](../man/figures/box52-5.png)
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=2) # 5 fold CV
@@ -177,7 +177,7 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=2) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
-![plot of chunk box52](figure/box52-6.png)
+![plot of chunk box52](../man/figures/box52-6.png)
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -186,7 +186,7 @@ print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE,seed=3) # 5 fold CV
 ```
 
-![plot of chunk box52](figure/box52-7.png)
+![plot of chunk box52](../man/figures/box52-7.png)
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=3) # 5 fold CV
@@ -198,7 +198,7 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=3) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
-![plot of chunk box52](figure/box52-8.png)
+![plot of chunk box52](../man/figures/box52-8.png)
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -362,7 +362,7 @@ for(iMethod in 1:3)
 axis(2,at=1:3,labels=c(" "," "," "),las=1)
 ```
 
-![plot of chunk subsetsim](figure/subsetsim-1.png)
+![plot of chunk subsetsim](../man/figures/subsetsim-1.png)
 
 
 ## Code Box 5.6: LASSO for plant height data of 5.1
@@ -376,7 +376,7 @@ ft_heightcv=cv.glmnet(X,log(globalPlants$height))
 plot(ft_heightcv)
 ```
 
-![plot of chunk box5.6](figure/box5.6-1.png)
+![plot of chunk box5.6](../man/figures/box5.6-1.png)
 
 ```r
 ft_lasso=glmnet(X,log(globalPlants$height),lambda=ft_heightcv$lambda.min)
@@ -552,7 +552,7 @@ par(mgp=c(1.75,0.75,0),mar=c(2.75,0.5,0.5,0))
   text(R2sRain[2]-eps,1-yText,'Rainfall',adj=1,col=darkBlue)
 ```
 
-![plot of chunk fig5.5](figure/fig5.5-1.png)
+![plot of chunk fig5.5](../man/figures/fig5.5-1.png)
 
 ## Exercise 5.4: Head bobs in lizards -- do their displays change with the environment?
 
@@ -583,7 +583,7 @@ plot(Hbspd_max~TemperatureC,data=headbobLizards)
 plot(Hbspd_max~Bg_noise_max,data=headbobLizards)
 ```
 
-![plot of chunk headbobs](figure/headbobs-1.png)
+![plot of chunk headbobs](../man/figures/headbobs-1.png)
 
 ```r
 
@@ -592,7 +592,7 @@ plot(Hbspd_max~TemperatureC,data=headbobLizards,log="y")
 plot(Hbspd_max~Bg_noise_max,data=headbobLizards,log="y")
 ```
 
-![plot of chunk headbobs](figure/headbobs-2.png)
+![plot of chunk headbobs](../man/figures/headbobs-2.png)
 
 ```r
 
@@ -601,7 +601,7 @@ ft_headbob=lm(bobspeed~TemperatureC+AmbientLight+Bg_noise_max,data=headbobLizard
 plotenvelope(ft_headbob)
 ```
 
-![plot of chunk headbobs](figure/headbobs-3.png)
+![plot of chunk headbobs](../man/figures/headbobs-3.png)
 
 ```r
 stepAIC(ft_headbob)
@@ -765,7 +765,7 @@ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_tempRain)
 ```
 
-![plot of chunk ex5.5plantprecip](figure/ex5.5plantprecip-1.png)
+![plot of chunk ex5.5plantprecip](../man/figures/ex5.5plantprecip-1.png)
 
 ```r
 ft_step = step(ft_temp, scope=formula(ft_tempRain), direction="forward")
@@ -821,7 +821,7 @@ lasso_rain=cv.glmnet(XtempRain,globalPlants$logHt,penalty.factor=c(0,rep(1,8)))
 plot(lasso_rain)
 ```
 
-![plot of chunk ex5.5lassorain](figure/ex5.5lassorain-1.png)
+![plot of chunk ex5.5lassorain](../man/figures/ex5.5lassorain-1.png)
 
 ```r
 ft_lasso=glmnet(XtempRain,globalPlants$logHt,lambda=lasso_rain$lambda.min)
@@ -906,7 +906,7 @@ lasso_Lrain=cv.glmnet(XlessRain,globalPlants$logHt,penalty.factor=c(0,rep(1,6)))
 plot(lasso_Lrain)
 ```
 
-![plot of chunk ex5.5lessrain](figure/ex5.5lessrain-1.png)
+![plot of chunk ex5.5lessrain](../man/figures/ex5.5lessrain-1.png)
 
 ```r
 ft_Llasso=glmnet(XlessRain,globalPlants$logHt,lambda=lasso_Lrain$lambda.min)
