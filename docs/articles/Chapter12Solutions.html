@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,7 +93,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
@@ -138,18 +138,18 @@ differently to see variation between revegetated and control plots.</p>
 using <code>mvabund</code>.<a class="anchor" aria-label="anchor" href="#code-box-12-1-plotting-the-bush-regeneration-data-of-exercise-12-1-using-mvabund-"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span> <span class="co">#to treat data as multivariate</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="co">#&gt; Overlapping points were shifted along the y-axis to make them visible.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  PIPING TO 2nd MVFACTOR</span>
-<span class="co">#&gt; Only the variables Collembola, Acarina, Formicidae, Coleoptera, Diptera, Amphipoda, Isopoda, Larvae, Hemiptera, Soleolifera, Hymenoptera, Araneae were included in the plot </span>
-<span class="co">#&gt; (the variables with highest total abundance).</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span> <span class="co">#to treat data as multivariate</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Overlapping points were shifted along the y-axis to make them visible.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  PIPING TO 2nd MVFACTOR</span></span>
+<span><span class="co">#&gt; Only the variables Collembola, Acarina, Formicidae, Coleoptera, Diptera, Amphipoda, Isopoda, Larvae, Hemiptera, Soleolifera, Hymenoptera, Araneae were included in the plot </span></span>
+<span><span class="co">#&gt; (the variables with highest total abundance).</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.1-1.png" alt=""><p class="caption">plot of chunk code12.1</p>
+<img src="../reference/figures/code12.1-1.png" alt=""><p class="caption">plot of chunk code12.1</p>
 </div>
 <p><em>Can you see any taxa that seem to be associated with bush
 regeneration?</em></p>
@@ -161,54 +161,54 @@ regeneration?</em></p>
 <h2 id="code-box-12-2-a-pca-of-edgars-iris-data">Code Box 12.2: A PCA of Edgar’s <em>Iris</em> data<a class="anchor" aria-label="anchor" href="#code-box-12-2-a-pca-of-edgars-iris-data"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">pc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/princomp.html" class="external-link">princomp</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,cor<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">pc</span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; princomp(x = iris[, 1:4], cor = TRUE)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Standard deviations:</span>
-<span class="co">#&gt;    Comp.1    Comp.2    Comp.3    Comp.4 </span>
-<span class="co">#&gt; 1.7083611 0.9560494 0.3830886 0.1439265 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  4  variables and  150 observations.</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/loadings.html" class="external-link">loadings</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Loadings:</span>
-<span class="co">#&gt;              Comp.1 Comp.2 Comp.3 Comp.4</span>
-<span class="co">#&gt; Sepal.Length  0.521  0.377  0.720  0.261</span>
-<span class="co">#&gt; Sepal.Width  -0.269  0.923 -0.244 -0.124</span>
-<span class="co">#&gt; Petal.Length  0.580        -0.142 -0.801</span>
-<span class="co">#&gt; Petal.Width   0.565        -0.634  0.524</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                Comp.1 Comp.2 Comp.3 Comp.4</span>
-<span class="co">#&gt; SS loadings      1.00   1.00   1.00   1.00</span>
-<span class="co">#&gt; Proportion Var   0.25   0.25   0.25   0.25</span>
-<span class="co">#&gt; Cumulative Var   0.25   0.50   0.75   1.00</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span> <span class="va">pc</span>, xlabs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"\u00B0"</span>,<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">pc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/princomp.html" class="external-link">princomp</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,cor<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">pc</span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; princomp(x = iris[, 1:4], cor = TRUE)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Standard deviations:</span></span>
+<span><span class="co">#&gt;    Comp.1    Comp.2    Comp.3    Comp.4 </span></span>
+<span><span class="co">#&gt; 1.7083611 0.9560494 0.3830886 0.1439265 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  4  variables and  150 observations.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/loadings.html" class="external-link">loadings</a></span><span class="op">(</span><span class="va">pc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loadings:</span></span>
+<span><span class="co">#&gt;              Comp.1 Comp.2 Comp.3 Comp.4</span></span>
+<span><span class="co">#&gt; Sepal.Length  0.521  0.377  0.720  0.261</span></span>
+<span><span class="co">#&gt; Sepal.Width  -0.269  0.923 -0.244 -0.124</span></span>
+<span><span class="co">#&gt; Petal.Length  0.580        -0.142 -0.801</span></span>
+<span><span class="co">#&gt; Petal.Width   0.565        -0.634  0.524</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                Comp.1 Comp.2 Comp.3 Comp.4</span></span>
+<span><span class="co">#&gt; SS loadings      1.00   1.00   1.00   1.00</span></span>
+<span><span class="co">#&gt; Proportion Var   0.25   0.25   0.25   0.25</span></span>
+<span><span class="co">#&gt; Cumulative Var   0.25   0.50   0.75   1.00</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/biplot.html" class="external-link">biplot</a></span><span class="op">(</span> <span class="va">pc</span>, xlabs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"\u00B0"</span>,<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.2-1.png" alt=""><p class="caption">plot of chunk code12.2</p>
+<img src="../reference/figures/code12.2-1.png" alt=""><p class="caption">plot of chunk code12.2</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="code-box-12-3-factor-analysis-of-the-iris-data">Code Box 12.3: Factor analysis of the Iris data<a class="anchor" aria-label="anchor" href="#code-box-12-3-factor-analysis-of-the-iris-data"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
-<span class="va">fa_iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, nfactors<span class="op">=</span><span class="fl">2</span>, fm<span class="op">=</span><span class="st">"ml"</span>, rotate<span class="op">=</span><span class="st">"varimax"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/loadings.html" class="external-link">loadings</a></span><span class="op">(</span><span class="va">fa_iris</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Loadings:</span>
-<span class="co">#&gt;              ML1    ML2   </span>
-<span class="co">#&gt; Sepal.Length  0.997       </span>
-<span class="co">#&gt; Sepal.Width  -0.115 -0.665</span>
-<span class="co">#&gt; Petal.Length  0.871  0.486</span>
-<span class="co">#&gt; Petal.Width   0.818  0.514</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                  ML1   ML2</span>
-<span class="co">#&gt; SS loadings    2.436 0.942</span>
-<span class="co">#&gt; Proportion Var 0.609 0.236</span>
-<span class="co">#&gt; Cumulative Var 0.609 0.844</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span></span>
+<span><span class="va">fa_iris</span> <span class="op">&lt;-</span> <span class="fu">fa</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, nfactors<span class="op">=</span><span class="fl">2</span>, fm<span class="op">=</span><span class="st">"ml"</span>, rotate<span class="op">=</span><span class="st">"varimax"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/loadings.html" class="external-link">loadings</a></span><span class="op">(</span><span class="va">fa_iris</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Loadings:</span></span>
+<span><span class="co">#&gt;              ML1    ML2   </span></span>
+<span><span class="co">#&gt; Sepal.Length  0.997       </span></span>
+<span><span class="co">#&gt; Sepal.Width  -0.115 -0.665</span></span>
+<span><span class="co">#&gt; Petal.Length  0.871  0.486</span></span>
+<span><span class="co">#&gt; Petal.Width   0.818  0.514</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                  ML1   ML2</span></span>
+<span><span class="co">#&gt; SS loadings    2.436 0.942</span></span>
+<span><span class="co">#&gt; Proportion Var 0.609 0.236</span></span>
+<span><span class="co">#&gt; Cumulative Var 0.609 0.844</span></span></code></pre></div>
 <p><em>How do results compare to the principal components
 analysis?</em></p>
 <p>They look awfully similar. The second factor looks a little
@@ -225,23 +225,23 @@ sepals were, now it is relative to petal size.</p>
 data<a class="anchor" aria-label="anchor" href="#code-box-12-4-assumption-checking-for-a-factor-analysis-of-the-iris-data"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">iVar</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">irisIvar</span> <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="va">iVar</span><span class="op">]</span>
-  <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">irisIvar</span><span class="op">~</span><span class="va">fa_iris</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, which<span class="op">=</span><span class="fl">1</span>, col<span class="op">=</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">[</span><span class="va">iVar</span><span class="op">]</span><span class="op">)</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; [1] "Sepal.Length"</span>
-<span class="co">#&gt; [1] "Sepal.Width"</span>
-<span class="co">#&gt; [1] "Petal.Length"</span>
-<span class="co">#&gt; [1] "Petal.Width"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">iVar</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">irisIvar</span> <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="va">iVar</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">irisIvar</span><span class="op">~</span><span class="va">fa_iris</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, which<span class="op">=</span><span class="fl">1</span>, col<span class="op">=</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">[</span><span class="va">iVar</span><span class="op">]</span><span class="op">)</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; [1] "Sepal.Length"</span></span>
+<span><span class="co">#&gt; [1] "Sepal.Width"</span></span>
+<span><span class="co">#&gt; [1] "Petal.Length"</span></span>
+<span><span class="co">#&gt; [1] "Petal.Width"</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.4-1.png" alt=""><p class="caption">plot of chunk code12.4</p>
+<img src="../reference/figures/code12.4-1.png" alt=""><p class="caption">plot of chunk code12.4</p>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,col<span class="op">=</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,col<span class="op">=</span><span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.4matrix-1.png" alt=""><p class="caption">plot of chunk code12.4matrix</p>
+<img src="../reference/figures/code12.4matrix-1.png" alt=""><p class="caption">plot of chunk code12.4matrix</p>
 </div>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>59</code> iterations, to speed up computation time.)</p>
@@ -253,54 +253,54 @@ data<a class="anchor" aria-label="anchor" href="#code-box-12-4-assumption-checki
 the <code>ecostats</code> package) and do a factor analysis (with two
 factors). </em></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
-<span class="va">fa_reveg</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, nfactors<span class="op">=</span><span class="fl">2</span>, fm<span class="op">=</span><span class="st">"ml"</span>, rotate<span class="op">=</span><span class="st">"varimax"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span>
-<span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span>
-<span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span>
-<span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span>
-<span class="co">#&gt; Warning in log(e): NaNs produced</span>
-<span class="co">#&gt; Error in optim(start, FAfn, FAgr, method = "L-BFGS-B", lower = 0.005,  : </span>
-<span class="co">#&gt;   L-BFGS-B needs finite values of 'fn'</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span></span>
+<span><span class="va">fa_reveg</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">fa</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, nfactors<span class="op">=</span><span class="fl">2</span>, fm<span class="op">=</span><span class="st">"ml"</span>, rotate<span class="op">=</span><span class="st">"varimax"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span></span>
+<span><span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span></span>
+<span><span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span></span>
+<span><span class="co">#&gt; Warning in log(e): NaNs produced</span></span>
+<span><span class="co">#&gt; Error in optim(start, FAfn, FAgr, method = "L-BFGS-B", lower = 0.005,  : </span></span>
+<span><span class="co">#&gt;   L-BFGS-B needs finite values of 'fn'</span></span></code></pre></div>
 <p><em>You might not be able to get a solution when using maximum
 likelihood estimation (fm=“ml”), in which case, try fitting using
 without specifying the fm argument (which tries to minimise
 residuals).</em></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fa_reveg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, nfactors<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span>
-<span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span>
-<span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span>
-<span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span>
-<span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span>
-<span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span>
-<span class="co">#&gt; Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done</span>
-<span class="co">#&gt; Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights for the factor scores</span>
-<span class="co">#&gt; are probably incorrect. Try a different factor score estimation method.</span>
-<span class="co">#&gt; In factor.scores, the correlation matrix is singular, an approximation is used</span>
-<span class="co">#&gt; Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fa_reveg</span> <span class="op">&lt;-</span> <span class="fu">fa</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, nfactors<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span></span>
+<span><span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span></span>
+<span><span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done</span></span>
+<span><span class="co">#&gt; In smc, smcs &lt; 0 were set to .0</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done</span></span>
+<span><span class="co">#&gt; Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights for the factor scores</span></span>
+<span><span class="co">#&gt; are probably incorrect. Try a different factor score estimation method.</span></span>
+<span><span class="co">#&gt; In factor.scores, the correlation matrix is singular, an approximation is used</span></span>
+<span><span class="co">#&gt; Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done</span></span></code></pre></div>
 <p>This returned some concerning warnings but did fit the model :)</p>
 <p><em>Check some assumptions, by fitting a linear model to some of the
 response variables, as a function of factor scores.</em></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">iVar</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">y</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="va">iVar</span><span class="op">]</span>
-  <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">fa_reveg</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, which<span class="op">=</span><span class="fl">1</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="va">iVar</span><span class="op">]</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">iVar</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">y</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="va">iVar</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">fa_reveg</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, which<span class="op">=</span><span class="fl">1</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="va">iVar</span><span class="op">]</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.4plots-1.png" alt=""><p class="caption">plot of chunk ex12.4plots</p>
+<img src="../reference/figures/ex12.4plots-1.png" alt=""><p class="caption">plot of chunk ex12.4plots</p>
 </div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">iVar</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">y</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="va">iVar</span><span class="op">]</span>
-  <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">fa_reveg</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, which<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="va">iVar</span><span class="op">]</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">iVar</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">y</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="va">iVar</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">fa_reveg</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, which<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="va">iVar</span><span class="op">]</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.4plots-2.png" alt=""><p class="caption">plot of chunk ex12.4plots</p>
+<img src="../reference/figures/ex12.4plots-2.png" alt=""><p class="caption">plot of chunk ex12.4plots</p>
 </div>
 <p><em>Can you see any issues with factor analysis assumptions?</em></p>
 <p>With only ten observations it is always hard to see issues, and
@@ -314,21 +314,21 @@ most concerning considering we are modelling counts!</p>
 <h2 id="code-box-12-5-choosing-the-number-of-factors-for-the-iris-data">Code Box 12.5: Choosing the number of factors for the iris data<a class="anchor" aria-label="anchor" href="#code-box-12-5-choosing-the-number-of-factors-for-the-iris-data"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fa_iris</span><span class="op">$</span><span class="va">values</span>,type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fa_iris</span><span class="op">$</span><span class="va">values</span>,type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.5scree-1.png" alt=""><p class="caption">plot of chunk code12.5scree</p>
+<img src="../reference/figures/code12.5scree-1.png" alt=""><p class="caption">plot of chunk code12.5scree</p>
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nFactors</span><span class="op">=</span><span class="fl">3</span> <span class="co"># to compare models with up to 3 factors</span>
-<span class="va">BICs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="va">nFactors</span><span class="op">)</span> <span class="co"># define the vector that BIC values go in</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">BICs</span><span class="op">)</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nFactors</span> <span class="co"># name its values according to #factors</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">iFactors</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">nFactors</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">fa_iris</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, nfactors<span class="op">=</span><span class="va">iFactors</span>, fm<span class="op">=</span><span class="st">"ml"</span>, rotate<span class="op">=</span><span class="st">"varimax"</span><span class="op">)</span>
-  <span class="va">BICs</span><span class="op">[</span><span class="va">iFactors</span><span class="op">]</span> <span class="op">=</span> <span class="va">fa_iris</span><span class="op">$</span><span class="va">objective</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">fa_iris</span><span class="op">$</span><span class="va">nh</span><span class="op">)</span> <span class="op">*</span> <span class="va">fa_iris</span><span class="op">$</span><span class="va">dof</span>
-<span class="op">}</span>
-<span class="va">BICs</span>
-<span class="co">#&gt;         1         2         3 </span>
-<span class="co">#&gt; -9.436629  5.171006 15.031906</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nFactors</span><span class="op">=</span><span class="fl">3</span> <span class="co"># to compare models with up to 3 factors</span></span>
+<span><span class="va">BICs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="va">nFactors</span><span class="op">)</span> <span class="co"># define the vector that BIC values go in</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">BICs</span><span class="op">)</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nFactors</span> <span class="co"># name its values according to #factors</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">iFactors</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">nFactors</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">fa_iris</span> <span class="op">&lt;-</span> <span class="fu">fa</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, nfactors<span class="op">=</span><span class="va">iFactors</span>, fm<span class="op">=</span><span class="st">"ml"</span>, rotate<span class="op">=</span><span class="st">"varimax"</span><span class="op">)</span></span>
+<span>  <span class="va">BICs</span><span class="op">[</span><span class="va">iFactors</span><span class="op">]</span> <span class="op">=</span> <span class="va">fa_iris</span><span class="op">$</span><span class="va">objective</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">fa_iris</span><span class="op">$</span><span class="va">nh</span><span class="op">)</span> <span class="op">*</span> <span class="va">fa_iris</span><span class="op">$</span><span class="va">dof</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">BICs</span></span>
+<span><span class="co">#&gt;         1         2         3 </span></span>
+<span><span class="co">#&gt; -9.436629  5.171006 15.031906</span></span></code></pre></div>
 <p><em>How many factors are supported by the data?</em></p>
 <p>One, this has the smallest BIC.</p>
 </div>
@@ -337,42 +337,42 @@ most concerning considering we are modelling counts!</p>
 revegetation data<a class="anchor" aria-label="anchor" href="#code-box-12-6-a-generalised-latent-variable-model-for-anthonys-revegetation-data"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JenniNiku/gllvm" class="external-link">gllvm</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'gllvm'</span>
-<span class="co">#&gt; The following object is masked from 'package:vegan':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     ordiplot</span>
-<span class="co">#&gt; The following objects are masked from 'package:VGAM':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     AICc, nobs, predict, vcov</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats4':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     nobs, vcov</span>
-<span class="co">#&gt; The following object is masked from 'package:mvabund':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     coefplot</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     nobs, predict, simulate, vcov</span>
-<span class="va">reveg_LVM</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">reveg_LVM</span><span class="op">)</span>
-<span class="co">#&gt; 'log Lik.' -675.5768 (df=95)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JenniNiku/gllvm" class="external-link">gllvm</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'gllvm'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:vegan':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     ordiplot</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:VGAM':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     AICc, nobs, predict, vcov</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats4':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     nobs, vcov</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:mvabund':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     coefplot</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     nobs, predict, simulate, vcov</span></span>
+<span><span class="va">reveg_LVM</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">reveg_LVM</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'log Lik.' -675.5768 (df=95)</span></span></code></pre></div>
 <p>Repeating this several times usually returns an answer of
 <code>-689.3</code>, so we can be confident this is (close to) the
 maximum likelihood solution. To get a biplot of this solution:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/ordiplot.gllvm.html" class="external-link">ordiplot</a></span><span class="op">(</span><span class="va">reveg_LVM</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span>, biplot<span class="op">=</span><span class="cn">TRUE</span>,
-ind.spp<span class="op">=</span><span class="fl">12</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">ordiplot</span><span class="op">(</span><span class="va">reveg_LVM</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span>, biplot<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>ind.spp<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.6bi-1.png" alt=""><p class="caption">plot of chunk code12.6bi</p>
+<img src="../reference/figures/code12.6bi-1.png" alt=""><p class="caption">plot of chunk code12.6bi</p>
 </div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">reveg_LVM</span>,which<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">reveg_LVM</span>,which<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.6plot-1.png" alt=""><p class="caption">plot of chunk code12.6plot</p>
+<img src="../reference/figures/code12.6plot-1.png" alt=""><p class="caption">plot of chunk code12.6plot</p>
 </div>
 </div>
 <div class="section level2">
@@ -384,29 +384,29 @@ latent variables. Are two latent variables needed, or should we use
 more, or less? Fit a few models varying the number of latent variables.
 Which model fits the data best, according to BIC?</em></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">reveg_LVM1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">1</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="va">reveg_LVM2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="va">reveg_LVM3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">3</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="va">reveg_LVM4</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">4</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="va">reveg_LVM5</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">5</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">reveg_LVM1</span>,<span class="va">reveg_LVM2</span>,<span class="va">reveg_LVM3</span>,<span class="va">reveg_LVM4</span>,<span class="va">reveg_LVM5</span><span class="op">)</span>
-<span class="co">#&gt;             df      BIC</span>
-<span class="co">#&gt; reveg_LVM1  72 1557.821</span>
-<span class="co">#&gt; reveg_LVM2  95 1578.730</span>
-<span class="co">#&gt; reveg_LVM3 117 1575.276</span>
-<span class="co">#&gt; reveg_LVM4 138 1587.444</span>
-<span class="co">#&gt; reveg_LVM5 158 1633.496</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">reveg_LVM1</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">1</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">reveg_LVM2</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">reveg_LVM3</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">3</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">reveg_LVM4</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">4</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">reveg_LVM5</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">5</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">reveg_LVM1</span>,<span class="va">reveg_LVM2</span>,<span class="va">reveg_LVM3</span>,<span class="va">reveg_LVM4</span>,<span class="va">reveg_LVM5</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             df      BIC</span></span>
+<span><span class="co">#&gt; reveg_LVM1  72 1557.821</span></span>
+<span><span class="co">#&gt; reveg_LVM2  95 1578.730</span></span>
+<span><span class="co">#&gt; reveg_LVM3 117 1575.276</span></span>
+<span><span class="co">#&gt; reveg_LVM4 138 1587.444</span></span>
+<span><span class="co">#&gt; reveg_LVM5 158 1633.496</span></span></code></pre></div>
 <p>For me two latent variable models was the winner!</p>
 <p><em>Fit a Poisson model to the data and check assumptions. Are there
 any signs of overdispersion?</em></p>
 <p>I’ll go with two latent variable models, on account of this looking
 the best in the above.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">reveg_LVM1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"poisson"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">reveg_LVM1</span>,which<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">reveg_LVM1</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"poisson"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">reveg_LVM1</span>,which<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.5-1.png" alt=""><p class="caption">plot of chunk ex12.5</p>
+<img src="../reference/figures/ex12.5-1.png" alt=""><p class="caption">plot of chunk ex12.5</p>
 </div>
 <p>Wow this does not look good! There is a clear fan-shape in the
 residual vs fits plot, which also shows up as an increasing trend in the
@@ -420,93 +420,93 @@ of overdispersion.</p>
 Anthony’s data<a class="anchor" aria-label="anchor" href="#code-box-12-7-a-non-metric-multi-dimensional-scaling-ordination-of-anthonys-data"></a>
 </h2>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vegandevs/vegan" class="external-link">vegan</a></span><span class="op">)</span>
-<span class="va">ord_mds</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/metaMDS.html" class="external-link">metaMDS</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span>
-<span class="co">#&gt; Square root transformation</span>
-<span class="co">#&gt; Wisconsin double standardization</span>
-<span class="co">#&gt; Run 0 stress 0.1611237 </span>
-<span class="co">#&gt; Run 1 stress 0.1687788 </span>
-<span class="co">#&gt; Run 2 stress 0.2684195 </span>
-<span class="co">#&gt; Run 3 stress 0.1611236 </span>
-<span class="co">#&gt; ... New best solution</span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0004585684  max resid 0.0008197316 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 4 stress 0.2062042 </span>
-<span class="co">#&gt; Run 5 stress 0.3314815 </span>
-<span class="co">#&gt; Run 6 stress 0.1611239 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0005366897  max resid 0.0009748253 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 7 stress 0.1680773 </span>
-<span class="co">#&gt; Run 8 stress 0.1680773 </span>
-<span class="co">#&gt; Run 9 stress 0.1641165 </span>
-<span class="co">#&gt; Run 10 stress 0.2022877 </span>
-<span class="co">#&gt; Run 11 stress 0.1641165 </span>
-<span class="co">#&gt; Run 12 stress 0.1680773 </span>
-<span class="co">#&gt; Run 13 stress 0.1680773 </span>
-<span class="co">#&gt; Run 14 stress 0.1687788 </span>
-<span class="co">#&gt; Run 15 stress 0.1611236 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0001032944  max resid 0.0001868105 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 16 stress 0.1880315 </span>
-<span class="co">#&gt; Run 17 stress 0.1880316 </span>
-<span class="co">#&gt; Run 18 stress 0.1611238 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0006247713  max resid 0.001114103 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 19 stress 0.1880315 </span>
-<span class="co">#&gt; Run 20 stress 0.1611236 </span>
-<span class="co">#&gt; ... New best solution</span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0002105525  max resid 0.0003734638 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; *** Solution reached</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ord_mds</span><span class="op">$</span><span class="va">points</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span>,col<span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vegandevs/vegan" class="external-link">vegan</a></span><span class="op">)</span></span>
+<span><span class="va">ord_mds</span><span class="op">=</span><span class="fu">metaMDS</span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Square root transformation</span></span>
+<span><span class="co">#&gt; Wisconsin double standardization</span></span>
+<span><span class="co">#&gt; Run 0 stress 0.1611237 </span></span>
+<span><span class="co">#&gt; Run 1 stress 0.1687788 </span></span>
+<span><span class="co">#&gt; Run 2 stress 0.2684195 </span></span>
+<span><span class="co">#&gt; Run 3 stress 0.1611236 </span></span>
+<span><span class="co">#&gt; ... New best solution</span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0004585684  max resid 0.0008197316 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 4 stress 0.2062042 </span></span>
+<span><span class="co">#&gt; Run 5 stress 0.3314815 </span></span>
+<span><span class="co">#&gt; Run 6 stress 0.1611239 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0005366897  max resid 0.0009748253 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 7 stress 0.1680773 </span></span>
+<span><span class="co">#&gt; Run 8 stress 0.1680773 </span></span>
+<span><span class="co">#&gt; Run 9 stress 0.1641165 </span></span>
+<span><span class="co">#&gt; Run 10 stress 0.2022877 </span></span>
+<span><span class="co">#&gt; Run 11 stress 0.1641165 </span></span>
+<span><span class="co">#&gt; Run 12 stress 0.1680773 </span></span>
+<span><span class="co">#&gt; Run 13 stress 0.1680773 </span></span>
+<span><span class="co">#&gt; Run 14 stress 0.1687788 </span></span>
+<span><span class="co">#&gt; Run 15 stress 0.1611236 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0001032944  max resid 0.0001868105 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 16 stress 0.1880315 </span></span>
+<span><span class="co">#&gt; Run 17 stress 0.1880316 </span></span>
+<span><span class="co">#&gt; Run 18 stress 0.1611238 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0006247713  max resid 0.001114103 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 19 stress 0.1880315 </span></span>
+<span><span class="co">#&gt; Run 20 stress 0.1611236 </span></span>
+<span><span class="co">#&gt; ... New best solution</span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0002105525  max resid 0.0003734638 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; *** Solution reached</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ord_mds</span><span class="op">$</span><span class="va">points</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span>,col<span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.7-1.png" alt=""><p class="caption">plot of chunk code12.7</p>
+<img src="../reference/figures/code12.7-1.png" alt=""><p class="caption">plot of chunk code12.7</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="exercise-12-6-mds-ordinations-of-coral-data">Exercise 12.6: MDS ordinations of coral data<a class="anchor" aria-label="anchor" href="#exercise-12-6-mds-ordinations-of-coral-data"></a>
 </h2>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">)</span>
-<span class="va">tikusAbund</span> <span class="op">=</span> <span class="va">tikus</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>,<span class="op">]</span> <span class="co"># for 1981 and 1983 data only</span>
-<span class="va">tikusAbund</span> <span class="op">=</span> <span class="va">tikusAbund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">tikusAbund</span>,<span class="fl">2</span>,<span class="va">sum</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove zerotons</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">)</span></span>
+<span><span class="va">tikusAbund</span> <span class="op">=</span> <span class="va">tikus</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span>,<span class="op">]</span> <span class="co"># for 1981 and 1983 data only</span></span>
+<span><span class="va">tikusAbund</span> <span class="op">=</span> <span class="va">tikusAbund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">tikusAbund</span>,<span class="fl">2</span>,<span class="va">sum</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove zerotons</span></span></code></pre></div>
 <p><em>Construct an MDS plot of the data, using the Bray-Curtis distance
 (default), and colour-code symbols by year of sampling.</em></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tikus_mds</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/metaMDS.html" class="external-link">metaMDS</a></span><span class="op">(</span><span class="va">tikusAbund</span><span class="op">)</span>
-<span class="co">#&gt; Square root transformation</span>
-<span class="co">#&gt; Wisconsin double standardization</span>
-<span class="co">#&gt; Run 0 stress 0.09863027 </span>
-<span class="co">#&gt; Run 1 stress 0.1096412 </span>
-<span class="co">#&gt; Run 2 stress 0.1144806 </span>
-<span class="co">#&gt; Run 3 stress 0.111816 </span>
-<span class="co">#&gt; Run 4 stress 0.09970471 </span>
-<span class="co">#&gt; Run 5 stress 0.1479043 </span>
-<span class="co">#&gt; Run 6 stress 0.1275178 </span>
-<span class="co">#&gt; Run 7 stress 0.1093704 </span>
-<span class="co">#&gt; Run 8 stress 0.09954172 </span>
-<span class="co">#&gt; Run 9 stress 0.1158263 </span>
-<span class="co">#&gt; Run 10 stress 0.1165909 </span>
-<span class="co">#&gt; Run 11 stress 0.10266 </span>
-<span class="co">#&gt; Run 12 stress 0.1054471 </span>
-<span class="co">#&gt; Run 13 stress 0.09954171 </span>
-<span class="co">#&gt; Run 14 stress 0.09954136 </span>
-<span class="co">#&gt; Run 15 stress 0.1010792 </span>
-<span class="co">#&gt; Run 16 stress 0.09863103 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.000412243  max resid 0.0009883379 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 17 stress 0.1078694 </span>
-<span class="co">#&gt; Run 18 stress 0.09863022 </span>
-<span class="co">#&gt; ... New best solution</span>
-<span class="co">#&gt; ... Procrustes: rmse 0.002205194  max resid 0.005495785 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 19 stress 0.1078696 </span>
-<span class="co">#&gt; Run 20 stress 0.1475714 </span>
-<span class="co">#&gt; *** Solution reached</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikus_mds</span><span class="op">$</span><span class="va">points</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>,col<span class="op">=</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tikus_mds</span><span class="op">=</span><span class="fu">metaMDS</span><span class="op">(</span><span class="va">tikusAbund</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Square root transformation</span></span>
+<span><span class="co">#&gt; Wisconsin double standardization</span></span>
+<span><span class="co">#&gt; Run 0 stress 0.09863027 </span></span>
+<span><span class="co">#&gt; Run 1 stress 0.1096412 </span></span>
+<span><span class="co">#&gt; Run 2 stress 0.1144806 </span></span>
+<span><span class="co">#&gt; Run 3 stress 0.111816 </span></span>
+<span><span class="co">#&gt; Run 4 stress 0.09970471 </span></span>
+<span><span class="co">#&gt; Run 5 stress 0.1479043 </span></span>
+<span><span class="co">#&gt; Run 6 stress 0.1275178 </span></span>
+<span><span class="co">#&gt; Run 7 stress 0.1093704 </span></span>
+<span><span class="co">#&gt; Run 8 stress 0.09954172 </span></span>
+<span><span class="co">#&gt; Run 9 stress 0.1158263 </span></span>
+<span><span class="co">#&gt; Run 10 stress 0.1165909 </span></span>
+<span><span class="co">#&gt; Run 11 stress 0.10266 </span></span>
+<span><span class="co">#&gt; Run 12 stress 0.1054471 </span></span>
+<span><span class="co">#&gt; Run 13 stress 0.09954171 </span></span>
+<span><span class="co">#&gt; Run 14 stress 0.09954136 </span></span>
+<span><span class="co">#&gt; Run 15 stress 0.1010792 </span></span>
+<span><span class="co">#&gt; Run 16 stress 0.09863103 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.000412243  max resid 0.0009883379 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 17 stress 0.1078694 </span></span>
+<span><span class="co">#&gt; Run 18 stress 0.09863022 </span></span>
+<span><span class="co">#&gt; ... New best solution</span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.002205194  max resid 0.005495785 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 19 stress 0.1078696 </span></span>
+<span><span class="co">#&gt; Run 20 stress 0.1475714 </span></span>
+<span><span class="co">#&gt; *** Solution reached</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikus_mds</span><span class="op">$</span><span class="va">points</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>,col<span class="op">=</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.6ordination-1.png" alt=""><p class="caption">plot of chunk ex12.6ordination</p>
+<img src="../reference/figures/ex12.6ordination-1.png" alt=""><p class="caption">plot of chunk ex12.6ordination</p>
 </div>
 <p><em>Does this plot agree with the Warwick et al. (1990)
 interpretation? [Warwick et al. (1990) used this dataset and MDS
@@ -519,66 +519,66 @@ change in dispersion.</p>
 <p><em>Construct another MDS plot using the Euclidean distance on
 <code>log(y+1)</code>-transformed data.</em></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tikus_mdsEuc</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/metaMDS.html" class="external-link">metaMDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">tikusAbund</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>,distance<span class="op">=</span><span class="st">"euclidean"</span><span class="op">)</span>
-<span class="co">#&gt; Run 0 stress 0.05741195 </span>
-<span class="co">#&gt; Run 1 stress 0.0574117 </span>
-<span class="co">#&gt; ... New best solution</span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0006040334  max resid 0.001755331 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 2 stress 0.05741207 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0002360083  max resid 0.0007165394 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 3 stress 0.0574119 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0005762837  max resid 0.001677264 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 4 stress 0.07425327 </span>
-<span class="co">#&gt; Run 5 stress 0.05741188 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0005713984  max resid 0.00166317 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 6 stress 0.05741211 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0002562405  max resid 0.0007773331 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 7 stress 0.05741165 </span>
-<span class="co">#&gt; ... New best solution</span>
-<span class="co">#&gt; ... Procrustes: rmse 7.397262e-05  max resid 0.0002236007 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 8 stress 0.05741203 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.000571415  max resid 0.001643115 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 9 stress 0.07425304 </span>
-<span class="co">#&gt; Run 10 stress 0.05741166 </span>
-<span class="co">#&gt; ... Procrustes: rmse 4.266406e-05  max resid 0.000132459 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 11 stress 0.07425298 </span>
-<span class="co">#&gt; Run 12 stress 0.05741199 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0005544893  max resid 0.001591259 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 13 stress 0.05741213 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0003408697  max resid 0.001033423 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 14 stress 0.05741181 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0001640364  max resid 0.0004996793 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 15 stress 0.05741166 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0003297201  max resid 0.0009738707 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 16 stress 0.05741166 </span>
-<span class="co">#&gt; ... Procrustes: rmse 3.541119e-05  max resid 0.0001048059 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 17 stress 0.05741194 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0005278599  max resid 0.001523223 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 18 stress 0.05741206 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0005868747  max resid 0.00168278 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; Run 19 stress 0.07425299 </span>
-<span class="co">#&gt; Run 20 stress 0.05741184 </span>
-<span class="co">#&gt; ... Procrustes: rmse 0.0001881958  max resid 0.0005719071 </span>
-<span class="co">#&gt; ... Similar to previous best</span>
-<span class="co">#&gt; *** Solution reached</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikus_mdsEuc</span><span class="op">$</span><span class="va">points</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>,col<span class="op">=</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tikus_mdsEuc</span><span class="op">=</span><span class="fu">metaMDS</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">tikusAbund</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>,distance<span class="op">=</span><span class="st">"euclidean"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Run 0 stress 0.05741195 </span></span>
+<span><span class="co">#&gt; Run 1 stress 0.0574117 </span></span>
+<span><span class="co">#&gt; ... New best solution</span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0006040334  max resid 0.001755331 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 2 stress 0.05741207 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0002360083  max resid 0.0007165394 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 3 stress 0.0574119 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0005762837  max resid 0.001677264 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 4 stress 0.07425327 </span></span>
+<span><span class="co">#&gt; Run 5 stress 0.05741188 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0005713984  max resid 0.00166317 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 6 stress 0.05741211 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0002562405  max resid 0.0007773331 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 7 stress 0.05741165 </span></span>
+<span><span class="co">#&gt; ... New best solution</span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 7.397262e-05  max resid 0.0002236007 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 8 stress 0.05741203 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.000571415  max resid 0.001643115 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 9 stress 0.07425304 </span></span>
+<span><span class="co">#&gt; Run 10 stress 0.05741166 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 4.266406e-05  max resid 0.000132459 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 11 stress 0.07425298 </span></span>
+<span><span class="co">#&gt; Run 12 stress 0.05741199 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0005544893  max resid 0.001591259 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 13 stress 0.05741213 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0003408697  max resid 0.001033423 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 14 stress 0.05741181 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0001640364  max resid 0.0004996793 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 15 stress 0.05741166 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0003297201  max resid 0.0009738707 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 16 stress 0.05741166 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 3.541119e-05  max resid 0.0001048059 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 17 stress 0.05741194 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0005278599  max resid 0.001523223 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 18 stress 0.05741206 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0005868747  max resid 0.00168278 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; Run 19 stress 0.07425299 </span></span>
+<span><span class="co">#&gt; Run 20 stress 0.05741184 </span></span>
+<span><span class="co">#&gt; ... Procrustes: rmse 0.0001881958  max resid 0.0005719071 </span></span>
+<span><span class="co">#&gt; ... Similar to previous best</span></span>
+<span><span class="co">#&gt; *** Solution reached</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikus_mdsEuc</span><span class="op">$</span><span class="va">points</span>,pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>,col<span class="op">=</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.6EucOrdination-1.png" alt=""><p class="caption">plot of chunk ex12.6EucOrdination</p>
+<img src="../reference/figures/ex12.6EucOrdination-1.png" alt=""><p class="caption">plot of chunk ex12.6EucOrdination</p>
 </div>
 <p><em>Does this plot agree with the Warwick et al. (1990)
 interpretation?</em></p>
@@ -589,33 +589,33 @@ change in mean abundance not just variability.</p>
 response variable as a function of time. What is the main pattern that
 you see?</em></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tikusMV</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">tikusAbund</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikusMV</span><span class="op">~</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt; Overlapping points were shifted along the y-axis to make them visible.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  PIPING TO 2nd MVFACTOR</span>
-<span class="co">#&gt; Only the variables Heliopora.coerulea, Montipora.digitata, Favites.abdita, Favites.chinensis, Platygyra.daedalea, Montipora.foliosa, Pocillopora.damicornis, Acropora.cytherea, Acropora.hyacinthus, Acropora.formosa, Pocillopora.verrucosa, Acropora.pulchra were included in the plot </span>
-<span class="co">#&gt; (the variables with highest total abundance).</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tikusMV</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">tikusAbund</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikusMV</span><span class="op">~</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Overlapping points were shifted along the y-axis to make them visible.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  PIPING TO 2nd MVFACTOR</span></span>
+<span><span class="co">#&gt; Only the variables Heliopora.coerulea, Montipora.digitata, Favites.abdita, Favites.chinensis, Platygyra.daedalea, Montipora.foliosa, Pocillopora.damicornis, Acropora.cytherea, Acropora.hyacinthus, Acropora.formosa, Pocillopora.verrucosa, Acropora.pulchra were included in the plot </span></span>
+<span><span class="co">#&gt; (the variables with highest total abundance).</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.6plot-1.png" alt=""><p class="caption">plot of chunk ex12.6plot</p>
+<img src="../reference/figures/ex12.6plot-1.png" alt=""><p class="caption">plot of chunk ex12.6plot</p>
 </div>
 <p><em>Convert the data into presence-absence and use the gllvm package
 to construct an ordination</em></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tikusPA</span> <span class="op">=</span> <span class="va">tikusAbund</span>
-<span class="va">tikusPA</span><span class="op">[</span><span class="va">tikusPA</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span><span class="op">=</span><span class="fl">1</span>
-<span class="va">tikus_LVM</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">tikusPA</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/ordiplot.gllvm.html" class="external-link">ordiplot.gllvm</a></span><span class="op">(</span><span class="va">tikus_LVM</span>, s.col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>, biplot<span class="op">=</span><span class="cn">TRUE</span>, ind.spp<span class="op">=</span><span class="fl">12</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tikusPA</span> <span class="op">=</span> <span class="va">tikusAbund</span></span>
+<span><span class="va">tikusPA</span><span class="op">[</span><span class="va">tikusPA</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span><span class="op">=</span><span class="fl">1</span></span>
+<span><span class="va">tikus_LVM</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">tikusPA</span>, num.lv<span class="op">=</span><span class="fl">2</span>, family<span class="op">=</span><span class="st">"binomial"</span>, trace<span class="op">=</span><span class="cn">TRUE</span>, jitter.var<span class="op">=</span><span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="fu">ordiplot.gllvm</span><span class="op">(</span><span class="va">tikus_LVM</span>, s.col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tikus</span><span class="op">$</span><span class="va">x</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>, biplot<span class="op">=</span><span class="cn">TRUE</span>, ind.spp<span class="op">=</span><span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.6PA-1.png" alt=""><p class="caption">plot of chunk ex12.6PA</p>
+<img src="../reference/figures/ex12.6PA-1.png" alt=""><p class="caption">plot of chunk ex12.6PA</p>
 </div>
 <p><em>Do assumptions appear reasonable? How would you interpret this
 plot?</em></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikus_LVM</span>,which<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tikus_LVM</span>,which<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex12.6assumptions-1.png" alt=""><p class="caption">plot of chunk ex12.6assumptions</p>
+<img src="../reference/figures/ex12.6assumptions-1.png" alt=""><p class="caption">plot of chunk ex12.6assumptions</p>
 </div>
 </div>
 <div class="section level2">
@@ -623,25 +623,25 @@ plot?</em></p>
 data<a class="anchor" aria-label="anchor" href="#code-box-12-8-studying-each-observation-separately-for-the-iris-data"></a>
 </h2>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/by.html" class="external-link">by</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span> <span class="op">}</span> <span class="op">)</span>
-<span class="co">#&gt; iris$Species: setosa</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;        5.006        3.428        1.462        0.246 </span>
-<span class="co">#&gt; ------------------------------------------------------------------------------------------- </span>
-<span class="co">#&gt; iris$Species: versicolor</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;        5.936        2.770        4.260        1.326 </span>
-<span class="co">#&gt; ------------------------------------------------------------------------------------------- </span>
-<span class="co">#&gt; iris$Species: virginica</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;        6.588        2.974        5.552        2.026</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Petal.Length</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Petal.Width</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/by.html" class="external-link">by</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>, <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">{</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span> <span class="op">}</span> <span class="op">)</span></span>
+<span><span class="co">#&gt; iris$Species: setosa</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span><span class="co">#&gt;        5.006        3.428        1.462        0.246 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------------------------------- </span></span>
+<span><span class="co">#&gt; iris$Species: versicolor</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span><span class="co">#&gt;        5.936        2.770        4.260        1.326 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------------------------------- </span></span>
+<span><span class="co">#&gt; iris$Species: virginica</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span><span class="co">#&gt;        6.588        2.974        5.552        2.026</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Sepal.Width</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Petal.Length</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Petal.Width</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code12.8-1.png" alt=""><p class="caption">plot of chunk code12.8</p>
+<img src="../reference/figures/code12.8-1.png" alt=""><p class="caption">plot of chunk code12.8</p>
 </div>
 <p>#remove this chunk once gllvm has been updated on CRAN:</p>
 </div>
@@ -658,7 +658,7 @@ data<a class="anchor" aria-label="anchor" href="#code-box-12-8-studying-each-obs
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

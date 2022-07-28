@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 2 -- An importance equivalence result -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 2 -- An importance equivalence result -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,12 +93,12 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 2 -- An importance equivalence result -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
             
-            <h4 data-toc-skip class="date">2022-07-12</h4>
+            <h4 data-toc-skip class="date">2022-07-28</h4>
       
       
       <div class="d-none name"><code>Chapter2Solutions.Rmd</code></div>
@@ -115,29 +115,29 @@ there is good evidence of an effect of nicotine. More directly, starting
 from the stated test statistic of <span class="math inline">\(-2.67\)</span>, the test statistic has a <span class="math inline">\(t_{n_1+n_2-2}\)</span> distribution under the
 hypothesis of no effect, so we could calculate the <span class="math inline">\(P\)</span>-value directly as:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">pt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.67</span>,<span class="fl">10</span><span class="op">+</span><span class="fl">10</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.007807045</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html" class="external-link">pt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.67</span>,<span class="fl">10</span><span class="op">+</span><span class="fl">10</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.007807045</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-2-1-a-two-sample-t-test-of-the-data-from-the-guinea-pig-experiment">Code Box 2.1 A two-sample t-test of the data from the guinea pig
 experiment<a class="anchor" aria-label="anchor" href="#code-box-2-1-a-two-sample-t-test-of-the-data-from-the-guinea-pig-experiment"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: mvabund</span>
- <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span>, var.equal<span class="op">=</span><span class="cn">TRUE</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Two Sample t-test</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; data:  errors by treatment</span>
-<span class="co">#&gt; t = -2.671, df = 18, p-value = 0.007791</span>
-<span class="co">#&gt; alternative hypothesis: true difference in means between group C and group N is less than 0</span>
-<span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;       -Inf -7.331268</span>
-<span class="co">#&gt; sample estimates:</span>
-<span class="co">#&gt; mean in group C mean in group N </span>
-<span class="co">#&gt;            23.4            44.3</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: mvabund</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span>, var.equal<span class="op">=</span><span class="cn">TRUE</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two Sample t-test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  errors by treatment</span></span>
+<span><span class="co">#&gt; t = -2.671, df = 18, p-value = 0.007791</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in means between group C and group N is less than 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;       -Inf -7.331268</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; mean in group C mean in group N </span></span>
+<span><span class="co">#&gt;            23.4            44.3</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-2-2-smoking-and-pregnancy-checking-assumptions">Code Box 2.2: Smoking and pregnancy – checking assumptions<a class="anchor" aria-label="anchor" href="#code-box-2-2-smoking-and-pregnancy-checking-assumptions"></a>
@@ -145,18 +145,18 @@ experiment<a class="anchor" aria-label="anchor" href="#code-box-2-1-a-two-sample
 <p>The normal quantile plots of Figure 2.1 were generated using the
 below code.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span><span class="op">[</span><span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="st">"N"</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span><span class="op">[</span><span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="st">"N"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/guineapig%20qqplots-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span><span class="op">[</span><span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="st">"C"</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span><span class="op">[</span><span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="st">"C"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/guineapig%20qqplots-2.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/by.html" class="external-link">by</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span>,<span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span>,<span class="va">sd</span><span class="op">)</span>
-<span class="co">#&gt; guineapig$treatment: C</span>
-<span class="co">#&gt; [1] 12.30357</span>
-<span class="co">#&gt; ------------------------------------------------------------ </span>
-<span class="co">#&gt; guineapig$treatment: N</span>
-<span class="co">#&gt; [1] 21.46858</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/by.html" class="external-link">by</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span>,<span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span>,<span class="va">sd</span><span class="op">)</span></span>
+<span><span class="co">#&gt; guineapig$treatment: C</span></span>
+<span><span class="co">#&gt; [1] 12.30357</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
+<span><span class="co">#&gt; guineapig$treatment: N</span></span>
+<span><span class="co">#&gt; [1] 21.46858</span></span></code></pre></div>
 <p>While all the points lie in the simulation envelope, there is a clear
 curve on both of them suggesting some right skew. Also, the standard
 deviations are quite different, not quite a factor of two, but getting
@@ -177,8 +177,8 @@ relationship between IBI and catchment area.</p>
 </ul>
 <p>I would use a scatterplot:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">waterQuality</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>, data<span class="op">=</span><span class="va">waterQuality</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">waterQuality</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>, data<span class="op">=</span><span class="va">waterQuality</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/waterQuality%20scatterplot-1.png" width="700"></p>
 <p>And I would fit a linear regression model, as in Code Box 2.3.</p>
 </div>
@@ -187,41 +187,41 @@ relationship between IBI and catchment area.</p>
 data<a class="anchor" aria-label="anchor" href="#code-box-2-3-fitting-a-linear-regression-to-the-water-quality-data"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">waterQuality</span><span class="op">)</span>
- <span class="va">fit_qual</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>, data <span class="op">=</span> <span class="va">waterQuality</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_qual</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = quality ~ logCatchment, data = waterQuality)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
-<span class="co">#&gt; -7.891 -3.354 -1.406  4.102 11.588 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)    74.266      7.071  10.502 1.38e-08 ***</span>
-<span class="co">#&gt; logCatchment  -11.042      1.780  -6.204 1.26e-05 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 5.397 on 16 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.7064, Adjusted R-squared:  0.688 </span>
-<span class="co">#&gt; F-statistic: 38.49 on 1 and 16 DF,  p-value: 1.263e-05</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">waterQuality</span><span class="op">)</span></span>
+<span> <span class="va">fit_qual</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>, data <span class="op">=</span> <span class="va">waterQuality</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_qual</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = quality ~ logCatchment, data = waterQuality)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span><span class="co">#&gt; -7.891 -3.354 -1.406  4.102 11.588 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)    74.266      7.071  10.502 1.38e-08 ***</span></span>
+<span><span class="co">#&gt; logCatchment  -11.042      1.780  -6.204 1.26e-05 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 5.397 on 16 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.7064, Adjusted R-squared:  0.688 </span></span>
+<span><span class="co">#&gt; F-statistic: 38.49 on 1 and 16 DF,  p-value: 1.263e-05</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-2-3-water-quality-interpreting-r-output">Exercise 2.3: Water quality – interpreting R output<a class="anchor" aria-label="anchor" href="#exercise-2-3-water-quality-interpreting-r-output"></a>
 </h2>
 <p>An approximate 95% CI is</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="op">-</span><span class="fl">11.042</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fl">1.780</span>
-<span class="co">#&gt; [1] -14.602  -7.482</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="op">-</span><span class="fl">11.042</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fl">1.780</span></span>
+<span><span class="co">#&gt; [1] -14.602  -7.482</span></span></code></pre></div>
 <p>or you could use <code>confint</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">fit_qual</span><span class="op">)</span>
-<span class="co">#&gt;                  2.5 %   97.5 %</span>
-<span class="co">#&gt; (Intercept)   59.27480 89.25623</span>
-<span class="co">#&gt; logCatchment -14.81464 -7.26864</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">fit_qual</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  2.5 %   97.5 %</span></span>
+<span><span class="co">#&gt; (Intercept)   59.27480 89.25623</span></span>
+<span><span class="co">#&gt; logCatchment -14.81464 -7.26864</span></span></code></pre></div>
 <p>Either way we are 95% confident that as logCatchment changes by 1
 (meaning a ten-fold increase in catchment area, since a
 log10-transformed of catchment area was used), IBI decreases by between
@@ -235,7 +235,7 @@ residuals, you just take a fitted regression object (like
 <code>fit_qual</code>, produced in Code Box 2.3) and apply the plot
 function:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit_qual</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit_qual</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/waterQuality%20resplots-1.png" width="700"><img src="Chapter2Solutions_files/figure-html/waterQuality%20resplots-2.png" width="700"></p>
 <p>The which argument lets you choose which plot to construct
 (1=residuals vs fits, 2=normal quantile plot).</p>
@@ -244,8 +244,8 @@ simulation envelopes around points on these plots, to check if any
 deviations from expected patterns are large compared to what we might
 expect for datasets that satisfy model assumptions:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">fit_qual</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">fit_qual</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/waterQuality%20simenvelope-1.png" width="700"><img src="Chapter2Solutions_files/figure-html/waterQuality%20simenvelope-2.png" width="700"></p>
 <p>Assumptions look reasonable here – there is no trend in the residual
 vs fits plot, and the normal quantile plot is close to a straight line.
@@ -277,44 +277,44 @@ about this assumption here.</li>
 data, again<a class="anchor" aria-label="anchor" href="#code-box-2-5-two-sample-t-test-output-for-the-smoking-pregnant-data-again"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span>, var.equal<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Two Sample t-test</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; data:  errors by treatment</span>
-<span class="co">#&gt; t = -2.671, df = 18, p-value = 0.01558</span>
-<span class="co">#&gt; alternative hypothesis: true difference in means between group C and group N is not equal to 0</span>
-<span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;  -37.339333  -4.460667</span>
-<span class="co">#&gt; sample estimates:</span>
-<span class="co">#&gt; mean in group C mean in group N </span>
-<span class="co">#&gt;            23.4            44.3</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span>, var.equal<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Two Sample t-test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  errors by treatment</span></span>
+<span><span class="co">#&gt; t = -2.671, df = 18, p-value = 0.01558</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true difference in means between group C and group N is not equal to 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;  -37.339333  -4.460667</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; mean in group C mean in group N </span></span>
+<span><span class="co">#&gt;            23.4            44.3</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-2-6-linear-regression-analysis-of-the-smoking-pregnant-data--compare-to-code-box-2-5">Code Box 2.6: Linear regression analysis of the smoking-pregnant
 data. compare to Code Box 2.5<a class="anchor" aria-label="anchor" href="#code-box-2-6-linear-regression-analysis-of-the-smoking-pregnant-data--compare-to-code-box-2-5"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">ft_guineapig</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_guineapig</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = errors ~ treatment, data = guineapig)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
-<span class="co">#&gt; -21.30 -11.57  -5.35  11.85  44.70 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)   23.400      5.533   4.229 0.000504 ***</span>
-<span class="co">#&gt; treatmentN    20.900      7.825   2.671 0.015581 *  </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 17.5 on 18 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.2838, Adjusted R-squared:  0.2441 </span>
-<span class="co">#&gt; F-statistic: 7.134 on 1 and 18 DF,  p-value: 0.01558</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">ft_guineapig</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_guineapig</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = errors ~ treatment, data = guineapig)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span><span class="co">#&gt; -21.30 -11.57  -5.35  11.85  44.70 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)   23.400      5.533   4.229 0.000504 ***</span></span>
+<span><span class="co">#&gt; treatmentN    20.900      7.825   2.671 0.015581 *  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 17.5 on 18 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.2838, Adjusted R-squared:  0.2441 </span></span>
+<span><span class="co">#&gt; F-statistic: 7.134 on 1 and 18 DF,  p-value: 0.01558</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-2-5-global-plant-height-against-latitude">Exercise 2.5: Global plant height against latitude<a class="anchor" aria-label="anchor" href="#exercise-2-5-global-plant-height-against-latitude"></a>
@@ -322,32 +322,32 @@ data. compare to Code Box 2.5<a class="anchor" aria-label="anchor" href="#code-b
 <p>Angela has two variables of interest – height and latitude – and both
 are quantitative. So linear regression is a good starting point.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">globalPlants</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/globalPlants%20lm-1.png" width="700"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">ft_height</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_height</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = height ~ lat, data = globalPlants)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
-<span class="co">#&gt; -15.740  -7.905  -5.289   4.409  68.326 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept) 17.00815    2.61957   6.493 1.66e-09 ***</span>
-<span class="co">#&gt; lat         -0.20759    0.06818  -3.045  0.00282 ** </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 13.59 on 129 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.06705,    Adjusted R-squared:  0.05982 </span>
-<span class="co">#&gt; F-statistic: 9.271 on 1 and 129 DF,  p-value: 0.002823</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_height</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">ft_height</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_height</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = height ~ lat, data = globalPlants)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -15.740  -7.905  -5.289   4.409  68.326 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept) 17.00815    2.61957   6.493 1.66e-09 ***</span></span>
+<span><span class="co">#&gt; lat         -0.20759    0.06818  -3.045  0.00282 ** </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 13.59 on 129 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.06705,    Adjusted R-squared:  0.05982 </span></span>
+<span><span class="co">#&gt; F-statistic: 9.271 on 1 and 129 DF,  p-value: 0.002823</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_height</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/globalPlants%20lm-2.png" width="700"><img src="Chapter2Solutions_files/figure-html/globalPlants%20lm-3.png" width="700"></p>
 <p>The original scatterplot suggests data are “pushed up” against the
 boundary of height=0, suggesting log-transformation. The linear model
@@ -356,31 +356,31 @@ being strongly right-skewed, and the residual vs fits plot suggesting a
 fan-shape.</p>
 <p>So let’s log-transform height.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span>,log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span>,log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/globalPlants%20loglm-1.png" width="700"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">globalPlants</span><span class="op">$</span><span class="va">logHeight</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">globalPlants</span><span class="op">$</span><span class="va">height</span><span class="op">)</span> 
- <span class="va">ft_logHeight</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logHeight</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_logHeight</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = logHeight ~ lat, data = globalPlants)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -1.49931 -0.48368 -0.04697  0.41125  1.54347 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)  1.152525   0.124193   9.280 5.19e-16 ***</span>
-<span class="co">#&gt; lat         -0.018501   0.003232  -5.724 6.94e-08 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 0.6442 on 129 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.2025, Adjusted R-squared:  0.1963 </span>
-<span class="co">#&gt; F-statistic: 32.76 on 1 and 129 DF,  p-value: 6.935e-08</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logHeight</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">globalPlants</span><span class="op">$</span><span class="va">logHeight</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">globalPlants</span><span class="op">$</span><span class="va">height</span><span class="op">)</span> </span>
+<span> <span class="va">ft_logHeight</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logHeight</span><span class="op">~</span><span class="va">lat</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_logHeight</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = logHeight ~ lat, data = globalPlants)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.49931 -0.48368 -0.04697  0.41125  1.54347 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  1.152525   0.124193   9.280 5.19e-16 ***</span></span>
+<span><span class="co">#&gt; lat         -0.018501   0.003232  -5.724 6.94e-08 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.6442 on 129 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.2025, Adjusted R-squared:  0.1963 </span></span>
+<span><span class="co">#&gt; F-statistic: 32.76 on 1 and 129 DF,  p-value: 6.935e-08</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logHeight</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/globalPlants%20loglm-2.png" width="700"><img src="Chapter2Solutions_files/figure-html/globalPlants%20loglm-3.png" width="700"></p>
 <p>OK suddenly everything is looking a lot better!</p>
 </div>
@@ -390,37 +390,37 @@ fan-shape.</p>
 <p>It will actually be slightly easier to check assumptions using a
 linear model, so I’ll use <code>lm</code> for reanalysis.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">)</span>
- <span class="va">guineapig</span><span class="op">$</span><span class="va">logErrors</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span><span class="op">)</span> 
- <span class="va">ft_logGuineapigs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logErrors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_logGuineapigs</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = logErrors ~ treatment, data = guineapig)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -0.72780 -0.33292 -0.07262  0.45788  0.81976 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)   3.0304     0.1534  19.750  1.2e-13 ***</span>
-<span class="co">#&gt; treatmentN    0.6665     0.2170   3.071  0.00658 ** </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 0.4852 on 18 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.3439, Adjusted R-squared:  0.3074 </span>
-<span class="co">#&gt; F-statistic: 9.434 on 1 and 18 DF,  p-value: 0.006577</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logGuineapigs</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">)</span></span>
+<span> <span class="va">guineapig</span><span class="op">$</span><span class="va">logErrors</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">errors</span><span class="op">)</span> </span>
+<span> <span class="va">ft_logGuineapigs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logErrors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_logGuineapigs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = logErrors ~ treatment, data = guineapig)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -0.72780 -0.33292 -0.07262  0.45788  0.81976 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)   3.0304     0.1534  19.750  1.2e-13 ***</span></span>
+<span><span class="co">#&gt; treatmentN    0.6665     0.2170   3.071  0.00658 ** </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.4852 on 18 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3439, Adjusted R-squared:  0.3074 </span></span>
+<span><span class="co">#&gt; F-statistic: 9.434 on 1 and 18 DF,  p-value: 0.006577</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logGuineapigs</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/guineapigs%20ttest%20log-transform-1.png" width="700"><img src="Chapter2Solutions_files/figure-html/guineapigs%20ttest%20log-transform-2.png" width="700"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/base/by.html" class="external-link">by</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">logErrors</span>,<span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span>,<span class="va">sd</span><span class="op">)</span>
-<span class="co">#&gt; guineapig$treatment: C</span>
-<span class="co">#&gt; [1] 0.521912</span>
-<span class="co">#&gt; ------------------------------------------------------------ </span>
-<span class="co">#&gt; guineapig$treatment: N</span>
-<span class="co">#&gt; [1] 0.445521</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/base/by.html" class="external-link">by</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">$</span><span class="va">logErrors</span>,<span class="va">guineapig</span><span class="op">$</span><span class="va">treatment</span>,<span class="va">sd</span><span class="op">)</span></span>
+<span><span class="co">#&gt; guineapig$treatment: C</span></span>
+<span><span class="co">#&gt; [1] 0.521912</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------ </span></span>
+<span><span class="co">#&gt; guineapig$treatment: N</span></span>
+<span><span class="co">#&gt; [1] 0.445521</span></span></code></pre></div>
 <p>We are doing much better with assumptions: plots look better,
 standard deviations are more similar. Results became slightly more
 significant, which is not unexpected, as data are closer to normal
@@ -434,7 +434,7 @@ non-linearity is not really useful, the only thing to worry about here
 is a fan shape. This would also show up on a smoother through the
 scale-location plot as an increasing trend:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logGuineapigs</span>,which<span class="op">=</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logGuineapigs</span>,which<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter2Solutions_files/figure-html/guineapigs%20ttest%20log-transform%20slplot-1.png" width="700"></p>
 <p>but there is no increasing trend so we are all good :)</p>
 </div>
@@ -442,48 +442,48 @@ scale-location plot as an increasing trend:</p>
 <h2 id="exercise-2-7-influential-value-in-the-water-quality-data">Exercise 2.7: Influential value in the water quality data<a class="anchor" aria-label="anchor" href="#exercise-2-7-influential-value-in-the-water-quality-data"></a>
 </h2>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">waterQuality</span><span class="op">)</span>
- <span class="va">ft_water</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>,data<span class="op">=</span><span class="va">waterQuality</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_water</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = quality ~ logCatchment, data = waterQuality)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;    Min     1Q Median     3Q    Max </span>
-<span class="co">#&gt; -7.891 -3.354 -1.406  4.102 11.588 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)    74.266      7.071  10.502 1.38e-08 ***</span>
-<span class="co">#&gt; logCatchment  -11.042      1.780  -6.204 1.26e-05 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 5.397 on 16 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.7064, Adjusted R-squared:  0.688 </span>
-<span class="co">#&gt; F-statistic: 38.49 on 1 and 16 DF,  p-value: 1.263e-05</span>
- <span class="va">ft_water2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>,data<span class="op">=</span><span class="va">waterQuality</span>, subset<span class="op">=</span><span class="va">waterQuality</span><span class="op">$</span><span class="va">logCatchment</span><span class="op">&gt;</span><span class="fl">2</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_water2</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = quality ~ logCatchment, data = waterQuality, subset = waterQuality$logCatchment &gt; </span>
-<span class="co">#&gt;     2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
-<span class="co">#&gt; -7.8709 -3.3107 -0.3438  4.5358 11.1955 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)     77.71       9.70   8.011 8.46e-07 ***</span>
-<span class="co">#&gt; logCatchment   -11.87       2.39  -4.966 0.000169 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 5.522 on 15 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.6218, Adjusted R-squared:  0.5966 </span>
-<span class="co">#&gt; F-statistic: 24.66 on 1 and 15 DF,  p-value: 0.0001691</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">waterQuality</span><span class="op">)</span></span>
+<span> <span class="va">ft_water</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>,data<span class="op">=</span><span class="va">waterQuality</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_water</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = quality ~ logCatchment, data = waterQuality)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span><span class="co">#&gt; -7.891 -3.354 -1.406  4.102 11.588 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)    74.266      7.071  10.502 1.38e-08 ***</span></span>
+<span><span class="co">#&gt; logCatchment  -11.042      1.780  -6.204 1.26e-05 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 5.397 on 16 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.7064, Adjusted R-squared:  0.688 </span></span>
+<span><span class="co">#&gt; F-statistic: 38.49 on 1 and 16 DF,  p-value: 1.263e-05</span></span>
+<span> <span class="va">ft_water2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">quality</span><span class="op">~</span><span class="va">logCatchment</span>,data<span class="op">=</span><span class="va">waterQuality</span>, subset<span class="op">=</span><span class="va">waterQuality</span><span class="op">$</span><span class="va">logCatchment</span><span class="op">&gt;</span><span class="fl">2</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_water2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = quality ~ logCatchment, data = waterQuality, subset = waterQuality$logCatchment &gt; </span></span>
+<span><span class="co">#&gt;     2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -7.8709 -3.3107 -0.3438  4.5358 11.1955 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)     77.71       9.70   8.011 8.46e-07 ***</span></span>
+<span><span class="co">#&gt; logCatchment   -11.87       2.39  -4.966 0.000169 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 5.522 on 15 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.6218, Adjusted R-squared:  0.5966 </span></span>
+<span><span class="co">#&gt; F-statistic: 24.66 on 1 and 15 DF,  p-value: 0.0001691</span></span></code></pre></div>
 <p>The <span class="math inline">\(R^2\)</span> value decreased a fair
 bit, which makes a bit of sense because we have removed from the dataset
 a point which has an extreme <span class="math inline">\(X\)</span>
@@ -507,7 +507,7 @@ for similar reasons.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

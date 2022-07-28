@@ -14,7 +14,7 @@ A dataframe containing:\describe{
 }
 }
 \usage{
-data(seaweed)
+data(snowmelt)
 }
 \description{
 Data from a study of how time from snowmelt to flowering relates to snowmelt date and elevation

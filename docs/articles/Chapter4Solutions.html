@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 4 -- Linear models -- anything goes -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 4 -- Linear models -- anything goes -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,12 +93,12 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 4 -- Linear models -- anything goes -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
             
-            <h4 data-toc-skip class="date">2022-07-12</h4>
+            <h4 data-toc-skip class="date">2022-07-28</h4>
       
       
       <div class="d-none name"><code>Chapter4Solutions.Rmd</code></div>
@@ -116,10 +116,10 @@ importantly, paired differences are independent of each other)</li>
 <li>the paired differences are approixmately normal.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: mvabund</span>
- <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">)</span>
- <span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">$</span><span class="va">delta</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: mvabund</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">$</span><span class="va">delta</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/ravens%20check-1.png" width="384"></p>
 <p>This looks OK, there is no evidence against normality here</p>
 </div>
@@ -127,20 +127,20 @@ importantly, paired differences are independent of each other)</li>
 <h2 id="code-box-4-1-paired-t-test-for-the-ravens-data">Code Box 4.1: Paired t-test for the ravens data<a class="anchor" aria-label="anchor" href="#code-box-4-1-paired-t-test-for-the-ravens-data"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">)</span>
- <span class="va">crowGun</span> <span class="op">=</span> <span class="va">ravens</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span> <span class="op">==</span> <span class="fl">1</span>,<span class="op">]</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">crowGun</span><span class="op">$</span><span class="va">Before</span>, <span class="va">crowGun</span><span class="op">$</span><span class="va">After</span>, paired<span class="op">=</span><span class="cn">TRUE</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  Paired t-test</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; data:  crowGun$Before and crowGun$After</span>
-<span class="co">#&gt; t = -2.6, df = 11, p-value = 0.01235</span>
-<span class="co">#&gt; alternative hypothesis: true difference in means is less than 0</span>
-<span class="co">#&gt; 95 percent confidence interval:</span>
-<span class="co">#&gt;       -Inf -0.335048</span>
-<span class="co">#&gt; sample estimates:</span>
-<span class="co">#&gt; mean of the differences </span>
-<span class="co">#&gt;               -1.083333</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">)</span></span>
+<span> <span class="va">crowGun</span> <span class="op">=</span> <span class="va">ravens</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span> <span class="op">==</span> <span class="fl">1</span>,<span class="op">]</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">crowGun</span><span class="op">$</span><span class="va">Before</span>, <span class="va">crowGun</span><span class="op">$</span><span class="va">After</span>, paired<span class="op">=</span><span class="cn">TRUE</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  Paired t-test</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; data:  crowGun$Before and crowGun$After</span></span>
+<span><span class="co">#&gt; t = -2.6, df = 11, p-value = 0.01235</span></span>
+<span><span class="co">#&gt; alternative hypothesis: true mean difference is less than 0</span></span>
+<span><span class="co">#&gt; 95 percent confidence interval:</span></span>
+<span><span class="co">#&gt;       -Inf -0.335048</span></span>
+<span><span class="co">#&gt; sample estimates:</span></span>
+<span><span class="co">#&gt; mean difference </span></span>
+<span><span class="co">#&gt;       -1.083333</span></span></code></pre></div>
 <p>There is some evidence that ravens fly towards the sound of
 gunshots.</p>
 </div>
@@ -158,28 +158,28 @@ place to another, see Code Box 4.3.</p>
 model<a class="anchor" aria-label="anchor" href="#code-box-4-2-paired-t-test-for-the-ravens-data-via-a-linear-model"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape" class="external-link">reshape2</a></span><span class="op">)</span>
- <span class="va">crowLong</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">crowGun</span>,measure.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Before"</span>,<span class="st">"After"</span><span class="op">)</span>,
-                 variable.name<span class="op">=</span><span class="st">"time"</span>,value.name<span class="op">=</span><span class="st">"ravens"</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crowLong</span><span class="op">)</span>
-<span class="co">#&gt;   delta    site treatment trees   time ravens</span>
-<span class="co">#&gt; 1     2 pilgrim         1     1 Before      0</span>
-<span class="co">#&gt; 2     1 pacific         1     1 Before      0</span>
-<span class="co">#&gt; 3     4 uhl hil         1     1 Before      0</span>
-<span class="co">#&gt; 4     1 wolff r         1     1 Before      0</span>
-<span class="co">#&gt; 5     0 teton p         1     1 Before      0</span>
-<span class="co">#&gt; 6     3 glacier         1     1 Before      2</span>
- <span class="va">ravenlm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">~</span><span class="va">site</span><span class="op">+</span><span class="va">time</span>,data<span class="op">=</span><span class="va">crowLong</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ravenlm</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: ravens</span>
-<span class="co">#&gt;           Df Sum Sq Mean Sq F value   Pr(&gt;F)   </span>
-<span class="co">#&gt; site      11 55.458  5.0417    4.84 0.007294 **</span>
-<span class="co">#&gt; time       1  7.042  7.0417    6.76 0.024694 * </span>
-<span class="co">#&gt; Residuals 11 11.458  1.0417                    </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape" class="external-link">reshape2</a></span><span class="op">)</span></span>
+<span> <span class="va">crowLong</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html" class="external-link">melt</a></span><span class="op">(</span><span class="va">crowGun</span>,measure.vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Before"</span>,<span class="st">"After"</span><span class="op">)</span>,</span>
+<span>                 variable.name<span class="op">=</span><span class="st">"time"</span>,value.name<span class="op">=</span><span class="st">"ravens"</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crowLong</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   delta    site treatment trees   time ravens</span></span>
+<span><span class="co">#&gt; 1     2 pilgrim         1     1 Before      0</span></span>
+<span><span class="co">#&gt; 2     1 pacific         1     1 Before      0</span></span>
+<span><span class="co">#&gt; 3     4 uhl hil         1     1 Before      0</span></span>
+<span><span class="co">#&gt; 4     1 wolff r         1     1 Before      0</span></span>
+<span><span class="co">#&gt; 5     0 teton p         1     1 Before      0</span></span>
+<span><span class="co">#&gt; 6     3 glacier         1     1 Before      2</span></span>
+<span> <span class="va">ravenlm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">~</span><span class="va">site</span><span class="op">+</span><span class="va">time</span>,data<span class="op">=</span><span class="va">crowLong</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ravenlm</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: ravens</span></span>
+<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value   Pr(&gt;F)   </span></span>
+<span><span class="co">#&gt; site      11 55.458  5.0417    4.84 0.007294 **</span></span>
+<span><span class="co">#&gt; time       1  7.042  7.0417    6.76 0.024694 * </span></span>
+<span><span class="co">#&gt; Residuals 11 11.458  1.0417                    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-3-a-linear-model-for-the-blocked-design-given-by-the-raven-counts-in-exercise-4-2">Code Box 4.3: A linear model for the blocked design given by the
@@ -188,20 +188,20 @@ raven counts in Exercise 4.2<a class="anchor" aria-label="anchor" href="#code-bo
 <p>To analyse, we first subset to the three treatments of interest
 (1=gunshot, 2=airhorn, 3=whistle):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">crowAfter</span> <span class="op">=</span> <span class="va">ravens</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span> <span class="op">&lt;=</span><span class="fl">3</span>,<span class="op">]</span>
-<span class="va">ft_crowAfter</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">After</span><span class="op">~</span><span class="va">site</span><span class="op">+</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">crowAfter</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_crowAfter</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: After</span>
-<span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)</span>
-<span class="co">#&gt; site      11 28.667  2.6061  0.9269 0.5327</span>
-<span class="co">#&gt; treatment  1  2.667  2.6667  0.9485 0.3402</span>
-<span class="co">#&gt; Residuals 23 64.667  2.8116</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">crowAfter</span> <span class="op">=</span> <span class="va">ravens</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span> <span class="op">&lt;=</span><span class="fl">3</span>,<span class="op">]</span></span>
+<span><span class="va">ft_crowAfter</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">After</span><span class="op">~</span><span class="va">site</span><span class="op">+</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">crowAfter</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_crowAfter</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: After</span></span>
+<span><span class="co">#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)</span></span>
+<span><span class="co">#&gt; site      11 28.667  2.6061  0.9269 0.5327</span></span>
+<span><span class="co">#&gt; treatment  1  2.667  2.6667  0.9485 0.3402</span></span>
+<span><span class="co">#&gt; Residuals 23 64.667  2.8116</span></span></code></pre></div>
 <p>To check assumptions we could look at diagnostic plots:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_crowAfter</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_crowAfter</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/ravens%20block%20assumptions-1.png" width="768"></p>
 <p>The residual vs fits plot has a fan-shaped pattern, suggesting that
 transformation might be a good idea here!</p>
@@ -232,11 +232,11 @@ in Code Box 4.4.</p>
 <h2 id="code-box-4-4-scatterplot-of-data-from-exercise-4-3-">Code Box 4.4: Scatterplot of data from Exercise 4.3.<a class="anchor" aria-label="anchor" href="#code-box-4-4-scatterplot-of-data-from-exercise-4-3-"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span>
- <span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Total</span><span class="op">~</span><span class="va">Wmass</span>, data<span class="op">=</span><span class="va">seaweed</span>, col<span class="op">=</span><span class="va">Dist</span>, 
-      xlab<span class="op">=</span><span class="st">"Wet Mass [log scale]"</span>,ylab<span class="op">=</span><span class="st">"Density (per gram) [log scale]"</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,pch<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span> <span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Total</span><span class="op">~</span><span class="va">Wmass</span>, data<span class="op">=</span><span class="va">seaweed</span>, col<span class="op">=</span><span class="va">Dist</span>, </span>
+<span>      xlab<span class="op">=</span><span class="st">"Wet Mass [log scale]"</span>,ylab<span class="op">=</span><span class="st">"Density (per gram) [log scale]"</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,pch<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20plot-1.png" width="384"></p>
 </div>
 <div class="section level2">
@@ -244,19 +244,19 @@ in Code Box 4.4.</p>
 Exercise 4.3.<a class="anchor" aria-label="anchor" href="#code-box-4-5-analysis-of-covariance-for-the-seaweed-data-of-exercise-4-3-"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">seaweed</span><span class="op">$</span><span class="va">logTot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Total</span><span class="op">)</span>
- <span class="va">seaweed</span><span class="op">$</span><span class="va">logWmass</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Wmass</span><span class="op">)</span>
- <span class="va">lmMassDist</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">logWmass</span><span class="op">+</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lmMassDist</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: logTot</span>
-<span class="co">#&gt;           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; logWmass   1  7.7216  7.7216 35.7165 1.975e-07 ***</span>
-<span class="co">#&gt; Dist       2  2.1415  1.0708  4.9528   0.01067 *  </span>
-<span class="co">#&gt; Residuals 53 11.4582  0.2162                      </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">seaweed</span><span class="op">$</span><span class="va">logTot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Total</span><span class="op">)</span></span>
+<span> <span class="va">seaweed</span><span class="op">$</span><span class="va">logWmass</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Wmass</span><span class="op">)</span></span>
+<span> <span class="va">lmMassDist</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">logWmass</span><span class="op">+</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lmMassDist</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: logTot</span></span>
+<span><span class="co">#&gt;           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; logWmass   1  7.7216  7.7216 35.7165 1.975e-07 ***</span></span>
+<span><span class="co">#&gt; Dist       2  2.1415  1.0708  4.9528   0.01067 *  </span></span>
+<span><span class="co">#&gt; Residuals 53 11.4582  0.2162                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-4-4-checking-ancova-assumptions">Exercise 4.4: Checking ANCOVA assumptions<a class="anchor" aria-label="anchor" href="#exercise-4-4-checking-ancova-assumptions"></a>
@@ -265,8 +265,8 @@ Exercise 4.3.<a class="anchor" aria-label="anchor" href="#code-box-4-5-analysis-
 <code>Dist</code> treatments to plots.</p>
 <p>Remaining assumptions can be checked using diagnostic plots.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">lmMassDist</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">lmMassDist</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20plt-1.png" width="768"></p>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>99</code> iterations, to speed up computation time.)</p>
@@ -288,17 +288,17 @@ seems OK</li>
 <p>Notice that switching the order changes the results in the ANOVA
 table, and their interpretation.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">lmDistMass</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Dist</span><span class="op">+</span><span class="va">logWmass</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lmDistMass</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: logTot</span>
-<span class="co">#&gt;           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; Dist       2  4.8786  2.4393  11.283 8.273e-05 ***</span>
-<span class="co">#&gt; logWmass   1  4.9845  4.9845  23.056 1.329e-05 ***</span>
-<span class="co">#&gt; Residuals 53 11.4582  0.2162                      </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">lmDistMass</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Dist</span><span class="op">+</span><span class="va">logWmass</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lmDistMass</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: logTot</span></span>
+<span><span class="co">#&gt;           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; Dist       2  4.8786  2.4393  11.283 8.273e-05 ***</span></span>
+<span><span class="co">#&gt; logWmass   1  4.9845  4.9845  23.056 1.329e-05 ***</span></span>
+<span><span class="co">#&gt; Residuals 53 11.4582  0.2162                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-4-5-order-of-terms-in-writing-out-a-model-for-snails-and-seaweed-">Exercise 4.5: Order of terms in writing out a model for snails and
@@ -313,17 +313,17 @@ an effect of <code>Dist</code> after controlling for
 seaweed.<a class="anchor" aria-label="anchor" href="#code-box-4-7-type-ii-sums-of-squares-for-the-ancova-of-snails-and-seaweed-"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/add1.html" class="external-link">drop1</a></span><span class="op">(</span><span class="va">lmMassDist</span>,test<span class="op">=</span><span class="st">"F"</span><span class="op">)</span>
-<span class="co">#&gt; Single term deletions</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model:</span>
-<span class="co">#&gt; logTot ~ logWmass + Dist</span>
-<span class="co">#&gt;          Df Sum of Sq    RSS     AIC F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; &lt;none&gt;                11.458 -83.448                      </span>
-<span class="co">#&gt; logWmass  1    4.9845 16.443 -64.861 23.0561 1.329e-05 ***</span>
-<span class="co">#&gt; Dist      2    2.1415 13.600 -77.681  4.9528   0.01067 *  </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/add1.html" class="external-link">drop1</a></span><span class="op">(</span><span class="va">lmMassDist</span>,test<span class="op">=</span><span class="st">"F"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Single term deletions</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model:</span></span>
+<span><span class="co">#&gt; logTot ~ logWmass + Dist</span></span>
+<span><span class="co">#&gt;          Df Sum of Sq    RSS     AIC F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; &lt;none&gt;                11.458 -83.448                      </span></span>
+<span><span class="co">#&gt; logWmass  1    4.9845 16.443 -64.861 23.0561 1.329e-05 ***</span></span>
+<span><span class="co">#&gt; Dist      2    2.1415 13.600 -77.681  4.9528   0.01067 *  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-4-6-snails-isolation-and-time">Exercise 4.6: Snails, isolation and time<a class="anchor" aria-label="anchor" href="#exercise-4-6-snails-isolation-and-time"></a>
@@ -355,16 +355,16 @@ six possible combinations of sampling time and distance of
 isolation.<a class="anchor" aria-label="anchor" href="#code-box-4-8-a-comparative-boxplot-of-snail-density-at-each-of-the-six-possible-combinations-of-sampling-time-and-distance-of-isolation-"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Total</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">Dist</span>,<span class="va">Time</span><span class="op">)</span>, data<span class="op">=</span><span class="va">seaweed</span>, log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span> <span class="co">## and as usual use xlabel, ylabel to name axes</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Total</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">Dist</span>,<span class="va">Time</span><span class="op">)</span>, data<span class="op">=</span><span class="va">seaweed</span>, log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span> <span class="co">## and as usual use xlabel, ylabel to name axes</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20compBox-1.png" width="384"></p>
 </div>
 <div class="section level2">
 <h2 id="exercise-4-7-factorial-anova-assumptions">Exercise 4.7: Factorial ANOVA assumptions<a class="anchor" aria-label="anchor" href="#exercise-4-7-factorial-anova-assumptions"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
- <span class="va">ft_seaweedFact</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_seaweedFact</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span> <span class="va">ft_seaweedFact</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_seaweedFact</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20fact-1.png" width="768"></p>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>99</code> iterations, to speed up computation time.)</p>
@@ -385,18 +385,18 @@ factorial ANOVA</li>
 <h2 id="code-box-4-9-factorial-anova-of-snails-isolation-and-time">Code Box 4.9: Factorial ANOVA of Snails, Isolation, and Time<a class="anchor" aria-label="anchor" href="#code-box-4-9-factorial-anova-of-snails-isolation-and-time"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_seaweedFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_seaweedFact</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: logTot</span>
-<span class="co">#&gt;           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; Time       1  0.2433 0.24333  0.8512 0.3605470    </span>
-<span class="co">#&gt; Dist       2  5.0323 2.51613  8.8023 0.0005201 ***</span>
-<span class="co">#&gt; Time:Dist  2  1.4673 0.73367  2.5666 0.0866804 .  </span>
-<span class="co">#&gt; Residuals 51 14.5784 0.28585                      </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_seaweedFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_seaweedFact</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: logTot</span></span>
+<span><span class="co">#&gt;           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; Time       1  0.2433 0.24333  0.8512 0.3605470    </span></span>
+<span><span class="co">#&gt; Dist       2  5.0323 2.51613  8.8023 0.0005201 ***</span></span>
+<span><span class="co">#&gt; Time:Dist  2  1.4673 0.73367  2.5666 0.0866804 .  </span></span>
+<span><span class="co">#&gt; Residuals 51 14.5784 0.28585                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>There is marginal evidence of an interaction and strong evidence of a
 <code>Dist</code> main effect. So there is an effect of
 <code>Dist</code> and it could potentially vary with
@@ -409,118 +409,118 @@ include <code>Time</code> to control for sampling time effects</p>
 <h2 id="code-box-4-10-r-code-for-the-interaction-plot-in-figure-4-1-">Code Box 4.10: R code for the interaction plot in Figure 4.1.<a class="anchor" aria-label="anchor" href="#code-box-4-10-r-code-for-the-interaction-plot-in-figure-4-1-"></a>
 </h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
- <span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span> 
- <span class="va">by_DistTime</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">seaweed</span>,<span class="va">Dist</span>,<span class="va">Time</span><span class="op">)</span>
- <span class="va">distTimeMeans</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">by_DistTime</span>, logTotal<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` has grouped output by 'Dist'. You can override using the</span>
-<span class="co">#&gt; `.groups` argument.</span>
- <span class="va">distTimeMeans</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span>
-<span class="co">#&gt; <span style="color: #949494;"># Groups:   Dist [3]</span></span>
-<span class="co">#&gt;   Dist  Time  logTotal</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0     5         1.58</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0     10        1.31</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2     5         2.01</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2     10        2.36</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 10    5         1.68</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 10    10        2.13</span>
- <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
- <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes" class="external-link">ggthemes</a></span><span class="op">)</span> <span class="co">#loads special themes</span>
- <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">seaweed</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">Dist</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">Total</span>, colour <span class="op">=</span> <span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">distTimeMeans</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">logTotal</span><span class="op">)</span>,
-   group <span class="op">=</span> <span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html" class="external-link">theme_few</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Distance of Isolation"</span><span class="op">)</span> <span class="op">+</span>
-   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Total abundance [log scale]"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span>breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span> <span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span> </span>
+<span> <span class="va">by_DistTime</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">seaweed</span>,<span class="va">Dist</span>,<span class="va">Time</span><span class="op">)</span></span>
+<span> <span class="va">distTimeMeans</span> <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">by_DistTime</span>, logTotal<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `summarise()` has grouped output by 'Dist'. You can override using the</span></span>
+<span><span class="co">#&gt; `.groups` argument.</span></span>
+<span> <span class="va">distTimeMeans</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   Dist [3]</span></span></span>
+<span><span class="co">#&gt;   Dist  Time  logTotal</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0     5         1.58</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0     10        1.31</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2     5         2.01</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 2     10        2.36</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 10    5         1.68</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 10    10        2.13</span></span>
+<span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes" class="external-link">ggthemes</a></span><span class="op">)</span> <span class="co">#loads special themes</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">seaweed</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">Dist</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">Total</span>, colour <span class="op">=</span> <span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">distTimeMeans</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">logTotal</span><span class="op">)</span>,</span>
+<span>   group <span class="op">=</span> <span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html" class="external-link">theme_few</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Distance of Isolation"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Total abundance [log scale]"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_log10</a></span><span class="op">(</span>breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20interplot-1.png" width="480"></p>
 <p>Alternatively, for a simpler plot without the data points on it,
 try:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/interaction.plot.html" class="external-link">interaction.plot</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span>, <span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span>, <span class="va">ft_seaweedFact</span><span class="op">$</span><span class="va">fitted</span>,
-      xlab<span class="op">=</span><span class="st">"Isolation of patch"</span>, ylab<span class="op">=</span><span class="st">"Total density [log]"</span>, trace.label<span class="op">=</span><span class="st">"Time"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/interaction.plot.html" class="external-link">interaction.plot</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span>, <span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span>, <span class="va">ft_seaweedFact</span><span class="op">$</span><span class="va">fitted</span>,</span>
+<span>      xlab<span class="op">=</span><span class="st">"Isolation of patch"</span>, ylab<span class="op">=</span><span class="st">"Total density [log]"</span>, trace.label<span class="op">=</span><span class="st">"Time"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20interplot2-1.png" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-11-uh-oh-anova-gone-wrong">Code Box 4.11: Uh oh… <code>anova</code> gone wrong<a class="anchor" aria-label="anchor" href="#code-box-4-11-uh-oh-anova-gone-wrong"></a>
 </h2>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="va">ft_nofactor</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_nofactor</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: log(Total)</span>
-<span class="co">#&gt;           Df  Sum Sq Mean Sq F value  Pr(&gt;F)  </span>
-<span class="co">#&gt; Time       1  0.2433 0.24333  0.6671 0.41771  </span>
-<span class="co">#&gt; Dist       1  0.7164 0.71635  1.9640 0.16691  </span>
-<span class="co">#&gt; Time:Dist  1  1.0303 1.03031  2.8248 0.09871 .</span>
-<span class="co">#&gt; Residuals 53 19.3313 0.36474                  </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="va">ft_nofactor</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_nofactor</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: log(Total)</span></span>
+<span><span class="co">#&gt;           Df  Sum Sq Mean Sq F value  Pr(&gt;F)  </span></span>
+<span><span class="co">#&gt; Time       1  0.2433 0.24333  0.6671 0.41771  </span></span>
+<span><span class="co">#&gt; Dist       1  0.7164 0.71635  1.9640 0.16691  </span></span>
+<span><span class="co">#&gt; Time:Dist  1  1.0303 1.03031  2.8248 0.09871 .</span></span>
+<span><span class="co">#&gt; Residuals 53 19.3313 0.36474                  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-12-tukeys-comparisons-dont-work-for-main-e-ects-in-an-orthogonal-design-as-seen-for-exercise-4-9">Code Box 4.12: Tukey’s comparisons don’t work for main eects in an
 orthogonal design, as seen for Exercise 4.9:<a class="anchor" aria-label="anchor" href="#code-box-4-12-tukeys-comparisons-dont-work-for-main-e-ects-in-an-orthogonal-design-as-seen-for-exercise-4-9"></a>
 </h2>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>
- <span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span>
- <span class="va">seaweed</span><span class="op">$</span><span class="va">logTot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Total</span><span class="op">)</span>
- <span class="va">ft_seaweedFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
- <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://multcomp.R-forge.R-project.org" class="external-link">multcomp</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: mvtnorm</span>
-<span class="co">#&gt; Loading required package: survival</span>
-<span class="co">#&gt; Loading required package: TH.data</span>
-<span class="co">#&gt; Loading required package: MASS</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'MASS'</span>
-<span class="co">#&gt; The following object is masked from 'package:dplyr':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     select</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'TH.data'</span>
-<span class="co">#&gt; The following object is masked from 'package:MASS':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     geyser</span>
- <span class="va">contFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>Dist<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span> <span class="co"># telling R to compare on the Dist factor</span>
- <span class="va">compFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedFact</span>, linfct<span class="op">=</span><span class="va">contFact</span><span class="op">)</span> <span class="co"># run multiple comparisions</span>
-<span class="co">#&gt; Warning in mcp2matrix(model, linfct = linfct): covariate interactions found --</span>
-<span class="co">#&gt; default contrast might be inappropriate</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span></span>
+<span> <span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
+<span> <span class="va">seaweed</span><span class="op">$</span><span class="va">logTot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Total</span><span class="op">)</span></span>
+<span> <span class="va">ft_seaweedFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://multcomp.R-forge.R-project.org" class="external-link">multcomp</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: mvtnorm</span></span>
+<span><span class="co">#&gt; Loading required package: survival</span></span>
+<span><span class="co">#&gt; Loading required package: TH.data</span></span>
+<span><span class="co">#&gt; Loading required package: MASS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'MASS'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:dplyr':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     select</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'TH.data'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:MASS':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     geyser</span></span>
+<span> <span class="va">contFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>Dist<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span> <span class="co"># telling R to compare on the Dist factor</span></span>
+<span> <span class="va">compFact</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedFact</span>, linfct<span class="op">=</span><span class="va">contFact</span><span class="op">)</span> <span class="co"># run multiple comparisions</span></span>
+<span><span class="co">#&gt; Warning in mcp2matrix(model, linfct = linfct): covariate interactions found --</span></span>
+<span><span class="co">#&gt; default contrast might be inappropriate</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-13-tukeys-comparisons-for-a-main-e-ect-of-dist-for-exercise-4-6-assuming-no-interaction-">Code Box 4.13: Tukey’s comparisons for a main eect of Dist for
 Exercise 4.6, assuming no interaction.<a class="anchor" aria-label="anchor" href="#code-box-4-13-tukeys-comparisons-for-a-main-e-ect-of-dist-for-exercise-4-6-assuming-no-interaction-"></a>
 </h2>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">ft_seaweedMain</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">+</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span> <span class="co"># note it is + not *</span>
- <span class="va">contrast</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>Dist<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span> <span class="co"># telling R to compare on the Dist factor</span>
- <span class="va">compDistMain</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedMain</span>, linfct<span class="op">=</span><span class="va">contrast</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">compDistMain</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Simultaneous Confidence Intervals</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multiple Comparisons of Means: Tukey Contrasts</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit: lm(formula = logTot ~ Time + Dist, data = seaweed)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Quantile = 2.4112</span>
-<span class="co">#&gt; 95% family-wise confidence level</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear Hypotheses:</span>
-<span class="co">#&gt;             Estimate lwr      upr     </span>
-<span class="co">#&gt; 2 - 0 == 0   0.72650  0.28772  1.16527</span>
-<span class="co">#&gt; 10 - 0 == 0  0.45838  0.03883  0.87793</span>
-<span class="co">#&gt; 10 - 2 == 0 -0.26812 -0.70689  0.17066</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">ft_seaweedMain</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Time</span><span class="op">+</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span> <span class="co"># note it is + not *</span></span>
+<span> <span class="va">contrast</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>Dist<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span> <span class="co"># telling R to compare on the Dist factor</span></span>
+<span> <span class="va">compDistMain</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedMain</span>, linfct<span class="op">=</span><span class="va">contrast</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">compDistMain</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Simultaneous Confidence Intervals</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multiple Comparisons of Means: Tukey Contrasts</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit: lm(formula = logTot ~ Time + Dist, data = seaweed)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Quantile = 2.4106</span></span>
+<span><span class="co">#&gt; 95% family-wise confidence level</span></span>
+<span><span class="co">#&gt;  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear Hypotheses:</span></span>
+<span><span class="co">#&gt;             Estimate lwr      upr     </span></span>
+<span><span class="co">#&gt; 2 - 0 == 0   0.72650  0.28784  1.16515</span></span>
+<span><span class="co">#&gt; 10 - 0 == 0  0.45838  0.03894  0.87782</span></span>
+<span><span class="co">#&gt; 10 - 2 == 0 -0.26812 -0.70677  0.17054</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-14-tukeys-comparisons-for-all-possible-treatment-combinations-for-exercise-4-6-">Code Box 4.14: Tukey’s comparisons for all possible treatment
@@ -529,39 +529,39 @@ combinations for Exercise 4.6.<a class="anchor" aria-label="anchor" href="#code-
 <p>This approach is wasteful as it compares some pairs we are not
 interested in (e.g. 2.10 vs 0.5).</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">td</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span>,<span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span>
- <span class="va">ft_seaweedInt</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">td</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span> <span class="co"># Time*Dist as a single term</span>
- <span class="va">contInt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>td<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span> <span class="co"># telling R to compare on all Time*Dist levels</span>
- <span class="va">compDistInt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedInt</span>, linfct<span class="op">=</span><span class="va">contInt</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">compDistInt</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Simultaneous Tests for General Linear Hypotheses</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multiple Comparisons of Means: Tukey Contrasts</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit: lm(formula = logTot ~ td, data = seaweed)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear Hypotheses:</span>
-<span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; 2.5 - 0.5 == 0      0.4356     0.2391   1.822  0.46038   </span>
-<span class="co">#&gt; 10.5 - 0.5 == 0     0.1013     0.2391   0.424  0.99815   </span>
-<span class="co">#&gt; 0.10 - 0.5 == 0    -0.2643     0.2391  -1.105  0.87659   </span>
-<span class="co">#&gt; 2.10 - 0.5 == 0     0.7852     0.2635   2.980  0.04756 * </span>
-<span class="co">#&gt; 10.10 - 0.5 == 0    0.5512     0.2391   2.305  0.21046   </span>
-<span class="co">#&gt; 10.5 - 2.5 == 0    -0.3343     0.2391  -1.398  0.72726   </span>
-<span class="co">#&gt; 0.10 - 2.5 == 0    -0.6999     0.2391  -2.927  0.05411 . </span>
-<span class="co">#&gt; 2.10 - 2.5 == 0     0.3496     0.2635   1.327  0.76838   </span>
-<span class="co">#&gt; 10.10 - 2.5 == 0    0.1156     0.2391   0.483  0.99654   </span>
-<span class="co">#&gt; 0.10 - 10.5 == 0   -0.3656     0.2391  -1.529  0.64689   </span>
-<span class="co">#&gt; 2.10 - 10.5 == 0    0.6839     0.2635   2.596  0.11665   </span>
-<span class="co">#&gt; 10.10 - 10.5 == 0   0.4499     0.2391   1.882  0.42411   </span>
-<span class="co">#&gt; 2.10 - 0.10 == 0    1.0495     0.2635   3.983  0.00282 **</span>
-<span class="co">#&gt; 10.10 - 0.10 == 0   0.8155     0.2391   3.411  0.01526 * </span>
-<span class="co">#&gt; 10.10 - 2.10 == 0  -0.2340     0.2635  -0.888  0.94749   </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">td</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span>,<span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
+<span> <span class="va">ft_seaweedInt</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">td</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span> <span class="co"># Time*Dist as a single term</span></span>
+<span> <span class="va">contInt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>td<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span> <span class="co"># telling R to compare on all Time*Dist levels</span></span>
+<span> <span class="va">compDistInt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedInt</span>, linfct<span class="op">=</span><span class="va">contInt</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">compDistInt</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Simultaneous Tests for General Linear Hypotheses</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multiple Comparisons of Means: Tukey Contrasts</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit: lm(formula = logTot ~ td, data = seaweed)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear Hypotheses:</span></span>
+<span><span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; 2.5 - 0.5 == 0      0.4356     0.2391   1.822  0.46047   </span></span>
+<span><span class="co">#&gt; 10.5 - 0.5 == 0     0.1013     0.2391   0.424  0.99815   </span></span>
+<span><span class="co">#&gt; 0.10 - 0.5 == 0    -0.2643     0.2391  -1.105  0.87659   </span></span>
+<span><span class="co">#&gt; 2.10 - 0.5 == 0     0.7852     0.2635   2.980  0.04744 * </span></span>
+<span><span class="co">#&gt; 10.10 - 0.5 == 0    0.5512     0.2391   2.305  0.21032   </span></span>
+<span><span class="co">#&gt; 10.5 - 2.5 == 0    -0.3343     0.2391  -1.398  0.72724   </span></span>
+<span><span class="co">#&gt; 0.10 - 2.5 == 0    -0.6999     0.2391  -2.927  0.05398 . </span></span>
+<span><span class="co">#&gt; 2.10 - 2.5 == 0     0.3496     0.2635   1.327  0.76828   </span></span>
+<span><span class="co">#&gt; 10.10 - 2.5 == 0    0.1156     0.2391   0.483  0.99654   </span></span>
+<span><span class="co">#&gt; 0.10 - 10.5 == 0   -0.3656     0.2391  -1.529  0.64681   </span></span>
+<span><span class="co">#&gt; 2.10 - 10.5 == 0    0.6839     0.2635   2.596  0.11668   </span></span>
+<span><span class="co">#&gt; 10.10 - 10.5 == 0   0.4499     0.2391   1.882  0.42421   </span></span>
+<span><span class="co">#&gt; 2.10 - 0.10 == 0    1.0495     0.2635   3.983  0.00277 **</span></span>
+<span><span class="co">#&gt; 10.10 - 0.10 == 0   0.8155     0.2391   3.411  0.01539 * </span></span>
+<span><span class="co">#&gt; 10.10 - 2.10 == 0  -0.2340     0.2635  -0.888  0.94749   </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-15-tukeys-comparisons-for-dist-within-each-sampling-time-for-exercise-4-6-">Code Box 4.15: Tukey’s comparisons for Dist within each sampling
@@ -570,55 +570,55 @@ time, for Exercise 4.6.<a class="anchor" aria-label="anchor" href="#code-box-4-1
 <p>This is the best approach to use if you think there is an interaction
 and are primarily interested in Dist.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"five"</span>,<span class="st">"ten"</span><span class="op">)</span> <span class="co">#need non-numbers for mcp to work</span>
- <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Zero"</span>,<span class="st">"Two"</span>,<span class="st">"Ten"</span><span class="op">)</span>
- <span class="va">td</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span>,<span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span>
- <span class="va">ft_seaweedInt</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">~</span><span class="va">td</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span> <span class="co"># Time*Dist as a single term</span>
- <span class="va">contDistinTime</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>td <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Two.five - Zero.five = 0"</span>,
-                             <span class="st">"Ten.five - Zero.five = 0"</span>,
-                             <span class="st">"Ten.five - Two.five = 0"</span>,
-                             <span class="st">"Two.ten - Zero.ten = 0"</span>,
-                             <span class="st">"Ten.ten - Zero.ten = 0"</span>,
-                             <span class="st">"Ten.ten - Two.ten = 0"</span><span class="op">)</span><span class="op">)</span>
- <span class="va">compDistinTime</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedInt</span>, linfct<span class="op">=</span><span class="va">contDistinTime</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">compDistinTime</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Simultaneous Tests for General Linear Hypotheses</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multiple Comparisons of Means: User-defined Contrasts</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit: lm(formula = log(Total) ~ td, data = seaweed)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Linear Hypotheses:</span>
-<span class="co">#&gt;                           Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; Two.five - Zero.five == 0   0.4356     0.2391   1.822  0.31168   </span>
-<span class="co">#&gt; Ten.five - Zero.five == 0   0.1013     0.2391   0.424  0.99083   </span>
-<span class="co">#&gt; Ten.five - Two.five == 0   -0.3343     0.2391  -1.398  0.57121   </span>
-<span class="co">#&gt; Two.ten - Zero.ten == 0     1.0495     0.2635   3.983  0.00126 **</span>
-<span class="co">#&gt; Ten.ten - Zero.ten == 0     0.8155     0.2391   3.411  0.00712 **</span>
-<span class="co">#&gt; Ten.ten - Two.ten == 0     -0.2340     0.2635  -0.888  0.87446   </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"five"</span>,<span class="st">"ten"</span><span class="op">)</span> <span class="co">#need non-numbers for mcp to work</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Zero"</span>,<span class="st">"Two"</span>,<span class="st">"Ten"</span><span class="op">)</span></span>
+<span> <span class="va">td</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span>,<span class="va">seaweed</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span>
+<span> <span class="va">ft_seaweedInt</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">~</span><span class="va">td</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span> <span class="co"># Time*Dist as a single term</span></span>
+<span> <span class="va">contDistinTime</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">mcp</a></span><span class="op">(</span>td <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Two.five - Zero.five = 0"</span>,</span>
+<span>                             <span class="st">"Ten.five - Zero.five = 0"</span>,</span>
+<span>                             <span class="st">"Ten.five - Two.five = 0"</span>,</span>
+<span>                             <span class="st">"Two.ten - Zero.ten = 0"</span>,</span>
+<span>                             <span class="st">"Ten.ten - Zero.ten = 0"</span>,</span>
+<span>                             <span class="st">"Ten.ten - Two.ten = 0"</span><span class="op">)</span><span class="op">)</span></span>
+<span> <span class="va">compDistinTime</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">ft_seaweedInt</span>, linfct<span class="op">=</span><span class="va">contDistinTime</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">compDistinTime</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Simultaneous Tests for General Linear Hypotheses</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multiple Comparisons of Means: User-defined Contrasts</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit: lm(formula = log(Total) ~ td, data = seaweed)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Linear Hypotheses:</span></span>
+<span><span class="co">#&gt;                           Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; Two.five - Zero.five == 0   0.4356     0.2391   1.822  0.31170   </span></span>
+<span><span class="co">#&gt; Ten.five - Zero.five == 0   0.1013     0.2391   0.424  0.99083   </span></span>
+<span><span class="co">#&gt; Ten.five - Two.five == 0   -0.3343     0.2391  -1.398  0.57121   </span></span>
+<span><span class="co">#&gt; Two.ten - Zero.ten == 0     1.0495     0.2635   3.983  0.00125 **</span></span>
+<span><span class="co">#&gt; Ten.ten - Zero.ten == 0     0.8155     0.2391   3.411  0.00718 **</span></span>
+<span><span class="co">#&gt; Ten.ten - Two.ten == 0     -0.2340     0.2635  -0.888  0.87446   </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-16-testing-for-an-interaction-in-an-ancova-for-density-of-epifauna-as-a-function-of-dist-and-algal-wet-mass-">Code Box 4.16: Testing for an interaction in an ANCOVA for density
 of epifauna as a function of Dist and algal wet mass.<a class="anchor" aria-label="anchor" href="#code-box-4-16-testing-for-an-interaction-in-an-ancova-for-density-of-epifauna-as-a-function-of-dist-and-algal-wet-mass-"></a>
 </h2>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">lmMassDistInter</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Wmass</span><span class="op">)</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lmMassDistInter</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: logTot</span>
-<span class="co">#&gt;                 Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; log(Wmass)       1  7.7216  7.7216 35.3587 2.489e-07 ***</span>
-<span class="co">#&gt; Dist             2  2.1415  1.0708  4.9032   0.01128 *  </span>
-<span class="co">#&gt; log(Wmass):Dist  2  0.3208  0.1604  0.7345   0.48475    </span>
-<span class="co">#&gt; Residuals       51 11.1374  0.2184                      </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">lmMassDistInter</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Wmass</span><span class="op">)</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lmMassDistInter</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: logTot</span></span>
+<span><span class="co">#&gt;                 Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; log(Wmass)       1  7.7216  7.7216 35.3587 2.489e-07 ***</span></span>
+<span><span class="co">#&gt; Dist             2  2.1415  1.0708  4.9032   0.01128 *  </span></span>
+<span><span class="co">#&gt; log(Wmass):Dist  2  0.3208  0.1604  0.7345   0.48475    </span></span>
+<span><span class="co">#&gt; Residuals       51 11.1374  0.2184                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-4-8-global-plant-height">Exercise 4.8: Global plant height<a class="anchor" aria-label="anchor" href="#exercise-4-8-global-plant-height"></a>
@@ -635,30 +635,30 @@ in Code Box 4.17.</p>
 data of Exercise 3.1.<a class="anchor" aria-label="anchor" href="#code-box-4-17-using-r-to-fit-a-quadratic-model-to-the-plant-height-data-of-exercise-3-1-"></a>
 </h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">ft_latRain2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">rain</span>,<span class="va">lat</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_latRain2</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = log(height) ~ poly(rain, lat, degree = 2), data = globalPlants)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
-<span class="co">#&gt; -3.3656 -0.9546 -0.0749  0.9775  3.1311 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)                      1.1675     0.2094   5.577 1.44e-07 ***</span>
-<span class="co">#&gt; poly(rain, lat, degree = 2)1.0   5.7178     2.3419   2.441  0.01603 *  </span>
-<span class="co">#&gt; poly(rain, lat, degree = 2)2.0  -1.1417     2.0304  -0.562  0.57493    </span>
-<span class="co">#&gt; poly(rain, lat, degree = 2)0.1  -5.0623     1.8212  -2.780  0.00628 ** </span>
-<span class="co">#&gt; poly(rain, lat, degree = 2)1.1  -6.1984    38.1037  -0.163  0.87104    </span>
-<span class="co">#&gt; poly(rain, lat, degree = 2)0.2  -2.3615     2.5031  -0.943  0.34729    </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 1.441 on 125 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.2706, Adjusted R-squared:  0.2415 </span>
-<span class="co">#&gt; F-statistic: 9.277 on 5 and 125 DF,  p-value: 1.558e-07</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">ft_latRain2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">rain</span>,<span class="va">lat</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_latRain2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = log(height) ~ poly(rain, lat, degree = 2), data = globalPlants)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span><span class="co">#&gt; -3.3656 -0.9546 -0.0749  0.9775  3.1311 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;                                Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)                      1.1675     0.2094   5.577 1.44e-07 ***</span></span>
+<span><span class="co">#&gt; poly(rain, lat, degree = 2)1.0   5.7178     2.3419   2.441  0.01603 *  </span></span>
+<span><span class="co">#&gt; poly(rain, lat, degree = 2)2.0  -1.1417     2.0304  -0.562  0.57493    </span></span>
+<span><span class="co">#&gt; poly(rain, lat, degree = 2)0.1  -5.0623     1.8212  -2.780  0.00628 ** </span></span>
+<span><span class="co">#&gt; poly(rain, lat, degree = 2)1.1  -6.1984    38.1037  -0.163  0.87104    </span></span>
+<span><span class="co">#&gt; poly(rain, lat, degree = 2)0.2  -2.3615     2.5031  -0.943  0.34729    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 1.441 on 125 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.2706, Adjusted R-squared:  0.2415 </span></span>
+<span><span class="co">#&gt; F-statistic: 9.277 on 5 and 125 DF,  p-value: 1.558e-07</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-4-9-snowmelt-and-time-to-flowering">Exercise 4.9: Snowmelt and time to flowering<a class="anchor" aria-label="anchor" href="#exercise-4-9-snowmelt-and-time-to-flowering"></a>
@@ -670,13 +670,13 @@ over measurements taken at three sampling times. Answer the research
 questions using the appropriate linear model, being sure to check your
 assumptions.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">snowmelt</span><span class="op">)</span>
- <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">flow</span><span class="op">~</span><span class="va">snow</span>,data<span class="op">=</span><span class="va">snowmelt</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">snowmelt</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">flow</span><span class="op">~</span><span class="va">snow</span>,data<span class="op">=</span><span class="va">snowmelt</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/snowmelt-1.png" width="700"></p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">snowReduced</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">snowmelt</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flow"</span>,<span class="st">"snow"</span>,<span class="st">"elev"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="co">#this line not normally needed, lm can handle NA's, but seems needed because of a weird conflict with MCMCglmm</span>
- <span class="va">ft_snow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">flow</span><span class="op">~</span><span class="va">elev</span><span class="op">+</span><span class="va">snow</span>, data<span class="op">=</span><span class="va">snowReduced</span><span class="op">)</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_snow</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">snowReduced</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">snowmelt</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flow"</span>,<span class="st">"snow"</span>,<span class="st">"elev"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="co">#this line not normally needed, lm can handle NA's, but seems needed because of a weird conflict with MCMCglmm</span></span>
+<span> <span class="va">ft_snow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">flow</span><span class="op">~</span><span class="va">elev</span><span class="op">+</span><span class="va">snow</span>, data<span class="op">=</span><span class="va">snowReduced</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_snow</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/snowmelt-2.png" width="700"><img src="Chapter4Solutions_files/figure-html/snowmelt-3.png" width="700"></p>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>99</code> iterations, to speed up computation time.)</p>
@@ -687,42 +687,42 @@ relationship, but it can’t continue to increase at the same rate because
 then flowering time would become negative). Try log-transforming
 flowering time…</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">flow</span><span class="op">~</span><span class="va">snow</span>,data<span class="op">=</span><span class="va">snowmelt</span>,log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in xy.coords(x, y, xlabel, ylabel, log): 1 y value &lt;= 0 omitted from</span>
-<span class="co">#&gt; logarithmic plot</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">flow</span><span class="op">~</span><span class="va">snow</span>,data<span class="op">=</span><span class="va">snowmelt</span>,log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in xy.coords(x, y, xlabel, ylabel, log): 1 y value &lt;= 0 omitted from</span></span>
+<span><span class="co">#&gt; logarithmic plot</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/snowmelt%20log-1.png" width="700"></p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">snowReduced</span><span class="op">$</span><span class="va">logFlow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">snowReduced</span><span class="op">$</span><span class="va">flow</span><span class="op">)</span>
- <span class="va">snowReduced2</span> <span class="op">=</span> <span class="va">snowReduced</span><span class="op">[</span><span class="va">snowReduced</span><span class="op">$</span><span class="va">logFlow</span><span class="op">&gt;</span><span class="op">-</span><span class="cn">Inf</span>,<span class="op">]</span> <span class="co"># look it's a bit naughty, removing the infinite value, but no biggie as only one value</span>
- <span class="va">ft_logsnow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logFlow</span><span class="op">~</span><span class="va">elev</span><span class="op">+</span><span class="va">snow</span>, data<span class="op">=</span><span class="va">snowReduced2</span><span class="op">)</span>
- <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logsnow</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">snowReduced</span><span class="op">$</span><span class="va">logFlow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">snowReduced</span><span class="op">$</span><span class="va">flow</span><span class="op">)</span></span>
+<span> <span class="va">snowReduced2</span> <span class="op">=</span> <span class="va">snowReduced</span><span class="op">[</span><span class="va">snowReduced</span><span class="op">$</span><span class="va">logFlow</span><span class="op">&gt;</span><span class="op">-</span><span class="cn">Inf</span>,<span class="op">]</span> <span class="co"># look it's a bit naughty, removing the infinite value, but no biggie as only one value</span></span>
+<span> <span class="va">ft_logsnow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logFlow</span><span class="op">~</span><span class="va">elev</span><span class="op">+</span><span class="va">snow</span>, data<span class="op">=</span><span class="va">snowReduced2</span><span class="op">)</span></span>
+<span> <span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_logsnow</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/snowmelt%20log-2.png" width="700"><img src="Chapter4Solutions_files/figure-html/snowmelt%20log-3.png" width="700"></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_logsnow</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = logFlow ~ elev + snow, data = snowReduced2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residuals:</span>
-<span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -0.90161 -0.15794  0.02338  0.15834  1.08662 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)  3.8805208  0.3193019  12.153  &lt; 2e-16 ***</span>
-<span class="co">#&gt; elev         0.0003357  0.0001226   2.739  0.00651 ** </span>
-<span class="co">#&gt; snow        -0.0103172  0.0007551 -13.663  &lt; 2e-16 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 0.2909 on 316 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.3774, Adjusted R-squared:  0.3735 </span>
-<span class="co">#&gt; F-statistic: 95.78 on 2 and 316 DF,  p-value: &lt; 2.2e-16</span>
- <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">ft_logsnow</span><span class="op">)</span>
-<span class="co">#&gt;                     2.5 %        97.5 %</span>
-<span class="co">#&gt; (Intercept)  3.252294e+00  4.5087472418</span>
-<span class="co">#&gt; elev         9.457986e-05  0.0005768232</span>
-<span class="co">#&gt; snow        -1.180299e-02 -0.0088315037</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_logsnow</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = logFlow ~ elev + snow, data = snowReduced2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -0.90161 -0.15794  0.02338  0.15834  1.08662 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;               Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  3.8805208  0.3193019  12.153  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; elev         0.0003357  0.0001226   2.739  0.00651 ** </span></span>
+<span><span class="co">#&gt; snow        -0.0103172  0.0007551 -13.663  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.2909 on 316 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.3774, Adjusted R-squared:  0.3735 </span></span>
+<span><span class="co">#&gt; F-statistic: 95.78 on 2 and 316 DF,  p-value: &lt; 2.2e-16</span></span>
+<span> <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">ft_logsnow</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                     2.5 %        97.5 %</span></span>
+<span><span class="co">#&gt; (Intercept)  3.252294e+00  4.5087472418</span></span>
+<span><span class="co">#&gt; elev         9.457986e-05  0.0005768232</span></span>
+<span><span class="co">#&gt; snow        -1.180299e-02 -0.0088315037</span></span></code></pre></div>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>99</code> iterations, to speed up computation time.)</p>
 <p>So as snowmelt date increases by 10 days, log(flowering time)
@@ -739,15 +739,15 @@ linear approximation is OK.)</p>
 <p><em>Is there an effect of the netting treatment on changes in aphid
 numbers across the sampling times?</em></p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">aphidsBACI</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">aphidsBACI</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    16 obs. of  5 variables:</span>
-<span class="co">#&gt;  $ Plot     : Factor w/ 8 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 1 2 ...</span>
-<span class="co">#&gt;  $ Treatment: Factor w/ 2 levels "excluded","present": 2 2 2 2 1 1 1 1 2 2 ...</span>
-<span class="co">#&gt;  $ Time     : Factor w/ 2 levels "X18.06.","X15.07.": 1 1 1 1 1 1 1 1 2 2 ...</span>
-<span class="co">#&gt;  $ counts   : int  78 71 122 271 119 152 120 202 60 48 ...</span>
-<span class="co">#&gt;  $ logcount : num  4.37 4.28 4.81 5.61 4.79 ...</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">logcount</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">Time</span>,<span class="va">Treatment</span><span class="op">)</span>,data<span class="op">=</span><span class="va">aphidsBACI</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">aphidsBACI</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">aphidsBACI</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    16 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ Plot     : Factor w/ 8 levels "1","2","3","4",..: 1 2 3 4 5 6 7 8 1 2 ...</span></span>
+<span><span class="co">#&gt;  $ Treatment: Factor w/ 2 levels "excluded","present": 2 2 2 2 1 1 1 1 2 2 ...</span></span>
+<span><span class="co">#&gt;  $ Time     : Factor w/ 2 levels "X18.06.","X15.07.": 1 1 1 1 1 1 1 1 2 2 ...</span></span>
+<span><span class="co">#&gt;  $ counts   : int  78 71 122 271 119 152 120 202 60 48 ...</span></span>
+<span><span class="co">#&gt;  $ logcount : num  4.37 4.28 4.81 5.61 4.79 ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">logcount</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">Time</span>,<span class="va">Treatment</span><span class="op">)</span>,data<span class="op">=</span><span class="va">aphidsBACI</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/aphid%20netting-1.png" width="384"></p>
 <p>OK log(count) looks fine, different treatments have similar
 variation. Eyeballing the data it looks like there is a treatment
@@ -759,9 +759,9 @@ include <code>Plot</code> as a blocking variable to account for this.
 This in turn means there is no need for a <code>Treatment</code> main
 effect, because different plots received different treatments.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">lm_aphids</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logcount</span><span class="op">~</span><span class="va">Plot</span><span class="op">+</span><span class="va">Time</span><span class="op">+</span><span class="va">Treatment</span><span class="op">:</span><span class="va">Time</span>,data<span class="op">=</span><span class="va">aphidsBACI</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">lm_aphids</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lm_aphids</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logcount</span><span class="op">~</span><span class="va">Plot</span><span class="op">+</span><span class="va">Time</span><span class="op">+</span><span class="va">Treatment</span><span class="op">:</span><span class="va">Time</span>,data<span class="op">=</span><span class="va">aphidsBACI</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">lm_aphids</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/aphid%20lm-1.png" width="768"></p>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>99</code> iterations, to speed up computation time.)</p>
@@ -769,17 +769,17 @@ effect, because different plots received different treatments.</p>
 <code>Treatment:Time</code>, which tells us if changes in aphids over
 time varied due to the bird exclusion treatment:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lm_aphids</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: logcount</span>
-<span class="co">#&gt;                Df Sum Sq Mean Sq F value   Pr(&gt;F)   </span>
-<span class="co">#&gt; Plot            7 0.8986  0.1284  0.4603 0.833357   </span>
-<span class="co">#&gt; Time            1 5.4675  5.4675 19.6038 0.004434 **</span>
-<span class="co">#&gt; Time:Treatment  1 0.7397  0.7397  2.6522 0.154527   </span>
-<span class="co">#&gt; Residuals       6 1.6734  0.2789                    </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">lm_aphids</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: logcount</span></span>
+<span><span class="co">#&gt;                Df Sum Sq Mean Sq F value   Pr(&gt;F)   </span></span>
+<span><span class="co">#&gt; Plot            7 0.8986  0.1284  0.4603 0.833357   </span></span>
+<span><span class="co">#&gt; Time            1 5.4675  5.4675 19.6038 0.004434 **</span></span>
+<span><span class="co">#&gt; Time:Treatment  1 0.7397  0.7397  2.6522 0.154527   </span></span>
+<span><span class="co">#&gt; Residuals       6 1.6734  0.2789                    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>There is no evidence of an interaction, meaning there is no evidence
 of an effect of bird exclusion on aphid numbers. Oh :(</p>
 <p>I guess the reason for this is that the levels of replication were
@@ -790,61 +790,61 @@ would have to be very strong to be statistically significant.</p>
 <h2 id="exercise-4-11-seaweed-snails-and-three-factors">Exercise 4.11: Seaweed, snails and three factors<a class="anchor" aria-label="anchor" href="#exercise-4-11-seaweed-snails-and-three-factors"></a>
 </h2>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="co">#&gt; 'data.frame':    57 obs. of  22 variables:</span>
-<span class="co">#&gt;  $ Size  : chr  "SMALL" "SMALL" "SMALL" "SMALL" ...</span>
-<span class="co">#&gt;  $ Dist  : int  0 0 0 0 0 2 2 2 2 2 ...</span>
-<span class="co">#&gt;  $ Time  : int  5 5 5 5 5 5 5 5 5 5 ...</span>
-<span class="co">#&gt;  $ Rep   : int  1 2 3 4 5 1 2 3 4 5 ...</span>
-<span class="co">#&gt;  $ Wmass : num  15.8 13.1 25.1 29.7 17.4 13.3 4.7 6.8 7.7 14.3 ...</span>
-<span class="co">#&gt;  $ Amph  : num  75 16 14 21 55 17 9 11 28 37 ...</span>
-<span class="co">#&gt;  $ Cope  : num  0 7 37 37 0 14 6 29 21 83 ...</span>
-<span class="co">#&gt;  $ Poly  : num  17 8 2 5 1 2 1 3 6 10 ...</span>
-<span class="co">#&gt;  $ Anem  : num  2 0 0 0 0 0 0 1 0 0 ...</span>
-<span class="co">#&gt;  $ Iso   : num  0 2 1 1 15 0 12 51 19 56 ...</span>
-<span class="co">#&gt;  $ Bival : num  3 2 1 0 0 2 0 4 3 0 ...</span>
-<span class="co">#&gt;  $ Gast  : num  6 18 33 9 9 1 10 7 4 15 ...</span>
-<span class="co">#&gt;  $ Turb  : num  1 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt;  $ Prawn : num  0 0 0 0 5 1 0 0 0 1 ...</span>
-<span class="co">#&gt;  $ Urchin: num  0 0 0 0 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt;  $ Fish  : num  0 0 0 0 1 0 0 0 0 0 ...</span>
-<span class="co">#&gt;  $ Crab  : num  0 1 1 0 0 0 0 1 0 0 ...</span>
-<span class="co">#&gt;  $ Caddis: num  0 0 0 0 1 0 0 0 0 0 ...</span>
-<span class="co">#&gt;  $ Opi   : num  0 1 0 1 0 0 0 0 0 0 ...</span>
-<span class="co">#&gt;  $ Ost   : num  0 0 6 3 0 0 1 1 0 11 ...</span>
-<span class="co">#&gt;  $ Bstar : num  0 0 0 0 0 0 0 0 0 1 ...</span>
-<span class="co">#&gt;  $ Total : num  6.58 4.2 3.78 2.59 5 ...</span>
-<span class="va">seaweed</span><span class="op">$</span><span class="va">logTot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Total</span><span class="op">)</span>
-<span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">7</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">Dist</span>,<span class="va">Size</span>,<span class="va">Time</span><span class="op">)</span>,data<span class="op">=</span><span class="va">seaweed</span>,xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">"Total abundance [log scale]"</span>,horizontal<span class="op">=</span><span class="cn">TRUE</span>,col<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>,las<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topleft"</span>,legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Dist="</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span><span class="op">)</span>,pch<span class="op">=</span><span class="fl">15</span>,col<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>,pt.cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    57 obs. of  22 variables:</span></span>
+<span><span class="co">#&gt;  $ Size  : chr  "SMALL" "SMALL" "SMALL" "SMALL" ...</span></span>
+<span><span class="co">#&gt;  $ Dist  : int  0 0 0 0 0 2 2 2 2 2 ...</span></span>
+<span><span class="co">#&gt;  $ Time  : int  5 5 5 5 5 5 5 5 5 5 ...</span></span>
+<span><span class="co">#&gt;  $ Rep   : int  1 2 3 4 5 1 2 3 4 5 ...</span></span>
+<span><span class="co">#&gt;  $ Wmass : num  15.8 13.1 25.1 29.7 17.4 13.3 4.7 6.8 7.7 14.3 ...</span></span>
+<span><span class="co">#&gt;  $ Amph  : num  75 16 14 21 55 17 9 11 28 37 ...</span></span>
+<span><span class="co">#&gt;  $ Cope  : num  0 7 37 37 0 14 6 29 21 83 ...</span></span>
+<span><span class="co">#&gt;  $ Poly  : num  17 8 2 5 1 2 1 3 6 10 ...</span></span>
+<span><span class="co">#&gt;  $ Anem  : num  2 0 0 0 0 0 0 1 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Iso   : num  0 2 1 1 15 0 12 51 19 56 ...</span></span>
+<span><span class="co">#&gt;  $ Bival : num  3 2 1 0 0 2 0 4 3 0 ...</span></span>
+<span><span class="co">#&gt;  $ Gast  : num  6 18 33 9 9 1 10 7 4 15 ...</span></span>
+<span><span class="co">#&gt;  $ Turb  : num  1 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Prawn : num  0 0 0 0 5 1 0 0 0 1 ...</span></span>
+<span><span class="co">#&gt;  $ Urchin: num  0 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Fish  : num  0 0 0 0 1 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Crab  : num  0 1 1 0 0 0 0 1 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Caddis: num  0 0 0 0 1 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Opi   : num  0 1 0 1 0 0 0 0 0 0 ...</span></span>
+<span><span class="co">#&gt;  $ Ost   : num  0 0 6 3 0 0 1 1 0 11 ...</span></span>
+<span><span class="co">#&gt;  $ Bstar : num  0 0 0 0 0 0 0 0 0 1 ...</span></span>
+<span><span class="co">#&gt;  $ Total : num  6.58 4.2 3.78 2.59 5 ...</span></span>
+<span><span class="va">seaweed</span><span class="op">$</span><span class="va">logTot</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Total</span><span class="op">)</span></span>
+<span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">7</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">Dist</span>,<span class="va">Size</span>,<span class="va">Time</span><span class="op">)</span>,data<span class="op">=</span><span class="va">seaweed</span>,xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">"Total abundance [log scale]"</span>,horizontal<span class="op">=</span><span class="cn">TRUE</span>,col<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>,las<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topleft"</span>,legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Dist="</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span><span class="op">)</span>,pch<span class="op">=</span><span class="fl">15</span>,col<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>,pt.cex<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%203-1.png" width="576"></p>
 <p>All good so far, no obvious trend, except that <code>Dist=0</code>
 seems to have lower total abundance at most times/sizes. Will analyse as
 a three-way ANOVA</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ft_seaweed3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">~</span><span class="va">Size</span><span class="op">*</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_seaweed3</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ft_seaweed3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Total</span><span class="op">)</span><span class="op">~</span><span class="va">Size</span><span class="op">*</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_seaweed3</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter4Solutions_files/figure-html/seaweed%20anova3-1.png" width="768"></p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_seaweed3</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: log(Total)</span>
-<span class="co">#&gt;                Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; Size            1  0.9940 0.99399  3.5849 0.0647472 .  </span>
-<span class="co">#&gt; Time            1  0.1923 0.19234  0.6937 0.4093064    </span>
-<span class="co">#&gt; Dist            2  4.7737 2.38686  8.6084 0.0006829 ***</span>
-<span class="co">#&gt; Size:Time       1  0.0605 0.06055  0.2184 0.6425429    </span>
-<span class="co">#&gt; Size:Dist       2  0.1800 0.09000  0.3246 0.7244968    </span>
-<span class="co">#&gt; Time:Dist       2  1.4117 0.70583  2.5456 0.0896686 .  </span>
-<span class="co">#&gt; Size:Time:Dist  2  1.2318 0.61592  2.2214 0.1202189    </span>
-<span class="co">#&gt; Residuals      45 12.4772 0.27727                      </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_seaweed3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: log(Total)</span></span>
+<span><span class="co">#&gt;                Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; Size            1  0.9940 0.99399  3.5849 0.0647472 .  </span></span>
+<span><span class="co">#&gt; Time            1  0.1923 0.19234  0.6937 0.4093064    </span></span>
+<span><span class="co">#&gt; Dist            2  4.7737 2.38686  8.6084 0.0006829 ***</span></span>
+<span><span class="co">#&gt; Size:Time       1  0.0605 0.06055  0.2184 0.6425429    </span></span>
+<span><span class="co">#&gt; Size:Dist       2  0.1800 0.09000  0.3246 0.7244968    </span></span>
+<span><span class="co">#&gt; Time:Dist       2  1.4117 0.70583  2.5456 0.0896686 .  </span></span>
+<span><span class="co">#&gt; Size:Time:Dist  2  1.2318 0.61592  2.2214 0.1202189    </span></span>
+<span><span class="co">#&gt; Residuals      45 12.4772 0.27727                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>(Note that <code>plotenvelope</code> was run with just
 <code>99</code> iterations, to speed up computation time.)</p>
 <p>From the plots, we can’t see any problems with assumptions.</p>
@@ -855,30 +855,30 @@ boxplots, this is probably because of the larger values for
 <p>We could reanalyse the data including <code>Wmass</code> as a
 covariate, for a three-factor ANCOVA:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_seaweedW3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Wmass</span><span class="op">*</span><span class="va">Size</span><span class="op">*</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_seaweedW3</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: logTot</span>
-<span class="co">#&gt;                      Df Sum Sq Mean Sq F value    Pr(&gt;F)    </span>
-<span class="co">#&gt; Wmass                 1 6.7793  6.7793 28.2266 7.328e-06 ***</span>
-<span class="co">#&gt; Size                  1 0.7106  0.7106  2.9585  0.094792 .  </span>
-<span class="co">#&gt; Time                  1 0.0747  0.0747  0.3109  0.580899    </span>
-<span class="co">#&gt; Dist                  2 2.8114  1.4057  5.8529  0.006675 ** </span>
-<span class="co">#&gt; Wmass:Size            1 0.0941  0.0941  0.3917  0.535700    </span>
-<span class="co">#&gt; Wmass:Time            1 0.0233  0.0233  0.0970  0.757459    </span>
-<span class="co">#&gt; Size:Time             1 0.3501  0.3501  1.4579  0.235849    </span>
-<span class="co">#&gt; Wmass:Dist            2 0.1979  0.0990  0.4121  0.665636    </span>
-<span class="co">#&gt; Size:Dist             2 0.0886  0.0443  0.1844  0.832475    </span>
-<span class="co">#&gt; Time:Dist             2 1.3263  0.6631  2.7611  0.077848 .  </span>
-<span class="co">#&gt; Wmass:Size:Time       1 0.0081  0.0081  0.0337  0.855482    </span>
-<span class="co">#&gt; Wmass:Size:Dist       2 0.1404  0.0702  0.2924  0.748389    </span>
-<span class="co">#&gt; Wmass:Time:Dist       2 0.2767  0.1384  0.5761  0.567645    </span>
-<span class="co">#&gt; Size:Time:Dist        2 0.3440  0.1720  0.7162  0.496020    </span>
-<span class="co">#&gt; Wmass:Size:Time:Dist  2 0.1701  0.0850  0.3540  0.704475    </span>
-<span class="co">#&gt; Residuals            33 7.9257  0.2402                      </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_seaweedW3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">logTot</span><span class="op">~</span><span class="va">Wmass</span><span class="op">*</span><span class="va">Size</span><span class="op">*</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_seaweedW3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: logTot</span></span>
+<span><span class="co">#&gt;                      Df Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span><span class="co">#&gt; Wmass                 1 6.7793  6.7793 28.2266 7.328e-06 ***</span></span>
+<span><span class="co">#&gt; Size                  1 0.7106  0.7106  2.9585  0.094792 .  </span></span>
+<span><span class="co">#&gt; Time                  1 0.0747  0.0747  0.3109  0.580899    </span></span>
+<span><span class="co">#&gt; Dist                  2 2.8114  1.4057  5.8529  0.006675 ** </span></span>
+<span><span class="co">#&gt; Wmass:Size            1 0.0941  0.0941  0.3917  0.535700    </span></span>
+<span><span class="co">#&gt; Wmass:Time            1 0.0233  0.0233  0.0970  0.757459    </span></span>
+<span><span class="co">#&gt; Size:Time             1 0.3501  0.3501  1.4579  0.235849    </span></span>
+<span><span class="co">#&gt; Wmass:Dist            2 0.1979  0.0990  0.4121  0.665636    </span></span>
+<span><span class="co">#&gt; Size:Dist             2 0.0886  0.0443  0.1844  0.832475    </span></span>
+<span><span class="co">#&gt; Time:Dist             2 1.3263  0.6631  2.7611  0.077848 .  </span></span>
+<span><span class="co">#&gt; Wmass:Size:Time       1 0.0081  0.0081  0.0337  0.855482    </span></span>
+<span><span class="co">#&gt; Wmass:Size:Dist       2 0.1404  0.0702  0.2924  0.748389    </span></span>
+<span><span class="co">#&gt; Wmass:Time:Dist       2 0.2767  0.1384  0.5761  0.567645    </span></span>
+<span><span class="co">#&gt; Size:Time:Dist        2 0.3440  0.1720  0.7162  0.496020    </span></span>
+<span><span class="co">#&gt; Wmass:Size:Time:Dist  2 0.1701  0.0850  0.3540  0.704475    </span></span>
+<span><span class="co">#&gt; Residuals            33 7.9257  0.2402                      </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>We get pretty much the same results. <code>Wmass</code> seems to be
 an important covariate, but after controlling for it, there is still a
 strong <code>Dist</code> main effect and not much else happening.</p>
@@ -896,7 +896,7 @@ strong <code>Dist</code> main effect and not much else happening.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

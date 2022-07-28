@@ -3,7 +3,7 @@
 Linear Model (mlm) object. The full conditional for each response is a
 linear model with all other responses used as predictors in addition to the
 regressors specified in the formula of the mlm object. This is used to 
-diagnose the multivariate normality assumption in plotenvelope."><title>Extract Conditional Residuals from Multivariate Linear Model Fits — cresiduals • ecostats</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extract Conditional Residuals from Multivariate Linear Model Fits — cresiduals"><meta property="og:description" content="Residuals from full conditionals of a Multivariate 
+diagnose the multivariate normality assumption in plotenvelope."><title>Extract Conditional Residuals from Multivariate Linear Model Fits — cresiduals • ecostats</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Extract Conditional Residuals from Multivariate Linear Model Fits — cresiduals"><meta property="og:description" content="Residuals from full conditionals of a Multivariate 
 Linear Model (mlm) object. The full conditional for each response is a
 linear model with all other responses used as predictors in addition to the
 regressors specified in the formula of the mlm object. This is used to 
@@ -33,7 +33,7 @@ diagnose the multivariate normality assumption in plotenvelope."><!-- mathjax --
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -92,22 +92,29 @@ diagnose the multivariate normality assumption in <code><a href="plotenvelope.ht
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cresiduals</span><span class="op">(</span><span class="va">object</span>, standardize <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cresiduals</span><span class="op">(</span><span class="va">object</span>, standardize <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
 <dd><p>a <code>mlm</code> object, typically the result of calling <code>lm</code> with a matrix response.</p></dd>
+
+
 <dt>standardize</dt>
 <dd><p>logical defaults to <code>TRUE</code>, to return studentized residuals
 using <code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">rstandard</a></code> so they are comparable across responses.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments passed to <code><a href="https://rdrr.io/r/stats/lm.summaries.html" class="external-link">residuals.lm</a></code> or <code><a href="https://rdrr.io/r/stats/influence.measures.html" class="external-link">rstandard</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A matrix of residuals</p>
+    
+
+<p>A matrix of residuals</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -132,11 +139,11 @@ responses, as in <code><a href="plotenvelope.html">plotenvelope</a></code>.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># fit a mlm:</span></span>
-<span class="r-in"><span class="va">iris.mlm</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">Sepal.Length</span>,<span class="va">Sepal.Width</span>,<span class="va">Petal.Length</span>,<span class="va">Petal.Width</span><span class="op">)</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># construct full conditional residuals:</span></span>
-<span class="r-in"><span class="fu">cresiduals</span><span class="op">(</span><span class="va">iris.mlm</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># fit a mlm:</span></span></span>
+<span class="r-in"><span><span class="va">iris.mlm</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">Sepal.Length</span>,<span class="va">Sepal.Width</span>,<span class="va">Petal.Length</span>,<span class="va">Petal.Width</span><span class="op">)</span><span class="op">~</span><span class="va">Species</span>,data<span class="op">=</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># construct full conditional residuals:</span></span></span>
+<span class="r-in"><span><span class="fu">cresiduals</span><span class="op">(</span><span class="va">iris.mlm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Sepal.Length  Sepal.Width Petal.Length  Petal.Width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     0.31367294  0.202516501 -0.301850145 -0.240802233</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     0.47429637 -1.399025921 -0.182414309  0.383425946</span>
@@ -288,7 +295,7 @@ responses, as in <code><a href="plotenvelope.html">plotenvelope</a></code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 148   0.60367745  0.035946981 -1.069763113  0.272590818</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 149  -1.29168602  1.423671672 -0.016470849  1.057043006</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 150  -1.31819069  1.302294870  0.417277409 -1.142817297</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -300,7 +307,7 @@ responses, as in <code><a href="plotenvelope.html">plotenvelope</a></code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

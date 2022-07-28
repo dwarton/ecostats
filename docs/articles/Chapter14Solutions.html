@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,7 +93,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
@@ -158,27 +158,27 @@ the <code>mvabund</code> package.</p>
 in Exercise 12.2<a class="anchor" aria-label="anchor" href="#code-box-14-1-using-mvabund-to-test-for-an-effect-of-revegetation-in-exercise-12-2"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span>
-<span class="va">ft_reveg</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>,
-family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span> <span class="co"># offset included as in Exercise 10.9</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_reveg</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 8 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: abundMV ~ treatment + offset(log(pitfalls))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; (Intercept)      9                         </span>
-<span class="co">#&gt; treatment        8       1 78.25     0.02 *</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span></span>
+<span><span class="va">ft_reveg</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span> <span class="co"># offset included as in Exercise 10.9</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_reveg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 8 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: abundMV ~ treatment + offset(log(pitfalls))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; (Intercept)      9                         </span></span>
+<span><span class="co">#&gt; treatment        8       1 78.25     0.02 *</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-14-4-testing-for-an-effect-of-isolation-on-invertebrates-in-seaweed">Exercise 14.4: Testing for an effect of isolation on invertebrates
@@ -198,35 +198,35 @@ interactions does not seem to matter – you could fit more but it would
 take longer. Because of the warning that this will take a long time to
 run I will set <code>nBoot=99</code> for a quicker, rough answer:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>
-<span class="co"># set up presence-absence response:</span>
-<span class="va">seaweed</span><span class="op">$</span><span class="va">PA</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">[</span>,<span class="fl">6</span><span class="op">:</span><span class="fl">21</span><span class="op">]</span><span class="op">)</span>
-<span class="va">seaweed</span><span class="op">$</span><span class="va">PA</span><span class="op">[</span><span class="va">seaweed</span><span class="op">$</span><span class="va">PA</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span>
-
-<span class="co">#fit model</span>
-<span class="va">ft_epiAlt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">PA</span><span class="op">~</span><span class="op">(</span><span class="va">Wmass</span><span class="op">+</span><span class="va">Size</span><span class="op">+</span><span class="va">Time</span><span class="op">)</span><span class="op">*</span><span class="va">Dist</span>,family<span class="op">=</span><span class="st">"cloglog"</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_epiAlt</span>,nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 16 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: PA ~ (Wmass + Size + Time) * Dist</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; (Intercept)     56                         </span>
-<span class="co">#&gt; Wmass           55       1  6.66     0.93  </span>
-<span class="co">#&gt; Size            54       1 36.98     0.02 *</span>
-<span class="co">#&gt; Time            53       1 32.35     0.04 *</span>
-<span class="co">#&gt; Dist            51       2 28.26     0.79  </span>
-<span class="co">#&gt; Wmass:Dist      49       2 33.29     0.25  </span>
-<span class="co">#&gt; Size:Dist       47       2 26.77     0.10 .</span>
-<span class="co">#&gt; Time:Dist       45       2 32.56     0.07 .</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 99 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span></span>
+<span><span class="co"># set up presence-absence response:</span></span>
+<span><span class="va">seaweed</span><span class="op">$</span><span class="va">PA</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">[</span>,<span class="fl">6</span><span class="op">:</span><span class="fl">21</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">seaweed</span><span class="op">$</span><span class="va">PA</span><span class="op">[</span><span class="va">seaweed</span><span class="op">$</span><span class="va">PA</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span></span>
+<span><span class="co">#fit model</span></span>
+<span><span class="va">ft_epiAlt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">PA</span><span class="op">~</span><span class="op">(</span><span class="va">Wmass</span><span class="op">+</span><span class="va">Size</span><span class="op">+</span><span class="va">Time</span><span class="op">)</span><span class="op">*</span><span class="va">Dist</span>,family<span class="op">=</span><span class="st">"cloglog"</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_epiAlt</span>,nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 16 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: PA ~ (Wmass + Size + Time) * Dist</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; (Intercept)     56                         </span></span>
+<span><span class="co">#&gt; Wmass           55       1  6.66     0.93  </span></span>
+<span><span class="co">#&gt; Size            54       1 36.98     0.02 *</span></span>
+<span><span class="co">#&gt; Time            53       1 32.35     0.04 *</span></span>
+<span><span class="co">#&gt; Dist            51       2 28.26     0.79  </span></span>
+<span><span class="co">#&gt; Wmass:Dist      49       2 33.29     0.25  </span></span>
+<span><span class="co">#&gt; Size:Dist       47       2 26.77     0.10 .</span></span>
+<span><span class="co">#&gt; Time:Dist       45       2 32.56     0.07 .</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 99 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>Now fit a model under the null hypothesis that there is no effect
 of Distance of isolation, and call it <code>ft_epiNull</code>. Run
 <code>anova(ft_epiNull, ft_epiAlt)</code>. This second anova took much
@@ -236,21 +236,21 @@ community?</em></p>
 <p>To see if there is an effect of <code>Dist</code> I guess we could
 remove it from the model entirely and see if that does anything:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_epiNull</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">PA</span><span class="op">~</span><span class="va">Wmass</span><span class="op">+</span><span class="va">Size</span><span class="op">+</span><span class="va">Time</span>,family<span class="op">=</span><span class="st">"cloglog"</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_epiNull</span>, <span class="va">ft_epiAlt</span>, nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 3 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ft_epiNull: PA ~ Wmass + Size + Time</span>
-<span class="co">#&gt; ft_epiAlt: PA ~ (Wmass + Size + Time) * Dist</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;            Res.Df Df.diff   Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; ft_epiNull     53                       </span>
-<span class="co">#&gt; ft_epiAlt      45       8 115.2     0.41</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 99 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_epiNull</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">PA</span><span class="op">~</span><span class="va">Wmass</span><span class="op">+</span><span class="va">Size</span><span class="op">+</span><span class="va">Time</span>,family<span class="op">=</span><span class="st">"cloglog"</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_epiNull</span>, <span class="va">ft_epiAlt</span>, nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 3 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ft_epiNull: PA ~ Wmass + Size + Time</span></span>
+<span><span class="co">#&gt; ft_epiAlt: PA ~ (Wmass + Size + Time) * Dist</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;            Res.Df Df.diff   Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; ft_epiNull     53                       </span></span>
+<span><span class="co">#&gt; ft_epiAlt      45       8 115.2     0.41</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 99 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>This second <code>anova</code> took much less time to fit –
 why?</em></p>
 <p>Because it only has to test one hypothesis, not seven, so took about
@@ -264,11 +264,11 @@ presence/absence patterns in the invertebrate community?</em></p>
 Code Box 14.1<a class="anchor" aria-label="anchor" href="#code-box-14-2-checking-assumptions-for-the-revegetation-model-of-code-box-14-1"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ft_reveg</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span>,offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_reveg</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ft_reveg</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span>,offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_reveg</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code14.2-1.png" alt=""><p class="caption">plot of chunk code14.2</p>
+<img src="../reference/figures/code14.2-1.png" alt=""><p class="caption">plot of chunk code14.2</p>
 </div>
 <p><em>What do you reckon?</em></p>
 <p>Assumptions seem reasonable here.</p>
@@ -278,24 +278,24 @@ Code Box 14.1<a class="anchor" aria-label="anchor" href="#code-box-14-2-checking
 revegetation model<a class="anchor" aria-label="anchor" href="#code-box-14-3-checking-mean-variance-assumptions-for-a-poisson-revegetation-model"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_revegP</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span>, offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_revegP</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, sim.method<span class="op">=</span><span class="st">"stand.norm"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_revegP</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span>, offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_revegP</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, sim.method<span class="op">=</span><span class="st">"stand.norm"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code14.3-1.png" alt=""><p class="caption">plot of chunk code14.3</p>
+<img src="../reference/figures/code14.3-1.png" alt=""><p class="caption">plot of chunk code14.3</p>
 </div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/meanvar.plot.html" class="external-link">meanvar.plot</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">~</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span>
-<span class="co">#&gt; START SECTION 2 </span>
-<span class="co">#&gt; Plotting if overlay is TRUE</span>
-<span class="co">#&gt; using grouping variable reveg$treatment 7 mean values were 0 and could </span>
-<span class="co">#&gt;                                      not be included in the log-plot</span>
-<span class="co">#&gt; using grouping variable reveg$treatment 10 variance values were 0 and could not </span>
-<span class="co">#&gt;                                      be included in the log-plot</span>
-<span class="co">#&gt; FINISHED SECTION 2</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0</span>,b<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="st">"darkgreen"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/meanvar.plot.html" class="external-link">meanvar.plot</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">~</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></span>
+<span><span class="co">#&gt; START SECTION 2 </span></span>
+<span><span class="co">#&gt; Plotting if overlay is TRUE</span></span>
+<span><span class="co">#&gt; using grouping variable reveg$treatment 7 mean values were 0 and could </span></span>
+<span><span class="co">#&gt;                                      not be included in the log-plot</span></span>
+<span><span class="co">#&gt; using grouping variable reveg$treatment 10 variance values were 0 and could not </span></span>
+<span><span class="co">#&gt;                                      be included in the log-plot</span></span>
+<span><span class="co">#&gt; FINISHED SECTION 2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0</span>,b<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="st">"darkgreen"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code14.3MV-1.png" alt=""><p class="caption">plot of chunk code14.3MV</p>
+<img src="../reference/figures/code14.3MV-1.png" alt=""><p class="caption">plot of chunk code14.3MV</p>
 </div>
 <p><em>How’s the Poisson assumption looking?</em></p>
 <p>It is in all sorts of trouble, there is a very strong fan-shape on
@@ -320,11 +320,11 @@ data<a class="anchor" aria-label="anchor" href="#exercise-14-5-checking-assumpti
 </ul>
 <p><em>Where possible, check these assumptions.</em></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ft_epiAlt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">PA</span><span class="op">~</span><span class="op">(</span><span class="va">Wmass</span><span class="op">+</span><span class="va">Size</span><span class="op">+</span><span class="va">Time</span><span class="op">)</span><span class="op">*</span><span class="va">Dist</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_epiAlt</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ft_epiAlt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">PA</span><span class="op">~</span><span class="op">(</span><span class="va">Wmass</span><span class="op">+</span><span class="va">Size</span><span class="op">+</span><span class="va">Time</span><span class="op">)</span><span class="op">*</span><span class="va">Dist</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>, data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_epiAlt</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex14.5-1.png" alt=""><p class="caption">plot of chunk ex14.5</p>
+<img src="../reference/figures/ex14.5-1.png" alt=""><p class="caption">plot of chunk ex14.5</p>
 </div>
 <p><em>Do assumptions seem reasonable?</em></p>
 <p>Yes it all looks good to me. This is not unexpected because
@@ -339,8 +339,8 @@ te independence assumption.</p>
 appropriate model to the data. Make sure you include a Station main
 effect (to account for the paired sampling design).</em></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span>
-<span class="va">ft_wind</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span></span>
+<span><span class="va">ft_wind</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span></code></pre></div>
 <p><em>What assumptions were made?</em></p>
 <p>We assumed:</p>
 <ul>
@@ -352,10 +352,10 @@ effect (to account for the paired sampling design).</em></p>
 <p><em>Where possible, check these assumptions.</em></p>
 <p>Used “stand.norm” because this model takes a while to fit.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_wind</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, sim.method<span class="op">=</span><span class="st">"stand.norm"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_wind</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, sim.method<span class="op">=</span><span class="st">"stand.norm"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex14.6assumptions-1.png" alt=""><p class="caption">plot of chunk ex14.6assumptions</p>
+<img src="../reference/figures/ex14.6assumptions-1.png" alt=""><p class="caption">plot of chunk ex14.6assumptions</p>
 </div>
 <p><em>Do assumptions seem reasonable? In particular, think about
 whether there is evidence that the counts are overdispersed compared to
@@ -369,101 +369,101 @@ being fitted (which has loads of parameters) so let’s repeat using
 <code>"refit"</code>, but with a smaller value of <code>n.sim</code> so
 it doesn’t take too long (it will take a few minutes though):</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_wind</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">59</span><span class="op">)</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error : inner loop 1; cannot correct step size</span>
-<span class="co">#&gt; Error : inner loop 1; cannot correct step size</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error : inner loop 1; cannot correct step size</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error : inner loop 1; cannot correct step size</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error : inner loop 1; cannot correct step size</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_wind</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">59</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error : inner loop 1; cannot correct step size</span></span>
+<span><span class="co">#&gt; Error : inner loop 1; cannot correct step size</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error : inner loop 1; cannot correct step size</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error : inner loop 1; cannot correct step size</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error : inner loop 1; cannot correct step size</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex14.6refit-1.png" alt=""><p class="caption">plot of chunk ex14.6refit</p>
+<img src="../reference/figures/ex14.6refit-1.png" alt=""><p class="caption">plot of chunk ex14.6refit</p>
 </div>
 <p>(You can ignore any error messages - these seem to happen because
 predicted values were numerically zero.)</p>
@@ -480,21 +480,21 @@ really a problem.)</p>
 statistic accounting for correlation<a class="anchor" aria-label="anchor" href="#code-box-14-4-a-manyglm-analysis-of-the-revegetation-data-using-a-statistic-accounting-for-correlation"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_reveg</span>,test<span class="op">=</span><span class="st">"wald"</span>,cor.type<span class="op">=</span><span class="st">"shrink"</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 5 sec</span>
-<span class="co">#&gt; Analysis of Variance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: abundMV ~ treatment</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff  wald Pr(&gt;wald)  </span>
-<span class="co">#&gt; (Intercept)      9                          </span>
-<span class="co">#&gt; treatment        8       1 8.698      0.05 *</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming correlated response via ridge regularization </span>
-<span class="co">#&gt;  P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_reveg</span>,test<span class="op">=</span><span class="st">"wald"</span>,cor.type<span class="op">=</span><span class="st">"shrink"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 5 sec</span></span>
+<span><span class="co">#&gt; Analysis of Variance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: abundMV ~ treatment</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff  wald Pr(&gt;wald)  </span></span>
+<span><span class="co">#&gt; (Intercept)      9                          </span></span>
+<span><span class="co">#&gt; treatment        8       1 8.698      0.05 *</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming correlated response via ridge regularization </span></span>
+<span><span class="co">#&gt;  P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-14-7-testing-for-an-effect-of-offshore-wind-farms-slowly">Exercise 14.7: Testing for an effect of offshore wind farms
@@ -508,50 +508,50 @@ time.</em></p>
 could still be year-to-year variation, but it should not affect
 different Zones in different ways.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">windMV</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span>
-<span class="va">ft_wind</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="va">ft_windNull</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_windNull</span>, <span class="va">ft_wind</span>, nBoot<span class="op">=</span><span class="fl">19</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 15 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ft_windNull: windMV ~ Station + Year</span>
-<span class="co">#&gt; ft_wind: windMV ~ Station + Year + Year:Zone</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; ft_windNull     70                         </span>
-<span class="co">#&gt; ft_wind         68       2 81.83     0.05 *</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 19 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">windMV</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span></span>
+<span><span class="va">ft_wind</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="va">ft_windNull</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_windNull</span>, <span class="va">ft_wind</span>, nBoot<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 15 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ft_windNull: windMV ~ Station + Year</span></span>
+<span><span class="co">#&gt; ft_wind: windMV ~ Station + Year + Year:Zone</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; ft_windNull     70                         </span></span>
+<span><span class="co">#&gt; ft_wind         68       2 81.83     0.05 *</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 19 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p>This took 12 seconds for me.</p>
 <p><em>Remove zerotons and singletons from the dataset using:
 <code>windMV = mvabund( windFarms$abund[,colSums(windFarms$abund&gt;0)&gt;1] )</code>
 Now fit a model to this new response variable, again with just 19
 bootstrap resamples.</em></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">windMV1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="va">ft_wind1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="va">ft_windNull1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_windNull1</span>, <span class="va">ft_wind1</span>, nBoot<span class="op">=</span><span class="fl">19</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 13 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ft_windNull1: windMV1 ~ Station + Year</span>
-<span class="co">#&gt; ft_wind1: windMV1 ~ Station + Year + Year:Zone</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;              Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; ft_windNull1     70                         </span>
-<span class="co">#&gt; ft_wind1         68       2 81.83     0.05 *</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 19 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">windMV1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">ft_wind1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="va">ft_windNull1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_windNull1</span>, <span class="va">ft_wind1</span>, nBoot<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 13 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ft_windNull1: windMV1 ~ Station + Year</span></span>
+<span><span class="co">#&gt; ft_wind1: windMV1 ~ Station + Year + Year:Zone</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;              Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; ft_windNull1     70                         </span></span>
+<span><span class="co">#&gt; ft_wind1         68       2 81.83     0.05 *</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 19 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>Did this run take less time?</em> Yes, but not much less, it took
 10 seconds for me.</p>
 <p><em>How do results compare?</em> Results were almost identical, with
@@ -564,35 +564,35 @@ minutes.</p>
 <p>It is curious that this didn’t change computation time all that much.
 Looking at number of non-zero values in <code>windMV</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span>
-<span class="co">#&gt;         Bergvar         Oxsimpa         Piggvar      Roodspotta       Rootsimpa     Sandskaadda         Sjurygg </span>
-<span class="co">#&gt;               0              51               1               3              30               5               6 </span>
-<span class="co">#&gt;   Skrubbskaadda     Skaaggsimpa    Skaarsnultra     Stensnultra Svart.smoorbult           Torsk        Tanglake </span>
-<span class="co">#&gt;              22               6               4              37               3             134             136 </span>
-<span class="co">#&gt;     Aakta.tunga              AL </span>
-<span class="co">#&gt;               0              61</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         Bergvar         Oxsimpa         Piggvar      Roodspotta       Rootsimpa     Sandskaadda         Sjurygg </span></span>
+<span><span class="co">#&gt;               0              51               1               3              30               5               6 </span></span>
+<span><span class="co">#&gt;   Skrubbskaadda     Skaaggsimpa    Skaarsnultra     Stensnultra Svart.smoorbult           Torsk        Tanglake </span></span>
+<span><span class="co">#&gt;              22               6               4              37               3             134             136 </span></span>
+<span><span class="co">#&gt;     Aakta.tunga              AL </span></span>
+<span><span class="co">#&gt;               0              61</span></span></code></pre></div>
 <p>we see that only three of the 16 species had one or less presence. A
 couple more had three counts, removing these as well:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">windMV3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>
-<span class="va">ft_wind3</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV3</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="va">ft_windNull3</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV3</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_windNull3</span>, <span class="va">ft_wind3</span>, nBoot<span class="op">=</span><span class="fl">19</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 11 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ft_windNull3: windMV3 ~ Station + Year</span>
-<span class="co">#&gt; ft_wind3: windMV3 ~ Station + Year + Year:Zone</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;              Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; ft_windNull3     70                         </span>
-<span class="co">#&gt; ft_wind3         68       2 74.19     0.05 *</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 19 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">windMV3</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">ft_wind3</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV3</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="va">ft_windNull3</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV3</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_windNull3</span>, <span class="va">ft_wind3</span>, nBoot<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 11 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ft_windNull3: windMV3 ~ Station + Year</span></span>
+<span><span class="co">#&gt; ft_wind3: windMV3 ~ Station + Year + Year:Zone</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;              Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; ft_windNull3     70                         </span></span>
+<span><span class="co">#&gt; ft_wind3         68       2 74.19     0.05 *</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 19 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p>This is only slightly quicker, which is a tad surprising. The test
 statistic is only slightly smaller, so we can see clearly that the
 action is happening for the more abundant species – this is not
@@ -604,53 +604,53 @@ to detect an interaction!</p>
 study using manyany<a class="anchor" aria-label="anchor" href="#code-box-14-5-analysing-ordinal-data-from-the-habitat-configuration-study-using-manyany"></a>
 </h2>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">habOrd</span> <span class="op">=</span> <span class="va">counts</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">[</span>,<span class="fl">6</span><span class="op">:</span><span class="fl">21</span><span class="op">]</span><span class="op">*</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Wmass</span><span class="op">)</span><span class="op">)</span>
- <span class="va">habOrd</span><span class="op">[</span><span class="va">counts</span><span class="op">&gt;</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">counts</span><span class="op">&lt;</span><span class="fl">10</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span>
-<span class="va">habOrd</span><span class="op">[</span><span class="va">counts</span><span class="op">&gt;=</span><span class="fl">10</span><span class="op">]</span> <span class="op">=</span> <span class="fl">2</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/ordinal" class="external-link">ordinal</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'ordinal'</span>
-<span class="co">#&gt; The following objects are masked from 'package:nlme':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     ranef, VarCorr</span>
-<span class="co">#&gt; The following objects are masked from 'package:VGAM':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     dgumbel, dlgamma, pgumbel, plgamma, qgumbel, rgumbel, wine</span>
-<span class="co">#&gt; The following objects are masked from 'package:glmmTMB':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     ranef, VarCorr</span>
-<span class="co">#&gt; The following objects are masked from 'package:lme4':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     ranef, VarCorr</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">habOrd</span><span class="op">)</span> <span class="co"># Amphipods are all "2" which would return an error in clm</span>
-<span class="co">#&gt;       Amph        Cope            Poly            Anem             Iso            Bival            Gast      </span>
-<span class="co">#&gt;  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000   Min.   :0.000   Min.   :1.000  </span>
-<span class="co">#&gt;  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:0.000   1st Qu.:2.000  </span>
-<span class="co">#&gt;  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000   Median :2.000   Median :2.000  </span>
-<span class="co">#&gt;  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877   Mean   :1.351   Mean   :1.947  </span>
-<span class="co">#&gt;  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  </span>
-<span class="co">#&gt;  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000   Max.   :2.000   Max.   :2.000  </span>
-<span class="co">#&gt;       Turb             Prawn            Urchin             Fish             Crab            Caddis       </span>
-<span class="co">#&gt;  Min.   :0.00000   Min.   :0.0000   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000  </span>
-<span class="co">#&gt;  1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.00000  </span>
-<span class="co">#&gt;  Median :0.00000   Median :0.0000   Median :0.00000   Median :0.0000   Median :0.0000   Median :0.00000  </span>
-<span class="co">#&gt;  Mean   :0.08772   Mean   :0.5263   Mean   :0.07018   Mean   :0.1754   Mean   :0.5965   Mean   :0.03509  </span>
-<span class="co">#&gt;  3rd Qu.:0.00000   3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.0000   3rd Qu.:0.00000  </span>
-<span class="co">#&gt;  Max.   :2.00000   Max.   :2.0000   Max.   :2.00000   Max.   :2.0000   Max.   :2.0000   Max.   :2.00000  </span>
-<span class="co">#&gt;       Opi              Ost            Bstar       </span>
-<span class="co">#&gt;  Min.   :0.0000   Min.   :0.000   Min.   :0.0000  </span>
-<span class="co">#&gt;  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  </span>
-<span class="co">#&gt;  Median :0.0000   Median :2.000   Median :0.0000  </span>
-<span class="co">#&gt;  Mean   :0.1404   Mean   :1.404   Mean   :0.2105  </span>
-<span class="co">#&gt;  3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  </span>
-<span class="co">#&gt;  Max.   :2.0000   Max.   :2.000   Max.   :2.0000</span>
-<span class="va">habOrd</span><span class="op">=</span><span class="va">habOrd</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co">#remove Amphipods</span>
-<span class="va">manyOrd</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyany.html" class="external-link">manyany</a></span><span class="op">(</span><span class="va">habOrd</span><span class="op">~</span><span class="va">Dist</span><span class="op">*</span><span class="va">Time</span><span class="op">*</span><span class="va">Size</span>,<span class="st">"clm"</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="va">manyOrdNull</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyany.html" class="external-link">manyany</a></span><span class="op">(</span><span class="va">habOrd</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Size</span>,<span class="st">"clm"</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">manyOrdNull</span>, <span class="va">manyOrd</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;              LR Pr(&gt;LR)</span>
-<span class="co">#&gt; sum-of-LR 101.1    0.17</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">habOrd</span> <span class="op">=</span> <span class="va">counts</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">[</span>,<span class="fl">6</span><span class="op">:</span><span class="fl">21</span><span class="op">]</span><span class="op">*</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Wmass</span><span class="op">)</span><span class="op">)</span></span>
+<span> <span class="va">habOrd</span><span class="op">[</span><span class="va">counts</span><span class="op">&gt;</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">counts</span><span class="op">&lt;</span><span class="fl">10</span><span class="op">]</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="va">habOrd</span><span class="op">[</span><span class="va">counts</span><span class="op">&gt;=</span><span class="fl">10</span><span class="op">]</span> <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/ordinal" class="external-link">ordinal</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'ordinal'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:nlme':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     ranef, VarCorr</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:VGAM':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     dgumbel, dlgamma, pgumbel, plgamma, qgumbel, rgumbel, wine</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:glmmTMB':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     ranef, VarCorr</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:lme4':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     ranef, VarCorr</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">habOrd</span><span class="op">)</span> <span class="co"># Amphipods are all "2" which would return an error in clm</span></span>
+<span><span class="co">#&gt;       Amph        Cope            Poly            Anem             Iso            Bival            Gast      </span></span>
+<span><span class="co">#&gt;  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000   Min.   :0.000   Min.   :1.000  </span></span>
+<span><span class="co">#&gt;  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:0.000   1st Qu.:2.000  </span></span>
+<span><span class="co">#&gt;  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000   Median :2.000   Median :2.000  </span></span>
+<span><span class="co">#&gt;  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877   Mean   :1.351   Mean   :1.947  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  </span></span>
+<span><span class="co">#&gt;  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000   Max.   :2.000   Max.   :2.000  </span></span>
+<span><span class="co">#&gt;       Turb             Prawn            Urchin             Fish             Crab            Caddis       </span></span>
+<span><span class="co">#&gt;  Min.   :0.00000   Min.   :0.0000   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000  </span></span>
+<span><span class="co">#&gt;  1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.00000  </span></span>
+<span><span class="co">#&gt;  Median :0.00000   Median :0.0000   Median :0.00000   Median :0.0000   Median :0.0000   Median :0.00000  </span></span>
+<span><span class="co">#&gt;  Mean   :0.08772   Mean   :0.5263   Mean   :0.07018   Mean   :0.1754   Mean   :0.5965   Mean   :0.03509  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:0.00000   3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.0000   3rd Qu.:0.00000  </span></span>
+<span><span class="co">#&gt;  Max.   :2.00000   Max.   :2.0000   Max.   :2.00000   Max.   :2.0000   Max.   :2.0000   Max.   :2.00000  </span></span>
+<span><span class="co">#&gt;       Opi              Ost            Bstar       </span></span>
+<span><span class="co">#&gt;  Min.   :0.0000   Min.   :0.000   Min.   :0.0000  </span></span>
+<span><span class="co">#&gt;  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  </span></span>
+<span><span class="co">#&gt;  Median :0.0000   Median :2.000   Median :0.0000  </span></span>
+<span><span class="co">#&gt;  Mean   :0.1404   Mean   :1.404   Mean   :0.2105  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  </span></span>
+<span><span class="co">#&gt;  Max.   :2.0000   Max.   :2.000   Max.   :2.0000</span></span>
+<span><span class="va">habOrd</span><span class="op">=</span><span class="va">habOrd</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span> <span class="co">#remove Amphipods</span></span>
+<span><span class="va">manyOrd</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyany.html" class="external-link">manyany</a></span><span class="op">(</span><span class="va">habOrd</span><span class="op">~</span><span class="va">Dist</span><span class="op">*</span><span class="va">Time</span><span class="op">*</span><span class="va">Size</span>,<span class="st">"clm"</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="va">manyOrdNull</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyany.html" class="external-link">manyany</a></span><span class="op">(</span><span class="va">habOrd</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Size</span>,<span class="st">"clm"</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">manyOrdNull</span>, <span class="va">manyOrd</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;              LR Pr(&gt;LR)</span></span>
+<span><span class="co">#&gt; sum-of-LR 101.1    0.17</span></span></code></pre></div>
 <p><em>What hypothesis has been tested here? Is there any evidence
 against it?</em></p>
 <p>We tested for an effect of distance on abundance, when classified
@@ -662,9 +662,9 @@ so it conflicts with <code>lme4</code> (specifically it overwrites the
 you are running analyses using both packages, you need to <em>detach the
 <code>ordinal</code> package</em> before continuing…</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/detach.html" class="external-link">detach</a></span><span class="op">(</span><span class="st">"package:ordinal"</span>, unload<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Warning: 'ordinal' namespace cannot be unloaded:</span>
-<span class="co">#&gt;   namespace 'ordinal' is imported by 'ecoCopula' so cannot be unloaded</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/detach.html" class="external-link">detach</a></span><span class="op">(</span><span class="st">"package:ordinal"</span>, unload<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: 'ordinal' namespace cannot be unloaded:</span></span>
+<span><span class="co">#&gt;   namespace 'ordinal' is imported by 'ecoCopula' so cannot be unloaded</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-14-6-a-compositional-analysis-of-anthonys-revegetation">Code Box 14.6: A compositional analysis of Anthony’s
@@ -672,23 +672,23 @@ revegetation<a class="anchor" aria-label="anchor" href="#code-box-14-6-a-composi
 </h2>
 <p>data</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_comp</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span>, composition<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_comp</span>,nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 25 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: abundMV ~ cols + treatment + offset(log(pitfalls)) + rows + cols:(treatment + offset(log(pitfalls)))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;                Res.Df Df.diff   Dev Pr(&gt;Dev)   </span>
-<span class="co">#&gt; (Intercept)       239                          </span>
-<span class="co">#&gt; cols              216      23 361.2     0.01 **</span>
-<span class="co">#&gt; treatment         215       1  14.1     0.01 **</span>
-<span class="co">#&gt; rows              206       9  25.5     0.02 * </span>
-<span class="co">#&gt; cols:treatment    184      23  56.7     0.01 **</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments: P-value calculated using 99 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_comp</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span>, composition<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_comp</span>,nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 25 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: abundMV ~ cols + treatment + offset(log(pitfalls)) + rows + cols:(treatment + offset(log(pitfalls)))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;                Res.Df Df.diff   Dev Pr(&gt;Dev)   </span></span>
+<span><span class="co">#&gt; (Intercept)       239                          </span></span>
+<span><span class="co">#&gt; cols              216      23 361.2     0.01 **</span></span>
+<span><span class="co">#&gt; treatment         215       1  14.1     0.01 **</span></span>
+<span><span class="co">#&gt; rows              206       9  25.5     0.02 * </span></span>
+<span><span class="co">#&gt; cols:treatment    184      23  56.7     0.01 **</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 99 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>Which term measures the effect of treatment on relative
 abundance? Is there evidence of an effect on relative
 abundance?</em></p>
@@ -700,52 +700,52 @@ relative abundance.</p>
 revegetation data<a class="anchor" aria-label="anchor" href="#code-box-14-7-a-faster-compositional-analysis-of-anthonys-revegetation-data"></a>
 </h2>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_null</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">cols</span><span class="op">+</span><span class="va">rows</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>,
-data<span class="op">=</span><span class="va">ft_comp</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-<span class="va">ft_alt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">cols</span><span class="op">+</span><span class="va">rows</span><span class="op">+</span><span class="va">treatment</span><span class="op">:</span><span class="va">cols</span>
-<span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">ft_comp</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_null</span>,<span class="va">ft_alt</span>,nBoot<span class="op">=</span><span class="fl">99</span>,block<span class="op">=</span><span class="va">ft_comp</span><span class="op">$</span><span class="va">rows</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 6 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ft_null: abundMV ~ cols + rows + offset(log(pitfalls))</span>
-<span class="co">#&gt; ft_alt: abundMV ~ cols + rows + treatment:cols + offset(log(pitfalls))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;         Res.Df Df.diff   Dev Pr(&gt;Dev)   </span>
-<span class="co">#&gt; ft_null    207                          </span>
-<span class="co">#&gt; ft_alt     184      23 56.74     0.01 **</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments: P-value calculated using 99 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_null</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">cols</span><span class="op">+</span><span class="va">rows</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>data<span class="op">=</span><span class="va">ft_comp</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="va">ft_alt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">cols</span><span class="op">+</span><span class="va">rows</span><span class="op">+</span><span class="va">treatment</span><span class="op">:</span><span class="va">cols</span></span>
+<span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">ft_comp</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_null</span>,<span class="va">ft_alt</span>,nBoot<span class="op">=</span><span class="fl">99</span>,block<span class="op">=</span><span class="va">ft_comp</span><span class="op">$</span><span class="va">rows</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 6 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ft_null: abundMV ~ cols + rows + offset(log(pitfalls))</span></span>
+<span><span class="co">#&gt; ft_alt: abundMV ~ cols + rows + treatment:cols + offset(log(pitfalls))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;         Res.Df Df.diff   Dev Pr(&gt;Dev)   </span></span>
+<span><span class="co">#&gt; ft_null    207                          </span></span>
+<span><span class="co">#&gt; ft_alt     184      23 56.74     0.01 **</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 99 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-14-8-quick-and-dirty-compositional-analysis-of-anthonys-revegetation-data">Code Box 14.8: Quick-and-dirty compositional analysis of Anthony’s
 revegetation data<a class="anchor" aria-label="anchor" href="#code-box-14-8-quick-and-dirty-compositional-analysis-of-anthonys-revegetation-data"></a>
 </h2>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_reveg0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">QDrows0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">ft_reveg0</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>
-<span class="va">ft_row0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="va">QDrows0</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">ft_reveg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">QDrows</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">ft_reveg</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>
-<span class="va">ft_row</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="va">QDrows</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_row0</span>,<span class="va">ft_row</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 8 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ft_row0: abundMV ~ 1 + offset(log(pitfalls)) + offset(QDrows0)</span>
-<span class="co">#&gt; ft_row: abundMV ~ treatment + offset(log(pitfalls)) + offset(QDrows)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;         Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; ft_row0      9                         </span>
-<span class="co">#&gt; ft_row       8       1 50.26    0.073 .</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt;  P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_reveg0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">QDrows0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">ft_reveg0</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">ft_row0</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="va">QDrows0</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">ft_reveg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">QDrows</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abundMV</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">ft_reveg</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">ft_row</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">abundMV</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="va">QDrows</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_row0</span>,<span class="va">ft_row</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 8 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ft_row0: abundMV ~ 1 + offset(log(pitfalls)) + offset(QDrows0)</span></span>
+<span><span class="co">#&gt; ft_row: abundMV ~ treatment + offset(log(pitfalls)) + offset(QDrows)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;         Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; ft_row0      9                         </span></span>
+<span><span class="co">#&gt; ft_row       8       1 50.26    0.073 .</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt;  P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>This was over ten times quicker than Code Box 14.7 (note that it
 used ten times as many resamples), but results are slightly different –
 the test statistic is slightly smaller, and the <span class="math inline">\(P\)</span>-value larger. Why do you think this
@@ -758,65 +758,65 @@ smaller test statistic and a larger <span class="math inline">\(P\)</span>-value
 <h2 id="code-box-14-9-posthoc-testing-for-the-bush-regeneration-data">Code Box 14.9: Posthoc testing for the bush regeneration data<a class="anchor" aria-label="anchor" href="#code-box-14-9-posthoc-testing-for-the-bush-regeneration-data"></a>
 </h2>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">an_reveg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_reveg</span>,p.uni<span class="op">=</span><span class="st">"adjusted"</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 7 sec</span>
-<span class="va">an_reveg</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: abundMV ~ treatment + offset(log(pitfalls))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; (Intercept)      9                         </span>
-<span class="co">#&gt; treatment        8       1 78.25    0.022 *</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Univariate Tests:</span>
-<span class="co">#&gt;             Acarina          Amphipoda          Araneae          Blattodea          Coleoptera          Collembola</span>
-<span class="co">#&gt;                 Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)        Dev</span>
-<span class="co">#&gt; (Intercept)                                                                                                       </span>
-<span class="co">#&gt; treatment     8.538    0.183     9.363    0.155   0.493    0.976    10.679    0.118      9.741    0.143      6.786</span>
-<span class="co">#&gt;                      Dermaptera          Diotocardia          Diplura          Diptera          Formicidae         </span>
-<span class="co">#&gt;             Pr(&gt;Dev)        Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)                                                                                                        </span>
-<span class="co">#&gt; treatment      0.297      0.196    0.976           0    0.983    2.24    0.840    5.93    0.348      0.831    0.973</span>
-<span class="co">#&gt;             Haplotaxida          Hemiptera          Hymenoptera          Isopoda          Larvae          Lepidoptera</span>
-<span class="co">#&gt;                     Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)    Dev Pr(&gt;Dev)         Dev</span>
-<span class="co">#&gt; (Intercept)                                                                                                          </span>
-<span class="co">#&gt; treatment         2.889    0.766     1.302    0.967       4.254    0.528   1.096    0.973  0.463    0.976       0.913</span>
-<span class="co">#&gt;                      Polydesmida          Pseudoscorpionida          Scolopendrida          Seolifera         </span>
-<span class="co">#&gt;             Pr(&gt;Dev)         Dev Pr(&gt;Dev)               Dev Pr(&gt;Dev)           Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)                                                                                                   </span>
-<span class="co">#&gt; treatment      0.973       1.451    0.957             1.056    0.973         0.913    0.973      1.03    0.973</span>
-<span class="co">#&gt;             Soleolifera          Thysanoptera          Tricladida         </span>
-<span class="co">#&gt;                     Dev Pr(&gt;Dev)          Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)                                                               </span>
-<span class="co">#&gt; treatment         4.223    0.528        1.056    0.973      2.804    0.766</span>
-<span class="co">#&gt; Arguments:</span>
-<span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span>
-<span class="co">#&gt; P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">an_reveg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_reveg</span>,p.uni<span class="op">=</span><span class="st">"adjusted"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 7 sec</span></span>
+<span><span class="va">an_reveg</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: abundMV ~ treatment + offset(log(pitfalls))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; (Intercept)      9                         </span></span>
+<span><span class="co">#&gt; treatment        8       1 78.25    0.022 *</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Univariate Tests:</span></span>
+<span><span class="co">#&gt;             Acarina          Amphipoda          Araneae          Blattodea          Coleoptera          Collembola</span></span>
+<span><span class="co">#&gt;                 Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)        Dev</span></span>
+<span><span class="co">#&gt; (Intercept)                                                                                                       </span></span>
+<span><span class="co">#&gt; treatment     8.538    0.183     9.363    0.155   0.493    0.976    10.679    0.118      9.741    0.143      6.786</span></span>
+<span><span class="co">#&gt;                      Dermaptera          Diotocardia          Diplura          Diptera          Formicidae         </span></span>
+<span><span class="co">#&gt;             Pr(&gt;Dev)        Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)                                                                                                        </span></span>
+<span><span class="co">#&gt; treatment      0.297      0.196    0.976           0    0.983    2.24    0.840    5.93    0.348      0.831    0.973</span></span>
+<span><span class="co">#&gt;             Haplotaxida          Hemiptera          Hymenoptera          Isopoda          Larvae          Lepidoptera</span></span>
+<span><span class="co">#&gt;                     Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)     Dev Pr(&gt;Dev)    Dev Pr(&gt;Dev)         Dev</span></span>
+<span><span class="co">#&gt; (Intercept)                                                                                                          </span></span>
+<span><span class="co">#&gt; treatment         2.889    0.766     1.302    0.967       4.254    0.528   1.096    0.973  0.463    0.976       0.913</span></span>
+<span><span class="co">#&gt;                      Polydesmida          Pseudoscorpionida          Scolopendrida          Seolifera         </span></span>
+<span><span class="co">#&gt;             Pr(&gt;Dev)         Dev Pr(&gt;Dev)               Dev Pr(&gt;Dev)           Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)                                                                                                   </span></span>
+<span><span class="co">#&gt; treatment      0.973       1.451    0.957             1.056    0.973         0.913    0.973      1.03    0.973</span></span>
+<span><span class="co">#&gt;             Soleolifera          Thysanoptera          Tricladida         </span></span>
+<span><span class="co">#&gt;                     Dev Pr(&gt;Dev)          Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)                                                               </span></span>
+<span><span class="co">#&gt; treatment         4.223    0.528        1.056    0.973      2.804    0.766</span></span>
+<span><span class="co">#&gt; Arguments:</span></span>
+<span><span class="co">#&gt;  Test statistics calculated assuming uncorrelated response (for faster computation) </span></span>
+<span><span class="co">#&gt; P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-14-10-exploring-indicator-taxa-most-strongly-associated-with-the-treatment-effect-in-anthonys-revegetation-data">Code Box 14.10: Exploring indicator taxa most strongly associated
 with the treatment effect in Anthony’s revegetation data<a class="anchor" aria-label="anchor" href="#code-box-14-10-exploring-indicator-taxa-most-strongly-associated-with-the-treatment-effect-in-anthonys-revegetation-data"></a>
 </h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sortedRevegStats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">an_reveg</span><span class="op">$</span><span class="va">uni.test</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,decreasing<span class="op">=</span><span class="cn">T</span>,
-index.return<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
-<span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
-<span class="co">#&gt;  Blattodea Coleoptera  Amphipoda    Acarina Collembola </span>
-<span class="co">#&gt;  10.679374   9.741038   9.362519   8.537903   6.785946</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">an_reveg</span><span class="op">$</span><span class="va">table</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">]</span>
-<span class="co">#&gt; [1] 0.5764636</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">ft_reveg</span><span class="op">)</span><span class="op">[</span>,<span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt;                  Blattodea Coleoptera Amphipoda  Acarina Collembola</span>
-<span class="co">#&gt; (Intercept)     -0.3566749  -1.609438 -16.42495 1.064711   5.056246</span>
-<span class="co">#&gt; treatmentImpact -3.3068867   5.009950  19.42990 2.518570   2.045361</span>
-<span class="va">ft_reveg</span><span class="op">$</span><span class="va">stderr</span><span class="op">[</span>,<span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt;                 Blattodea Coleoptera Amphipoda   Acarina Collembola</span>
-<span class="co">#&gt; (Intercept)     0.3779645   1.004969  707.1068 0.5171539  0.4879159</span>
-<span class="co">#&gt; treatmentImpact 1.0690450   1.066918  707.1069 0.5713194  0.5453801</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sortedRevegStats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">an_reveg</span><span class="op">$</span><span class="va">uni.test</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,decreasing<span class="op">=</span><span class="cn">T</span>,</span>
+<span>index.return<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  Blattodea Coleoptera  Amphipoda    Acarina Collembola </span></span>
+<span><span class="co">#&gt;  10.679374   9.741038   9.362519   8.537903   6.785946</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">an_reveg</span><span class="op">$</span><span class="va">table</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">]</span></span>
+<span><span class="co">#&gt; [1] 0.5764636</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">ft_reveg</span><span class="op">)</span><span class="op">[</span>,<span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                  Blattodea Coleoptera Amphipoda  Acarina Collembola</span></span>
+<span><span class="co">#&gt; (Intercept)     -0.3566749  -1.609438 -16.42495 1.064711   5.056246</span></span>
+<span><span class="co">#&gt; treatmentImpact -3.3068867   5.009950  19.42990 2.518570   2.045361</span></span>
+<span><span class="va">ft_reveg</span><span class="op">$</span><span class="va">stderr</span><span class="op">[</span>,<span class="va">sortedRevegStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;                 Blattodea Coleoptera Amphipoda   Acarina Collembola</span></span>
+<span><span class="co">#&gt; (Intercept)     0.3779645   1.004969  707.1068 0.5171539  0.4879159</span></span>
+<span><span class="co">#&gt; treatmentImpact 1.0690450   1.066918  707.1069 0.5713194  0.5453801</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-14-8-indicator-species-for-offshore-wind-farms">Exercise 14.8: Indicator species for offshore wind farms?<a class="anchor" aria-label="anchor" href="#exercise-14-8-indicator-species-for-offshore-wind-farms"></a>
@@ -826,18 +826,18 @@ wind farms, in Lena’s study? Reanalyse the data to obtain univariate
 test statistics and univariate <span class="math inline">\(P\)</span>-values that have been adjusted for
 multiple testing.</em></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span>
-<span class="va">windMV1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
-<span class="va">ft_wind1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="va">an_wind1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_wind1</span>,p.uni<span class="op">=</span><span class="st">"adjusted"</span>,nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 3 min 32 sec</span>
-<span class="va">sortedWindStats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">an_wind1</span><span class="op">$</span><span class="va">uni.test</span><span class="op">[</span><span class="fl">4</span>,<span class="op">]</span>, decreasing<span class="op">=</span><span class="cn">T</span>, index.return<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
-<span class="va">sortedWindStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
-<span class="co">#&gt;  Tanglake     Torsk   Oxsimpa Rootsimpa        AL </span>
-<span class="co">#&gt; 29.019951 22.296044  6.899955  6.801339  4.819447</span>
-<span class="va">an_wind1</span><span class="op">$</span><span class="va">uni.p</span><span class="op">[</span><span class="fl">4</span>,<span class="va">sortedWindStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt;  Tanglake     Torsk   Oxsimpa Rootsimpa        AL </span>
-<span class="co">#&gt;      0.01      0.01      0.15      0.15      0.23</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span></span>
+<span><span class="va">windMV1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">ft_wind1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="va">an_wind1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_wind1</span>,p.uni<span class="op">=</span><span class="st">"adjusted"</span>,nBoot<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 3 min 32 sec</span></span>
+<span><span class="va">sortedWindStats</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">an_wind1</span><span class="op">$</span><span class="va">uni.test</span><span class="op">[</span><span class="fl">4</span>,<span class="op">]</span>, decreasing<span class="op">=</span><span class="cn">T</span>, index.return<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="va">sortedWindStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  Tanglake     Torsk   Oxsimpa Rootsimpa        AL </span></span>
+<span><span class="co">#&gt; 29.019951 22.296044  6.899955  6.801339  4.819447</span></span>
+<span><span class="va">an_wind1</span><span class="op">$</span><span class="va">uni.p</span><span class="op">[</span><span class="fl">4</span>,<span class="va">sortedWindStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  Tanglake     Torsk   Oxsimpa Rootsimpa        AL </span></span>
+<span><span class="co">#&gt;      0.01      0.01      0.15      0.15      0.23</span></span></code></pre></div>
 <p><em>Is there evidence that any species clearly have a Zone:Year
 interaction, after adjusting for multiple testing?</em></p>
 <p>Yes it looks like we have evidence of an effect in
@@ -848,13 +848,13 @@ attributable to these potential indicator species?</em></p>
 <p><em>(These code chunk has not been run as it is reliant on the
 previous code chunk.)</em></p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">sortedWindStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">an_wind1</span><span class="op">$</span><span class="va">table</span><span class="op">[</span><span class="fl">4</span>,<span class="fl">3</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">sortedWindStats</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="va">an_wind1</span><span class="op">$</span><span class="va">table</span><span class="op">[</span><span class="fl">4</span>,<span class="fl">3</span><span class="op">]</span></span></code></pre></div>
 <p>So 63% of the <code>Zone:Year</code> effect is just these two
 species.</p>
 <p><em>Plot the abundance of each potential indicator species against
 Zone and Year.</em></p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">$</span><span class="va">Zone</span>,<span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">$</span><span class="va">Year</span><span class="op">)</span>,var.subset<span class="op">=</span><span class="va">sortedWindStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">windMV1</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">$</span><span class="va">Zone</span>,<span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">$</span><span class="va">Year</span><span class="op">)</span>,var.subset<span class="op">=</span><span class="va">sortedWindStats</span><span class="op">$</span><span class="va">ix</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><em>What is the nature of the wind farm effect for each species? Do
 you think these species are good indicators of an effect of wind
 farms?</em></p>
@@ -876,7 +876,7 @@ Interaction plots might be a better way to see this…</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

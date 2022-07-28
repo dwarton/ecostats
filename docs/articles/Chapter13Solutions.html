@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 13 -- Allometric line-fitting -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 13 -- Allometric line-fitting -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,12 +93,12 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 13 -- Allometric line-fitting -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
             
-            <h4 data-toc-skip class="date">2022-07-12</h4>
+            <h4 data-toc-skip class="date">2022-07-28</h4>
       
       
       <div class="d-none name"><code>Chapter13Solutions.Rmd</code></div>
@@ -136,21 +136,21 @@ axes.</p>
 <h2 id="code-box-13-1-linear-models-of-the-brain-size-body-size-data">Code Box 13.1: Linear models of the brain size-body size data<a class="anchor" aria-label="anchor" href="#code-box-13-1-linear-models-of-the-brain-size-body-size-data"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Animals</span><span class="op">)</span>
-<span class="va">ftBrainBody</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">brain</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">body</span><span class="op">)</span>,data<span class="op">=</span><span class="va">Animals</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">ftBrainBody</span><span class="op">)</span>
-<span class="co">#&gt;                 2.5 %    97.5 %</span>
-<span class="co">#&gt; (Intercept) 1.7056829 3.4041133</span>
-<span class="co">#&gt; log(body)   0.3353152 0.6566742</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Animals</span><span class="op">)</span></span>
+<span><span class="va">ftBrainBody</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">brain</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">body</span><span class="op">)</span>,data<span class="op">=</span><span class="va">Animals</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">ftBrainBody</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                 2.5 %    97.5 %</span></span>
+<span><span class="co">#&gt; (Intercept) 1.7056829 3.4041133</span></span>
+<span><span class="co">#&gt; log(body)   0.3353152 0.6566742</span></span></code></pre></div>
 <p>This confidence interval does not cover <code>2/3</code> so suggests
 the data do not fit the 2/3 power law.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ftBodyBrain</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">body</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">brain</span><span class="op">)</span>,data<span class="op">=</span><span class="va">Animals</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">ftBodyBrain</span><span class="op">)</span>
-<span class="co">#&gt;                  2.5 %    97.5 %</span>
-<span class="co">#&gt; (Intercept) -3.6396580 0.3396307</span>
-<span class="co">#&gt; log(brain)   0.8281789 1.6218881</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ftBodyBrain</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">body</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">brain</span><span class="op">)</span>,data<span class="op">=</span><span class="va">Animals</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">ftBodyBrain</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                  2.5 %    97.5 %</span></span>
+<span><span class="co">#&gt; (Intercept) -3.6396580 0.3396307</span></span>
+<span><span class="co">#&gt; log(brain)   0.8281789 1.6218881</span></span></code></pre></div>
 <p>Flipping <code>x</code> and <code>y</code> axes, this confidence
 interval <em>does</em> cover <code>3/2</code>, which suggests that the
 data <em>do</em> fit the 2/3 power law!</p>
@@ -159,61 +159,61 @@ data <em>do</em> fit the 2/3 power law!</p>
 <h2 id="code-box-13-2-testing-if-the-brain-body-mass-slope-is-23">Code Box 13.2: Testing if the brain-body mass slope is 2/3<a class="anchor" aria-label="anchor" href="#code-box-13-2-testing-if-the-brain-body-mass-slope-is-23"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/traitecoevo" class="external-link">smatr</a></span><span class="op">)</span>
-<span class="va">sma_brainBody</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">sma_brainBody</span>
-<span class="co">#&gt; Call: sma(formula = brain ~ body, data = Animals, log = "xy", slope.test = 2/3) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             elevation     slope</span>
-<span class="co">#&gt; estimate    0.8797718 0.6363038</span>
-<span class="co">#&gt; lower limit 0.4999123 0.4955982</span>
-<span class="co">#&gt; upper limit 1.2596314 0.8169572</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : variables uncorrelated</span>
-<span class="co">#&gt; R-squared : 0.6076101 </span>
-<span class="co">#&gt; P-value : 1.0169e-06 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; H0 : slope not different from 0.6666667 </span>
-<span class="co">#&gt; Test statistic : r= -0.07424 with 26 degrees of freedom under H0</span>
-<span class="co">#&gt; P-value : 0.70734</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://web.maths.unsw.edu.au/~dwarton" class="external-link">smatr</a></span><span class="op">)</span></span>
+<span><span class="va">sma_brainBody</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">sma_brainBody</span></span>
+<span><span class="co">#&gt; Call: sma(formula = brain ~ body, data = Animals, log = "xy", slope.test = 2/3) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    0.8797718 0.6363038</span></span>
+<span><span class="co">#&gt; lower limit 0.4999123 0.4955982</span></span>
+<span><span class="co">#&gt; upper limit 1.2596314 0.8169572</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated</span></span>
+<span><span class="co">#&gt; R-squared : 0.6076101 </span></span>
+<span><span class="co">#&gt; P-value : 1.0169e-06 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; H0 : slope not different from 0.6666667 </span></span>
+<span><span class="co">#&gt; Test statistic : r= -0.07424 with 26 degrees of freedom under H0</span></span>
+<span><span class="co">#&gt; P-value : 0.70734</span></span></code></pre></div>
 <p>Here we got <span class="math inline">\(r=-0.07\)</span>, <span class="math inline">\(P=0.71\)</span> and conclude there is no evidence
 against the 2/3 power law. Note that <code>2/3</code> is towards the
 centre of the confidence interval for the SMA slope.</p>
 <p>Reversing the axes:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">body</span><span class="op">~</span><span class="va">brain</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Call: sma(formula = body ~ brain, data = Animals, log = "xy", slope.test = 3/2) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;              elevation    slope</span>
-<span class="co">#&gt; estimate    -1.3826286 1.571576</span>
-<span class="co">#&gt; lower limit -2.2584635 1.224054</span>
-<span class="co">#&gt; upper limit -0.5067936 2.017763</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : variables uncorrelated</span>
-<span class="co">#&gt; R-squared : 0.6076101 </span>
-<span class="co">#&gt; P-value : 1.0169e-06 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; H0 : slope not different from 1.5 </span>
-<span class="co">#&gt; Test statistic : r= 0.07424 with 26 degrees of freedom under H0</span>
-<span class="co">#&gt; P-value : 0.70734</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">body</span><span class="op">~</span><span class="va">brain</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Call: sma(formula = body ~ brain, data = Animals, log = "xy", slope.test = 3/2) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;              elevation    slope</span></span>
+<span><span class="co">#&gt; estimate    -1.3826286 1.571576</span></span>
+<span><span class="co">#&gt; lower limit -2.2584635 1.224054</span></span>
+<span><span class="co">#&gt; upper limit -0.5067936 2.017763</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated</span></span>
+<span><span class="co">#&gt; R-squared : 0.6076101 </span></span>
+<span><span class="co">#&gt; P-value : 1.0169e-06 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; H0 : slope not different from 1.5 </span></span>
+<span><span class="co">#&gt; Test statistic : r= 0.07424 with 26 degrees of freedom under H0</span></span>
+<span><span class="co">#&gt; P-value : 0.70734</span></span></code></pre></div>
 <p>We get exactly the same test results: <span class="math inline">\(r=-0.07\)</span>, <span class="math inline">\(P=0.71\)</span> and reach the same conclusion.
 Note that <code>3/2</code> is towards the centre of the confidence
 interval for the SMA slope.</p>
@@ -228,20 +228,67 @@ the 2/3 power law.</p>
 <code>smatr</code><a class="anchor" aria-label="anchor" href="#code-box-13-3-comparing-allometric-slopes-for-ians-data-using-smatr"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">leaflife</span><span class="op">)</span>
-<span class="va">leafSlopes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">*</span><span class="va">site</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaflife</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span>
-<span class="co">#&gt;   group  n        r2         pval    Slope Slope_lowCI Slope_highCI       Int</span>
-<span class="co">#&gt; 1     1 17 0.5039152 1.411320e-03 2.119823   1.4518161     3.095192 -4.218236</span>
-<span class="co">#&gt; 2     2 17 0.3407371 1.389091e-02 1.176888   0.7631512     1.814929 -2.321737</span>
-<span class="co">#&gt; 3     3 23 0.7392636 1.461968e-07 1.182538   0.9398479     1.487896 -2.523634</span>
-<span class="co">#&gt; 4     4 10 0.8065100 4.170919e-04 1.786551   1.2572572     2.538672 -3.837710</span>
-<span class="co">#&gt;   Int_lowCI Int_highCI Slope_test Slope_test_p Elev_test Elev_test_p</span>
-<span class="co">#&gt; 1 -5.903527  -2.532946         NA           NA        NA          NA</span>
-<span class="co">#&gt; 2 -3.475559  -1.167915         NA           NA        NA          NA</span>
-<span class="co">#&gt; 3 -3.135266  -1.912003         NA           NA        NA          NA</span>
-<span class="co">#&gt; 4 -5.291926  -2.383495         NA           NA        NA          NA</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">leaflife</span><span class="op">)</span></span>
+<span><span class="va">leafSlopes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">*</span><span class="va">site</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaflife</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Call: sma(formula = longev ~ lma * site, data = leaflife, log = "xy") </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Results of comparing lines among groups.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : slopes are equal.</span></span>
+<span><span class="co">#&gt; Likelihood ratio statistic : 9.382 with 3 degrees of freedom</span></span>
+<span><span class="co">#&gt; P-value : 0.02462 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients by group in variable "site"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 1 </span></span>
+<span><span class="co">#&gt;             elevation    slope</span></span>
+<span><span class="co">#&gt; estimate    -4.218236 2.119823</span></span>
+<span><span class="co">#&gt; lower limit -5.903527 1.451816</span></span>
+<span><span class="co">#&gt; upper limit -2.532946 3.095192</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.5039152 </span></span>
+<span><span class="co">#&gt; P-value : 0.0014113 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 2 </span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    -2.321737 1.1768878</span></span>
+<span><span class="co">#&gt; lower limit -3.475559 0.7631512</span></span>
+<span><span class="co">#&gt; upper limit -1.167915 1.8149286</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.3407371 </span></span>
+<span><span class="co">#&gt; P-value : 0.013891 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 3 </span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    -2.523634 1.1825381</span></span>
+<span><span class="co">#&gt; lower limit -3.135266 0.9398479</span></span>
+<span><span class="co">#&gt; upper limit -1.912003 1.4878965</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.7392636 </span></span>
+<span><span class="co">#&gt; P-value : 1.462e-07 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 4 </span></span>
+<span><span class="co">#&gt;             elevation    slope</span></span>
+<span><span class="co">#&gt; estimate    -3.837710 1.786551</span></span>
+<span><span class="co">#&gt; lower limit -5.291926 1.257257</span></span>
+<span><span class="co">#&gt; upper limit -2.383495 2.538672</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.80651 </span></span>
+<span><span class="co">#&gt; P-value : 0.00041709</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter13Solutions_files/figure-html/code13.3-1.png" width="576"></p>
 </div>
 <div class="section level2">
@@ -249,77 +296,77 @@ the 2/3 power law.</p>
 low soil nutrients data using <code>smatr</code><a class="anchor" aria-label="anchor" href="#code-box-13-4-comparing-elevations-of-allometric-lines-for-ians-low-soil-nutrients-data-using-smatr"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">leaf_low_soilp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">leaflife</span>, <span class="va">soilp</span> <span class="op">==</span> <span class="st">"low"</span><span class="op">)</span>
-<span class="va">leafElev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">+</span><span class="va">rain</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaf_low_soilp</span><span class="op">)</span>
-<span class="va">leafElev</span>
-<span class="co">#&gt; Call: sma(formula = longev ~ lma + rain, data = leaf_low_soilp, log = "xy") </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Results of comparing lines among groups.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : slopes are equal.</span>
-<span class="co">#&gt; Likelihood ratio statistic : 2.367 with 1 degrees of freedom</span>
-<span class="co">#&gt; P-value : 0.12395 </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : no difference in elevation.</span>
-<span class="co">#&gt; Wald statistic: 6.566 with 1 degrees of freedom</span>
-<span class="co">#&gt; P-value : 0.010393 </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Use the summary() function to print coefficients by group.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">leaf_low_soilp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">leaflife</span>, <span class="va">soilp</span> <span class="op">==</span> <span class="st">"low"</span><span class="op">)</span></span>
+<span><span class="va">leafElev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">+</span><span class="va">rain</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaf_low_soilp</span><span class="op">)</span></span>
+<span><span class="va">leafElev</span></span>
+<span><span class="co">#&gt; Call: sma(formula = longev ~ lma + rain, data = leaf_low_soilp, log = "xy") </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Results of comparing lines among groups.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : slopes are equal.</span></span>
+<span><span class="co">#&gt; Likelihood ratio statistic : 2.367 with 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; P-value : 0.12395 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : no difference in elevation.</span></span>
+<span><span class="co">#&gt; Wald statistic: 6.566 with 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; P-value : 0.010393 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Use the summary() function to print coefficients by group.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-13-5-residual-plots-for-brain-body-size-relationship">Code Box 13.5: Residual plots for brain-body size relationship<a class="anchor" aria-label="anchor" href="#code-box-13-5-residual-plots-for-brain-body-size-relationship"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sma_brainBody</span>,which<span class="op">=</span><span class="st">"residual"</span><span class="op">)</span> <span class="co"># residual plot</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0</span>,b<span class="op">=</span><span class="fl">0</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span><span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">sma_brainBody</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqline</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">sma_brainBody</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sma_brainBody</span>,which<span class="op">=</span><span class="st">"residual"</span><span class="op">)</span> <span class="co"># residual plot</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0</span>,b<span class="op">=</span><span class="fl">0</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">sma_brainBody</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqline</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">sma_brainBody</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter13Solutions_files/figure-html/code13.5-1.png" width="768"></p>
 </div>
 <div class="section level2">
 <h2 id="code-box-13-6-robust-sma-for-brain-body-size-relationship">Code Box 13.6: Robust SMA for brain-body size relationship<a class="anchor" aria-label="anchor" href="#code-box-13-6-robust-sma-for-brain-body-size-relationship"></a>
 </h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sma_brainBodyRobust</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,
-slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span>,robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">sma_brainBodyRobust</span>
-<span class="co">#&gt; Call: sma(formula = brain ~ body, data = Animals, log = "xy", slope.test = 2/3, </span>
-<span class="co">#&gt;     robust = TRUE) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             elevation     slope</span>
-<span class="co">#&gt; estimate    0.8367912 0.7541820</span>
-<span class="co">#&gt; lower limit 0.6056688 0.6452409</span>
-<span class="co">#&gt; upper limit 1.0679136 0.8815164</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : variables uncorrelated</span>
-<span class="co">#&gt; R-squared : 0.6076101 </span>
-<span class="co">#&gt; P-value : 1.0169e-06 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; H0 : slope not different from 0.6666667 </span>
-<span class="co">#&gt; Test statistic : r= 0.3458 with 26 degrees of freedom under H0</span>
-<span class="co">#&gt; P-value : 0.11673</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>,data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">sma_brainBody</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">sma_brainBodyRobust</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sma_brainBodyRobust</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,</span>
+<span>slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span>,robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">sma_brainBodyRobust</span></span>
+<span><span class="co">#&gt; Call: sma(formula = brain ~ body, data = Animals, log = "xy", slope.test = 2/3, </span></span>
+<span><span class="co">#&gt;     robust = TRUE) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    0.8367912 0.7541820</span></span>
+<span><span class="co">#&gt; lower limit 0.6056688 0.6452409</span></span>
+<span><span class="co">#&gt; upper limit 1.0679136 0.8815164</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated</span></span>
+<span><span class="co">#&gt; R-squared : 0.6076101 </span></span>
+<span><span class="co">#&gt; P-value : 1.0169e-06 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; H0 : slope not different from 0.6666667 </span></span>
+<span><span class="co">#&gt; Test statistic : r= 0.3458 with 26 degrees of freedom under H0</span></span>
+<span><span class="co">#&gt; P-value : 0.11673</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>,data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">sma_brainBody</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">sma_brainBodyRobust</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter13Solutions_files/figure-html/code13.6-1.png" width="576"></p>
 <p><em>Notice that this line is slightly steeper than previously,
 because it is less sensitive to the outliers below the line, also note
@@ -338,63 +385,63 @@ handle outliers we can get more precise estimates.</p>
 13.2 and 13.6, excluding the three dinosaur species from analysis by
 using <code>data=AnimalsSnipped[-c(6,16,26),]</code>.</em></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">AnimalsSnipped</span><span class="op">=</span><span class="va">Animals</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">16</span>,<span class="fl">26</span><span class="op">)</span>,<span class="op">]</span>
-<span class="va">sma_brainBody</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">AnimalsSnipped</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">sma_brainBody</span>
-<span class="co">#&gt; Call: sma(formula = brain ~ body, data = AnimalsSnipped, log = "xy", </span>
-<span class="co">#&gt;     slope.test = 2/3) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             elevation     slope</span>
-<span class="co">#&gt; estimate    0.8927447 0.7835628</span>
-<span class="co">#&gt; lower limit 0.7115619 0.6946736</span>
-<span class="co">#&gt; upper limit 1.0739275 0.8838260</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : variables uncorrelated</span>
-<span class="co">#&gt; R-squared : 0.9216991 </span>
-<span class="co">#&gt; P-value : 3.2428e-14 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; H0 : slope not different from 0.6666667 </span>
-<span class="co">#&gt; Test statistic : r= 0.5016 with 23 degrees of freedom under H0</span>
-<span class="co">#&gt; P-value : 0.010623</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">AnimalsSnipped</span><span class="op">=</span><span class="va">Animals</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">16</span>,<span class="fl">26</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">sma_brainBody</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">AnimalsSnipped</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">sma_brainBody</span></span>
+<span><span class="co">#&gt; Call: sma(formula = brain ~ body, data = AnimalsSnipped, log = "xy", </span></span>
+<span><span class="co">#&gt;     slope.test = 2/3) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    0.8927447 0.7835628</span></span>
+<span><span class="co">#&gt; lower limit 0.7115619 0.6946736</span></span>
+<span><span class="co">#&gt; upper limit 1.0739275 0.8838260</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated</span></span>
+<span><span class="co">#&gt; R-squared : 0.9216991 </span></span>
+<span><span class="co">#&gt; P-value : 3.2428e-14 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; H0 : slope not different from 0.6666667 </span></span>
+<span><span class="co">#&gt; Test statistic : r= 0.5016 with 23 degrees of freedom under H0</span></span>
+<span><span class="co">#&gt; P-value : 0.010623</span></span></code></pre></div>
 <p>This suddenly gives a significant effect (<span class="math inline">\(r=0.50\)</span>, <span class="math inline">\(P=0.01\)</span>), with the slope having jumped up
 from <code>0.64</code> to <code>0.78</code>. Using robust methods:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sma_brainBodyRobust</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">AnimalsSnipped</span>,log<span class="op">=</span><span class="st">"xy"</span>,
-slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span>,robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">sma_brainBodyRobust</span>
-<span class="co">#&gt; Call: sma(formula = brain ~ body, data = AnimalsSnipped, log = "xy", </span>
-<span class="co">#&gt;     slope.test = 2/3, robust = TRUE) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             elevation     slope</span>
-<span class="co">#&gt; estimate    0.8844792 0.7709489</span>
-<span class="co">#&gt; lower limit 0.7222772 0.6990277</span>
-<span class="co">#&gt; upper limit 1.0466812 0.8502700</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : variables uncorrelated</span>
-<span class="co">#&gt; R-squared : 0.9216991 </span>
-<span class="co">#&gt; P-value : 3.2428e-14 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; H0 : slope not different from 0.6666667 </span>
-<span class="co">#&gt; Test statistic : r= 0.5261 with 23 degrees of freedom under H0</span>
-<span class="co">#&gt; P-value : 0.005345</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sma_brainBodyRobust</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">AnimalsSnipped</span>,log<span class="op">=</span><span class="st">"xy"</span>,</span>
+<span>slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span>,robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">sma_brainBodyRobust</span></span>
+<span><span class="co">#&gt; Call: sma(formula = brain ~ body, data = AnimalsSnipped, log = "xy", </span></span>
+<span><span class="co">#&gt;     slope.test = 2/3, robust = TRUE) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    0.8844792 0.7709489</span></span>
+<span><span class="co">#&gt; lower limit 0.7222772 0.6990277</span></span>
+<span><span class="co">#&gt; upper limit 1.0466812 0.8502700</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated</span></span>
+<span><span class="co">#&gt; R-squared : 0.9216991 </span></span>
+<span><span class="co">#&gt; P-value : 3.2428e-14 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; H0 : slope not different from 0.6666667 </span></span>
+<span><span class="co">#&gt; Test statistic : r= 0.5261 with 23 degrees of freedom under H0</span></span>
+<span><span class="co">#&gt; P-value : 0.005345</span></span></code></pre></div>
 <p><em>Is robust SMA less sensitive to the dinosaur outliers? Is this
 what you expected?</em></p>
 <p>The results changed in both cases, but in a less dramatic way when
@@ -414,48 +461,96 @@ data<a class="anchor" aria-label="anchor" href="#exercise-13-4-robust-allometric
 Boxes 13.3-13.4, using robust=TRUE. Do results work out
 differently?</em></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">leafSlopes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">*</span><span class="va">site</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaflife</span>, robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span>
-<span class="co">#&gt;   group  n        r2         pval    Slope Slope_lowCI Slope_highCI       Int</span>
-<span class="co">#&gt; 1     1 17 0.5039152 1.411320e-03 2.411612   1.6946943     3.431812 -4.811259</span>
-<span class="co">#&gt; 2     2 17 0.3407371 1.389091e-02 1.401976   0.9552956     2.057517 -2.824595</span>
-<span class="co">#&gt; 3     3 23 0.7392636 1.461968e-07 1.151046   0.9373065     1.413526 -2.448110</span>
-<span class="co">#&gt; 4     4 10 0.8065100 4.170919e-04 1.925544   1.3614601     2.723342 -4.142043</span>
-<span class="co">#&gt;   Int_lowCI Int_highCI Slope_test Slope_test_p Elev_test Elev_test_p</span>
-<span class="co">#&gt; 1 -6.589002  -3.033515         NA           NA        NA          NA</span>
-<span class="co">#&gt; 2 -4.040935  -1.608255         NA           NA        NA          NA</span>
-<span class="co">#&gt; 3 -2.979219  -1.917001         NA           NA        NA          NA</span>
-<span class="co">#&gt; 4 -5.680918  -2.603167         NA           NA        NA          NA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">leafSlopes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">*</span><span class="va">site</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaflife</span>, robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Call: sma(formula = longev ~ lma * site, data = leaflife, log = "xy", </span></span>
+<span><span class="co">#&gt;     robust = TRUE) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Results of comparing lines among groups.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : slopes are equal.</span></span>
+<span><span class="co">#&gt; Likelihood ratio statistic : 15.03 with 3 degrees of freedom</span></span>
+<span><span class="co">#&gt; P-value : 0.001789 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients by group in variable "site"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 1 </span></span>
+<span><span class="co">#&gt;             elevation    slope</span></span>
+<span><span class="co">#&gt; estimate    -4.811259 2.411612</span></span>
+<span><span class="co">#&gt; lower limit -6.589002 1.694694</span></span>
+<span><span class="co">#&gt; upper limit -3.033515 3.431812</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.5039152 </span></span>
+<span><span class="co">#&gt; P-value : 0.0014113 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 2 </span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    -2.824595 1.4019760</span></span>
+<span><span class="co">#&gt; lower limit -4.040935 0.9552956</span></span>
+<span><span class="co">#&gt; upper limit -1.608255 2.0575167</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.3407371 </span></span>
+<span><span class="co">#&gt; P-value : 0.013891 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 3 </span></span>
+<span><span class="co">#&gt;             elevation     slope</span></span>
+<span><span class="co">#&gt; estimate    -2.448110 1.1510462</span></span>
+<span><span class="co">#&gt; lower limit -2.979219 0.9373065</span></span>
+<span><span class="co">#&gt; upper limit -1.917001 1.4135261</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.7392636 </span></span>
+<span><span class="co">#&gt; P-value : 1.462e-07 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Group: 4 </span></span>
+<span><span class="co">#&gt;             elevation    slope</span></span>
+<span><span class="co">#&gt; estimate    -4.142043 1.925544</span></span>
+<span><span class="co">#&gt; lower limit -5.680918 1.361460</span></span>
+<span><span class="co">#&gt; upper limit -2.603167 2.723342</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
+<span><span class="co">#&gt; R-squared : 0.80651 </span></span>
+<span><span class="co">#&gt; P-value : 0.00041709</span></span></code></pre></div>
 <p>This result is fairly similar, although there is stronger evidence
 now that the slopes are not the same, perhaps because the slope for
 group 1 is now noticeably steeper.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">leaf_low_soilp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">leaflife</span>, <span class="va">soilp</span> <span class="op">==</span> <span class="st">"low"</span><span class="op">)</span>
-<span class="va">leafElev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">+</span><span class="va">rain</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaf_low_soilp</span>, robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">leafElev</span>
-<span class="co">#&gt; Call: sma(formula = longev ~ lma + rain, data = leaf_low_soilp, log = "xy", </span>
-<span class="co">#&gt;     robust = TRUE) </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fit using Standardized Major Axis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; These variables were log-transformed before fitting: xy </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence intervals (CI) are at 95%</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; Results of comparing lines among groups.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : slopes are equal.</span>
-<span class="co">#&gt; Likelihood ratio statistic : 1.84 with 1 degrees of freedom</span>
-<span class="co">#&gt; P-value : 0.17498 </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; H0 : no difference in elevation.</span>
-<span class="co">#&gt; Wald statistic: 6.017 with 1 degrees of freedom</span>
-<span class="co">#&gt; P-value : 0.014166 </span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Use the summary() function to print coefficients by group.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">leaf_low_soilp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">leaflife</span>, <span class="va">soilp</span> <span class="op">==</span> <span class="st">"low"</span><span class="op">)</span></span>
+<span><span class="va">leafElev</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">+</span><span class="va">rain</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaf_low_soilp</span>, robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">leafElev</span></span>
+<span><span class="co">#&gt; Call: sma(formula = longev ~ lma + rain, data = leaf_low_soilp, log = "xy", </span></span>
+<span><span class="co">#&gt;     robust = TRUE) </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Results of comparing lines among groups.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : slopes are equal.</span></span>
+<span><span class="co">#&gt; Likelihood ratio statistic : 1.84 with 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; P-value : 0.17498 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; H0 : no difference in elevation.</span></span>
+<span><span class="co">#&gt; Wald statistic: 6.017 with 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; P-value : 0.014166 </span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Use the summary() function to print coefficients by group.</span></span></code></pre></div>
 <p>When comparing elevation of lines fitted to low soil nutrient sites,
 there does not seem to be evidence of a difference due to rainfall.</p>
 </div>
@@ -472,7 +567,7 @@ there does not seem to be evidence of a difference due to rainfall.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

@@ -22,7 +22,7 @@ navbar:
       href: reference/index.html
     about:
       text: About ecostats
-      href: articles/eco-stats.html
+      href: articles/ecostats.html
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/dwarton/ecostats

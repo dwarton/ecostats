@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,7 +93,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
@@ -278,7 +278,7 @@ using a generalised linear model (assuming a negative binomial or
 Poisson response, as in Code Box 10.1).</p>
 </div>
 <div class="section level2">
-<h2 id="exercise-10-3-invertebrate-response-to-bush-regeneration">Exercise 10.3: Invertebrate response to bush regeneration}<a class="anchor" aria-label="anchor" href="#exercise-10-3-invertebrate-response-to-bush-regeneration"></a>
+<h2 id="exercise-10-3-invertebrate-response-to-bush-regeneration">Exercise 10.3: Invertebrate response to bush regeneration<a class="anchor" aria-label="anchor" href="#exercise-10-3-invertebrate-response-to-bush-regeneration"></a>
 </h2>
 <p><em>Anthony wants to evaluate how well invertebrate communities are
 re-establishing following bush regeneration efforts.</em></p>
@@ -339,63 +339,63 @@ generalised linear model (assuming a negative binomial or Poisson
 response, as in Code Box 10.1).</p>
 </div>
 <div class="section level2">
-<h2 id="code-box-10-1-example-glm-fits-for-exercises-10-1-3-">Code Box 10.1: Example GLM fits for Exercises 10.1-3.}<a class="anchor" aria-label="anchor" href="#code-box-10-1-example-glm-fits-for-exercises-10-1-3-"></a>
+<h2 id="code-box-10-1-example-glm-fits-for-exercises-10-1-3-">Code Box 10.1: Example GLM fits for Exercises 10.1-3.<a class="anchor" aria-label="anchor" href="#code-box-10-1-example-glm-fits-for-exercises-10-1-3-"></a>
 </h2>
 <p>For Exercise 10.1:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="va">seaweed</span><span class="op">$</span><span class="va">CrabPres</span> <span class="op">=</span> <span class="va">seaweed</span><span class="op">$</span><span class="va">Crab</span><span class="op">&gt;</span><span class="fl">0</span>
-<span class="va">ft_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,
-             data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></code></pre></div>
-<p>For Exercise 10.2: \begin{verbatim}</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="va">seaweed</span><span class="op">$</span><span class="va">CrabPres</span> <span class="op">=</span> <span class="va">seaweed</span><span class="op">$</span><span class="va">Crab</span><span class="op">&gt;</span><span class="fl">0</span></span>
+<span><span class="va">ft_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,</span>
+<span>             data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span></code></pre></div>
+<p>For Exercise 10.2:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span>
-<span class="va">eels</span> <span class="op">=</span> <span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">16</span><span class="op">]</span>
-<span class="va">ft_eels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">eels</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">*</span><span class="va">Zone</span>,family<span class="op">=</span><span class="st">"poisson"</span>,
-             data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="co">#&gt; Warning: glm.fit: fitted rates numerically 0 occurred</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span></span>
+<span><span class="va">eels</span> <span class="op">=</span> <span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">16</span><span class="op">]</span></span>
+<span><span class="va">ft_eels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">eels</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">*</span><span class="va">Zone</span>,family<span class="op">=</span><span class="st">"poisson"</span>,</span>
+<span>             data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: glm.fit: fitted rates numerically 0 occurred</span></span></code></pre></div>
 <p>For Exercise 10.3:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">Haplotaxida</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">12</span><span class="op">]</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="va">worms</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Haplotaxida</span>
-<span class="va">ft_worms</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">worms</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">Haplotaxida</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">12</span><span class="op">]</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="va">worms</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Haplotaxida</span></span>
+<span><span class="va">ft_worms</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">worms</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-for-fig--10-5">Code for Fig. 10.5<a class="anchor" aria-label="anchor" href="#code-for-fig--10-5"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="va">revegMV</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span>
-<span class="va">treatment</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/meanvar.plot.html" class="external-link">meanvar.plot</a></span><span class="op">(</span><span class="va">revegMV</span><span class="op">~</span><span class="va">treatment</span>,legend<span class="op">=</span><span class="cn">T</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>,<span class="st">"darkgreen"</span><span class="op">)</span>,main<span class="op">=</span><span class="st">"Poisson"</span><span class="op">)</span>
-<span class="co">#&gt; START SECTION 2 </span>
-<span class="co">#&gt; Plotting if overlay is TRUE</span>
-<span class="co">#&gt; using grouping variable Poisson 7 mean values were 0 and could </span>
-<span class="co">#&gt;                                      not be included in the log-plot</span>
-<span class="co">#&gt; using grouping variable Poisson 10 variance values were 0 and could not </span>
-<span class="co">#&gt;                                      be included in the log-plot</span>
-<span class="co">#&gt; FINISHED SECTION 2</span>
-<span class="va">x</span><span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3.8</span>,length<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">x</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="va">revegMV</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund.html" class="external-link">mvabund</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span></span>
+<span><span class="va">treatment</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">treatment</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/meanvar.plot.html" class="external-link">meanvar.plot</a></span><span class="op">(</span><span class="va">revegMV</span><span class="op">~</span><span class="va">treatment</span>,legend<span class="op">=</span><span class="cn">T</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>,<span class="st">"darkgreen"</span><span class="op">)</span>,main<span class="op">=</span><span class="st">"Poisson"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; START SECTION 2 </span></span>
+<span><span class="co">#&gt; Plotting if overlay is TRUE</span></span>
+<span><span class="co">#&gt; using grouping variable Poisson 7 mean values were 0 and could </span></span>
+<span><span class="co">#&gt;                                      not be included in the log-plot</span></span>
+<span><span class="co">#&gt; using grouping variable Poisson 10 variance values were 0 and could not </span></span>
+<span><span class="co">#&gt;                                      be included in the log-plot</span></span>
+<span><span class="co">#&gt; FINISHED SECTION 2</span></span>
+<span><span class="va">x</span><span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3.8</span>,length<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">x</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/fig10.5-1.png" alt=""><p class="caption">plot of chunk fig10.5</p>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/meanvar.plot.html" class="external-link">meanvar.plot</a></span><span class="op">(</span><span class="va">revegMV</span><span class="op">~</span><span class="va">treatment</span>,legend<span class="op">=</span><span class="cn">T</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>,<span class="st">"darkgreen"</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Negative binomial"</span><span class="op">)</span>
-<span class="co">#&gt; START SECTION 2 </span>
-<span class="co">#&gt; Plotting if overlay is TRUE</span>
-<span class="co">#&gt; using grouping variable Negative binomial 7 mean values were 0 and could </span>
-<span class="co">#&gt;                                      not be included in the log-plot</span>
-<span class="co">#&gt; using grouping variable Negative binomial 10 variance values were 0 and could not </span>
-<span class="co">#&gt;                                      be included in the log-plot</span>
-<span class="co">#&gt; FINISHED SECTION 2</span>
-<span class="va">x</span><span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3.8</span>,length<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">x</span><span class="op">+</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"darkblue"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/meanvar.plot.html" class="external-link">meanvar.plot</a></span><span class="op">(</span><span class="va">revegMV</span><span class="op">~</span><span class="va">treatment</span>,legend<span class="op">=</span><span class="cn">T</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkorange"</span>,<span class="st">"darkgreen"</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"Negative binomial"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; START SECTION 2 </span></span>
+<span><span class="co">#&gt; Plotting if overlay is TRUE</span></span>
+<span><span class="co">#&gt; using grouping variable Negative binomial 7 mean values were 0 and could </span></span>
+<span><span class="co">#&gt;                                      not be included in the log-plot</span></span>
+<span><span class="co">#&gt; using grouping variable Negative binomial 10 variance values were 0 and could not </span></span>
+<span><span class="co">#&gt;                                      be included in the log-plot</span></span>
+<span><span class="co">#&gt; FINISHED SECTION 2</span></span>
+<span><span class="va">x</span><span class="op">=</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">3.8</span>,length<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">x</span><span class="op">+</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"darkblue"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/fig10.5-2.png" alt=""><p class="caption">plot of chunk fig10.5</p>
 </div>
@@ -405,45 +405,45 @@ response, as in Code Box 10.1).</p>
 data of Exercise 10.1<a class="anchor" aria-label="anchor" href="#code-box-10-2-a-summary-of-a-glm-fit-to-the-crab-presence-absence-data-of-exercise-10-1"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span>
-<span class="va">ft_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,
-             data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_crab</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; glm(formula = CrabPres ~ Time * Dist, family = binomial("cloglog"), </span>
-<span class="co">#&gt;     data = seaweed)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Deviance Residuals: </span>
-<span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span>
-<span class="co">#&gt; -1.3537  -0.6681  -0.6681   1.0108   2.1460  </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span>
-<span class="co">#&gt; (Intercept)  -2.3282     1.5046  -1.547    0.122</span>
-<span class="co">#&gt; Time          0.1656     0.1741   0.952    0.341</span>
-<span class="co">#&gt; Dist2        -1.5921     2.5709  -0.619    0.536</span>
-<span class="co">#&gt; Dist10       -0.5843     2.1097  -0.277    0.782</span>
-<span class="co">#&gt; Time:Dist2    0.1683     0.2899   0.581    0.561</span>
-<span class="co">#&gt; Time:Dist10   0.1169     0.2399   0.487    0.626</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     Null deviance: 71.097  on 56  degrees of freedom</span>
-<span class="co">#&gt; Residual deviance: 62.999  on 51  degrees of freedom</span>
-<span class="co">#&gt; AIC: 74.999</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number of Fisher Scoring iterations: 5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Dist</span><span class="op">)</span></span>
+<span><span class="va">ft_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,</span>
+<span>             data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_crab</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; glm(formula = CrabPres ~ Time * Dist, family = binomial("cloglog"), </span></span>
+<span><span class="co">#&gt;     data = seaweed)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Deviance Residuals: </span></span>
+<span><span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span></span>
+<span><span class="co">#&gt; -1.3537  -0.6681  -0.6681   1.0108   2.1460  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
+<span><span class="co">#&gt; (Intercept)  -2.3282     1.5046  -1.547    0.122</span></span>
+<span><span class="co">#&gt; Time          0.1656     0.1741   0.952    0.341</span></span>
+<span><span class="co">#&gt; Dist2        -1.5921     2.5709  -0.619    0.536</span></span>
+<span><span class="co">#&gt; Dist10       -0.5843     2.1097  -0.277    0.782</span></span>
+<span><span class="co">#&gt; Time:Dist2    0.1683     0.2899   0.581    0.561</span></span>
+<span><span class="co">#&gt; Time:Dist10   0.1169     0.2399   0.487    0.626</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     Null deviance: 71.097  on 56  degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual deviance: 62.999  on 51  degrees of freedom</span></span>
+<span><span class="co">#&gt; AIC: 74.999</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of Fisher Scoring iterations: 5</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-10-3-dunn-smyth-residual-plots-for-the-crab-data-using-the-mvabund-package">Code Box 10.3: Dunn-Smyth residual plots for the crab data, using
 the <code>mvabund</code> package<a class="anchor" aria-label="anchor" href="#code-box-10-3-dunn-smyth-residual-plots-for-the-crab-data-using-the-mvabund-package"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="va">ftMany_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,
-             data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_crab</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="va">ftMany_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,</span>
+<span>             data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_crab</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/box10.3-1.png" alt=""><p class="caption">plot of chunk box10.3</p>
 </div>
@@ -452,12 +452,12 @@ the <code>mvabund</code> package<a class="anchor" aria-label="anchor" href="#cod
 <h2 id="code-for-figure-10-8">Code for Figure 10.8<a class="anchor" aria-label="anchor" href="#code-for-figure-10-8"></a>
 </h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_crab</span>, which<span class="op">=</span><span class="fl">1</span>, n.sim<span class="op">=</span><span class="fl">39</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_crab</span>, which<span class="op">=</span><span class="fl">1</span>, n.sim<span class="op">=</span><span class="fl">39</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/fig10.8-1.png" alt=""><p class="caption">plot of chunk fig10.8</p>
 </div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_crab</span>, which<span class="op">=</span><span class="fl">1</span>, n.sim<span class="op">=</span><span class="fl">39</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_crab</span>, which<span class="op">=</span><span class="fl">1</span>, n.sim<span class="op">=</span><span class="fl">39</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/fig10.8-2.png" alt=""><p class="caption">plot of chunk fig10.8</p>
 </div>
@@ -470,7 +470,7 @@ experiment.<a class="anchor" aria-label="anchor" href="#exercise-10-4-counts-of-
 </h2>
 <p><em>What sort of model would you use for Ostracod counts?</em></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">seaweed</span>,<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="va">Ost</span><span class="op">~</span><span class="va">Dist</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">seaweed</span>,<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="va">Ost</span><span class="op">~</span><span class="va">Dist</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/ex10.4-1.png" alt=""><p class="caption">plot of chunk ex10.4</p>
 </div>
@@ -490,19 +490,19 @@ assumption, as in Code Box 10.4.</p>
 10.4.}<a class="anchor" aria-label="anchor" href="#code-box-10-4-assumption-checking-for-ostracod-counts-of-exercise-10-4-"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">seaweed</span><span class="op">$</span><span class="va">logWmass</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Wmass</span><span class="op">)</span>
-<span class="va">ft_countOst</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Ost</span><span class="op">~</span><span class="va">logWmass</span><span class="op">+</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span>,
-             family<span class="op">=</span><span class="st">"poisson"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_countOst</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span> <span class="co"># for a scale-location plot as well</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">seaweed</span><span class="op">$</span><span class="va">logWmass</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">seaweed</span><span class="op">$</span><span class="va">Wmass</span><span class="op">)</span></span>
+<span><span class="va">ft_countOst</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Ost</span><span class="op">~</span><span class="va">logWmass</span><span class="op">+</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span>,</span>
+<span>             family<span class="op">=</span><span class="st">"poisson"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_countOst</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span> <span class="co"># for a scale-location plot as well</span></span></code></pre></div>
 <p><img src="../reference/figures/box10.4-1.png" alt="plot of chunk box10.4"> (Note that <code>plotenvelope</code> was
 run with just <code>99</code> iterations, to speed up computation
 time.)</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span> <span class="co">#this line is currently needed to deal with a bug but prob redundant soon</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ft.countOstNB</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Ost</span><span class="op">~</span><span class="va">logWmass</span><span class="op">+</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft.countOstNB</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span> <span class="co">#this line is currently needed to deal with a bug but prob redundant soon</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ft.countOstNB</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Ost</span><span class="op">~</span><span class="va">logWmass</span><span class="op">+</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>,data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft.countOstNB</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/box10.4b-1.png" alt=""><p class="caption">plot of chunk box10.4b</p>
 </div>
@@ -514,14 +514,14 @@ data.<a class="anchor" aria-label="anchor" href="#exercise-10-5-checking-the-poi
 <p><em>Refit the model using the <code>manyglm</code> function, and
 hence construct a residual plot</em></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span>
-<span class="va">eels</span> <span class="op">=</span> <span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">16</span><span class="op">]</span>
-<span class="va">ft_eels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">eels</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">*</span><span class="va">Zone</span>,family<span class="op">=</span><span class="st">"poisson"</span>,
-             data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_eels</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span>
-<span class="co">#&gt;   NA/NaN/Inf in 'x'</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">windFarms</span><span class="op">)</span></span>
+<span><span class="va">eels</span> <span class="op">=</span> <span class="va">windFarms</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">16</span><span class="op">]</span></span>
+<span><span class="va">ft_eels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">eels</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">*</span><span class="va">Zone</span>,family<span class="op">=</span><span class="st">"poisson"</span>,</span>
+<span>             data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_eels</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : </span></span>
+<span><span class="co">#&gt;   NA/NaN/Inf in 'x'</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/ex10.5-1.png" alt=""><p class="caption">plot of chunk ex10.5</p>
 </div>
@@ -537,23 +537,23 @@ counts.}<a class="anchor" aria-label="anchor" href="#exercise-10-6-checking-the-
 <p><em>Refit the model using the <code>manyglm</code> function under the
 Poisson assumption, and hence construct a residual plot.</em></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">Haplotaxida</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">12</span><span class="op">]</span>
-<span class="va">worms</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Haplotaxida</span>
-<span class="va">ft_worms</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">worms</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_worms</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">Haplotaxida</span><span class="op">=</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">[</span>,<span class="fl">12</span><span class="op">]</span></span>
+<span><span class="va">worms</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Haplotaxida</span></span>
+<span><span class="va">ft_worms</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">worms</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_worms</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/box10.6Poisson-1.png" alt=""><p class="caption">plot of chunk box10.6Poisson</p>
 </div>
 <p><em>Also fit a negative binomial to the data and construct a residual
 plot.</em></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_wormsNB</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">worms</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_wormsNB</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span>
-<span class="co">#&gt; Warning in predict.lm(gam.yxi, newdata = data.frame(xiSim = xPred)): prediction from a rank-deficient fit may be</span>
-<span class="co">#&gt; misleading</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_wormsNB</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">worms</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ft_wormsNB</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in predict.lm(gam.yxi, newdata = data.frame(xiSim = xPred)): prediction from a rank-deficient fit may be</span></span>
+<span><span class="co">#&gt; misleading</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/box10.6NB-1.png" alt=""><p class="caption">plot of chunk box10.6NB</p>
 </div>
@@ -565,10 +565,10 @@ envelope.</p>
 <p><em>Compare BIC for the two models, using the <code>BIC</code>
 function.</em></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">ft_worms</span>, <span class="va">ft_wormsNB</span><span class="op">)</span>
-<span class="co">#&gt;            df      BIC</span>
-<span class="co">#&gt; ft_worms    2 80.55508</span>
-<span class="co">#&gt; ft_wormsNB  3 53.93523</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">ft_worms</span>, <span class="va">ft_wormsNB</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            df      BIC</span></span>
+<span><span class="co">#&gt; ft_worms    2 80.55508</span></span>
+<span><span class="co">#&gt; ft_wormsNB  3 53.93523</span></span></code></pre></div>
 <p><em>Which model has the better fit to the worm counts?</em></p>
 <p>Well BIC suggests the negative binomial model is way better,
 corroborating the result from the normal quantile plots.</p>
@@ -579,23 +579,23 @@ function to test the key hypotheses of interest to David and Alistair in
 Exercise 10.1.<a class="anchor" aria-label="anchor" href="#code-box-10-5-r-code-using-the-anova-function-to-test-the-key-hypotheses-of-interest-to-david-and-alistair-in-exercise-10-1-"></a>
 </h2>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_crab</span>, test<span class="op">=</span><span class="st">"Chisq"</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: binomial, link: cloglog</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: CrabPres</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Terms added sequentially (first to last)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;           Df Deviance Resid. Df Resid. Dev Pr(&gt;Chi)   </span>
-<span class="co">#&gt; NULL                         56     71.097            </span>
-<span class="co">#&gt; Time       1   6.6701        55     64.427 0.009804 **</span>
-<span class="co">#&gt; Dist       2   1.0265        53     63.400 0.598553   </span>
-<span class="co">#&gt; Time:Dist  2   0.4012        51     62.999 0.818257   </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_crab</span>, test<span class="op">=</span><span class="st">"Chisq"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: binomial, link: cloglog</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: CrabPres</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Terms added sequentially (first to last)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;           Df Deviance Resid. Df Resid. Dev Pr(&gt;Chi)   </span></span>
+<span><span class="co">#&gt; NULL                         56     71.097            </span></span>
+<span><span class="co">#&gt; Time       1   6.6701        55     64.427 0.009804 **</span></span>
+<span><span class="co">#&gt; Dist       2   1.0265        53     63.400 0.598553   </span></span>
+<span><span class="co">#&gt; Time:Dist  2   0.4012        51     62.999 0.818257   </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p><em>Any evidence of an effect of Isolation distance on
 crabs?</em></p>
 <p>Nope :(</p>
@@ -613,9 +613,9 @@ structure?</em></p>
 <code>Station</code> as one of the predictors, to handle
 station-to-station variation in eel abundance:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_eelsSt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">eels</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>,family<span class="op">=</span><span class="st">"poisson"</span>,
-             data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="co">#&gt; Warning: glm.fit: fitted rates numerically 0 occurred</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_eelsSt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">eels</span><span class="op">~</span><span class="va">Station</span><span class="op">+</span><span class="va">Year</span><span class="op">+</span><span class="va">Year</span><span class="op">:</span><span class="va">Zone</span>,family<span class="op">=</span><span class="st">"poisson"</span>,</span>
+<span>             data<span class="op">=</span><span class="va">windFarms</span><span class="op">$</span><span class="va">X</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: glm.fit: fitted rates numerically 0 occurred</span></span></code></pre></div>
 <p>It would be OK to write <code>Year*Zone</code> but the
 <code>Zone</code> main effect is redundant because of the
 <code>Station</code> main effect. You could also use a mixed model with
@@ -623,23 +623,23 @@ a random intercept for <code>Station</code>.</p>
 <p><em>Fit the appropriate model and test for an effect of wind
 farm.</em></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_eelsSt</span>,test<span class="op">=</span><span class="st">'Chisq'</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: poisson, link: log</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: eels</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Terms added sequentially (first to last)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;            Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    </span>
-<span class="co">#&gt; NULL                         178    246.714              </span>
-<span class="co">#&gt; Station   107  169.443        71     77.270 0.0001145 ***</span>
-<span class="co">#&gt; Year        1    1.906        70     75.365 0.1674431    </span>
-<span class="co">#&gt; Year:Zone   2    4.821        68     70.544 0.0897813 .  </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_eelsSt</span>,test<span class="op">=</span><span class="st">'Chisq'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: poisson, link: log</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: eels</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Terms added sequentially (first to last)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;            Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    </span></span>
+<span><span class="co">#&gt; NULL                         178    246.714              </span></span>
+<span><span class="co">#&gt; Station   107  169.443        71     77.270 0.0001145 ***</span></span>
+<span><span class="co">#&gt; Year        1    1.906        70     75.365 0.1674431    </span></span>
+<span><span class="co">#&gt; Year:Zone   2    4.821        68     70.544 0.0897813 .  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>There is marginal evidence of a Year-Zone interaction.</p>
 </div>
 <div class="section level2">
@@ -647,42 +647,42 @@ farm.</em></p>
 Exercise 10.3.<a class="anchor" aria-label="anchor" href="#code-box-10-6-model-based-inference-for-anthonys-worm-counts-from-exercise-10-3-"></a>
 </h2>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ftmany_Hap</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>,
-              data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftmany_Hap</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: Haplotaxida ~ treatment</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)      9                       </span>
-<span class="co">#&gt; treatment        8       1 2.811    0.156</span>
-<span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ftmany_Hap</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span>,</span>
+<span>              data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftmany_Hap</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: Haplotaxida ~ treatment</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)      9                       </span></span>
+<span><span class="co">#&gt; treatment        8       1 2.811    0.156</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-10-7-design-based-inference-for-davids-and-alistairs-crab-data-using-mvabund-">Code Box 10.7: Design-based inference for David’s and Alistair’s
 crab data using <code>mvabund</code>.<a class="anchor" aria-label="anchor" href="#code-box-10-7-design-based-inference-for-davids-and-alistairs-crab-data-using-mvabund-"></a>
 </h2>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ftMany_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,
-                 data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftMany_crab</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 2 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: CrabPres ~ Time * Dist</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span>
-<span class="co">#&gt; (Intercept)     56                         </span>
-<span class="co">#&gt; Time            55       1 6.670    0.016 *</span>
-<span class="co">#&gt; Dist            53       2 1.026    0.614  </span>
-<span class="co">#&gt; Time:Dist       51       2 0.401    0.857  </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ftMany_crab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">CrabPres</span><span class="op">~</span><span class="va">Time</span><span class="op">*</span><span class="va">Dist</span>, family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="st">"cloglog"</span><span class="op">)</span>,</span>
+<span>                 data<span class="op">=</span><span class="va">seaweed</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftMany_crab</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 2 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: CrabPres ~ Time * Dist</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)  </span></span>
+<span><span class="co">#&gt; (Intercept)     56                         </span></span>
+<span><span class="co">#&gt; Time            55       1 6.670    0.016 *</span></span>
+<span><span class="co">#&gt; Dist            53       2 1.026    0.614  </span></span>
+<span><span class="co">#&gt; Time:Dist       51       2 0.401    0.857  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>Any important differences from results David and Alistair
 previously obtained in Code Box 10.5?</em></p>
 <p>Nope, looks very similar actually! I guess the <code>Time</code>
@@ -695,84 +695,84 @@ effect.</p>
 in Anthony’s worm counts from Exercise 10.3.<a class="anchor" aria-label="anchor" href="#code-box-10-8-getting-the-wrong-answer-by-ignoring-overdispersion-in-anthonys-worm-counts-from-exercise-10-3-"></a>
 </h2>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_wormPois</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_wormPois</span>,test<span class="op">=</span><span class="st">"Chisq"</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: poisson, link: log</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: Haplotaxida</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Terms added sequentially (first to last)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;           Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    </span>
-<span class="co">#&gt; NULL                          9     63.946              </span>
-<span class="co">#&gt; treatment  1   11.668         8     52.278 0.0006359 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_wormPois</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_wormPois</span>,test<span class="op">=</span><span class="st">"Chisq"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: poisson, link: log</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: Haplotaxida</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Terms added sequentially (first to last)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;           Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    </span></span>
+<span><span class="co">#&gt; NULL                          9     63.946              </span></span>
+<span><span class="co">#&gt; treatment  1   11.668         8     52.278 0.0006359 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_wormmanyPois</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"poisson"</span>,
-                     data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_wormmanyPois</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: Haplotaxida ~ treatment</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)      9                       </span>
-<span class="co">#&gt; treatment        8       1 11.67    0.224</span>
-<span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_wormmanyPois</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span>,family<span class="op">=</span><span class="st">"poisson"</span>,</span>
+<span>                     data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_wormmanyPois</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: Haplotaxida ~ treatment</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)      9                       </span></span>
+<span><span class="co">#&gt; treatment        8       1 11.67    0.224</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-10-9-using-an-observation-level-random-effect-for-a-binomial-response">Code Box 10.9: Using an observation-level random effect for a
 binomial response<a class="anchor" aria-label="anchor" href="#code-box-10-9-using-an-observation-level-random-effect-for-a-binomial-response"></a>
 </h2>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seedsTemp</span><span class="op">)</span>
-<span class="va">seedsTemp</span><span class="op">$</span><span class="va">propGerm</span> <span class="op">=</span> <span class="va">seedsTemp</span><span class="op">$</span><span class="va">NumGerm</span> <span class="op">/</span> <span class="va">seedsTemp</span><span class="op">$</span><span class="va">NumSown</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">propGerm</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">propGerm</span><span class="op">)</span><span class="op">~</span><span class="va">Test.Temp</span>,data<span class="op">=</span><span class="va">seedsTemp</span>,log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values &lt;= 0 omitted from logarithmic plot</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">seedsTemp</span><span class="op">)</span></span>
+<span><span class="va">seedsTemp</span><span class="op">$</span><span class="va">propGerm</span> <span class="op">=</span> <span class="va">seedsTemp</span><span class="op">$</span><span class="va">NumGerm</span> <span class="op">/</span> <span class="va">seedsTemp</span><span class="op">$</span><span class="va">NumSown</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">propGerm</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">propGerm</span><span class="op">)</span><span class="op">~</span><span class="va">Test.Temp</span>,data<span class="op">=</span><span class="va">seedsTemp</span>,log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values &lt;= 0 omitted from logarithmic plot</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/box10.9Load-1.png" alt=""><p class="caption">plot of chunk box10.9Load</p>
 </div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
-<span class="va">seedsTemp</span><span class="op">$</span><span class="va">ID</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">seedsTemp</span><span class="op">$</span><span class="va">NumGerm</span><span class="op">)</span>
-<span class="va">ft_temp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">NumGerm</span>,<span class="va">NumSown</span><span class="op">-</span><span class="va">NumGerm</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Test.Temp</span>,<span class="fl">2</span><span class="op">)</span><span class="op">+</span>
-               <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">ID</span><span class="op">)</span>,data<span class="op">=</span><span class="va">seedsTemp</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_temp</span><span class="op">)</span>
-<span class="co">#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']</span>
-<span class="co">#&gt;  Family: binomial  ( logit )</span>
-<span class="co">#&gt; Formula: cbind(NumGerm, NumSown - NumGerm) ~ poly(Test.Temp, 2) + (1 |      ID)</span>
-<span class="co">#&gt;    Data: seedsTemp</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;      AIC      BIC   logLik deviance df.resid </span>
-<span class="co">#&gt;    212.7    218.1   -102.3    204.7       25 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Scaled residuals: </span>
-<span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -1.10831 -0.00896  0.06063  0.13519  0.33025 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Random effects:</span>
-<span class="co">#&gt;  Groups Name        Variance Std.Dev.</span>
-<span class="co">#&gt;  ID     (Intercept) 2.961    1.721   </span>
-<span class="co">#&gt; Number of obs: 29, groups:  ID, 29</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Fixed effects:</span>
-<span class="co">#&gt;                     Estimate Std. Error z value Pr(&gt;|z|)  </span>
-<span class="co">#&gt; (Intercept)          -0.5896     0.3428  -1.720   0.0854 .</span>
-<span class="co">#&gt; poly(Test.Temp, 2)1   2.8770     1.9395   1.483   0.1380  </span>
-<span class="co">#&gt; poly(Test.Temp, 2)2  -3.6910     1.9227  -1.920   0.0549 .</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Correlation of Fixed Effects:</span>
-<span class="co">#&gt;             (Intr) p(T.T,2)1</span>
-<span class="co">#&gt; ply(T.T,2)1 -0.060          </span>
-<span class="co">#&gt; ply(T.T,2)2  0.066 -0.147</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
+<span><span class="va">seedsTemp</span><span class="op">$</span><span class="va">ID</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">seedsTemp</span><span class="op">$</span><span class="va">NumGerm</span><span class="op">)</span></span>
+<span><span class="va">ft_temp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">NumGerm</span>,<span class="va">NumSown</span><span class="op">-</span><span class="va">NumGerm</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Test.Temp</span>,<span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span>               <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">ID</span><span class="op">)</span>,data<span class="op">=</span><span class="va">seedsTemp</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">ft_temp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']</span></span>
+<span><span class="co">#&gt;  Family: binomial  ( logit )</span></span>
+<span><span class="co">#&gt; Formula: cbind(NumGerm, NumSown - NumGerm) ~ poly(Test.Temp, 2) + (1 |      ID)</span></span>
+<span><span class="co">#&gt;    Data: seedsTemp</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;      AIC      BIC   logLik deviance df.resid </span></span>
+<span><span class="co">#&gt;    212.7    218.1   -102.3    204.7       25 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Scaled residuals: </span></span>
+<span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span><span class="co">#&gt; -1.10831 -0.00896  0.06063  0.13519  0.33025 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Random effects:</span></span>
+<span><span class="co">#&gt;  Groups Name        Variance Std.Dev.</span></span>
+<span><span class="co">#&gt;  ID     (Intercept) 2.961    1.721   </span></span>
+<span><span class="co">#&gt; Number of obs: 29, groups:  ID, 29</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Fixed effects:</span></span>
+<span><span class="co">#&gt;                     Estimate Std. Error z value Pr(&gt;|z|)  </span></span>
+<span><span class="co">#&gt; (Intercept)          -0.5896     0.3428  -1.720   0.0854 .</span></span>
+<span><span class="co">#&gt; poly(Test.Temp, 2)1   2.8770     1.9395   1.483   0.1380  </span></span>
+<span><span class="co">#&gt; poly(Test.Temp, 2)2  -3.6910     1.9227  -1.920   0.0549 .</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Correlation of Fixed Effects:</span></span>
+<span><span class="co">#&gt;             (Intr) p(T.T,2)1</span></span>
+<span><span class="co">#&gt; ply(T.T,2)1 -0.060          </span></span>
+<span><span class="co">#&gt; ply(T.T,2)2  0.066 -0.147</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-10-8-anthonys-ant-data-">Exercise 10.8: Anthony’s ant data.<a class="anchor" aria-label="anchor" href="#exercise-10-8-anthonys-ant-data-"></a>
@@ -781,10 +781,10 @@ binomial response<a class="anchor" aria-label="anchor" href="#code-box-10-9-usin
 Poisson or negative binomial?</em></p>
 <p>This is a hard question to answer without fitting a model.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ants</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Formicidae</span>
-<span class="va">ants_Poisson</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">ants</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">reveg</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ants_Poisson</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ants</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Formicidae</span></span>
+<span><span class="va">ants_Poisson</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">ants</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">reveg</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ants_Poisson</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/ex10.8P-1.png" alt=""><p class="caption">plot of chunk ex10.8P</p>
 </div>
@@ -794,7 +794,7 @@ do not stay anywhere near their envelope.</p>
 <p><em>Plot the data – does there seem to be evidence of a treatment
 effect?</em></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">reveg</span>,<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="va">abund</span><span class="op">$</span><span class="va">Formicidae</span><span class="op">~</span><span class="va">treatment</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">reveg</span>,<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="va">abund</span><span class="op">$</span><span class="va">Formicidae</span><span class="op">~</span><span class="va">treatment</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/ex10.8plot-1.png" alt=""><p class="caption">plot of chunk ex10.8plot</p>
 </div>
@@ -804,46 +804,46 @@ middle of those from the revegetated sites.</p>
 model, and use this to test for a treatment effect. Did you get what you
 expected?</em></p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ants_Poisson</span>,test<span class="op">=</span><span class="st">'Chisq'</span><span class="op">)</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: poisson, link: log</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Response: ants</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Terms added sequentially (first to last)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;           Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    </span>
-<span class="co">#&gt; NULL                          9     985.74              </span>
-<span class="co">#&gt; treatment  1   62.345         8     923.39 2.882e-15 ***</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ants_Poisson</span>,test<span class="op">=</span><span class="st">'Chisq'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: poisson, link: log</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Response: ants</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Terms added sequentially (first to last)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;           Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    </span></span>
+<span><span class="co">#&gt; NULL                          9     985.74              </span></span>
+<span><span class="co">#&gt; treatment  1   62.345         8     923.39 2.882e-15 ***</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>Whoah we are being told there is strongly significant evidence of a
 treatment effect, a claim that should be treated with suspicion (no such
 evidence on the boxplot above!)</p>
 <p><em>Now use negative binomial regression to test for a treatment
 effect.</em></p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ants</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Formicidae</span>
-<span class="va">ants_NB</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">ants</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">reveg</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ants_NB</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: ants ~ treatment</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)      9                       </span>
-<span class="co">#&gt; treatment        8       1 0.765     0.56</span>
-<span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ants</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Formicidae</span></span>
+<span><span class="va">ants_NB</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">ants</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">reveg</span>,family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ants_NB</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: ants ~ treatment</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)      9                       </span></span>
+<span><span class="co">#&gt; treatment        8       1 0.765     0.56</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p><em>Notice you have got a very different answer.</em></p>
 <p>Yeah, like completely the opposite!!!</p>
 <p><em>Which answer is more likely to be correct in this case?</em></p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ants_NB</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ants_NB</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/ex10.8NBplots-1.png" alt=""><p class="caption">plot of chunk ex10.8NBplots</p>
 </div>
@@ -872,19 +872,19 @@ sites in our model?</em></p>
 <h2 id="code-box-10-10-adding-an-offset-to-the-model-for-worm-counts-">Code Box 10.10: Adding an offset to the model for worm counts.<a class="anchor" aria-label="anchor" href="#code-box-10-10-adding-an-offset-to-the-model-for-worm-counts-"></a>
 </h2>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ftmany_hapoffset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>,
-                            family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftmany_hapoffset</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: Haplotaxida ~ treatment + offset(log(pitfalls))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span>
-<span class="co">#&gt; (Intercept)      9                       </span>
-<span class="co">#&gt; treatment        8       1 2.889    0.157</span>
-<span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ftmany_hapoffset</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">Haplotaxida</span><span class="op">~</span><span class="va">treatment</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                            family<span class="op">=</span><span class="st">"negative.binomial"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftmany_hapoffset</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: Haplotaxida ~ treatment + offset(log(pitfalls))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)</span></span>
+<span><span class="co">#&gt; (Intercept)      9                       </span></span>
+<span><span class="co">#&gt; treatment        8       1 2.889    0.157</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-10-10-anthonys-cockroaches">Exercise 10.10: Anthony’s cockroaches<a class="anchor" aria-label="anchor" href="#exercise-10-10-anthonys-cockroaches"></a>
@@ -894,27 +894,27 @@ sites in our model?</em></p>
 assuming assumptions are all satisfied. The main difference here is that
 we have many zeros in the dataset (70%)…</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">roaches</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Blattodea</span>
-<span class="va">ftMany_roaches</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">roaches</span><span class="op">~</span><span class="va">treatment</span>,offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_roaches</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">roaches</span> <span class="op">=</span> <span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">$</span><span class="va">Blattodea</span></span>
+<span><span class="va">ftMany_roaches</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manyglm.html" class="external-link">manyglm</a></span><span class="op">(</span><span class="va">roaches</span><span class="op">~</span><span class="va">treatment</span>,offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">pitfalls</span><span class="op">)</span>, family<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1.5</span>,<span class="fl">0.5</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotenvelope.html">plotenvelope</a></span><span class="op">(</span><span class="va">ftMany_roaches</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, n.sim<span class="op">=</span><span class="fl">99</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="../reference/figures/ex10.10-1.png" alt=""><p class="caption">plot of chunk ex10.10</p>
 </div>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftMany_roaches</span><span class="op">)</span>
-<span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span>
-<span class="co">#&gt; Analysis of Deviance Table</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Model: roaches ~ treatment</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Multivariate test:</span>
-<span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)   </span>
-<span class="co">#&gt; (Intercept)      9                          </span>
-<span class="co">#&gt; treatment        8       1 16.68    0.006 **</span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftMany_roaches</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Time elapsed: 0 hr 0 min 0 sec</span></span>
+<span><span class="co">#&gt; Analysis of Deviance Table</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model: roaches ~ treatment</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Multivariate test:</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff   Dev Pr(&gt;Dev)   </span></span>
+<span><span class="co">#&gt; (Intercept)      9                          </span></span>
+<span><span class="co">#&gt; treatment        8       1 16.68    0.006 **</span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via PIT-trap resampling.</span></span></code></pre></div>
 <p>Although we have many zeros in the dataset, they are all in the
 treatment group, meaning that our observed predictor explains these
 well. A Poisson model seems to fit the reasonably data well, and we can
@@ -934,7 +934,7 @@ on cockroaches (they disappeared from revegetated plots).</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

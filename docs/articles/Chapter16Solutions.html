@@ -8,8 +8,8 @@
 <meta name="description" content="ecostats">
 <title>Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes • ecostats</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes">
 <meta property="og:description" content="ecostats">
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../articles/eco-stats.html">About ecostats</a>
+  <a class="nav-link" href="../articles/ecostats.html">About ecostats</a>
 </li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -93,7 +93,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes</h1>
                         <h4 data-toc-skip class="author">David
 Warton</h4>
@@ -126,68 +126,68 @@ data<a class="anchor" aria-label="anchor" href="#code-box-16-1-fitting-a-species
 </h2>
 <p>Run the below lines to install <code>ecomix</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span>
-<span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"skiptoniam/ecomix"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"skiptoniam/ecomix"</span><span class="op">)</span></span></code></pre></div>
 <p>Code to fit <code>ecomix</code> will only be run if it is installed
 (the if statement is included because CRAN policies require vignettes to
 be able to be run only using packages that can be installed from
 CRAN)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">is_ecomix_installed</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ecomix"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span>
-<span class="va">SpiderDF</span><span class="op">=</span><span class="va">spider</span><span class="op">$</span><span class="va">x</span>
-<span class="va">SpiderDF</span><span class="op">$</span><span class="va">abund</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span>
-<span class="va">spiderFormula</span> <span class="op">=</span> <span class="va">abund</span> <span class="op">~</span> <span class="va">soil.dry</span> <span class="op">+</span> <span class="va">bare.sand</span> <span class="op">+</span> <span class="va">fallen.leaves</span> <span class="op">+</span> <span class="va">moss</span> <span class="op">+</span>
-<span class="va">herb.layer</span> <span class="op">+</span> <span class="va">reflection</span>
-<span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">ft_Mix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">spiderFormula</span>, data<span class="op">=</span><span class="va">SpiderDF</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="fl">2</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>init_method<span class="op">=</span><span class="st">'kmeans'</span>,ecm_refit<span class="op">=</span><span class="fl">5</span>, ecm_steps<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">ft_Mix</span><span class="op">)</span><span class="op">$</span><span class="va">beta</span>
-<span class="op">}</span>
-<span class="co">#&gt; SAM modelling</span>
-<span class="co">#&gt; There are 2 archetypes to group the species into</span>
-<span class="co">#&gt; There are 28 site observations for 12 species</span>
-<span class="co">#&gt; The model for the archetype (grouping) is ~soil.dry + bare.sand + fallen.leaves + moss + herb.layer + reflection</span>
-<span class="co">#&gt; The model for the species is ~1</span>
-<span class="co">#&gt; You are implementing a negative.binomial Species Archetype Model.</span>
-<span class="co">#&gt; Using ECM algorithm to find starting values; using 5 refits</span>
-<span class="co">#&gt; ECM restart 1 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span>
-<span class="co">#&gt; ECM restart 2 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span>
-<span class="co">#&gt; ECM restart 3 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span>
-<span class="co">#&gt; ECM restart 4 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span>
-<span class="co">#&gt; ECM restart 5 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span>
-<span class="co">#&gt; initial  value 834.997322 </span>
-<span class="co">#&gt; iter  10 value 821.805630</span>
-<span class="co">#&gt; iter  20 value 818.658041</span>
-<span class="co">#&gt; iter  30 value 817.420228</span>
-<span class="co">#&gt; iter  40 value 781.755656</span>
-<span class="co">#&gt; iter  50 value 778.215211</span>
-<span class="co">#&gt; final  value 777.933344 </span>
-<span class="co">#&gt; converged</span>
-<span class="co">#&gt;              soil.dry   bare.sand fallen.leaves       moss herb.layer reflection</span>
-<span class="co">#&gt; Archetype1  1.5628882 -0.05472053    -0.2785304 -0.1449823  0.7081129 -0.4731397</span>
-<span class="co">#&gt; Archetype2 -0.1067054  0.22426193    -0.2855950  0.4186594  0.5893706  0.4760833</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">is_ecomix_installed</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ecomix"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span></span>
+<span><span class="va">SpiderDF</span><span class="op">=</span><span class="va">spider</span><span class="op">$</span><span class="va">x</span></span>
+<span><span class="va">SpiderDF</span><span class="op">$</span><span class="va">abund</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span></span>
+<span><span class="va">spiderFormula</span> <span class="op">=</span> <span class="va">abund</span> <span class="op">~</span> <span class="va">soil.dry</span> <span class="op">+</span> <span class="va">bare.sand</span> <span class="op">+</span> <span class="va">fallen.leaves</span> <span class="op">+</span> <span class="va">moss</span> <span class="op">+</span></span>
+<span><span class="va">herb.layer</span> <span class="op">+</span> <span class="va">reflection</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">ft_Mix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">spiderFormula</span>, data<span class="op">=</span><span class="va">SpiderDF</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="fl">2</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>init_method<span class="op">=</span><span class="st">'kmeans'</span>,ecm_refit<span class="op">=</span><span class="fl">5</span>, ecm_steps<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">ft_Mix</span><span class="op">)</span><span class="op">$</span><span class="va">beta</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; SAM modelling</span></span>
+<span><span class="co">#&gt; There are 2 archetypes to group the species into</span></span>
+<span><span class="co">#&gt; There are 28 site observations for 12 species</span></span>
+<span><span class="co">#&gt; The model for the archetype (grouping) is ~soil.dry + bare.sand + fallen.leaves + moss + herb.layer + reflection</span></span>
+<span><span class="co">#&gt; The model for the species is ~1</span></span>
+<span><span class="co">#&gt; You are implementing a negative.binomial Species Archetype Model.</span></span>
+<span><span class="co">#&gt; Using ECM algorithm to find starting values; using 5 refits</span></span>
+<span><span class="co">#&gt; ECM restart 1 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span></span>
+<span><span class="co">#&gt; ECM restart 2 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span></span>
+<span><span class="co">#&gt; ECM restart 3 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span></span>
+<span><span class="co">#&gt; ECM restart 4 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span></span>
+<span><span class="co">#&gt; ECM restart 5 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -1041.731 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548</span></span>
+<span><span class="co">#&gt; initial  value 834.997322 </span></span>
+<span><span class="co">#&gt; iter  10 value 821.805630</span></span>
+<span><span class="co">#&gt; iter  20 value 818.658041</span></span>
+<span><span class="co">#&gt; iter  30 value 817.420228</span></span>
+<span><span class="co">#&gt; iter  40 value 781.755656</span></span>
+<span><span class="co">#&gt; iter  50 value 778.215211</span></span>
+<span><span class="co">#&gt; final  value 777.933344 </span></span>
+<span><span class="co">#&gt; converged</span></span>
+<span><span class="co">#&gt;              soil.dry   bare.sand fallen.leaves       moss herb.layer reflection</span></span>
+<span><span class="co">#&gt; Archetype1  1.5628882 -0.05472053    -0.2785304 -0.1449823  0.7081129 -0.4731397</span></span>
+<span><span class="co">#&gt; Archetype2 -0.1067054  0.22426193    -0.2855950  0.4186594  0.5893706  0.4760833</span></span></code></pre></div>
 <p><em>Which predictors vary the most across archetypes (hence across
 taxa)? Is this what you saw in Code Box 15.7?</em></p>
 <p><code>soil.dry</code> had the biggest change, jumping from
@@ -200,11 +200,11 @@ what was happening in Code Box 15.7 as well.</p>
 Archetype Model<a class="anchor" aria-label="anchor" href="#code-box-16-2-minding-your-ps-and-qs-for-petruss-species-archetype-model"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ft_Mix</span>, type<span class="op">=</span><span class="st">"link"</span><span class="op">)</span>
-<span class="co">#&gt; Infinite residuals removed from residual plots: 82 in total.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ft_Mix</span>, type<span class="op">=</span><span class="st">"link"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Infinite residuals removed from residual plots: 82 in total.</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code16.2-1.png" alt=""><p class="caption">plot of chunk code16.2</p>
+<img src="../reference/figures/code16.2-1.png" alt=""><p class="caption">plot of chunk code16.2</p>
 </div>
 <p><em>Do model assumptions seem reasonable here?</em></p>
 <p>This generally looks good, no fan-shape in residual vs fits plot,
@@ -218,60 +218,60 @@ better characterise how different invertebrate orders respond to the
 revegetation treatment. Fit a Species Archetype Model with two
 archetypes.</em></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">revegDF</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span>
-<span class="va">revegDF</span><span class="op">$</span><span class="va">abundMat</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span>
-<span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">ft_revegMix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">abundMat</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">revegDF</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="fl">2</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>init_method<span class="op">=</span><span class="st">'kmeans'</span>,ecm_refit<span class="op">=</span><span class="fl">5</span>, ecm_steps<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">ft_revegMix</span><span class="op">)</span><span class="op">$</span><span class="va">beta</span>
-<span class="op">}</span>
-<span class="co">#&gt; SAM modelling</span>
-<span class="co">#&gt; There are 2 archetypes to group the species into</span>
-<span class="co">#&gt; There are 10 site observations for 24 species</span>
-<span class="co">#&gt; The model for the archetype (grouping) is ~treatment</span>
-<span class="co">#&gt; The model for the species is ~1</span>
-<span class="co">#&gt; You are implementing a negative.binomial Species Archetype Model.</span>
-<span class="co">#&gt; Using ECM algorithm to find starting values; using 5 refits</span>
-<span class="co">#&gt; ECM restart 1 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span>
-<span class="co">#&gt; ECM restart 2 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span>
-<span class="co">#&gt; ECM restart 3 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span>
-<span class="co">#&gt; ECM restart 4 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span>
-<span class="co">#&gt; ECM restart 5 of 5</span>
-<span class="co">#&gt; Initialising starting values</span>
-<span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span>
-<span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span>
-<span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span>
-<span class="co">#&gt; initial  value 745.015688 </span>
-<span class="co">#&gt; iter  10 value 740.900796</span>
-<span class="co">#&gt; iter  20 value 740.884813</span>
-<span class="co">#&gt; iter  30 value 740.865771</span>
-<span class="co">#&gt; iter  40 value 740.817682</span>
-<span class="co">#&gt; iter  50 value 739.833832</span>
-<span class="co">#&gt; iter  60 value 728.725117</span>
-<span class="co">#&gt; iter  70 value 728.591056</span>
-<span class="co">#&gt; final  value 728.590862 </span>
-<span class="co">#&gt; converged</span>
-<span class="co">#&gt;            treatmentImpact</span>
-<span class="co">#&gt; Archetype1        1.463471</span>
-<span class="co">#&gt; Archetype2        1.463359</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">revegDF</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">)</span></span>
+<span><span class="va">revegDF</span><span class="op">$</span><span class="va">abundMat</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">reveg</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">ft_revegMix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">abundMat</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">revegDF</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="fl">2</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>init_method<span class="op">=</span><span class="st">'kmeans'</span>,ecm_refit<span class="op">=</span><span class="fl">5</span>, ecm_steps<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">ft_revegMix</span><span class="op">)</span><span class="op">$</span><span class="va">beta</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; SAM modelling</span></span>
+<span><span class="co">#&gt; There are 2 archetypes to group the species into</span></span>
+<span><span class="co">#&gt; There are 10 site observations for 24 species</span></span>
+<span><span class="co">#&gt; The model for the archetype (grouping) is ~treatment</span></span>
+<span><span class="co">#&gt; The model for the species is ~1</span></span>
+<span><span class="co">#&gt; You are implementing a negative.binomial Species Archetype Model.</span></span>
+<span><span class="co">#&gt; Using ECM algorithm to find starting values; using 5 refits</span></span>
+<span><span class="co">#&gt; ECM restart 1 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span></span>
+<span><span class="co">#&gt; ECM restart 2 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span></span>
+<span><span class="co">#&gt; ECM restart 3 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span></span>
+<span><span class="co">#&gt; ECM restart 4 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span></span>
+<span><span class="co">#&gt; ECM restart 5 of 5</span></span>
+<span><span class="co">#&gt; Initialising starting values</span></span>
+<span><span class="co">#&gt; Initial groups parameter estimates by K-means clustering</span></span>
+<span><span class="co">#&gt; Iteration: 1 | New loglik -932.547 | Ratio loglik 0</span></span>
+<span><span class="co">#&gt; Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905</span></span>
+<span><span class="co">#&gt; initial  value 745.015688 </span></span>
+<span><span class="co">#&gt; iter  10 value 740.900796</span></span>
+<span><span class="co">#&gt; iter  20 value 740.884813</span></span>
+<span><span class="co">#&gt; iter  30 value 740.865771</span></span>
+<span><span class="co">#&gt; iter  40 value 740.817682</span></span>
+<span><span class="co">#&gt; iter  50 value 739.833832</span></span>
+<span><span class="co">#&gt; iter  60 value 728.725117</span></span>
+<span><span class="co">#&gt; iter  70 value 728.591056</span></span>
+<span><span class="co">#&gt; final  value 728.590862 </span></span>
+<span><span class="co">#&gt; converged</span></span>
+<span><span class="co">#&gt;            treatmentImpact</span></span>
+<span><span class="co">#&gt; Archetype1        1.463471</span></span>
+<span><span class="co">#&gt; Archetype2        1.463359</span></span></code></pre></div>
 <p><em>Explain what the main two types of response to revegetation were,
 across invertebrate taxa.</em></p>
 <p>Oh that’s odd – the estimated trend is almost identical for these two
@@ -290,19 +290,19 @@ data<a class="anchor" aria-label="anchor" href="#code-box-16-3-choosing-the-numb
 <p><em>This code chunk has not been run, as it takes a minute or so to
 complete</em></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">nClust</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span>,<span class="fl">3</span><span class="op">)</span>
-  <span class="va">bics</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw">for</span><span class="op">(</span><span class="va">iClust</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">{</span>
-    <span class="va">fti_Mix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">spiderFormula</span>, data<span class="op">=</span><span class="va">SpiderDF</span>,
-      family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="va">nClust</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span>,
-      control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>init_method<span class="op">=</span><span class="st">'kmeans'</span>,ecm_refit<span class="op">=</span><span class="fl">5</span>, ecm_steps<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">bics</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">fti_Mix</span><span class="op">)</span>
-  <span class="op">}</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bics</span><span class="op">~</span><span class="va">nClust</span>, ylab<span class="op">=</span><span class="st">"BIC"</span>, xlab<span class="op">=</span><span class="st">"# archetypes"</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">nClust</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="va">bics</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">iClust</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">{</span></span>
+<span>    <span class="va">fti_Mix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">spiderFormula</span>, data<span class="op">=</span><span class="va">SpiderDF</span>,</span>
+<span>      family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="va">nClust</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span>,</span>
+<span>      control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>init_method<span class="op">=</span><span class="st">'kmeans'</span>,ecm_refit<span class="op">=</span><span class="fl">5</span>, ecm_steps<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">bics</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">fti_Mix</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bics</span><span class="op">~</span><span class="va">nClust</span>, ylab<span class="op">=</span><span class="st">"BIC"</span>, xlab<span class="op">=</span><span class="st">"# archetypes"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p><em>How many archetypes would you use?</em></p>
 <p>I guess I’d go for four archetypes, that looks like the winner
 here.</p>
@@ -324,18 +324,18 @@ choice.</em></p>
 <p><em>This code chunk has not been run, as it takes a minute or so to
 complete</em></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span>
-<span class="op">{</span>
-  <span class="va">nClust</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">3</span><span class="op">)</span>
-  <span class="va">bics</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span>
-  <span class="kw">for</span><span class="op">(</span><span class="va">iClust</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">{</span>
-    <span class="va">fti_Mix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">abundMat</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">revegDF</span>, 
-      family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="va">nClust</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">bics</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">fti_Mix</span><span class="op">)</span>
-  <span class="op">}</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bics</span><span class="op">~</span><span class="va">nClust</span>, ylab<span class="op">=</span><span class="st">"BIC"</span>, xlab<span class="op">=</span><span class="st">"# archetypes"</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="va">is_ecomix_installed</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>  <span class="va">nClust</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">3</span><span class="op">)</span></span>
+<span>  <span class="va">bics</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">iClust</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">nClust</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">{</span></span>
+<span>    <span class="va">fti_Mix</span> <span class="op">=</span> <span class="fu">ecomix</span><span class="fu">::</span><span class="fu">species_mix</span><span class="op">(</span><span class="va">abundMat</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">revegDF</span>, </span>
+<span>      family<span class="op">=</span><span class="st">"negative.binomial"</span>, nArchetypes<span class="op">=</span><span class="va">nClust</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">bics</span><span class="op">[</span><span class="va">iClust</span><span class="op">]</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">fti_Mix</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bics</span><span class="op">~</span><span class="va">nClust</span>, ylab<span class="op">=</span><span class="st">"BIC"</span>, xlab<span class="op">=</span><span class="st">"# archetypes"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>Well it looks like there should be two archetypes (presumably, one of
 these is increasing with revegetation, the other not).</p>
 </div>
@@ -358,42 +358,42 @@ explained by these traits.</p>
 traitglm<a class="anchor" aria-label="anchor" href="#code-box-16-4-a-fourth-corner-model-for-spider-data-using-traitglm"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JenniNiku/gllvm" class="external-link">gllvm</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'gllvm'</span>
-<span class="co">#&gt; The following object is masked from 'package:vegan':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     ordiplot</span>
-<span class="co">#&gt; The following objects are masked from 'package:VGAM':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     AICc, nobs, predict, vcov</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats4':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     nobs, vcov</span>
-<span class="co">#&gt; The following object is masked from 'package:mvabund':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     coefplot</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     nobs, predict, simulate, vcov</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span>
-<span class="va">X</span> <span class="op">=</span> <span class="va">spider</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soil.dry"</span>,<span class="st">"herb.layer"</span><span class="op">)</span><span class="op">]</span>
-<span class="va">ft_trait</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>, randomX<span class="op">=</span><span class="op">~</span><span class="va">soil.dry</span><span class="op">+</span><span class="va">herb.layer</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">)</span>
-<span class="co">#&gt; 'log Lik.' -711.2906 (df=60)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://lattice.r-forge.r-project.org/" class="external-link">lattice</a></span><span class="op">)</span>
-<span class="va">a</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">$</span><span class="va">fourth.corner</span><span class="op">)</span> <span class="op">)</span>
-<span class="va">colort</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="st">"white"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">plot.4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/levelplot.html" class="external-link">levelplot</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">$</span><span class="va">fourth.corner</span>, col.regions<span class="op">=</span><span class="fu">colort</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,
-           at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span>, <span class="va">a</span>, length<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rot <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot.4th</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JenniNiku/gllvm" class="external-link">gllvm</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'gllvm'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:vegan':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     ordiplot</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:VGAM':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     AICc, nobs, predict, vcov</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats4':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     nobs, vcov</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:mvabund':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     coefplot</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     nobs, predict, simulate, vcov</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">spider</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">=</span> <span class="va">spider</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soil.dry"</span>,<span class="st">"herb.layer"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">ft_trait</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>, randomX<span class="op">=</span><span class="op">~</span><span class="va">soil.dry</span><span class="op">+</span><span class="va">herb.layer</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'log Lik.' -711.2906 (df=60)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://lattice.r-forge.r-project.org/" class="external-link">lattice</a></span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">$</span><span class="va">fourth.corner</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">colort</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="st">"white"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">plot.4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/levelplot.html" class="external-link">levelplot</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">$</span><span class="va">fourth.corner</span>, col.regions<span class="op">=</span><span class="fu">colort</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>           at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span>, <span class="va">a</span>, length<span class="op">=</span><span class="fl">100</span><span class="op">)</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rot <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot.4th</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code16.4-1.png" alt=""><p class="caption">plot of chunk code16.4</p>
+<img src="../reference/figures/code16.4-1.png" alt=""><p class="caption">plot of chunk code16.4</p>
 </div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/coefplot.gllvm.html" class="external-link">coefplot</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/coefplot.manyglm.html" class="external-link">coefplot</a></span><span class="op">(</span><span class="va">ft_trait</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code16.4-2.png" alt=""><p class="caption">plot of chunk code16.4</p>
+<img src="../reference/figures/code16.4-2.png" alt=""><p class="caption">plot of chunk code16.4</p>
 </div>
 </div>
 <div class="section level2">
@@ -407,27 +407,27 @@ would like to know if these traits explain why ant species differ in
 environmental response. Fit a fourth corner model to this
 dataset.</em></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">)</span>
-<span class="va">envMat</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">env</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">)</span></span>
+<span><span class="va">envMat</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">env</span><span class="op">)</span></span></code></pre></div>
 <p><em>(The below code chunk takes about a minute to run.)</em></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_anttrait</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>, randomX<span class="op">=</span><span class="op">~</span><span class="va">envMat</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, starting.val<span class="op">=</span><span class="st">"zero"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">)</span>
-<span class="co">#&gt; 'log Lik.' -1919.352 (df=223)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://lattice.r-forge.r-project.org/" class="external-link">lattice</a></span><span class="op">)</span>
-<span class="va">a</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">$</span><span class="va">fourth.corner</span><span class="op">)</span> <span class="op">)</span>
-<span class="va">colort</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="st">"white"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">plot_4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/levelplot.html" class="external-link">levelplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">$</span><span class="va">fourth.corner</span><span class="op">)</span><span class="op">)</span>,
-  col.regions<span class="op">=</span><span class="fu">colort</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span>, <span class="va">a</span>, length<span class="op">=</span><span class="fl">100</span><span class="op">)</span>,
-  scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> x<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rot <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_4th</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_anttrait</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>, randomX<span class="op">=</span><span class="op">~</span><span class="va">envMat</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, starting.val<span class="op">=</span><span class="st">"zero"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'log Lik.' -1919.352 (df=223)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://lattice.r-forge.r-project.org/" class="external-link">lattice</a></span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">$</span><span class="va">fourth.corner</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">colort</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>,<span class="st">"white"</span>,<span class="st">"red"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">plot_4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/lattice/man/levelplot.html" class="external-link">levelplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">$</span><span class="va">fourth.corner</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  col.regions<span class="op">=</span><span class="fu">colort</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="va">a</span>, <span class="va">a</span>, length<span class="op">=</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>  scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> x<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rot <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot_4th</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex16.5-1.png" alt=""><p class="caption">plot of chunk ex16.5</p>
+<img src="../reference/figures/ex16.5-1.png" alt=""><p class="caption">plot of chunk ex16.5</p>
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/coefplot.gllvm.html" class="external-link">coefplot</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/coefplot.manyglm.html" class="external-link">coefplot</a></span><span class="op">(</span><span class="va">ft_anttrait</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/ex16.5-2.png" alt=""><p class="caption">plot of chunk ex16.5</p>
+<img src="../reference/figures/ex16.5-2.png" alt=""><p class="caption">plot of chunk ex16.5</p>
 </div>
 <p>This doesn’t always produce a <code>coefplot</code> because of
 infinite values – this is symptomatic of non-convergence. Make sure you
@@ -444,8 +444,8 @@ most runs, but with a fairly large standard error.</p>
 <p><em>The below code chunk has not been evaluated because it is a
 function of the previous one</em></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/mvabund-internal.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ft_anttrait</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,mgp<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.75</span>,<span class="fl">0.75</span>,<span class="fl">0</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ft_anttrait</span>, which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>This looks good to me. The points on the normal quantile plot don’t
 all stay in the envelope (which is pointwise not global, so is tighter
 than it should be), but the violations we have are not of the alarming
@@ -458,25 +458,25 @@ large. This is often symptomatic of overfitting rather than lack-of-fit
 data<a class="anchor" aria-label="anchor" href="#code-box-16-5-a-fourth-corner-interaction-plot-for-petruss-spider-data"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nVars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
-<span class="va">newTraits</span> <span class="op">=</span> <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>
-<span class="co"># set factors not of interest here to be a constant value</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">length</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">length</span><span class="op">)</span> <span class="co">#set length to its mean</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">colour</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">colour</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">nVars</span><span class="op">)</span>,
-   levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">colour</span><span class="op">)</span><span class="op">)</span> <span class="co">#set to first level of factor</span>
-<span class="co"># set starting rows of ’marks’ to take all possible values</span>
-<span class="va">nMarks</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">marks</span><span class="op">)</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">marks</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">marks</span><span class="op">)</span>
-<span class="co"># create a new env dataset where the only thing that varies is soil:</span>
-<span class="va">newEnv</span> <span class="op">=</span> <span class="va">spider</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soil.dry"</span>,<span class="st">"herb.layer"</span><span class="op">)</span><span class="op">]</span>
-<span class="va">newEnv</span><span class="op">[</span>,<span class="st">"soil.dry"</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>,<span class="st">"soil.dry"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-<span class="va">newEnv</span><span class="op">[</span>,<span class="st">"herb.layer"</span><span class="op">]</span><span class="op">=</span><span class="fl">0</span>
-<span class="co">#make predictions and plot:</span>
-<span class="va">newPreds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/predict.gllvm.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">ft_trait</span>,newX<span class="op">=</span><span class="va">newEnv</span>,newTR<span class="op">=</span><span class="va">newTraits</span>,type<span class="op">=</span><span class="st">"response"</span>, level<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">newPreds</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span><span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>, log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">newTraits</span><span class="op">$</span><span class="va">marks</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nVars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">newTraits</span> <span class="op">=</span> <span class="va">spider</span><span class="op">$</span><span class="va">trait</span></span>
+<span><span class="co"># set factors not of interest here to be a constant value</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">length</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">length</span><span class="op">)</span> <span class="co">#set length to its mean</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">colour</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">colour</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">nVars</span><span class="op">)</span>,</span>
+<span>   levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">colour</span><span class="op">)</span><span class="op">)</span> <span class="co">#set to first level of factor</span></span>
+<span><span class="co"># set starting rows of ’marks’ to take all possible values</span></span>
+<span><span class="va">nMarks</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">marks</span><span class="op">)</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">marks</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">trait</span><span class="op">$</span><span class="va">marks</span><span class="op">)</span></span>
+<span><span class="co"># create a new env dataset where the only thing that varies is soil:</span></span>
+<span><span class="va">newEnv</span> <span class="op">=</span> <span class="va">spider</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soil.dry"</span>,<span class="st">"herb.layer"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">newEnv</span><span class="op">[</span>,<span class="st">"soil.dry"</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>,<span class="st">"soil.dry"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">newEnv</span><span class="op">[</span>,<span class="st">"herb.layer"</span><span class="op">]</span><span class="op">=</span><span class="fl">0</span></span>
+<span><span class="co">#make predictions and plot:</span></span>
+<span><span class="va">newPreds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">ft_trait</span>,newX<span class="op">=</span><span class="va">newEnv</span>,newTR<span class="op">=</span><span class="va">newTraits</span>,type<span class="op">=</span><span class="st">"response"</span>, level<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">newPreds</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span><span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>, log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">newTraits</span><span class="op">$</span><span class="va">marks</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nMarks</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="figure/code16.5-1.png" alt=""><p class="caption">plot of chunk code16.5</p>
+<img src="../reference/figures/code16.5-1.png" alt=""><p class="caption">plot of chunk code16.5</p>
 </div>
 </div>
 <div class="section level2">
@@ -492,30 +492,30 @@ with the biggest (and only significant) interaction term:</p>
 <p><em>The below code chunk has not been evaluated because it is a
 function of the previous one</em></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nVars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
-<span class="va">newTraits</span> <span class="op">=</span> <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>
-<span class="co">#set length vars to their mean</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">Femur.length</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Femur.length</span><span class="op">)</span> 
-<span class="va">newTraits</span><span class="op">$</span><span class="va">Webers.length</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Webers.length</span><span class="op">)</span>
-<span class="co"># set factors not of interest here to be a constant value</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">No.spines</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">nVars</span><span class="op">)</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">Pilosity</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Pilosity</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">nVars</span><span class="op">)</span>,
-<span class="co"># set first few levels of Polymorphism to all possible values</span>
-levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Pilosity</span><span class="op">)</span><span class="op">)</span> <span class="co">#set to first level of factor</span>
-<span class="va">nPoly</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">)</span>
-<span class="va">newTraits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">)</span>
-<span class="co"># create a new env dataset where the only thing that varies is Canopy.cover:</span>
-<span class="va">newEnv</span> <span class="op">=</span> <span class="va">antTraits</span><span class="op">$</span><span class="va">env</span>
-<span class="va">newEnv</span><span class="op">$</span><span class="va">Canopy.cover</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Canopy.cover</span><span class="op">)</span><span class="op">)</span>
-<span class="va">newEnv</span><span class="op">$</span><span class="va">Bare.ground</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Bare.ground</span><span class="op">)</span>
-<span class="va">newEnv</span><span class="op">$</span><span class="va">Shrub.cover</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Shrub.cover</span><span class="op">)</span>
-<span class="va">newEnv</span><span class="op">$</span><span class="va">Volume.lying.CWD</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Volume.lying.CWD</span><span class="op">)</span>
-<span class="va">newEnv</span><span class="op">$</span><span class="va">Feral.mammal.dung</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Feral.mammal.dung</span><span class="op">)</span>
-<span class="va">newEnv</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">)</span>
-<span class="co">#make predictions and plot:</span>
-<span class="va">newPreds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/predict.gllvm.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">ft_anttrait</span>,newX<span class="op">=</span><span class="va">newEnv</span>,newTR<span class="op">=</span><span class="va">newTraits</span>,type<span class="op">=</span><span class="st">"response"</span>, level<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">[</span>,<span class="st">"Canopy.cover"</span><span class="op">]</span>, <span class="va">newPreds</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span><span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>, ylab<span class="op">=</span><span class="st">"Mean abundance"</span>, xlab<span class="op">=</span><span class="st">"Canopy cover"</span>, log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">newTraits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nVars</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="va">newTraits</span> <span class="op">=</span> <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span></span>
+<span><span class="co">#set length vars to their mean</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">Femur.length</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Femur.length</span><span class="op">)</span> </span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">Webers.length</span><span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Webers.length</span><span class="op">)</span></span>
+<span><span class="co"># set factors not of interest here to be a constant value</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">No.spines</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">nVars</span><span class="op">)</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">Pilosity</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Pilosity</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,<span class="va">nVars</span><span class="op">)</span>,</span>
+<span><span class="co"># set first few levels of Polymorphism to all possible values</span></span>
+<span>levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Pilosity</span><span class="op">)</span><span class="op">)</span> <span class="co">#set to first level of factor</span></span>
+<span><span class="va">nPoly</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">)</span></span>
+<span><span class="va">newTraits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">)</span></span>
+<span><span class="co"># create a new env dataset where the only thing that varies is Canopy.cover:</span></span>
+<span><span class="va">newEnv</span> <span class="op">=</span> <span class="va">antTraits</span><span class="op">$</span><span class="va">env</span></span>
+<span><span class="va">newEnv</span><span class="op">$</span><span class="va">Canopy.cover</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Canopy.cover</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">newEnv</span><span class="op">$</span><span class="va">Bare.ground</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Bare.ground</span><span class="op">)</span></span>
+<span><span class="va">newEnv</span><span class="op">$</span><span class="va">Shrub.cover</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Shrub.cover</span><span class="op">)</span></span>
+<span><span class="va">newEnv</span><span class="op">$</span><span class="va">Volume.lying.CWD</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Volume.lying.CWD</span><span class="op">)</span></span>
+<span><span class="va">newEnv</span><span class="op">$</span><span class="va">Feral.mammal.dung</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">$</span><span class="va">Feral.mammal.dung</span><span class="op">)</span></span>
+<span><span class="va">newEnv</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">)</span></span>
+<span><span class="co">#make predictions and plot:</span></span>
+<span><span class="va">newPreds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">ft_anttrait</span>,newX<span class="op">=</span><span class="va">newEnv</span>,newTR<span class="op">=</span><span class="va">newTraits</span>,type<span class="op">=</span><span class="st">"response"</span>, level<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="va">newEnv</span><span class="op">[</span>,<span class="st">"Canopy.cover"</span><span class="op">]</span>, <span class="va">newPreds</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span><span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>, ylab<span class="op">=</span><span class="st">"Mean abundance"</span>, xlab<span class="op">=</span><span class="st">"Canopy cover"</span>, log<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">newTraits</span><span class="op">$</span><span class="va">Polymorphism</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="va">nPoly</span><span class="op">)</span></span></code></pre></div>
 <p>We can see there that when there is no polymorphism, abundance is
 relatively high with low canopy cover.</p>
 </div>
@@ -524,20 +524,20 @@ relatively high with low canopy cover.</p>
 𝛽-diversity<a class="anchor" aria-label="anchor" href="#code-box-16-6-quantifying-how-effectively-traits-explain-%F0%9D%9B%BD-diversity"></a>
 </h2>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_spp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span>
-<span class="va">ft_trait</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span>
-<span class="va">ft_main</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, formula<span class="op">=</span><span class="op">~</span><span class="va">soil.dry</span><span class="op">+</span><span class="va">herb.layer</span><span class="op">)</span>
-<span class="va">an_spider4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_main</span>, <span class="va">ft_trait</span>, <span class="va">ft_spp</span><span class="op">)</span>
-<span class="co">#&gt; Model  1 :  ~ soil.dry + herb.layer </span>
-<span class="co">#&gt; Model  2 :  y ~ soil.dry + herb.layer + (soil.dry + herb.layer):(length + colour + marks) </span>
-<span class="co">#&gt; Model  3 :  y ~ X</span>
-<span class="va">an_spider4th</span>
-<span class="co">#&gt;   Resid.Df        D Df.diff     P.value</span>
-<span class="co">#&gt; 1      287  0.00000       0            </span>
-<span class="co">#&gt; 2      279 40.12996       8 3.02999e-06</span>
-<span class="co">#&gt; 3      265 76.84430      14 1.08408e-10</span>
-<span class="va">an_spider4th</span><span class="op">$</span><span class="va">D</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">an_spider4th</span><span class="op">$</span><span class="va">D</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.3430666</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_spp</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span></span>
+<span><span class="va">ft_trait</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span></span>
+<span><span class="va">ft_main</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">spider</span><span class="op">$</span><span class="va">abund</span>, <span class="va">X</span>, <span class="va">spider</span><span class="op">$</span><span class="va">trait</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, formula<span class="op">=</span><span class="op">~</span><span class="va">soil.dry</span><span class="op">+</span><span class="va">herb.layer</span><span class="op">)</span></span>
+<span><span class="va">an_spider4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_main</span>, <span class="va">ft_trait</span>, <span class="va">ft_spp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Model  1 :  ~ soil.dry + herb.layer </span></span>
+<span><span class="co">#&gt; Model  2 :  y ~ soil.dry + herb.layer + (soil.dry + herb.layer):(length + colour + marks) </span></span>
+<span><span class="co">#&gt; Model  3 :  y ~ X</span></span>
+<span><span class="va">an_spider4th</span></span>
+<span><span class="co">#&gt;   Resid.Df        D Df.diff     P.value</span></span>
+<span><span class="co">#&gt; 1      287  0.00000       0            </span></span>
+<span><span class="co">#&gt; 2      279 40.12996       8 3.02999e-06</span></span>
+<span><span class="co">#&gt; 3      265 76.84430      14 1.08408e-10</span></span>
+<span><span class="va">an_spider4th</span><span class="op">$</span><span class="va">D</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">an_spider4th</span><span class="op">$</span><span class="va">D</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.3430666</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exercise-16-7-variation-explained-by-traits-for-heloises-ants">Exercise 16.7: Variation explained by traits for Heloise’s ants<a class="anchor" aria-label="anchor" href="#exercise-16-7-variation-explained-by-traits-for-heloises-ants"></a>
@@ -546,22 +546,22 @@ relatively high with low canopy cover.</p>
 variation in environmental response is explained by the measured species
 traits?</em></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ft_antspp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span>
-<span class="va">ft_anttrait</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span>
-<span class="va">mainFormula</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">as.formula</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"~"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">envMat</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">"+"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">ft_antmain</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/gllvm/man/gllvm.html" class="external-link">gllvm</a></span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, formula<span class="op">=</span><span class="va">mainFormula</span><span class="op">)</span>
-<span class="va">an_ant4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_antmain</span>, <span class="va">ft_anttrait</span>, <span class="va">ft_antspp</span><span class="op">)</span>
-<span class="co">#&gt; Warning in anova.gllvm(ft_antmain, ft_anttrait, ft_antspp): This test was not designed for tests with a df.diff larger than 20 so the P-value should be treated as approximate.</span>
-<span class="co">#&gt; Model  1 :  ~ Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung </span>
-<span class="co">#&gt; Model  2 :  y ~ Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung + (Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung):(Femur.length + No.spines + Pilosity + Polymorphism + Webers.length) </span>
-<span class="co">#&gt; Model  3 :  y ~ X</span>
-<span class="va">an_ant4th</span>
-<span class="co">#&gt;   Resid.Df         D Df.diff     P.value</span>
-<span class="co">#&gt; 1     1062   0.00000       0            </span>
-<span class="co">#&gt; 2     1022  75.73794      40 0.000548758</span>
-<span class="co">#&gt; 3      862 271.85048     160 8.23701e-08</span>
-<span class="va">an_ant4th</span><span class="op">$</span><span class="va">D</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">an_ant4th</span><span class="op">$</span><span class="va">D</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.2178955</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ft_antspp</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span></span>
+<span><span class="va">ft_anttrait</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span><span class="op">)</span></span>
+<span><span class="va">mainFormula</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/formula.html" class="external-link">as.formula</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"~"</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">envMat</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">"+"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ft_antmain</span> <span class="op">=</span> <span class="fu">gllvm</span><span class="op">(</span><span class="va">antTraits</span><span class="op">$</span><span class="va">abund</span>, <span class="va">envMat</span>, <span class="va">antTraits</span><span class="op">$</span><span class="va">traits</span>, family<span class="op">=</span><span class="st">"negative.binomial"</span>, formula<span class="op">=</span><span class="va">mainFormula</span><span class="op">)</span></span>
+<span><span class="va">an_ant4th</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_antmain</span>, <span class="va">ft_anttrait</span>, <span class="va">ft_antspp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in anova.gllvm(ft_antmain, ft_anttrait, ft_antspp): This test was not designed for tests with a df.diff larger than 20 so the P-value should be treated as approximate.</span></span>
+<span><span class="co">#&gt; Model  1 :  ~ Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung </span></span>
+<span><span class="co">#&gt; Model  2 :  y ~ Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung + (Bare.ground + Canopy.cover + Shrub.cover + Volume.lying.CWD + Feral.mammal.dung):(Femur.length + No.spines + Pilosity + Polymorphism + Webers.length) </span></span>
+<span><span class="co">#&gt; Model  3 :  y ~ X</span></span>
+<span><span class="va">an_ant4th</span></span>
+<span><span class="co">#&gt;   Resid.Df         D Df.diff     P.value</span></span>
+<span><span class="co">#&gt; 1     1062   0.00000       0            </span></span>
+<span><span class="co">#&gt; 2     1022  75.73794      40 0.000548758</span></span>
+<span><span class="co">#&gt; 3      862 271.85048     160 8.23701e-08</span></span>
+<span><span class="va">an_ant4th</span><span class="op">$</span><span class="va">D</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">an_ant4th</span><span class="op">$</span><span class="va">D</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.2178955</span></span></code></pre></div>
 <p>So it looks like about a quarter of interspecific variation can be
 explained by traits, which is not super, especially considering that the
 trait model uses a quarter as many parameters. This suggests we are not
@@ -581,7 +581,7 @@ really onto a winner here…</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
