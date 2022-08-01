@@ -4,6 +4,8 @@
 [![License](http://img.shields.io/badge/license-LGPL%20%28%3E=%202.1%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) <br />
 [![CRAN](http://www.r-pkg.org/badges/version/ecostats)](https://CRAN.R-project.org/package=ecostats) 
 [![Downloads](http://cranlogs.r-pkg.org/badges/ecostats?color=brightgreen)](https://www.r-pkg.org/pkg/ecostats)
+  [![R-CMD-check](https://github.com/fontikar/ecostats/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fontikar/ecostats/actions/workflows/R-CMD-check.yaml)
+
 
 
 #### Author
