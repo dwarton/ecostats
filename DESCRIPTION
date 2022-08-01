@@ -49,6 +49,7 @@ Suggests:
     smatr,
     testthat,
     vegan,
-    VGAM
+    VGAM,
+    covr
 Additional_repositories: https://dwarton.github.io/drat
 VignetteBuilder: knitr
