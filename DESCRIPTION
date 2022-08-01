@@ -24,7 +24,6 @@ Suggests:
     DAAG,
     DHARMa,
     dplyr,
-    ecomix,
     gclus,
     GGally,
     ggplot2,
