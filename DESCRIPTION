@@ -24,7 +24,6 @@ Suggests:
     DAAG,
     DHARMa,
     dplyr,
-    ecomix,
     gclus,
     GGally,
     ggplot2,
@@ -50,6 +49,7 @@ Suggests:
     smatr,
     testthat,
     vegan,
-    VGAM
+    VGAM,
+    covr
 Additional_repositories: https://dwarton.github.io/drat
 VignetteBuilder: knitr

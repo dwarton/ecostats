@@ -17,3 +17,5 @@
 ^doc$
 ^Meta$
 ^ignore/
+^\.github$
+^codecov\.yml$
