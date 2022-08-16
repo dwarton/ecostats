@@ -102,7 +102,7 @@ legend("bottomright",legend=c("high rain, high soilp",
          "low rain, low soilp"), col=1:4, pch=1)
 ```
 
-![plot of chunk box11.2plot](figure/box11.2plot-1.png)
+![plot of chunk box11.2plot](../man/figures/box11.2plot-1.png)
 
 *What is the nature of the rainfall effect?*
 
@@ -117,7 +117,7 @@ library(ecostats)
 plotenvelope(ft_leaf,which=1:3,n.sim=99)
 ```
 
-![plot of chunk box11.3](figure/box11.3-1.png)
+![plot of chunk box11.3](../man/figures/box11.3-1.png)
 
 (Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
@@ -173,7 +173,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_leafLog,which=1:3,n.sim=99)
 ```
 
-![plot of chunk ex11.4](figure/ex11.4-1.png)
+![plot of chunk ex11.4](../man/figures/ex11.4-1.png)
 
 *Is this what you expected to happen?*
 
@@ -193,7 +193,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_iris,which=1:3,n.sim=99)
 ```
 
-![plot of chunk ex11.5Un](figure/ex11.5Un-1.png)
+![plot of chunk ex11.5Un](../man/figures/ex11.5Un-1.png)
 
 This doesn't look too bad, but there is a moderate fan-shape, evident in an increasing trend in the scale-location plot, which drifts outside its simulation envelope. The trend is not strong however, with the y-axis predictions ranging from 0.6 to 1 (varying over a factor of about 1.5).
 
@@ -206,7 +206,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_irisLog,which=1:3,n.sim=99)
 ```
 
-![plot of chunk ex11.5Log](figure/ex11.5Log-1.png)
+![plot of chunk ex11.5Log](../man/figures/ex11.5Log-1.png)
 
 Oh well that's disappointing! The log-transformation hasn't made things much better, reversing the fan-shape and the trend in the scale-location plot (although again it is not a strong trend).  Residuals now appear quite non-normal with some long tails, especially at the lower end.  The issue is largely with petal variables (blue/green), we would get a slightly better plot if we only log-transformed sepal measurements.  The main issue we saw previously - an increasing trend on the scale-location plot - is however less of an issue now (note the trend line covers a smaller range of values, from about 0.7 to 0.9).
 
@@ -409,7 +409,7 @@ hist(ft_MCMC$VCV[,9],breaks=15,xlab="Troc variance",main="")
 abline(v=summary(spid_glmm)$varcor$cond$rows[3,3],col="red")
 ```
 
-![plot of chunk code11.7hists](figure/code11.7hists-1.png)
+![plot of chunk code11.7hists](../man/figures/code11.7hists-1.png)
 
 The posterior modes show much closer agreement to the `glmmTMB` variance estimates, although still tending to be slightly larger.
 
@@ -490,7 +490,7 @@ To simplify referencing of parameters let's refit with no intercept in the model
   legend("topleft",levels(spiderGeneraLong$genus),col=1:3,pch=1,cex=0.9,y.intersp=1.0)
 ```
 
-![plot of chunk fig11.4](figure/fig11.4-1.png)
+![plot of chunk fig11.4](../man/figures/fig11.4-1.png)
 
 But note this plot excludes absences... there are only a few for these taxa. But in other situations with many zeros, a lot of data would be missing from a plot constructed in this way, unless you get creative!
 
@@ -508,7 +508,7 @@ addSmooth(spidFits,res_spid) # a function in ecostats package to add smoother an
 qqenvelope(res_spid,col=spiderGeneraLong$genus)
 ```
 
-![plot of chunk code11.8](figure/code11.8-1.png)
+![plot of chunk code11.8](../man/figures/code11.8-1.png)
 
 _What do these plots tell us about model assumptions?_
 
@@ -646,7 +646,7 @@ mtext(colnames(ft_MCMC$VCV)[iPlot])
 }
 ```
 
-![plot of chunk code11.9](figure/code11.9-1.png)
+![plot of chunk code11.9](../man/figures/code11.9-1.png)
 
 ```r
 gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],
@@ -933,7 +933,6 @@ mtext(colnames(ft_MCMC$VCV)[iPlot])
 }
 ```
 
-![plot of chunk ex11.7mcmc](figure/ex11.7mcmc-1.png)
 
 ```r
 gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],

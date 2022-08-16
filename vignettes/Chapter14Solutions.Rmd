@@ -139,7 +139,7 @@ ft_reveg=manyglm(abundMV~treatment,offset=log(pitfalls),family="negative.binomia
 plotenvelope(ft_reveg, which=1:3)
 ```
 
-![plot of chunk code14.2](figure/code14.2-1.png)
+![plot of chunk code14.2](../man/figures/code14.2-1.png)
 
 *What do you reckon?*
 
@@ -154,7 +154,7 @@ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_revegP, which=1:3, sim.method="stand.norm")
 ```
 
-![plot of chunk code14.3](figure/code14.3-1.png)
+![plot of chunk code14.3](../man/figures/code14.3-1.png)
 
 
 ```r
@@ -169,7 +169,7 @@ meanvar.plot(reveg$abundMV~reveg$treatment)
 abline(a=0,b=1,col="darkgreen")
 ```
 
-![plot of chunk code14.3MV](figure/code14.3MV-1.png)
+![plot of chunk code14.3MV](../man/figures/code14.3MV-1.png)
 
 *How's the Poisson assumption looking?*
 
@@ -195,7 +195,7 @@ ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family=binomial("cloglog"), data=s
 plotenvelope(ft_epiAlt, which=1:3)
 ```
 
-![plot of chunk ex14.5](figure/ex14.5-1.png)
+![plot of chunk ex14.5](../man/figures/ex14.5-1.png)
 
 *Do assumptions seem reasonable?*
 
@@ -231,7 +231,7 @@ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wind, which=1:3, sim.method="stand.norm")
 ```
 
-![plot of chunk ex14.6assumptions](figure/ex14.6assumptions-1.png)
+![plot of chunk ex14.6assumptions](../man/figures/ex14.6assumptions-1.png)
 
 
 *Do assumptions seem reasonable? In particular, think about whether there is evidence that the counts are overdispersed compared to the Poisson.*
@@ -335,7 +335,7 @@ plotenvelope(ft_wind, which=1:3, n.sim=59)
 #>   NA/NaN/Inf in 'x'
 ```
 
-![plot of chunk ex14.6refit](figure/ex14.6refit-1.png)
+![plot of chunk ex14.6refit](../man/figures/ex14.6refit-1.png)
 
 (You can ignore any error messages - these seem to happen because predicted values were numerically zero.)
 

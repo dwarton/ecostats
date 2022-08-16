@@ -11,3 +11,9 @@
 ^vignettes/Chapter15Solutions\.Rmd\.orig$
 ^vignettes/Chapter16Solutions\.Rmd\.orig$
 ^vignettes/precompile\.R$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^doc$
+^Meta$
+^ignore/

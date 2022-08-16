@@ -1,0 +1,82 @@
+url: ~
+template:
+  bootstrap: 5
+  bootswatch: lumen
+
+navbar:
+  structure:
+    left:
+    - home
+    - about
+    - articles
+    - reference
+    right: 
+    - search
+    - github
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    reference:
+      text: Glossary of functions
+      href: reference/index.html
+    about:
+      text: About ecostats
+      href: articles/ecostats.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/dwarton/ecostats
+
+articles:
+- title: Chapter Solutions
+  navbar: Chapter Solutions
+  contents:
+  - Chapter1Solutions
+  - Chapter2Solutions
+  - Chapter3Solutions
+  - Chapter4Solutions
+  - Chapter5Solutions
+  - Chapter6Solutions
+  - Chapter7Solutions
+  - Chapter8Solutions
+  - Chapter9Solutions
+  - Chapter10Solutions
+  - Chapter11Solutions
+  - Chapter12Solutions
+  - Chapter13Solutions
+  - Chapter14Solutions
+  - Chapter15Solutions
+  - Chapter16Solutions
+  - Chapter17Solutions
+
+reference: 
+- title: Functions for Analysis
+- contents:
+  - BlockBootID
+  - anovaPB
+- title: Functions for Diagnostics
+- contents: 
+  - addSmooth
+  - ends_with("envelope")
+- title: Functions for Predictions/Simulations
+- contents: 
+  - starts_with("c")
+  - starts_with("simulate")
+- title: Datasets
+- contents: 
+  - Myrtaceae
+  - aphids 
+  - aphidsBACI
+  - estuaries
+  - estuaryZone
+  - globalPlants
+  - guineapig
+  - headbobLizards
+  - maunaloa
+  - ravens
+  - reveg
+  - seaweed
+  - seedsTemp
+  - snowmelt
+  - waterQuality 
+  - windFarms

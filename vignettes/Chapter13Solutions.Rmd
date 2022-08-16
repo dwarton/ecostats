@@ -91,8 +91,8 @@ leafElev
 ## Code Box 13.5: Residual plots for brain-body size relationship
 ```{r code13.5,fig.width=8,fig.height=4}
 par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
-plot(sma_brainBody,which="residual") # residual plot
-abline(a=0,b=0,col="red")
+{plot(sma_brainBody,which="residual") # residual plot
+abline(a=0,b=0,col="red")}
 qqnorm(residuals(sma_brainBody))
 qqline(residuals(sma_brainBody), col="red")
 ```
