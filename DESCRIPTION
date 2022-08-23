@@ -51,5 +51,4 @@ Suggests:
     vegan,
     VGAM,
     covr
-Additional_repositories: https://dwarton.github.io/drat
 VignetteBuilder: knitr

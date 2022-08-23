@@ -128,7 +128,7 @@ x=10^(seq(-1,3.8,length=100))
 lines(x,x,type="l",col="red")
 ```
 
-![plot of chunk fig10.5](figure/fig10.5-1.png)
+![plot of chunk fig10.5](../man/figures/fig10.5-1.png)
 
 ```r
 
@@ -144,7 +144,7 @@ x=10^(seq(-1,3.8,length=100))
 points(x,x+x^2,type="l",col="darkblue")
 ```
 
-![plot of chunk fig10.5](figure/fig10.5-2.png)
+![plot of chunk fig10.5](../man/figures/fig10.5-2.png)
 
 ## Code Box 10.2: A summary of a GLM fit to the crab presence-absence data of Exercise 10.1
 
@@ -191,7 +191,7 @@ ftMany_crab = manyglm(CrabPres~Time*Dist,family=binomial("cloglog"),
 plotenvelope(ftMany_crab, which=1)
 ```
 
-![plot of chunk box10.3](figure/box10.3-1.png)
+![plot of chunk box10.3](../man/figures/box10.3-1.png)
 
 
 ## Code for Figure 10.8
@@ -200,13 +200,13 @@ plotenvelope(ftMany_crab, which=1)
 plotenvelope(ftMany_crab, which=1, n.sim=39)
 ```
 
-![plot of chunk fig10.8](figure/fig10.8-1.png)
+![plot of chunk fig10.8](../man/figures/fig10.8-1.png)
 
 ```r
 plotenvelope(ftMany_crab, which=1, n.sim=39)
 ```
 
-![plot of chunk fig10.8](figure/fig10.8-2.png)
+![plot of chunk fig10.8](../man/figures/fig10.8-2.png)
 
 (Note that `plotenvelope` was run with just `39` iterations, to speed up computation time.)
 
@@ -219,7 +219,7 @@ plotenvelope(ftMany_crab, which=1, n.sim=39)
 with(seaweed,boxplot(Ost~Dist))
 ```
 
-![plot of chunk ex10.4](figure/ex10.4-1.png)
+![plot of chunk ex10.4](../man/figures/ex10.4-1.png)
 
 As this is a count variable with plenty of small counts (and zeros in each category), I am thinking a GLM. To start with we could consider a Poisson regression, if there were no overdispersion, or negative binomial regression.
 
@@ -241,7 +241,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_countOst, which=1:3, n.sim=99) # for a scale-location plot as well
 ```
 
-![plot of chunk box10.4](figure/box10.4-1.png)
+![plot of chunk box10.4](../man/figures/box10.4-1.png)
 (Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 
@@ -253,7 +253,7 @@ ft.countOstNB=manyglm(Ost~logWmass+Time*Dist,data=seaweed)
 plotenvelope(ft.countOstNB, which=1:3, n.sim=99)
 ```
 
-![plot of chunk box10.4b](figure/box10.4b-1.png)
+![plot of chunk box10.4b](../man/figures/box10.4b-1.png)
 
 ## Exercise 10.5: Checking the Poisson assumption on the wind farm data.
 
@@ -271,7 +271,7 @@ plotenvelope(ft_eels, which=1:3, n.sim=99)
 #>   NA/NaN/Inf in 'x'
 ```
 
-![plot of chunk ex10.5](figure/ex10.5-1.png)
+![plot of chunk ex10.5](../man/figures/ex10.5-1.png)
 
 *Does the Poisson assumption look reasonable?*
 
@@ -292,7 +292,7 @@ par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_worms, which=1:2, n.sim=99)
 ```
 
-![plot of chunk box10.6Poisson](figure/box10.6Poisson-1.png)
+![plot of chunk box10.6Poisson](../man/figures/box10.6Poisson-1.png)
 
 *Also fit a negative binomial to the data and construct a residual plot.*
 
@@ -302,7 +302,7 @@ par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wormsNB, which=1:2, n.sim=99)
 ```
 
-![plot of chunk box10.6NB](figure/box10.6NB-1.png)
+![plot of chunk box10.6NB](../man/figures/box10.6NB-1.png)
 
 *Can you see any differences between plots?*
 
@@ -416,7 +416,7 @@ anova(ftmany_Hap)
 ftMany_crab = manyglm(CrabPres~Time*Dist, family=binomial("cloglog"),
                  data=seaweed)
 anova(ftMany_crab)
-#> Time elapsed: 0 hr 0 min 2 sec
+#> Time elapsed: 0 hr 0 min 1 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: CrabPres ~ Time * Dist
@@ -482,10 +482,11 @@ anova(ft_wormmanyPois)
 data(seedsTemp)
 seedsTemp$propGerm = seedsTemp$NumGerm / seedsTemp$NumSown
 plot(propGerm/(1-propGerm)~Test.Temp,data=seedsTemp,log="y")
-#> Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values <= 0 omitted from logarithmic plot
+#> Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values <= 0 omitted from
+#> logarithmic plot
 ```
 
-![plot of chunk box10.9Load](figure/box10.9Load-1.png)
+![plot of chunk box10.9Load](../man/figures/box10.9Load-1.png)
 
 
 ```r
@@ -494,7 +495,8 @@ seedsTemp$ID = 1:length(seedsTemp$NumGerm)
 ft_temp = glmer(cbind(NumGerm,NumSown-NumGerm)~poly(Test.Temp,2)+
                (1|ID),data=seedsTemp,family="binomial")
 summary(ft_temp)
-#> Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+#> Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) [
+#> glmerMod]
 #>  Family: binomial  ( logit )
 #> Formula: cbind(NumGerm, NumSown - NumGerm) ~ poly(Test.Temp, 2) + (1 |      ID)
 #>    Data: seedsTemp
@@ -538,7 +540,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ants_Poisson, which=1:3, n.sim=99)
 ```
 
-![plot of chunk ex10.8P](figure/ex10.8P-1.png)
+![plot of chunk ex10.8P](../man/figures/ex10.8P-1.png)
 
 OK so a Poisson fit is **spectacularly** bad. Neither smoother stays in its envelope, and the data on the normal quantile plot do not stay anywhere near their envelope.
 
@@ -548,7 +550,7 @@ OK so a Poisson fit is **spectacularly** bad. Neither smoother stays in its enve
 with(reveg,boxplot(abund$Formicidae~treatment))
 ```
 
-![plot of chunk ex10.8plot](figure/ex10.8plot-1.png)
+![plot of chunk ex10.8plot](../man/figures/ex10.8plot-1.png)
 
 Not really! The ant counts in the control sites are similar to the middle of those from the revegetated sites.
 
@@ -607,7 +609,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ants_NB,which=1:3, n.sim=99)
 ```
 
-![plot of chunk ex10.8NBplots](figure/ex10.8NBplots-1.png)
+![plot of chunk ex10.8NBplots](../man/figures/ex10.8NBplots-1.png)
 
 Whereas the diagnostic plots for the Poisson model showed serious problems, we have no such issues here. So the negative binomial regression is a much better fit to the data.  It produced (much!) larger $P$-values because there is a lot of overdispersion in the data, which a Poisson model is unable to account for.
 
@@ -653,7 +655,7 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ftMany_roaches, which=1:3, n.sim=99)
 ```
 
-![plot of chunk ex10.10](figure/ex10.10-1.png)
+![plot of chunk ex10.10](../man/figures/ex10.10-1.png)
 
 ```r
 anova(ftMany_roaches)

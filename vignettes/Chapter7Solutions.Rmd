@@ -39,7 +39,7 @@ legend("topright",c("Excluded","Present"),col=cols,lty=1)
 mtext("(b)",3,adj=0,line=0.5,cex=1.4)
 ```
 
-![plot of chunk box71](figure/box71-1.png)
+![plot of chunk box71](../man/figures/box71-1.png)
 
 ## Code Box 7.2: Choosing a longitudinal model for the aphid data
 
@@ -50,15 +50,15 @@ aphid_int = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(1|Plot),
     data=aphids$oat,REML=FALSE) # random intercepts model
 aphid_slope = lmer(logcount~Treatment*Time+Treatment*I(Time^2)+(Time|Plot),
     data=aphids$oat, REML=FALSE) # random slopes model
-#> Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to converge with max|grad| = 0.00715391 (tol = 0.002,
-#> component 1)
+#> Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model failed to
+#> converge with max|grad| = 0.00715391 (tol = 0.002, component 1)
 library(nlme) # refit random intercepts model in nlme to get a ACF:
 aphid_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
     random=~1|Plot, data=aphids$oat, method="ML")
 plot(ACF(aphid_int2),alpha=0.05) # only works for nlme-fitted mixed models
 ```
 
-![plot of chunk box72](figure/box72-1.png)
+![plot of chunk box72](../man/figures/box72-1.png)
 
 ```r
 # now try a model with a temporally structured random effect:
@@ -88,10 +88,10 @@ print(aphid_int)
 #>  Residual             0.635   
 #> Number of obs: 56, groups:  Plot, 8
 #> Fixed Effects:
-#>                (Intercept)            Treatmentpresent                        Time                   I(Time^2)       Treatmentpresent:Time  
-#>                  6.5703718                  -0.2379806                  -0.1943256                   0.0028708                   0.0495183  
-#> Treatmentpresent:I(Time^2)  
-#>                 -0.0004498
+#>                (Intercept)            Treatmentpresent                        Time  
+#>                  6.5703718                  -0.2379806                  -0.1943256  
+#>                  I(Time^2)       Treatmentpresent:Time  Treatmentpresent:I(Time^2)  
+#>                  0.0028708                   0.0495183                  -0.0004498
 anova(aphid_int)
 #> Analysis of Variance Table
 #>                     npar  Sum Sq Mean Sq F value
@@ -131,10 +131,10 @@ print(aphid_slope)
 #>  Residual             0.57877       
 #> Number of obs: 56, groups:  Plot, 8
 #> Fixed Effects:
-#>                (Intercept)            Treatmentpresent                        Time                   I(Time^2)       Treatmentpresent:Time  
-#>                  6.5703718                  -0.2379806                  -0.1943256                   0.0028708                   0.0495183  
-#> Treatmentpresent:I(Time^2)  
-#>                 -0.0004498  
+#>                (Intercept)            Treatmentpresent                        Time  
+#>                  6.5703718                  -0.2379806                  -0.1943256  
+#>                  I(Time^2)       Treatmentpresent:Time  Treatmentpresent:I(Time^2)  
+#>                  0.0028708                   0.0495183                  -0.0004498  
 #> optimizer (nloptwrap) convergence code: 0 (OK) ; 0 optimizer warnings; 1 lme4 warnings
 anova(aphid_slope)
 #> Analysis of Variance Table
@@ -171,7 +171,7 @@ with(aphids$wheat, interaction.plot(Time,Plot,logcount,legend=FALSE,
 legend("bottomleft",c("Excluded","Present"),col=cols,lty=1)
 ```
 
-![plot of chunk ex72plot](figure/ex72plot-1.png)
+![plot of chunk ex72plot](../man/figures/ex72plot-1.png)
 
 As before we don't see a lot of lines crossing over so expect some correlation. We also see a similar pattern with aphid counts reducing over time, but possibly being higher without bird exclusion 2-5 weeks into the trial. 
 
@@ -192,7 +192,7 @@ aphidw_int2 = lme(logcount~Treatment*Time+Treatment*I(Time^2),
 plot(ACF(aphidw_int2),alpha=0.05) # only works for nlme-fitted mixed models
 ```
 
-![plot of chunk ex72long](figure/ex72long-1.png)
+![plot of chunk ex72long](../man/figures/ex72long-1.png)
 
 ```r
 # now try a model with a temporally structured random effect:
@@ -335,7 +335,7 @@ plot(corRich,xlim=c(0,150),ylim=c(-0.05,0.2))
 abline(h=0,col="grey90")
 ```
 
-![plot of chunk box77](figure/box77-1.png)
+![plot of chunk box77](../man/figures/box77-1.png)
 
 ```r
 
@@ -345,7 +345,7 @@ plot(corRichResid,xlim=c(0,150),ylim=c(-0.05,0.2))
 abline(h=0,col="grey90")
 ```
 
-![plot of chunk box77](figure/box77-2.png)
+![plot of chunk box77](../man/figures/box77-2.png)
 
 
 ## Exercise 7.5: Egg size when Dads incubate
@@ -369,7 +369,7 @@ barplot.phylo4d(shore4d,c("Egg.Mass","F.Mass","M.Mass"))
 #> Warning in asMethod(object): trees with unknown order may be unsafe in ape
 ```
 
-![plot of chunk box7.8](figure/box7.8-1.png)
+![plot of chunk box7.8](../man/figures/box7.8-1.png)
 
 
 ## Code Box 7.9: Exploratory analysis of egg size data}\label{code:eggEDA}
@@ -380,7 +380,7 @@ library(GGally)
 ggpairs(log(shorebird.data[,2:4]))
 ```
 
-![plot of chunk box7.9](figure/box7.9-1.png)
+![plot of chunk box7.9](../man/figures/box7.9-1.png)
 
 ## Code Box 7.10: Comparative analysis of egg size data
 
