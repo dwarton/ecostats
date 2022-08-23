@@ -11,6 +11,7 @@ plotenvelope(
   n.sim = 199,
   conf.level = 0.95,
   type = "st",
+  overlay = TRUE,
   transform = NULL,
   main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"),
   xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
@@ -21,6 +22,8 @@ plotenvelope(
   envelope.col = adjustcolor(line.col, 0.1),
   add.smooth = TRUE,
   plot.it = TRUE,
+  resFunction = NULL,
+  predFunction = NULL,
   fitMin = if (inherits(y, "glm") | inherits(y, "manyglm")) -6 else -Inf,
   ...
 )
@@ -59,6 +62,9 @@ the observed residuals will be compared. The default is 199 datasets.}
 studentized envelope tests to protect for unequal variance, which has performed well
 in simulations in this context.}
 
+\item{overlay}{logical. For multivariate data, determines whether residuals from 
+different responses are overlaid on a single plot (default), or plotted separately.}
+
 \item{transform}{a character vector pointing to a function that should be applied to both
 axes of the normal quantile plot. The most common use is to set \code{transform="pnorm"}
 for a PP-plot.}
@@ -87,11 +93,19 @@ scale-location plots, and computes a global envelope around the \emph{smoother} 
 
 \item{plot.it}{logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.}
 
+\item{resFunction}{the function used to compute residuals for all diagnostic plots. Defaults
+to \code{\link{cresiduals}} for multivariate linear models, \code{\link{rstandard}} for linear
+models, or \code{\link{residuals}} in other cases.}
+
+\item{predFunction}{the function used to compute predicted values in residual vs fits or
+scale-location plots. Defaults to \code{\link{cpredict}} for multivariate linear models
+and to \code{\link{cpredict}} otherwise.}
+
 \item{fitMin}{the minimum fitted value to use in plots, any fitted value less than this will be truncated to
 \code{fitMin}. This is useful for generalised linear models, where small fitted values correspond to
 predictions that are numerically zero. The default is to set \code{fitMin} to \code{-6} for GLMs, otherwise no truncation (\code{-Inf}).}
 
-\item{...}{further arguments sent through to \code{plot}}
+\item{...}{further arguments sent through to \code{plot}.}
 }
 \value{
 Up to three diagnostic plots with simulation envelopes are returned, and additionally a list of 
@@ -186,18 +200,22 @@ are unusually far from the values expected of them if model assumptions were sat
 y = rpois(50,lambda=1)
 x = 1:50
 rpois_glm = glm(y~x,family=poisson())
-plotenvelope(rpois_glm,n.sim=99)
+plotenvelope(rpois_glm,n.sim=59)
 
 # Fit a multivariate linear model to the iris dataset:
 data(iris)
 Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris_mlm=lm(Y~Species,data=iris)
 # check normality assumption:
-plotenvelope(iris_mlm,n.sim=99,which=2)
+plotenvelope(iris_mlm,n.sim=59,which=2)
 
 # A few more plots, with envelopes around data not smoothers:
 \donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=FALSE)
-# Note violation on the scale/location plot.}
+# Note minor violation on the scale/location plot.}
+
+# Repeat but with smoothers and with separate plots for each response and 
+# a multiple testing adjustment to sim envelopes:
+\donttest{plotenvelope(iris_mlm, which=1:3, overlay=FALSE, conf.level=1-0.05/4)}
 
 }
 \references{

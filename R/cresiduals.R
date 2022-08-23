@@ -39,7 +39,7 @@ cresiduals=function(object, standardize = TRUE, ...)
   mf = model.frame(object)
   Ys = model.response(mf) #should be the response matrix
   nYs = dim(Ys)[2]
-  resFunction = if(standardize==TRUE) rstandard else residuals
+  residFunction = if(standardize==TRUE) rstandard else residuals
   if(nYs>1 & inherits(object,"mlm"))
   {
     res=matrix(NA,dim(Ys)[1],nYs,dimnames=dimnames(Ys))
@@ -50,13 +50,13 @@ cresiduals=function(object, standardize = TRUE, ...)
       mfi$yi = Ys[ ,iVar]
       mfi$Y = Ys[ ,-iVar]
       fit = lm(formObji,data=mfi)
-      res[ ,iVar] = resFunction(fit, ...)
+      res[ ,iVar] = residFunction(fit, ...)
     }
   }
   else
   {
     warning("Not recognised as a mlm object so ordinary (marginal) residuals will be returned")
-    res = resFunction(object)
+    res = residFunction(object)
   }
   return(res)
 }

@@ -1,7 +1,7 @@
 ---
 title: "Chapter 5 -- Model selection -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-06-28"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 5 -- Model selection -- Exercise solutions and Code Boxes}
@@ -74,7 +74,11 @@ for(iDegree in 1:nDegree)
 legend("bottomright",c("Training data","Test data"),pch=c("o","*"),col=c("black",dgreen))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk fig5.1-2](../man/figures/fig5.1-2-1.png)
+=======
+![plot of chunk fig5.1-2](fig5.1-2-1.png)
+>>>>>>> Stashed changes
 
 ```r
 print(err)
@@ -90,7 +94,11 @@ axis(2,c(0,2,4,6))
 legend("topright",c("Training data","Test data"),lty=1,col=c("black",dgreen))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk fig5.1-2](../man/figures/fig5.1-2-2.png)
+=======
+![plot of chunk fig5.1-2](fig5.1-2-2.png)
+>>>>>>> Stashed changes
 
 ## Code Box 5.1: Using validation for model selection using Angela's plant height data
 
@@ -123,7 +131,11 @@ ft_rs = lm(log(height)~rain+rain.seas,dat=globalPlants)
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE) # 5 fold CV
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-1.png)
+=======
+![plot of chunk box52](box52-1.png)
+>>>>>>> Stashed changes
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE) # 5 fold CV
@@ -135,7 +147,11 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-2.png)
+=======
+![plot of chunk box52](box52-2.png)
+>>>>>>> Stashed changes
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -144,7 +160,11 @@ print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE,seed=1) # 5 fold CV
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-3.png)
+=======
+![plot of chunk box52](box52-3.png)
+>>>>>>> Stashed changes
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=1) # 5 fold CV
@@ -156,7 +176,11 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=1) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-4.png)
+=======
+![plot of chunk box52](box52-4.png)
+>>>>>>> Stashed changes
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -165,7 +189,11 @@ print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE,seed=2) # 5 fold CV
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-5.png)
+=======
+![plot of chunk box52](box52-5.png)
+>>>>>>> Stashed changes
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=2) # 5 fold CV
@@ -177,7 +205,11 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=2) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-6.png)
+=======
+![plot of chunk box52](box52-6.png)
+>>>>>>> Stashed changes
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -186,7 +218,11 @@ print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
 cv_r = cv.lm(data=globalPlants, ft_r, m=5, printit=FALSE,seed=3) # 5 fold CV
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-7.png)
+=======
+![plot of chunk box52](box52-7.png)
+>>>>>>> Stashed changes
 
 ```r
 cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=3) # 5 fold CV
@@ -198,7 +234,11 @@ cv_rs = cv.lm(data=globalPlants, ft_rs, m=5, printit=FALSE,seed=3) # 5 fold CV
 #>  are shown for the different folds are approximate
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box52](../man/figures/box52-8.png)
+=======
+![plot of chunk box52](box52-8.png)
+>>>>>>> Stashed changes
 
 ```r
 print( c( attr(cv_r,"ms"),attr(cv_rs,"ms") ), digits=6 )
@@ -362,7 +402,11 @@ for(iMethod in 1:3)
 axis(2,at=1:3,labels=c(" "," "," "),las=1)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk subsetsim](../man/figures/subsetsim-1.png)
+=======
+![plot of chunk subsetsim](subsetsim-1.png)
+>>>>>>> Stashed changes
 
 
 ## Code Box 5.6: LASSO for plant height data of 5.1
@@ -376,7 +420,11 @@ ft_heightcv=cv.glmnet(X,log(globalPlants$height))
 plot(ft_heightcv)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box5.6](../man/figures/box5.6-1.png)
+=======
+![plot of chunk box5.6](box5.6-1.png)
+>>>>>>> Stashed changes
 
 ```r
 ft_lasso=glmnet(X,log(globalPlants$height),lambda=ft_heightcv$lambda.min)
@@ -552,7 +600,11 @@ par(mgp=c(1.75,0.75,0),mar=c(2.75,0.5,0.5,0))
   text(R2sRain[2]-eps,1-yText,'Rainfall',adj=1,col=darkBlue)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk fig5.5](../man/figures/fig5.5-1.png)
+=======
+![plot of chunk fig5.5](fig5.5-1.png)
+>>>>>>> Stashed changes
 
 ## Exercise 5.4: Head bobs in lizards -- do their displays change with the environment?
 
@@ -574,7 +626,7 @@ str(headbobLizards)
 #>  $ AmbientLight       : num  0.47 4.13 2.46 0.31 2.36 ...
 #>  $ Bg_noise_max       : num  11.1 16.47 9.32 2.29 7.37 ...
 #>  $ Hbspd_max          : num  29.7 54.4 34.6 26.7 28.7 ...
-#>  $ time               : POSIXct, format: "2005-07-03 15:44:00" "2005-07-04 09:33:00" "2005-07-03 16:18:00" "2005-07-03 17:50:00" ...
+#>  $ time               : POSIXct, format: "2005-07-03 15:44:00" "2005-07-04 09:33:00" "2005-07-03 16:18:00" ...
 
 # try some AIC funny-business
 library(MASS)
@@ -583,7 +635,11 @@ plot(Hbspd_max~TemperatureC,data=headbobLizards)
 plot(Hbspd_max~Bg_noise_max,data=headbobLizards)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk headbobs](../man/figures/headbobs-1.png)
+=======
+![plot of chunk headbobs](headbobs-1.png)
+>>>>>>> Stashed changes
 
 ```r
 
@@ -592,18 +648,26 @@ plot(Hbspd_max~TemperatureC,data=headbobLizards,log="y")
 plot(Hbspd_max~Bg_noise_max,data=headbobLizards,log="y")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk headbobs](../man/figures/headbobs-2.png)
+=======
+![plot of chunk headbobs](headbobs-2.png)
+>>>>>>> Stashed changes
 
 ```r
 
 headbobLizards$bobspeed=log(headbobLizards$Hbspd_max)
 ft_headbob=lm(bobspeed~TemperatureC+AmbientLight+Bg_noise_max,data=headbobLizards)
 plotenvelope(ft_headbob)
+<<<<<<< Updated upstream
 ```
 
 ![plot of chunk headbobs](../man/figures/headbobs-3.png)
 
 ```r
+=======
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
+>>>>>>> Stashed changes
 stepAIC(ft_headbob)
 #> Start:  AIC=-35.58
 #> bobspeed ~ TemperatureC + AmbientLight + Bg_noise_max
@@ -763,11 +827,15 @@ ft_temp = lm(logHt~temp, data=globalPlants)
 ft_tempRain = lm(logHt~temp+rain+rain.wetm+rain.drym+rain.seas+rain.wetqr+rain.dryqr+rain.warmqr+rain.coldqr, data=globalPlants)
 par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_tempRain)
+<<<<<<< Updated upstream
 ```
 
 ![plot of chunk ex5.5plantprecip](../man/figures/ex5.5plantprecip-1.png)
 
 ```r
+=======
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
+>>>>>>> Stashed changes
 ft_step = step(ft_temp, scope=formula(ft_tempRain), direction="forward")
 #> Start:  AIC=107.97
 #> logHt ~ temp
@@ -821,7 +889,11 @@ lasso_rain=cv.glmnet(XtempRain,globalPlants$logHt,penalty.factor=c(0,rep(1,8)))
 plot(lasso_rain)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex5.5lassorain](../man/figures/ex5.5lassorain-1.png)
+=======
+![plot of chunk ex5.5lassorain](ex5.5lassorain-1.png)
+>>>>>>> Stashed changes
 
 ```r
 ft_lasso=glmnet(XtempRain,globalPlants$logHt,lambda=lasso_rain$lambda.min)
@@ -847,19 +919,31 @@ This time we are going with two rainfall variables again, but different ones -- 
 ```r
 library(car)
 vif(ft_tempRain)
-#>        temp        rain   rain.wetm   rain.drym   rain.seas  rain.wetqr  rain.dryqr rain.warmqr rain.coldqr 
-#>    1.773040  111.063634   85.433552  110.163673    5.524702  130.580531  144.565319    9.577784    6.436926
+#>        temp        rain   rain.wetm   rain.drym   rain.seas  rain.wetqr  rain.dryqr rain.warmqr 
+#>    1.773040  111.063634   85.433552  110.163673    5.524702  130.580531  144.565319    9.577784 
+#> rain.coldqr 
+#>    6.436926
 cor(XtempRain)
-#>                 temp        rain rain.wetm  rain.drym   rain.seas rain.wetqr rain.dryqr rain.wetqr rain.dryqr
-#> temp       1.0000000  0.47869648 0.5552163  0.1923458  0.37764956  0.5530709  0.1959310  0.5530709  0.1959310
-#> rain       0.4786965  1.00000000 0.9170080  0.7540378 -0.03914991  0.9276384  0.7811679  0.9276384  0.7811679
-#> rain.wetm  0.5552163  0.91700800 1.0000000  0.4730420  0.30626819  0.9935421  0.5030374  0.9935421  0.5030374
-#> rain.drym  0.1923458  0.75403779 0.4730420  1.0000000 -0.53128346  0.4907095  0.9933645  0.4907095  0.9933645
-#> rain.seas  0.3776496 -0.03914991 0.3062682 -0.5312835  1.00000000  0.2893864 -0.5243323  0.2893864 -0.5243323
-#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558  1.0000000  0.5187558
-#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000  0.5187558  1.0000000
-#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558  1.0000000  0.5187558
-#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000  0.5187558  1.0000000
+#>                 temp        rain rain.wetm  rain.drym   rain.seas rain.wetqr rain.dryqr rain.wetqr
+#> temp       1.0000000  0.47869648 0.5552163  0.1923458  0.37764956  0.5530709  0.1959310  0.5530709
+#> rain       0.4786965  1.00000000 0.9170080  0.7540378 -0.03914991  0.9276384  0.7811679  0.9276384
+#> rain.wetm  0.5552163  0.91700800 1.0000000  0.4730420  0.30626819  0.9935421  0.5030374  0.9935421
+#> rain.drym  0.1923458  0.75403779 0.4730420  1.0000000 -0.53128346  0.4907095  0.9933645  0.4907095
+#> rain.seas  0.3776496 -0.03914991 0.3062682 -0.5312835  1.00000000  0.2893864 -0.5243323  0.2893864
+#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558  1.0000000
+#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000  0.5187558
+#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558  1.0000000
+#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000  0.5187558
+#>            rain.dryqr
+#> temp        0.1959310
+#> rain        0.7811679
+#> rain.wetm   0.5030374
+#> rain.drym   0.9933645
+#> rain.seas  -0.5243323
+#> rain.wetqr  0.5187558
+#> rain.dryqr  1.0000000
+#> rain.wetqr  0.5187558
+#> rain.dryqr  1.0000000
 ```
 
 A bunch of high VIF's, looking at correlations, `rain.wetm` looks like one of the main culprits, it is quite understandable that rainfall in the wettest month should be highly correlated with total rainfall, and with rainfall in the wettest quarter! Will also remove `rain.drym` because there is high redundancy between this variable and `rain.dryqr`.
@@ -906,7 +990,11 @@ lasso_Lrain=cv.glmnet(XlessRain,globalPlants$logHt,penalty.factor=c(0,rep(1,6)))
 plot(lasso_Lrain)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex5.5lessrain](../man/figures/ex5.5lessrain-1.png)
+=======
+![plot of chunk ex5.5lessrain](ex5.5lessrain-1.png)
+>>>>>>> Stashed changes
 
 ```r
 ft_Llasso=glmnet(XlessRain,globalPlants$logHt,lambda=lasso_Lrain$lambda.min)

@@ -1,7 +1,7 @@
 ---
 title: "Chapter 15 -- Predicting multivariate abundances -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-06-28"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 15 -- Predicting multivariate abundances -- Exercise solutions and Code Boxes}
@@ -249,7 +249,11 @@ log=TRUE))
 plot(windLassoTrain$lambda,predLLlasso,type="l",log="x")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.3](../man/figures/code15.3-1.png)
+=======
+![plot of chunk code15.3](code15.3-1.png)
+>>>>>>> Stashed changes
 
 ```r
 isBestLambda = which(predLLlasso==max(predLLlasso))
@@ -262,7 +266,11 @@ matplot(windLasso$lambda,t(windLasso$beta),type="n", log="x")
 matlines(windLasso$lambda,t(windLasso$beta))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.3beta](../man/figures/code15.3beta-1.png)
+=======
+![plot of chunk code15.3beta](code15.3beta-1.png)
+>>>>>>> Stashed changes
 
 ## Code Box 15.4: Fitting a group-LASSO to the wind farm data
 
@@ -297,7 +305,11 @@ predLLgrplasso = colSums(dpois(windComp$data$windMV[isTest], prGrpTest,log=TRUE)
 plot(windGrplasso$lambda,predLLgrplasso,log="x",type="l")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.4](../man/figures/code15.4-1.png)
+=======
+![plot of chunk code15.4](code15.4-1.png)
+>>>>>>> Stashed changes
 
 ```r
 isBestLambdaGrplasso = which(predLLgrplasso==max(predLLgrplasso))
@@ -309,7 +321,11 @@ matplot(windGrplasso$lambda,t(windGrplasso$coefficients),type="n",log="x")
 matlines(windGrplasso$lambda,t(windGrplasso$coefficients))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.4beta](../man/figures/code15.4beta-1.png)
+=======
+![plot of chunk code15.4beta](code15.4beta-1.png)
+>>>>>>> Stashed changes
 
 ## Exercise 15.5: Comparing predictive likelihoods for the wind farm data
 *Compare the predictive log-likelihoods from Code Box 15.1 and Figures 15.1c-d. These models were all applied using the same test dataset. Which model seems to fit the data better? Why do you think this is?*
@@ -329,12 +345,16 @@ library(VGAM)
 wind_RR2=rrvglm(as.matrix(windFarms$abund)~Year*Zone, family=poissonff, data=windFarms$X, Rank=2)
 wind_manyglm = manyglm(windMV~Year*Zone, data=windFarms$X, family=poisson())
 c( BIC(wind_RR2), sum(BIC(wind_manyglm)))
-#> [1] 3318.548 3471.901
+#> [1] 3471.901
 zoneyear = interaction(windFarms$X$Zone,windFarms$X$Year)
 matplot(as.numeric(zoneyear),latvar(wind_RR2),pch=c(1,19))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.5](../man/figures/code15.5-1.png)
+=======
+![plot of chunk code15.5](code15.5-1.png)
+>>>>>>> Stashed changes
 
 *Which model fits better, according to BIC?*
 
@@ -350,7 +370,11 @@ spid.trait = traitglm(spider$abund,spider$x,method="cv.glm1path")
 #> No traits matrix entered, so will fit SDMs with different env response for each spp
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.6](../man/figures/code15.6-1.png)
+=======
+![plot of chunk code15.6](code15.6-1.png)
+>>>>>>> Stashed changes
 
 ```r
 library(lattice)
@@ -363,7 +387,11 @@ scales = list( x= list(rot = 45)) )
 print(plot.4th)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code15.6](../man/figures/code15.6-2.png)
+=======
+![plot of chunk code15.6](code15.6-2.png)
+>>>>>>> Stashed changes
 
 *Which environmental variables seem to have the strongest effect on spider abundances?*
 
@@ -382,11 +410,13 @@ library(glmmTMB)
 spid_glmm = glmmTMB(fullFormula,family=nbinom2(),data=spiderLong)
 #> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite Hessian matrix. See
 #> vignette('troubleshooting')
-#> Warning in fitTMB(TMBStruc): Model convergence problem; false convergence (8). See vignette('troubleshooting')
+#> Warning in fitTMB(TMBStruc): Model convergence problem; false convergence (8). See
+#> vignette('troubleshooting')
 summary(spid_glmm)
 #>  Family: nbinom2  ( log )
 #> Formula:          value ~ cols + soil.dry + bare.sand + fallen.leaves + moss +  
-#>     herb.layer + reflection + (soil.dry + bare.sand + fallen.leaves +      moss + herb.layer + reflection | cols)
+#>     herb.layer + reflection + (soil.dry + bare.sand + fallen.leaves +  
+#>     moss + herb.layer + reflection | cols)
 #> Data: spiderLong
 #> 
 #>      AIC      BIC   logLik deviance df.resid 

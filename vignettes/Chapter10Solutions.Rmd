@@ -1,7 +1,7 @@
 ---
 title: "Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-06-28"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes}
@@ -127,7 +127,11 @@ x=10^(seq(-1,3.8,length=100))
 lines(x,x,type="l",col="red")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk fig10.5](../man/figures/fig10.5-1.png)
+=======
+![plot of chunk fig10.5](fig10.5-1.png)
+>>>>>>> Stashed changes
 
 ```r
 
@@ -143,7 +147,11 @@ x=10^(seq(-1,3.8,length=100))
 points(x,x+x^2,type="l",col="darkblue")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk fig10.5](../man/figures/fig10.5-2.png)
+=======
+![plot of chunk fig10.5](fig10.5-2.png)
+>>>>>>> Stashed changes
 
 ## Code Box 10.2: A summary of a GLM fit to the crab presence-absence data of Exercise 10.1
 
@@ -188,25 +196,37 @@ library(mvabund)
 ftMany_crab = manyglm(CrabPres~Time*Dist,family=binomial("cloglog"),
              data=seaweed)
 plotenvelope(ftMany_crab, which=1)
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box10.3](../man/figures/box10.3-1.png)
 
+=======
+>>>>>>> Stashed changes
 
 ## Code for Figure 10.8
 
 ```r
 plotenvelope(ftMany_crab, which=1, n.sim=39)
+<<<<<<< Updated upstream
 ```
 
 ![plot of chunk fig10.8](../man/figures/fig10.8-1.png)
 
 ```r
+=======
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
+>>>>>>> Stashed changes
 plotenvelope(ftMany_crab, which=1, n.sim=39)
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk fig10.8](../man/figures/fig10.8-2.png)
 
+=======
+>>>>>>> Stashed changes
 (Note that `plotenvelope` was run with just `39` iterations, to speed up computation time.)
 
 ## Exercise 10.4: Counts of Ostracods in habitat configuration experiment.
@@ -218,7 +238,11 @@ plotenvelope(ftMany_crab, which=1, n.sim=39)
 with(seaweed,boxplot(Ost~Dist))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex10.4](../man/figures/ex10.4-1.png)
+=======
+![plot of chunk ex10.4](ex10.4-1.png)
+>>>>>>> Stashed changes
 
 As this is a count variable with plenty of small counts (and zeros in each category), I am thinking a GLM. To start with we could consider a Poisson regression, if there were no overdispersion, or negative binomial regression.
 
@@ -238,9 +262,13 @@ ft_countOst=manyglm(Ost~logWmass+Time*Dist,data=seaweed,
              family="poisson")
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_countOst, which=1:3, n.sim=99) # for a scale-location plot as well
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
+<<<<<<< Updated upstream
 
 ![plot of chunk box10.4](../man/figures/box10.4-1.png)
+=======
+>>>>>>> Stashed changes
 (Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 
@@ -250,10 +278,14 @@ library(MASS) #this line is currently needed to deal with a bug but prob redunda
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 ft.countOstNB=manyglm(Ost~logWmass+Time*Dist,data=seaweed)
 plotenvelope(ft.countOstNB, which=1:3, n.sim=99)
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box10.4b](../man/figures/box10.4b-1.png)
 
+=======
+>>>>>>> Stashed changes
 ## Exercise 10.5: Checking the Poisson assumption on the wind farm data.
 
 *Refit the model using the `manyglm` function, and hence construct a residual plot*
@@ -268,10 +300,14 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_eels, which=1:3, n.sim=99)
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex10.5](../man/figures/ex10.5-1.png)
 
+=======
+>>>>>>> Stashed changes
 *Does the Poisson assumption look reasonable?*
 
 There is no evidence of a fan shape, residuals are close to a straight line on the normal quantile plot, so it looks pretty good to me.
@@ -289,22 +325,28 @@ worms = reveg$abund$Haplotaxida
 ft_worms = manyglm(worms~treatment,family=poisson(), data=reveg)
 par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_worms, which=1:2, n.sim=99)
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box10.6Poisson](../man/figures/box10.6Poisson-1.png)
 
+=======
+>>>>>>> Stashed changes
 *Also fit a negative binomial to the data and construct a residual plot.*
 
 ```r
 ft_wormsNB = manyglm(worms~treatment,family="negative.binomial", data=reveg)
 par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wormsNB, which=1:2, n.sim=99)
-#> Warning in predict.lm(gam.yxi, newdata = data.frame(xiSim = xPred)): prediction from a rank-deficient fit may be
-#> misleading
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box10.6NB](../man/figures/box10.6NB-1.png)
 
+=======
+>>>>>>> Stashed changes
 *Can you see any differences between plots?*
 
 The Poisson model fans out more and has a couple of residuals that are unusually large (see normal quantile plot). It also may have a trend line on the residual vs fits plots that slips outside its simulation envelope.
@@ -417,7 +459,7 @@ anova(ftmany_Hap)
 ftMany_crab = manyglm(CrabPres~Time*Dist, family=binomial("cloglog"),
                  data=seaweed)
 anova(ftMany_crab)
-#> Time elapsed: 0 hr 0 min 2 sec
+#> Time elapsed: 0 hr 0 min 6 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: CrabPres ~ Time * Dist
@@ -486,7 +528,11 @@ plot(propGerm/(1-propGerm)~Test.Temp,data=seedsTemp,log="y")
 #> Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values <= 0 omitted from logarithmic plot
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk box10.9Load](../man/figures/box10.9Load-1.png)
+=======
+![plot of chunk box10.9Load](box10.9Load-1.png)
+>>>>>>> Stashed changes
 
 
 ```r
@@ -537,10 +583,14 @@ ants = reveg$abund$Formicidae
 ants_Poisson = glm(ants~treatment,data=reveg,family=poisson())
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ants_Poisson, which=1:3, n.sim=99)
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex10.8P](../man/figures/ex10.8P-1.png)
 
+=======
+>>>>>>> Stashed changes
 OK so a Poisson fit is **spectacularly** bad. Neither smoother stays in its envelope, and the data on the normal quantile plot do not stay anywhere near their envelope.
 
 *Plot the data -- does there seem to be evidence of a treatment effect?*
@@ -549,7 +599,11 @@ OK so a Poisson fit is **spectacularly** bad. Neither smoother stays in its enve
 with(reveg,boxplot(abund$Formicidae~treatment))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex10.8plot](../man/figures/ex10.8plot-1.png)
+=======
+![plot of chunk ex10.8plot](ex10.8plot-1.png)
+>>>>>>> Stashed changes
 
 Not really! The ant counts in the control sites are similar to the middle of those from the revegetated sites.
 
@@ -606,10 +660,14 @@ Yeah, like completely the opposite!!!
 ```r
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ants_NB,which=1:3, n.sim=99)
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex10.8NBplots](../man/figures/ex10.8NBplots-1.png)
 
+=======
+>>>>>>> Stashed changes
 Whereas the diagnostic plots for the Poisson model showed serious problems, we have no such issues here. So the negative binomial regression is a much better fit to the data.  It produced (much!) larger $P$-values because there is a lot of overdispersion in the data, which a Poisson model is unable to account for.
 
 (Note that the simulation envelopes cover a broad range!  This is because of the small sample size. When comparing these plots to those for the Poisson fit, notice that the y-axis scale on the negative binomial plot is much smaller -- the envelopes actually have similar width in both sets of plots, they look different mostly because the axes have different scales.)
@@ -652,11 +710,15 @@ roaches = reveg$abund$Blattodea
 ftMany_roaches = manyglm(roaches~treatment,offset=log(pitfalls), family="poisson", data=reveg)
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ftMany_roaches, which=1:3, n.sim=99)
+<<<<<<< Updated upstream
 ```
 
 ![plot of chunk ex10.10](../man/figures/ex10.10-1.png)
 
 ```r
+=======
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
+>>>>>>> Stashed changes
 anova(ftMany_roaches)
 #> Time elapsed: 0 hr 0 min 0 sec
 #> Analysis of Deviance Table

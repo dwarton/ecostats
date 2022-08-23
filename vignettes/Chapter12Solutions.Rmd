@@ -1,7 +1,7 @@
 ---
 title: "Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-06-28"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes}
@@ -44,7 +44,11 @@ plot(abundMV~treatment, data=reveg)
 #> (the variables with highest total abundance).
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.1](../man/figures/code12.1-1.png)
+=======
+![plot of chunk code12.1](code12.1-1.png)
+>>>>>>> Stashed changes
 
 *Can you see any taxa that seem to be associated with bush regeneration?*
 
@@ -82,7 +86,11 @@ loadings(pc)
 biplot( pc, xlabs=rep("\u00B0",dim(iris)[1]) )
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.2](../man/figures/code12.2-1.png)
+=======
+![plot of chunk code12.2](code12.2-1.png)
+>>>>>>> Stashed changes
 
 
 ## Code Box 12.3: Factor analysis of the Iris data
@@ -120,18 +128,23 @@ for(iVar in 1:4)
   plotenvelope(lm(irisIvar~fa_iris$scores), which=1, col=iris$Species, main=print(names(iris)[iVar]), n.sim=99)
 }
 #> [1] "Sepal.Length"
-#> [1] "Sepal.Width"
-#> [1] "Petal.Length"
-#> [1] "Petal.Width"
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.4](../man/figures/code12.4-1.png)
 
+=======
+>>>>>>> Stashed changes
 ```r
 plot(iris[,1:4],col=iris$Species)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.4matrix](../man/figures/code12.4matrix-1.png)
+=======
+![plot of chunk code12.4matrix](code12.4matrix-1.png)
+>>>>>>> Stashed changes
 
 (Note that `plotenvelope` was run with just `59` iterations, to speed up computation time.)
 
@@ -164,8 +177,8 @@ fa_reveg <- fa(reveg$abund, nfactors=2)
 #> Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done
 #> In smc, smcs < 0 were set to .0
 #> Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
-#> Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights for the factor scores
-#> are probably incorrect. Try a different factor score estimation method.
+#> Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights
+#> for the factor scores are probably incorrect. Try a different factor score estimation method.
 #> In factor.scores, the correlation matrix is singular, an approximation is used
 #> Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
 ```
@@ -182,11 +195,15 @@ for(iVar in 1:9)
   y=reveg$abund[,iVar]
   plotenvelope(lm(y~fa_reveg$scores), which=1,main=names(reveg$abund)[iVar], n.sim=99)
 }
+<<<<<<< Updated upstream
 ```
 
 ![plot of chunk ex12.4plots](../man/figures/ex12.4plots-1.png)
 
 ```r
+=======
+#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
+>>>>>>> Stashed changes
 for(iVar in 1:9)
 {
   y=reveg$abund[,iVar]
@@ -194,7 +211,11 @@ for(iVar in 1:9)
 }
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.4plots](../man/figures/ex12.4plots-2.png)
+=======
+![plot of chunk ex12.4plots](ex12.4plots-1.png)
+>>>>>>> Stashed changes
 
 *Can you see any issues with factor analysis assumptions?*
 
@@ -207,7 +228,11 @@ With only ten observations it is always hard to see issues, and residual plots h
 plot(fa_iris$values,type="l")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.5scree](../man/figures/code12.5scree-1.png)
+=======
+![plot of chunk code12.5scree](code12.5scree-1.png)
+>>>>>>> Stashed changes
 
 
 ```r
@@ -235,15 +260,18 @@ data(reveg)
 library(gllvm)
 #> 
 #> Attaching package: 'gllvm'
-#> The following object is masked from 'package:vegan':
+#> The following objects are masked from 'package:ecostats':
 #> 
-#>     ordiplot
+#>     coefplot, nobs, predict, simulate, vcov
 #> The following objects are masked from 'package:VGAM':
 #> 
 #>     AICc, nobs, predict, vcov
 #> The following objects are masked from 'package:stats4':
 #> 
 #>     nobs, vcov
+#> The following object is masked from 'package:vegan':
+#> 
+#>     ordiplot
 #> The following object is masked from 'package:mvabund':
 #> 
 #>     coefplot
@@ -252,7 +280,7 @@ library(gllvm)
 #>     nobs, predict, simulate, vcov
 reveg_LVM = gllvm(reveg$abund, num.lv=2, family="negative.binomial", trace=TRUE, jitter.var=0.2)
 logLik(reveg_LVM)
-#> 'log Lik.' -675.5768 (df=95)
+#> 'log Lik.' -679.9619 (df=95)
 ```
 Repeating this several times usually returns an answer of `-689.3`, so we can be confident this is (close to) the maximum likelihood solution. To get a biplot
 of this solution:
@@ -262,7 +290,11 @@ ordiplot(reveg_LVM, col=as.numeric(reveg$treatment), biplot=TRUE,
 ind.spp=12)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.6bi](../man/figures/code12.6bi-1.png)
+=======
+![plot of chunk code12.6bi](code12.6bi-1.png)
+>>>>>>> Stashed changes
 
 
 ```r
@@ -270,7 +302,11 @@ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plot(reveg_LVM,which=c(1,2,5))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.6plot](../man/figures/code12.6plot-1.png)
+=======
+![plot of chunk code12.6plot](code12.6plot-1.png)
+>>>>>>> Stashed changes
 
 ## Exercise 12.5: Checking analysis decisions for Anthony’s revegetation data
 
@@ -285,10 +321,10 @@ reveg_LVM5 = gllvm(reveg$abund, num.lv=5, family="negative.binomial", trace=TRUE
 BIC(reveg_LVM1,reveg_LVM2,reveg_LVM3,reveg_LVM4,reveg_LVM5)
 #>             df      BIC
 #> reveg_LVM1  72 1557.821
-#> reveg_LVM2  95 1578.730
+#> reveg_LVM2  95 1610.781
 #> reveg_LVM3 117 1575.276
-#> reveg_LVM4 138 1587.444
-#> reveg_LVM5 158 1633.496
+#> reveg_LVM4 138 1629.856
+#> reveg_LVM5 158 1669.682
 ```
 
 For me two latent variable models was the winner!
@@ -303,7 +339,11 @@ par(mfrow=c(1,3))
 plot(reveg_LVM1,which=c(1,2,5))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.5](../man/figures/ex12.5-1.png)
+=======
+![plot of chunk ex12.5](ex12.5-1.png)
+>>>>>>> Stashed changes
 
 Wow this does not look good! There is a clear fan-shape in the residual vs fits plot, which also shows up as an increasing trend in the scale-location plot. Points on the normal quantile plot are well outside bounds on both sides, frequently falling below -5 or above 5 (when we would expect most values between -3 and 3). These are all strong signs of overdispersion.
 
@@ -316,43 +356,48 @@ ord_mds=metaMDS(reveg$abund)
 #> Square root transformation
 #> Wisconsin double standardization
 #> Run 0 stress 0.1611237 
-#> Run 1 stress 0.1687788 
-#> Run 2 stress 0.2684195 
-#> Run 3 stress 0.1611236 
+#> Run 1 stress 0.1641162 
+#> Run 2 stress 0.1653221 
+#> Run 3 stress 0.1687788 
+#> Run 4 stress 0.177687 
+#> Run 5 stress 0.1805824 
+#> Run 6 stress 0.1745439 
+#> Run 7 stress 0.1880315 
+#> Run 8 stress 0.1611236 
 #> ... New best solution
-#> ... Procrustes: rmse 0.0004585684  max resid 0.0008197316 
+#> ... Procrustes: rmse 0.0001157573  max resid 0.0002073088 
 #> ... Similar to previous best
-#> Run 4 stress 0.2062042 
-#> Run 5 stress 0.3314815 
-#> Run 6 stress 0.1611239 
-#> ... Procrustes: rmse 0.0005366897  max resid 0.0009748253 
+#> Run 9 stress 0.3314815 
+#> Run 10 stress 0.1687788 
+#> Run 11 stress 0.2244987 
+#> Run 12 stress 0.164116 
+#> Run 13 stress 0.1641167 
+#> Run 14 stress 0.1611236 
+#> ... New best solution
+#> ... Procrustes: rmse 0.0002265118  max resid 0.0004099737 
 #> ... Similar to previous best
-#> Run 7 stress 0.1680773 
-#> Run 8 stress 0.1680773 
-#> Run 9 stress 0.1641165 
-#> Run 10 stress 0.2022877 
-#> Run 11 stress 0.1641165 
-#> Run 12 stress 0.1680773 
-#> Run 13 stress 0.1680773 
-#> Run 14 stress 0.1687788 
-#> Run 15 stress 0.1611236 
-#> ... Procrustes: rmse 0.0001032944  max resid 0.0001868105 
+#> Run 15 stress 0.1641163 
+#> Run 16 stress 0.1653221 
+#> Run 17 stress 0.1611236 
+#> ... Procrustes: rmse 0.0002056824  max resid 0.0003733336 
 #> ... Similar to previous best
-#> Run 16 stress 0.1880315 
-#> Run 17 stress 0.1880316 
-#> Run 18 stress 0.1611238 
-#> ... Procrustes: rmse 0.0006247713  max resid 0.001114103 
+#> Run 18 stress 0.2984 
+#> Run 19 stress 0.1611236 
+#> ... Procrustes: rmse 0.0001213268  max resid 0.0002138302 
 #> ... Similar to previous best
-#> Run 19 stress 0.1880315 
 #> Run 20 stress 0.1611236 
 #> ... New best solution
-#> ... Procrustes: rmse 0.0002105525  max resid 0.0003734638 
+#> ... Procrustes: rmse 5.352512e-05  max resid 9.438702e-05 
 #> ... Similar to previous best
 #> *** Solution reached
 plot(ord_mds$points,pch=as.numeric(reveg$treatment),col=reveg$treatment)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.7](../man/figures/code12.7-1.png)
+=======
+![plot of chunk code12.7](code12.7-1.png)
+>>>>>>> Stashed changes
 
 ## Exercise 12.6: MDS ordinations of coral data
 
@@ -371,36 +416,40 @@ tikus_mds=metaMDS(tikusAbund)
 #> Square root transformation
 #> Wisconsin double standardization
 #> Run 0 stress 0.09863027 
-#> Run 1 stress 0.1096412 
-#> Run 2 stress 0.1144806 
-#> Run 3 stress 0.111816 
-#> Run 4 stress 0.09970471 
-#> Run 5 stress 0.1479043 
-#> Run 6 stress 0.1275178 
-#> Run 7 stress 0.1093704 
-#> Run 8 stress 0.09954172 
-#> Run 9 stress 0.1158263 
-#> Run 10 stress 0.1165909 
-#> Run 11 stress 0.10266 
-#> Run 12 stress 0.1054471 
-#> Run 13 stress 0.09954171 
-#> Run 14 stress 0.09954136 
-#> Run 15 stress 0.1010792 
-#> Run 16 stress 0.09863103 
-#> ... Procrustes: rmse 0.000412243  max resid 0.0009883379 
-#> ... Similar to previous best
-#> Run 17 stress 0.1078694 
-#> Run 18 stress 0.09863022 
+#> Run 1 stress 0.1318005 
+#> Run 2 stress 0.1323406 
+#> Run 3 stress 0.109769 
+#> Run 4 stress 0.1086391 
+#> Run 5 stress 0.1410027 
+#> Run 6 stress 0.1068254 
+#> Run 7 stress 0.1024098 
+#> Run 8 stress 0.1165249 
+#> Run 9 stress 0.09862977 
 #> ... New best solution
-#> ... Procrustes: rmse 0.002205194  max resid 0.005495785 
+#> ... Procrustes: rmse 0.0003897009  max resid 0.0009384022 
 #> ... Similar to previous best
-#> Run 19 stress 0.1078696 
-#> Run 20 stress 0.1475714 
+#> Run 10 stress 0.09863026 
+#> ... Procrustes: rmse 0.001910785  max resid 0.004769176 
+#> ... Similar to previous best
+#> Run 11 stress 0.1120024 
+#> Run 12 stress 0.1215337 
+#> Run 13 stress 0.1042514 
+#> Run 14 stress 0.1063168 
+#> Run 15 stress 0.1024098 
+#> Run 16 stress 0.1024096 
+#> Run 17 stress 0.1097838 
+#> Run 18 stress 0.1209392 
+#> Run 19 stress 0.1010801 
+#> Run 20 stress 0.1100804 
 #> *** Solution reached
 plot(tikus_mds$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.6ordination](../man/figures/ex12.6ordination-1.png)
+=======
+![plot of chunk ex12.6ordination](ex12.6ordination-1.png)
+>>>>>>> Stashed changes
 
 *Does this plot agree with the Warwick et al. (1990) interpretation? [Warwick et al. (1990) used this dataset and MDS ordinations to argue that stress increases dispersion in coral communities]*
 
@@ -412,65 +461,74 @@ Yes it does, 1981 (before El Niño disturbance) the points are close together in
 ```r
 tikus_mdsEuc=metaMDS(log(tikusAbund+1),distance="euclidean")
 #> Run 0 stress 0.05741195 
-#> Run 1 stress 0.0574117 
+#> Run 1 stress 0.05741186 
 #> ... New best solution
-#> ... Procrustes: rmse 0.0006040334  max resid 0.001755331 
+#> ... Procrustes: rmse 0.0007236973  max resid 0.002122405 
 #> ... Similar to previous best
-#> Run 2 stress 0.05741207 
-#> ... Procrustes: rmse 0.0002360083  max resid 0.0007165394 
-#> ... Similar to previous best
-#> Run 3 stress 0.0574119 
-#> ... Procrustes: rmse 0.0005762837  max resid 0.001677264 
-#> ... Similar to previous best
-#> Run 4 stress 0.07425327 
-#> Run 5 stress 0.05741188 
-#> ... Procrustes: rmse 0.0005713984  max resid 0.00166317 
-#> ... Similar to previous best
-#> Run 6 stress 0.05741211 
-#> ... Procrustes: rmse 0.0002562405  max resid 0.0007773331 
-#> ... Similar to previous best
-#> Run 7 stress 0.05741165 
+#> Run 2 stress 0.05741181 
 #> ... New best solution
-#> ... Procrustes: rmse 7.397262e-05  max resid 0.0002236007 
+#> ... Procrustes: rmse 0.0006510492  max resid 0.001915565 
 #> ... Similar to previous best
-#> Run 8 stress 0.05741203 
-#> ... Procrustes: rmse 0.000571415  max resid 0.001643115 
+#> Run 3 stress 0.0574116 
+#> ... New best solution
+#> ... Procrustes: rmse 0.000209974  max resid 0.0006023444 
 #> ... Similar to previous best
-#> Run 9 stress 0.07425304 
-#> Run 10 stress 0.05741166 
-#> ... Procrustes: rmse 4.266406e-05  max resid 0.000132459 
+#> Run 4 stress 0.05741188 
+#> ... Procrustes: rmse 0.0002484388  max resid 0.0007128858 
 #> ... Similar to previous best
-#> Run 11 stress 0.07425298 
-#> Run 12 stress 0.05741199 
-#> ... Procrustes: rmse 0.0005544893  max resid 0.001591259 
+#> Run 5 stress 0.05741183 
+#> ... Procrustes: rmse 0.0002121153  max resid 0.0006080952 
 #> ... Similar to previous best
-#> Run 13 stress 0.05741213 
-#> ... Procrustes: rmse 0.0003408697  max resid 0.001033423 
+#> Run 6 stress 0.05741178 
+#> ... Procrustes: rmse 0.0003856582  max resid 0.001167658 
 #> ... Similar to previous best
-#> Run 14 stress 0.05741181 
-#> ... Procrustes: rmse 0.0001640364  max resid 0.0004996793 
+#> Run 7 stress 0.05741211 
+#> ... Procrustes: rmse 0.000576628  max resid 0.001741823 
 #> ... Similar to previous best
-#> Run 15 stress 0.05741166 
-#> ... Procrustes: rmse 0.0003297201  max resid 0.0009738707 
+#> Run 8 stress 0.05741227 
+#> ... Procrustes: rmse 0.0006196617  max resid 0.001878622 
 #> ... Similar to previous best
-#> Run 16 stress 0.05741166 
-#> ... Procrustes: rmse 3.541119e-05  max resid 0.0001048059 
+#> Run 9 stress 0.05741165 
+#> ... Procrustes: rmse 7.097593e-05  max resid 0.0002030925 
 #> ... Similar to previous best
-#> Run 17 stress 0.05741194 
-#> ... Procrustes: rmse 0.0005278599  max resid 0.001523223 
+#> Run 10 stress 0.05741164 
+#> ... Procrustes: rmse 0.0002544858  max resid 0.0007717277 
 #> ... Similar to previous best
-#> Run 18 stress 0.05741206 
-#> ... Procrustes: rmse 0.0005868747  max resid 0.00168278 
+#> Run 11 stress 0.05741192 
+#> ... Procrustes: rmse 0.0004851852  max resid 0.001463452 
 #> ... Similar to previous best
-#> Run 19 stress 0.07425299 
-#> Run 20 stress 0.05741184 
-#> ... Procrustes: rmse 0.0001881958  max resid 0.0005719071 
+#> Run 12 stress 0.07425305 
+#> Run 13 stress 0.05741202 
+#> ... Procrustes: rmse 0.000318195  max resid 0.0009133398 
+#> ... Similar to previous best
+#> Run 14 stress 0.05741167 
+#> ... Procrustes: rmse 0.0003011839  max resid 0.0009098946 
+#> ... Similar to previous best
+#> Run 15 stress 0.05741182 
+#> ... Procrustes: rmse 0.0002108956  max resid 0.0006049422 
+#> ... Similar to previous best
+#> Run 16 stress 0.0574122 
+#> ... Procrustes: rmse 0.000557587  max resid 0.001671816 
+#> ... Similar to previous best
+#> Run 17 stress 0.05741172 
+#> ... Procrustes: rmse 0.0003450418  max resid 0.001041247 
+#> ... Similar to previous best
+#> Run 18 stress 0.05741177 
+#> ... Procrustes: rmse 0.0003800631  max resid 0.001149431 
+#> ... Similar to previous best
+#> Run 19 stress 0.07425315 
+#> Run 20 stress 0.05741199 
+#> ... Procrustes: rmse 0.0004999004  max resid 0.001515361 
 #> ... Similar to previous best
 #> *** Solution reached
 plot(tikus_mdsEuc$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.6EucOrdination](../man/figures/ex12.6EucOrdination-1.png)
+=======
+![plot of chunk ex12.6EucOrdination](ex12.6EucOrdination-1.png)
+>>>>>>> Stashed changes
 
 *Does this plot agree with the Warwick et al. (1990) interpretation?*
 
@@ -489,7 +547,11 @@ plot(tikusMV~tikus$x$time[1:20])
 #> (the variables with highest total abundance).
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.6plot](../man/figures/ex12.6plot-1.png)
+=======
+![plot of chunk ex12.6plot](ex12.6plot-1.png)
+>>>>>>> Stashed changes
 
 *Convert the data into presence-absence and use the gllvm package to construct an ordination*
 
@@ -500,7 +562,11 @@ tikus_LVM = gllvm(tikusPA, num.lv=2, family="binomial", trace=TRUE, jitter.var=0
 ordiplot.gllvm(tikus_LVM, s.col=as.numeric(tikus$x$time), biplot=TRUE, ind.spp=12)
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.6PA](../man/figures/ex12.6PA-1.png)
+=======
+![plot of chunk ex12.6PA](ex12.6PA-1.png)
+>>>>>>> Stashed changes
 
 *Do assumptions appear reasonable? How would you interpret this plot?*
 
@@ -509,7 +575,11 @@ par(mfrow=c(1,3))
 plot(tikus_LVM,which=c(1,2,5))
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk ex12.6assumptions](../man/figures/ex12.6assumptions-1.png)
+=======
+![plot of chunk ex12.6assumptions](ex12.6assumptions-1.png)
+>>>>>>> Stashed changes
 
 ## Code Box 12.8: Studying each observation separately for the Iris data
 
@@ -518,11 +588,11 @@ by(iris, iris$Species, function(dat){ apply(dat[,1:4],2,mean) } )
 #> iris$Species: setosa
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        5.006        3.428        1.462        0.246 
-#> ------------------------------------------------------------------------------------------- 
+#> --------------------------------------------------------------------------- 
 #> iris$Species: versicolor
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        5.936        2.770        4.260        1.326 
-#> ------------------------------------------------------------------------------------------- 
+#> --------------------------------------------------------------------------- 
 #> iris$Species: virginica
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        6.588        2.974        5.552        2.026
@@ -533,7 +603,11 @@ plot(Petal.Length~Species,data=iris,xlab="")
 plot(Petal.Width~Species,data=iris,xlab="")
 ```
 
+<<<<<<< Updated upstream
 ![plot of chunk code12.8](../man/figures/code12.8-1.png)
+=======
+![plot of chunk code12.8](code12.8-1.png)
+>>>>>>> Stashed changes
 
 #remove this chunk once gllvm has been updated on CRAN:
 

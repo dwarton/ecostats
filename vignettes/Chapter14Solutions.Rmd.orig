@@ -4,7 +4,7 @@ author: "David Warton"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Chapter 14 -- Multivariate abundances --- inference about environmental associations -- Exercise solutions and Code Boxes}
+  %\VignetteIndexEntry{Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
