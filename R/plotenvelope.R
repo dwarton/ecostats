@@ -279,6 +279,8 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   }
   else
   {
+    if(is.null(col))
+      col=1  
     is.mva = FALSE
     n.resp = 1
     mu     = switch(sim.method[1],"stand.norm" = 0, mean(y))
