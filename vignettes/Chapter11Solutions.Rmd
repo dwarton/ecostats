@@ -1,7 +1,7 @@
 ---
 title: "Chapter 11 -- Multivariate analysis -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-28"
+date: "2022-08-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 11 -- Multivariate analysis -- Exercise solutions and Code Boxes}
@@ -102,11 +102,7 @@ legend("bottomright",legend=c("high rain, high soilp",
          "low rain, low soilp"), col=1:4, pch=1)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk box11.2plot](../man/figures/box11.2plot-1.png)
-=======
-![plot of chunk box11.2plot](box11.2plot-1.png)
->>>>>>> Stashed changes
+![plot of chunk box11.2plot](figure/box11.2plot-1.png)
 
 *What is the nature of the rainfall effect?*
 
@@ -119,14 +115,10 @@ The red dots look to be higher than the black dots, and the blue dots look to be
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 library(ecostats)
 plotenvelope(ft_leaf,which=1:3,n.sim=99)
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk box11.3](../man/figures/box11.3-1.png)
+![plot of chunk box11.3](figure/box11.3-1.png)
 
-=======
->>>>>>> Stashed changes
 (Note that `plotenvelope` was run with just `99` iterations, to speed up computation time.)
 
 *What do you think about the model assumptions made here?*
@@ -149,8 +141,8 @@ anova(ftmany_leaf,cor.type="R",test="LR")
 #>             Res.Df Df.diff val(LR) Pr(>LR)   
 #> (Intercept)     66                           
 #> rain            65       1  23.941   0.002 **
-#> soilp           64       1   4.475   0.122   
-#> rain:soilp      63       1   3.371   0.202   
+#> soilp           64       1   4.475   0.127   
+#> rain:soilp      63       1   3.371   0.196   
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments:
@@ -179,14 +171,10 @@ anova(ft_leafLog, test="Wilks")
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_leafLog,which=1:3,n.sim=99)
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex11.4](../man/figures/ex11.4-1.png)
+![plot of chunk ex11.4](figure/ex11.4-1.png)
 
-=======
->>>>>>> Stashed changes
 *Is this what you expected to happen?*
 
 Assumptions are looking more reasonable now, there is no longer a fan-shape nor appreciable right-skew in the data. This is what I expected because (as mentioned in the question) size variables tend to make more sense when viewed on a proportional scale. MANOVA results were generally similar, although test statistics (`approx F`) for main effects were slightly larger, in keeping with the general result that you can see signals more clearly when reducing skew in data (procedures tend to be more *efficient* when their underlying assumptions are more reasonable).
@@ -203,14 +191,10 @@ iris$Yflower = as.matrix(iris[,1:4])
 ft_iris = lm(Yflower~Species,data=iris)
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_iris,which=1:3,n.sim=99)
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex11.5Un](../man/figures/ex11.5Un-1.png)
+![plot of chunk ex11.5Un](figure/ex11.5Un-1.png)
 
-=======
->>>>>>> Stashed changes
 This doesn't look too bad, but there is a moderate fan-shape, evident in an increasing trend in the scale-location plot, which drifts outside its simulation envelope. The trend is not strong however, with the y-axis predictions ranging from 0.6 to 1 (varying over a factor of about 1.5).
 
 *Does a log-transformation help at all?*
@@ -220,14 +204,10 @@ iris$YfLog = as.matrix(log(iris[,1:4]))
 ft_irisLog = lm(YfLog~Species,data=iris)
 par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_irisLog,which=1:3,n.sim=99)
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex11.5Log](../man/figures/ex11.5Log-1.png)
+![plot of chunk ex11.5Log](figure/ex11.5Log-1.png)
 
-=======
->>>>>>> Stashed changes
 Oh well that's disappointing! The log-transformation hasn't made things much better, reversing the fan-shape and the trend in the scale-location plot (although again it is not a strong trend).  Residuals now appear quite non-normal with some long tails, especially at the lower end.  The issue is largely with petal variables (blue/green), we would get a slightly better plot if we only log-transformed sepal measurements.  The main issue we saw previously - an increasing trend on the scale-location plot - is however less of an issue now (note the trend line covers a smaller range of values, from about 0.7 to 0.9).
 
 ## Code Box 11.5: Preparing spider data for analysis on `lme4` or `glmmTMB`
@@ -269,6 +249,7 @@ head(spiderGeneraLong)
 
 ```r
 library(glmmTMB)
+#> Warning: package 'glmmTMB' was built under R version 4.2.1
 spid_glmm = glmmTMB(abundance~genus+soil.dry:genus+moss:genus
  +(0+genus|rows), family="poisson",data=spiderGeneraLong)
 summary(spid_glmm)
@@ -312,6 +293,7 @@ _Can you see any differences in response of different spider genera to environme
 
 ```r
 library(MCMCglmm)
+#> Loading required package: coda
 set.seed(1)
 ft_MCMC = MCMCglmm(cbind(Alop,Pard,Troc)~trait+soil.dry:trait+moss:trait,
    rcov=~us(trait):units,data=spidGeneraWide, family=rep("poisson",3))
@@ -429,11 +411,7 @@ hist(ft_MCMC$VCV[,9],breaks=15,xlab="Troc variance",main="")
 abline(v=summary(spid_glmm)$varcor$cond$rows[3,3],col="red")
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code11.7hists](../man/figures/code11.7hists-1.png)
-=======
-![plot of chunk code11.7hists](code11.7hists-1.png)
->>>>>>> Stashed changes
+![plot of chunk code11.7hists](figure/code11.7hists-1.png)
 
 The posterior modes show much closer agreement to the `glmmTMB` variance estimates, although still tending to be slightly larger.
 
@@ -514,11 +492,7 @@ To simplify referencing of parameters let's refit with no intercept in the model
   legend("topleft",levels(spiderGeneraLong$genus),col=1:3,pch=1,cex=0.9,y.intersp=1.0)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk fig11.4](../man/figures/fig11.4-1.png)
-=======
-![plot of chunk fig11.4](fig11.4-1.png)
->>>>>>> Stashed changes
+![plot of chunk fig11.4](figure/fig11.4-1.png)
 
 But note this plot excludes absences... there are only a few for these taxa. But in other situations with many zeros, a lot of data would be missing from a plot constructed in this way, unless you get creative!
 
@@ -528,6 +502,7 @@ But note this plot excludes absences... there are only a few for these taxa. But
 ```r
 par(mfrow=c(1,2),mgp=c(2,0.75,0),mar=c(3,3,1,1))
 library(DHARMa)
+#> This is DHARMa 0.4.5. For overview type '?DHARMa'. For recent changes, type news(package = 'DHARMa')
 spidFits = predict(spid_glmm,re.form=NA)
 res_spid = qnorm( simulateResiduals(spid_glmm)$scaledResiduals )
 plot(spidFits,res_spid,col=spiderGeneraLong$genus, xlab="Fitted values", ylab="Dunn-Smyth residuals")
@@ -536,11 +511,7 @@ addSmooth(spidFits,res_spid) # a function in ecostats package to add smoother an
 qqenvelope(res_spid,col=spiderGeneraLong$genus)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code11.8](../man/figures/code11.8-1.png)
-=======
-![plot of chunk code11.8](code11.8-1.png)
->>>>>>> Stashed changes
+![plot of chunk code11.8](figure/code11.8-1.png)
 
 _What do these plots tell us about model assumptions?_
 
@@ -678,11 +649,7 @@ mtext(colnames(ft_MCMC$VCV)[iPlot])
 }
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code11.9](../man/figures/code11.9-1.png)
-=======
-![plot of chunk code11.9](code11.9-1.png)
->>>>>>> Stashed changes
+![plot of chunk code11.9](figure/code11.9-1.png)
 
 ```r
 gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],
@@ -723,10 +690,8 @@ head(spider3Long)
 
 spid_glmm3 = glmmTMB(abundance~species+soil.dry:species+moss:species
    +(0+species|rows), family="poisson",data=spider3Long)
-#> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite Hessian matrix. See
-#> vignette('troubleshooting')
-#> Warning in fitTMB(TMBStruc): Model convergence problem; singular convergence (7). See
-#> vignette('troubleshooting')
+#> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite Hessian matrix. See vignette('troubleshooting')
+#> Warning in fitTMB(TMBStruc): Model convergence problem; singular convergence (7). See vignette('troubleshooting')
 ```
 
 Uh oh, non-convergence.  Try using `MCMCglmm`:
@@ -970,10 +935,7 @@ mtext(colnames(ft_MCMC$VCV)[iPlot])
 }
 ```
 
-<<<<<<< Updated upstream
-=======
-![plot of chunk ex11.7mcmc](ex11.7mcmc-1.png)
->>>>>>> Stashed changes
+![plot of chunk ex11.7mcmc](figure/ex11.7mcmc-1.png)
 
 ```r
 gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],

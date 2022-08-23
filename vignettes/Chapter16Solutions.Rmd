@@ -1,7 +1,7 @@
 ---
 title: "Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-28"
+date: "2022-08-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes}
@@ -76,17 +76,20 @@ if(is_ecomix_installed)
 #> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
 #> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
 #> initial  value 834.997322 
-#> iter  10 value 822.222854
-#> iter  20 value 818.604712
-#> iter  30 value 817.369372
-#> iter  40 value 791.004057
-#> iter  50 value 780.045741
-#> iter  60 value 777.960056
-#> final  value 777.933447 
+#> iter  10 value 822.933991
+#> iter  20 value 818.054221
+#> iter  30 value 816.602567
+#> iter  40 value 812.844421
+#> iter  50 value 793.214165
+#> iter  60 value 791.057454
+#> iter  70 value 786.683339
+#> iter  80 value 778.413169
+#> iter  90 value 777.956005
+#> final  value 777.933344 
 #> converged
 #>              soil.dry   bare.sand fallen.leaves       moss herb.layer reflection
-#> Archetype1  1.5627522 -0.05457262    -0.2776585 -0.1443984  0.7081403 -0.4725645
-#> Archetype2 -0.1072806  0.22383732    -0.2858613  0.4185213  0.5891489  0.4757195
+#> Archetype1  1.5629184 -0.05470042    -0.2784744 -0.1449658  0.7081518 -0.4730736
+#> Archetype2 -0.1069941  0.22420728    -0.2855582  0.4186874  0.5894873  0.4759734
 ```
 
 *Which predictors vary the most across archetypes (hence across taxa)? Is this what you saw in Code Box 15.7?*
@@ -102,11 +105,7 @@ if(is_ecomix_installed)
 #> Infinite residuals removed from residual plots: 82 in total.
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code16.2](../man/figures/code16.2-1.png)
-=======
-![plot of chunk code16.2](code16.2-1.png)
->>>>>>> Stashed changes
+![plot of chunk code16.2](figure/code16.2-1.png)
 
 *Do model assumptions seem reasonable here?*
 
@@ -160,11 +159,17 @@ if(is_ecomix_installed)
 #> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
 #> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
 #> initial  value 745.015688 
-#> final  value 745.015688 
+#> iter  10 value 740.892697
+#> iter  20 value 740.884895
+#> iter  30 value 740.853616
+#> iter  40 value 738.670084
+#> iter  50 value 728.734390
+#> iter  60 value 728.591054
+#> final  value 728.590888 
 #> converged
 #>            treatmentImpact
-#> Archetype1        5.350399
-#> Archetype2        1.441362
+#> Archetype1        1.463281
+#> Archetype2        1.463275
 ```
 
 *Explain what the main two types of response to revegetation were, across invertebrate taxa.*
@@ -241,9 +246,6 @@ He wants to know *why* species vary in their environmental response, so a good i
 library(gllvm)
 #> 
 #> Attaching package: 'gllvm'
-#> The following objects are masked from 'package:ecostats':
-#> 
-#>     coefplot, nobs, predict, simulate, vcov
 #> The following objects are masked from 'package:VGAM':
 #> 
 #>     AICc, nobs, predict, vcov
@@ -272,21 +274,13 @@ plot.4th = levelplot(ft_trait$fourth.corner, col.regions=colort(100),
 print(plot.4th)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code16.4](../man/figures/code16.4-1.png)
-=======
-![plot of chunk code16.4](code16.4-1.png)
->>>>>>> Stashed changes
+![plot of chunk code16.4](figure/code16.4-1.png)
 
 ```r
 coefplot(ft_trait)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code16.4](../man/figures/code16.4-2.png)
-=======
-![plot of chunk code16.4](code16.4-2.png)
->>>>>>> Stashed changes
+![plot of chunk code16.4](figure/code16.4-2.png)
 
 ## Exercise 16.5: Heloise’s ants
 *Heloise collected counts of 41 species of ants at 30 sites across south-eastern Australia, stored as `antTraits` in the `mvabund` package. She also recorded five environmental variables at each site, and five functional traits for each species. She would like to know if these traits explain why ant species differ in environmental response. Fit a fourth corner model to this dataset.*
@@ -313,21 +307,13 @@ plot_4th = levelplot(t(as.matrix(ft_anttrait$fourth.corner)),
 print(plot_4th)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex16.5](../man/figures/ex16.5-1.png)
-=======
-![plot of chunk ex16.5](ex16.5-1.png)
->>>>>>> Stashed changes
+![plot of chunk ex16.5](figure/ex16.5-1.png)
 
 ```r
 coefplot(ft_anttrait)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex16.5](../man/figures/ex16.5-2.png)
-=======
-![plot of chunk ex16.5](ex16.5-2.png)
->>>>>>> Stashed changes
+![plot of chunk ex16.5](figure/ex16.5-2.png)
 
 This doesn't always produce a `coefplot` because of infinite values -- this is symptomatic of non-convergence. Make sure you end up with a `logLik` value of about `-2300` or better, if this doesn't happen then re-run. I ended up using `starting.val="zero"` which usually gave better fits (it doesn't always but did this time around).
 
@@ -370,11 +356,7 @@ matplot(newEnv[,1], newPreds[,1:nMarks],type="l", log="y")
 legend("topright",levels(newTraits$marks),lty=1:nMarks,col=1:nMarks)
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code16.5](../man/figures/code16.5-1.png)
-=======
-![plot of chunk code16.5](code16.5-1.png)
->>>>>>> Stashed changes
+![plot of chunk code16.5](figure/code16.5-1.png)
 
 
 ## Exercise 16.6: A fourth corner interaction plot for Heloise’s ants

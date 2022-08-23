@@ -1,7 +1,7 @@
 ---
 title: "Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-28"
+date: "2022-08-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes}
@@ -44,7 +44,7 @@ reveg$abundMV=mvabund(reveg$abund)
 ft_reveg=manyglm(abundMV~treatment+offset(log(pitfalls)),
 family="negative.binomial", data=reveg) # offset included as in Exercise 10.9
 anova(ft_reveg)
-#> Time elapsed: 0 hr 0 min 6 sec
+#> Time elapsed: 0 hr 0 min 8 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: abundMV ~ treatment + offset(log(pitfalls))
@@ -52,7 +52,7 @@ anova(ft_reveg)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)  
 #> (Intercept)      9                         
-#> treatment        8       1 78.25    0.025 *
+#> treatment        8       1 78.25     0.02 *
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments:
@@ -78,21 +78,21 @@ seaweed$PA[seaweed$PA>1] = 1
 #fit model
 ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family="cloglog", data=seaweed)
 anova(ft_epiAlt,nBoot=99)
-#> Time elapsed: 0 hr 0 min 13 sec
+#> Time elapsed: 0 hr 0 min 18 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: PA ~ (Wmass + Size + Time) * Dist
 #> 
 #> Multivariate test:
-#>             Res.Df Df.diff   Dev Pr(>Dev)   
-#> (Intercept)     56                          
-#> Wmass           55       1  6.66     0.91   
-#> Size            54       1 36.98     0.01 **
-#> Time            53       1 32.35     0.02 * 
-#> Dist            51       2 28.26     0.73   
-#> Wmass:Dist      49       2 33.29     0.19   
-#> Size:Dist       47       2 26.77     0.05 * 
-#> Time:Dist       45       2 32.56     0.08 . 
+#>             Res.Df Df.diff   Dev Pr(>Dev)  
+#> (Intercept)     56                         
+#> Wmass           55       1  6.66     0.93  
+#> Size            54       1 36.98     0.02 *
+#> Time            53       1 32.35     0.04 *
+#> Dist            51       2 28.26     0.79  
+#> Wmass:Dist      49       2 33.29     0.25  
+#> Size:Dist       47       2 26.77     0.10 .
+#> Time:Dist       45       2 32.56     0.07 .
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments:
@@ -107,7 +107,7 @@ To see if there is an effect of `Dist` I guess we could remove it from the model
 ```r
 ft_epiNull = manyglm(PA~Wmass+Size+Time,family="cloglog", data=seaweed)
 anova(ft_epiNull, ft_epiAlt, nBoot=99)
-#> Time elapsed: 0 hr 0 min 2 sec
+#> Time elapsed: 0 hr 0 min 3 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_epiNull: PA ~ Wmass + Size + Time
@@ -116,7 +116,7 @@ anova(ft_epiNull, ft_epiAlt, nBoot=99)
 #> Multivariate test:
 #>            Res.Df Df.diff   Dev Pr(>Dev)
 #> ft_epiNull     53                       
-#> ft_epiAlt      45       8 115.2     0.47
+#> ft_epiAlt      45       8 115.2     0.41
 #> Arguments:
 #>  Test statistics calculated assuming uncorrelated response (for faster computation) 
 #>  P-value calculated using 99 iterations via PIT-trap resampling.
@@ -137,14 +137,10 @@ No :(
 par(mfrow=c(1,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 ft_reveg=manyglm(abundMV~treatment,offset=log(pitfalls),family="negative.binomial", data=reveg)
 plotenvelope(ft_reveg, which=1:3)
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code14.2](../man/figures/code14.2-1.png)
+![plot of chunk code14.2](figure/code14.2-1.png)
 
-=======
->>>>>>> Stashed changes
 *What do you reckon?*
 
 Assumptions seem reasonable here.
@@ -156,14 +152,10 @@ Assumptions seem reasonable here.
 ft_revegP=manyglm(abundMV~treatment, offset=log(pitfalls), family="poisson", data=reveg)
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_revegP, which=1:3, sim.method="stand.norm")
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code14.3](../man/figures/code14.3-1.png)
+![plot of chunk code14.3](figure/code14.3-1.png)
 
-=======
->>>>>>> Stashed changes
 
 ```r
 meanvar.plot(reveg$abundMV~reveg$treatment)
@@ -177,11 +169,7 @@ meanvar.plot(reveg$abundMV~reveg$treatment)
 abline(a=0,b=1,col="darkgreen")
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk code14.3MV](../man/figures/code14.3MV-1.png)
-=======
-![plot of chunk code14.3MV](code14.3MV-1.png)
->>>>>>> Stashed changes
+![plot of chunk code14.3MV](figure/code14.3MV-1.png)
 
 *How's the Poisson assumption looking?*
 
@@ -205,14 +193,10 @@ We assumed:
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family=binomial("cloglog"), data=seaweed)
 plotenvelope(ft_epiAlt, which=1:3)
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex14.5](../man/figures/ex14.5-1.png)
+![plot of chunk ex14.5](figure/ex14.5-1.png)
 
-=======
->>>>>>> Stashed changes
 *Do assumptions seem reasonable?*
 
 Yes it all looks good to me. This is not unexpected because presence-absence data are by definition Bernoulli, the only potential issues could be if there were higher order interactions or violations of te independence assumption.
@@ -245,14 +229,10 @@ Used "stand.norm"  because this model takes a while to fit.
 ```r
 par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wind, which=1:3, sim.method="stand.norm")
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex14.6assumptions](../man/figures/ex14.6assumptions-1.png)
+![plot of chunk ex14.6assumptions](figure/ex14.6assumptions-1.png)
 
-=======
->>>>>>> Stashed changes
 
 *Do assumptions seem reasonable? In particular, think about whether there is evidence that the counts are overdispersed compared to the Poisson.*
 
@@ -274,6 +254,8 @@ plotenvelope(ft_wind, which=1:3, n.sim=59)
 #>   NA/NaN/Inf in 'x'
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
+#> Error : inner loop 1; cannot correct step size
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
@@ -282,6 +264,34 @@ plotenvelope(ft_wind, which=1:3, n.sim=59)
 #>   NA/NaN/Inf in 'x'
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
+#> Error : inner loop 1; cannot correct step size
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
@@ -321,43 +331,12 @@ plotenvelope(ft_wind, which=1:3, n.sim=59)
 #>   NA/NaN/Inf in 'x'
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
-#> Error : inner loop 1; cannot correct step size
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
-#>   NA/NaN/Inf in 'x'
-#> Error in matrix(NA, nPred, n.sim): object 'n.sim' not found
 ```
 
-<<<<<<< Updated upstream
-![plot of chunk ex14.6refit](../man/figures/ex14.6refit-1.png)
+![plot of chunk ex14.6refit](figure/ex14.6refit-1.png)
 
-=======
->>>>>>> Stashed changes
 (You can ignore any error messages - these seem to happen because predicted values were numerically zero.)
 
 Anyway, the downward trend in the scale-location plot happened in simulated data too, so it is nothing really to worry about. It seems to be an artifact, probably because of overfitting of the data by including a `Station` term in the model -- this means that there is a parameter for every two observations in the data! (If a random effect were used instead, this effect would have been weaker. But it isn't really a problem.)
@@ -375,7 +354,7 @@ anova(ft_reveg,test="wald",cor.type="shrink")
 #> Multivariate test:
 #>             Res.Df Df.diff  wald Pr(>wald)  
 #> (Intercept)      9                          
-#> treatment        8       1 8.698     0.048 *
+#> treatment        8       1 8.698      0.05 *
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments:
@@ -419,7 +398,7 @@ windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull1=manyglm(windMV1~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull1, ft_wind1, nBoot=19)
-#> Time elapsed: 0 hr 0 min 10 sec
+#> Time elapsed: 0 hr 0 min 9 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_windNull1: windMV1 ~ Station + Year
@@ -450,12 +429,10 @@ It is curious that this didn't change computation time all that much. Looking at
 
 ```r
 colSums(windFarms$abund>0)
-#>         Bergvar         Oxsimpa         Piggvar      Roodspotta       Rootsimpa     Sandskaadda 
-#>               0              51               1               3              30               5 
-#>         Sjurygg   Skrubbskaadda     Skaaggsimpa    Skaarsnultra     Stensnultra Svart.smoorbult 
-#>               6              22               6               4              37               3 
-#>           Torsk        Tanglake     Aakta.tunga              AL 
-#>             134             136               0              61
+#>         Bergvar         Oxsimpa         Piggvar      Roodspotta       Rootsimpa     Sandskaadda         Sjurygg   Skrubbskaadda     Skaaggsimpa 
+#>               0              51               1               3              30               5               6              22               6 
+#>    Skaarsnultra     Stensnultra Svart.smoorbult           Torsk        Tanglake     Aakta.tunga              AL 
+#>               4              37               3             134             136               0              61
 ```
 we see that only three of the 16 species had one or less presence.  A couple more had three counts, removing these as well:
 
@@ -493,9 +470,6 @@ habOrd[counts>=10] = 2
 library(ordinal)
 #> 
 #> Attaching package: 'ordinal'
-#> The following objects are masked from 'package:VGAM':
-#> 
-#>     dgumbel, dlgamma, pgumbel, plgamma, qgumbel, rgumbel, wine
 #> The following objects are masked from 'package:glmmTMB':
 #> 
 #>     ranef, VarCorr
@@ -506,36 +480,27 @@ library(ordinal)
 #> 
 #>     ranef, VarCorr
 summary(habOrd) # Amphipods are all "2" which would return an error in clm
-#>       Amph        Cope            Poly            Anem             Iso            Bival      
-#>  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000   Min.   :0.000  
-#>  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:0.000  
-#>  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000   Median :2.000  
-#>  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877   Mean   :1.351  
-#>  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:2.000  
-#>  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000   Max.   :2.000  
-#>       Gast            Turb             Prawn            Urchin             Fish       
-#>  Min.   :1.000   Min.   :0.00000   Min.   :0.0000   Min.   :0.00000   Min.   :0.0000  
-#>  1st Qu.:2.000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000  
-#>  Median :2.000   Median :0.00000   Median :0.0000   Median :0.00000   Median :0.0000  
-#>  Mean   :1.947   Mean   :0.08772   Mean   :0.5263   Mean   :0.07018   Mean   :0.1754  
-#>  3rd Qu.:2.000   3rd Qu.:0.00000   3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000  
-#>  Max.   :2.000   Max.   :2.00000   Max.   :2.0000   Max.   :2.00000   Max.   :2.0000  
-#>       Crab            Caddis             Opi              Ost            Bstar       
-#>  Min.   :0.0000   Min.   :0.00000   Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
-#>  1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
-#>  Median :0.0000   Median :0.00000   Median :0.0000   Median :2.000   Median :0.0000  
-#>  Mean   :0.5965   Mean   :0.03509   Mean   :0.1404   Mean   :1.404   Mean   :0.2105  
-#>  3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  
-#>  Max.   :2.0000   Max.   :2.00000   Max.   :2.0000   Max.   :2.000   Max.   :2.0000
+#>       Amph        Cope            Poly            Anem             Iso            Bival            Gast            Turb             Prawn       
+#>  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000   Min.   :0.000   Min.   :1.000   Min.   :0.00000   Min.   :0.0000  
+#>  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:0.000   1st Qu.:2.000   1st Qu.:0.00000   1st Qu.:0.0000  
+#>  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000   Median :2.000   Median :2.000   Median :0.00000   Median :0.0000  
+#>  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877   Mean   :1.351   Mean   :1.947   Mean   :0.08772   Mean   :0.5263  
+#>  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.00000   3rd Qu.:2.0000  
+#>  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.00000   Max.   :2.0000  
+#>      Urchin             Fish             Crab            Caddis             Opi              Ost            Bstar       
+#>  Min.   :0.00000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000   Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
+#>  1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
+#>  Median :0.00000   Median :0.0000   Median :0.0000   Median :0.00000   Median :0.0000   Median :2.000   Median :0.0000  
+#>  Mean   :0.07018   Mean   :0.1754   Mean   :0.5965   Mean   :0.03509   Mean   :0.1404   Mean   :1.404   Mean   :0.2105  
+#>  3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  
+#>  Max.   :2.00000   Max.   :2.0000   Max.   :2.0000   Max.   :2.00000   Max.   :2.0000   Max.   :2.000   Max.   :2.0000
 habOrd=habOrd[,-1] #remove Amphipods
 manyOrd=manyany(habOrd~Dist*Time*Size,"clm",data=seaweed)
 manyOrdNull=manyany(habOrd~Time*Size,"clm",data=seaweed)
 anova(manyOrdNull, manyOrd)
 #> 
-#>              LR Pr(>LR)  
-#> sum-of-LR 101.1    0.05 *
-#> ---
-#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#>              LR Pr(>LR)
+#> sum-of-LR 101.1    0.17
 ```
 
 *What hypothesis has been tested here? Is there any evidence against it?*
@@ -557,7 +522,7 @@ data
 ```r
 ft_comp=manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg, composition=TRUE)
 anova(ft_comp,nBoot=99)
-#> Time elapsed: 0 hr 0 min 18 sec
+#> Time elapsed: 0 hr 0 min 19 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: abundMV ~ cols + treatment + offset(log(pitfalls)) + rows + cols:(treatment + offset(log(pitfalls)))
@@ -567,7 +532,7 @@ anova(ft_comp,nBoot=99)
 #> (Intercept)       239                          
 #> cols              216      23 361.2     0.01 **
 #> treatment         215       1  14.1     0.01 **
-#> rows              206       9  25.5     0.03 * 
+#> rows              206       9  25.5     0.02 * 
 #> cols:treatment    184      23  56.7     0.01 **
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -612,7 +577,7 @@ ft_reveg = manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg)
 QDrows = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg)) )
 ft_row=manyglm(abundMV~treatment+offset(log(pitfalls))+offset(QDrows), data=reveg)
 anova(ft_row0,ft_row)
-#> Time elapsed: 0 hr 0 min 8 sec
+#> Time elapsed: 0 hr 0 min 7 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_row0: abundMV ~ 1 + offset(log(pitfalls)) + offset(QDrows0)
@@ -621,7 +586,7 @@ anova(ft_row0,ft_row)
 #> Multivariate test:
 #>         Res.Df Df.diff   Dev Pr(>Dev)  
 #> ft_row0      9                         
-#> ft_row       8       1 50.26    0.077 .
+#> ft_row       8       1 50.26    0.073 .
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments:
@@ -638,7 +603,7 @@ The quick-and-dirty offset approach only roughly approximates the row effect, so
 
 ```r
 an_reveg = anova(ft_reveg,p.uni="adjusted")
-#> Time elapsed: 0 hr 0 min 6 sec
+#> Time elapsed: 0 hr 0 min 5 sec
 an_reveg
 #> Analysis of Deviance Table
 #> 
@@ -647,35 +612,27 @@ an_reveg
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)  
 #> (Intercept)      9                         
-#> treatment        8       1 78.25    0.024 *
+#> treatment        8       1 78.25    0.022 *
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
 #> Univariate Tests:
-#>             Acarina          Amphipoda          Araneae          Blattodea          Coleoptera
-#>                 Dev Pr(>Dev)       Dev Pr(>Dev)     Dev Pr(>Dev)       Dev Pr(>Dev)        Dev
-#> (Intercept)                                                                                   
-#> treatment     8.538    0.190     9.363    0.157   0.493    0.980    10.679    0.113      9.741
-#>                      Collembola          Dermaptera          Diotocardia          Diplura         
-#>             Pr(>Dev)        Dev Pr(>Dev)        Dev Pr(>Dev)         Dev Pr(>Dev)     Dev Pr(>Dev)
-#> (Intercept)                                                                                       
-#> treatment      0.137      6.786    0.295      0.196    0.980           0    0.980    2.24    0.851
-#>             Diptera          Formicidae          Haplotaxida          Hemiptera         
-#>                 Dev Pr(>Dev)        Dev Pr(>Dev)         Dev Pr(>Dev)       Dev Pr(>Dev)
-#> (Intercept)                                                                             
-#> treatment      5.93    0.365      0.831    0.980       2.889    0.765     1.302    0.967
-#>             Hymenoptera          Isopoda          Larvae          Lepidoptera          Polydesmida
-#>                     Dev Pr(>Dev)     Dev Pr(>Dev)    Dev Pr(>Dev)         Dev Pr(>Dev)         Dev
-#> (Intercept)                                                                                       
-#> treatment         4.254    0.554   1.096    0.980  0.463    0.980       0.913    0.980       1.451
-#>                      Pseudoscorpionida          Scolopendrida          Seolifera         
-#>             Pr(>Dev)               Dev Pr(>Dev)           Dev Pr(>Dev)       Dev Pr(>Dev)
-#> (Intercept)                                                                              
-#> treatment      0.961             1.056    0.980         0.913    0.980      1.03    0.980
-#>             Soleolifera          Thysanoptera          Tricladida         
-#>                     Dev Pr(>Dev)          Dev Pr(>Dev)        Dev Pr(>Dev)
-#> (Intercept)                                                               
-#> treatment         4.223    0.554        1.056    0.980      2.804    0.766
+#>             Acarina          Amphipoda          Araneae          Blattodea          Coleoptera          Collembola          Dermaptera         
+#>                 Dev Pr(>Dev)       Dev Pr(>Dev)     Dev Pr(>Dev)       Dev Pr(>Dev)        Dev Pr(>Dev)        Dev Pr(>Dev)        Dev Pr(>Dev)
+#> (Intercept)                                                                                                                                    
+#> treatment     8.538    0.183     9.363    0.155   0.493    0.976    10.679    0.118      9.741    0.143      6.786    0.297      0.196    0.976
+#>             Diotocardia          Diplura          Diptera          Formicidae          Haplotaxida          Hemiptera          Hymenoptera         
+#>                     Dev Pr(>Dev)     Dev Pr(>Dev)     Dev Pr(>Dev)        Dev Pr(>Dev)         Dev Pr(>Dev)       Dev Pr(>Dev)         Dev Pr(>Dev)
+#> (Intercept)                                                                                                                                        
+#> treatment             0    0.983    2.24    0.840    5.93    0.348      0.831    0.973       2.889    0.766     1.302    0.967       4.254    0.528
+#>             Isopoda          Larvae          Lepidoptera          Polydesmida          Pseudoscorpionida          Scolopendrida          Seolifera
+#>                 Dev Pr(>Dev)    Dev Pr(>Dev)         Dev Pr(>Dev)         Dev Pr(>Dev)               Dev Pr(>Dev)           Dev Pr(>Dev)       Dev
+#> (Intercept)                                                                                                                                       
+#> treatment     1.096    0.973  0.463    0.976       0.913    0.973       1.451    0.957             1.056    0.973         0.913    0.973      1.03
+#>                      Soleolifera          Thysanoptera          Tricladida         
+#>             Pr(>Dev)         Dev Pr(>Dev)          Dev Pr(>Dev)        Dev Pr(>Dev)
+#> (Intercept)                                                                        
+#> treatment      0.973       4.223    0.528        1.056    0.973      2.804    0.766
 #> Arguments:
 #>  Test statistics calculated assuming uncorrelated response (for faster computation) 
 #> P-value calculated using 999 iterations via PIT-trap resampling.
@@ -711,14 +668,14 @@ data(windFarms)
 windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 an_wind1 = anova(ft_wind1,p.uni="adjusted",nBoot=99)
-#> Time elapsed: 0 hr 51 min 49 sec
+#> Time elapsed: 0 hr 3 min 13 sec
 sortedWindStats = sort(an_wind1$uni.test[4,], decreasing=T, index.return=T)
 sortedWindStats$x[1:5]
 #>  Tanglake     Torsk   Oxsimpa Rootsimpa        AL 
 #> 29.019951 22.296044  6.899955  6.801339  4.819447
 an_wind1$uni.p[4,sortedWindStats$ix[1:5]]
 #>  Tanglake     Torsk   Oxsimpa Rootsimpa        AL 
-#>      0.01      0.01      0.04      0.04      0.17
+#>      0.01      0.01      0.15      0.15      0.23
 ```
 
 *Is there evidence that any species clearly have a Zone:Year interaction, after adjusting for multiple testing?*

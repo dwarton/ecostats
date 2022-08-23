@@ -16,7 +16,7 @@ plotenvelope(
   main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"),
   xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
   ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))),
-  col = par("col"),
+  col = NULL,
   line.col = if (add.smooth) c("slateblue4", "olivedrab", "slateblue4") else
     rep("olivedrab", 3),
   envelope.col = adjustcolor(line.col, 0.1),
