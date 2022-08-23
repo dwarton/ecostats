@@ -89,17 +89,6 @@ biplot( pc, xlabs=rep("\u00B0",dim(iris)[1]) )
 
 ```r
 library(psych)
-#> 
-#> Attaching package: 'psych'
-#> The following objects are masked from 'package:ggplot2':
-#> 
-#>     %+%, alpha
-#> The following object is masked from 'package:pgirmess':
-#> 
-#>     shannon
-#> The following object is masked from 'package:car':
-#> 
-#>     logit
 fa_iris <- fa(iris[,1:4], nfactors=2, fm="ml", rotate="varimax")
 loadings(fa_iris)
 #> 
@@ -174,10 +163,9 @@ fa_reveg <- fa(reveg$abund, nfactors=2)
 #> In smc, smcs < 0 were set to .0
 #> Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done
 #> In smc, smcs < 0 were set to .0
-#> Loading required namespace: GPArotation
 #> Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
-#> Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights for the factor scores are probably incorrect. Try a
-#> different factor score estimation method.
+#> Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights
+#> for the factor scores are probably incorrect. Try a different factor score estimation method.
 #> In factor.scores, the correlation matrix is singular, an approximation is used
 #> Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
 ```
@@ -196,9 +184,10 @@ for(iVar in 1:9)
 }
 ```
 
-![plot of chunk ex12.4plots](figure/ex12.4plots-1.png)
+![plot of chunk ex12.4RFplots](figure/ex12.4RFplots-1.png)
 
 ```r
+par(mfrow=c(3,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 for(iVar in 1:9)
 {
   y=reveg$abund[,iVar]
@@ -206,7 +195,7 @@ for(iVar in 1:9)
 }
 ```
 
-![plot of chunk ex12.4plots](figure/ex12.4plots-2.png)
+![plot of chunk ex12.4QQplots](figure/ex12.4QQplots-1.png)
 
 *Can you see any issues with factor analysis assumptions?*
 
@@ -245,10 +234,11 @@ One, this has the smallest BIC.
 ```r
 data(reveg)
 library(gllvm)
-#> Loading required package: TMB
-#> Warning: package 'TMB' was built under R version 4.2.1
 #> 
 #> Attaching package: 'gllvm'
+#> The following object is masked from 'package:vegan':
+#> 
+#>     ordiplot
 #> The following object is masked from 'package:mvabund':
 #> 
 #>     coefplot
@@ -290,10 +280,10 @@ reveg_LVM5 = gllvm(reveg$abund, num.lv=5, family="negative.binomial", trace=TRUE
 BIC(reveg_LVM1,reveg_LVM2,reveg_LVM3,reveg_LVM4,reveg_LVM5)
 #>             df      BIC
 #> reveg_LVM1  72 1557.821
-#> reveg_LVM2  95 1578.730
-#> reveg_LVM3 117 1575.276
+#> reveg_LVM2  95 1569.899
+#> reveg_LVM3 117 1629.363
 #> reveg_LVM4 138 1587.444
-#> reveg_LVM5 158 1633.496
+#> reveg_LVM5 158 1602.782
 ```
 
 For me two latent variable models was the winner!
@@ -317,48 +307,38 @@ Wow this does not look good! There is a clear fan-shape in the residual vs fits 
 
 ```r
 library(vegan)
-#> Loading required package: permute
-#> This is vegan 2.6-2
-#> 
-#> Attaching package: 'vegan'
-#> The following object is masked from 'package:gllvm':
-#> 
-#>     ordiplot
 ord_mds=metaMDS(reveg$abund)
 #> Square root transformation
 #> Wisconsin double standardization
 #> Run 0 stress 0.1611237 
-#> Run 1 stress 0.1687788 
-#> Run 2 stress 0.2684195 
-#> Run 3 stress 0.1611236 
+#> Run 1 stress 0.1819872 
+#> Run 2 stress 0.1641163 
+#> Run 3 stress 0.1680773 
+#> Run 4 stress 0.1923967 
+#> Run 5 stress 0.1653221 
+#> Run 6 stress 0.1923966 
+#> Run 7 stress 0.2075317 
+#> Run 8 stress 0.1611238 
+#> ... Procrustes: rmse 0.0008583297  max resid 0.001554576 
+#> ... Similar to previous best
+#> Run 9 stress 0.1641162 
+#> Run 10 stress 0.1641164 
+#> Run 11 stress 0.1653221 
+#> Run 12 stress 0.1934609 
+#> Run 13 stress 0.1611236 
 #> ... New best solution
-#> ... Procrustes: rmse 0.0004585684  max resid 0.0008197316 
+#> ... Procrustes: rmse 0.0005031619  max resid 0.0009058036 
 #> ... Similar to previous best
-#> Run 4 stress 0.2062042 
-#> Run 5 stress 0.3314815 
-#> Run 6 stress 0.1611239 
-#> ... Procrustes: rmse 0.0005366897  max resid 0.0009748253 
+#> Run 14 stress 0.1659807 
+#> Run 15 stress 0.1805824 
+#> Run 16 stress 0.174544 
+#> Run 17 stress 0.1611237 
+#> ... Procrustes: rmse 0.0001254392  max resid 0.0002248365 
 #> ... Similar to previous best
-#> Run 7 stress 0.1680773 
-#> Run 8 stress 0.1680773 
-#> Run 9 stress 0.1641165 
-#> Run 10 stress 0.2022877 
-#> Run 11 stress 0.1641165 
-#> Run 12 stress 0.1680773 
-#> Run 13 stress 0.1680773 
-#> Run 14 stress 0.1687788 
-#> Run 15 stress 0.1611236 
-#> ... Procrustes: rmse 0.0001032944  max resid 0.0001868105 
-#> ... Similar to previous best
-#> Run 16 stress 0.1880315 
-#> Run 17 stress 0.1880316 
-#> Run 18 stress 0.1611238 
-#> ... Procrustes: rmse 0.0006247713  max resid 0.001114103 
-#> ... Similar to previous best
-#> Run 19 stress 0.1880315 
-#> Run 20 stress 0.1611236 
-#> ... New best solution
-#> ... Procrustes: rmse 0.0002105525  max resid 0.0003734638 
+#> Run 18 stress 0.1680773 
+#> Run 19 stress 0.1641161 
+#> Run 20 stress 0.1611238 
+#> ... Procrustes: rmse 0.000385828  max resid 0.000691825 
 #> ... Similar to previous best
 #> *** Solution reached
 plot(ord_mds$points,pch=as.numeric(reveg$treatment),col=reveg$treatment)
@@ -383,32 +363,29 @@ tikus_mds=metaMDS(tikusAbund)
 #> Square root transformation
 #> Wisconsin double standardization
 #> Run 0 stress 0.09863027 
-#> Run 1 stress 0.1096412 
-#> Run 2 stress 0.1144806 
-#> Run 3 stress 0.111816 
-#> Run 4 stress 0.09970471 
-#> Run 5 stress 0.1479043 
-#> Run 6 stress 0.1275178 
-#> Run 7 stress 0.1093704 
-#> Run 8 stress 0.09954172 
-#> Run 9 stress 0.1158263 
-#> Run 10 stress 0.1165909 
-#> Run 11 stress 0.10266 
-#> Run 12 stress 0.1054471 
-#> Run 13 stress 0.09954171 
-#> Run 14 stress 0.09954136 
-#> Run 15 stress 0.1010792 
-#> Run 16 stress 0.09863103 
-#> ... Procrustes: rmse 0.000412243  max resid 0.0009883379 
-#> ... Similar to previous best
-#> Run 17 stress 0.1078694 
-#> Run 18 stress 0.09863022 
-#> ... New best solution
-#> ... Procrustes: rmse 0.002205194  max resid 0.005495785 
-#> ... Similar to previous best
-#> Run 19 stress 0.1078696 
-#> Run 20 stress 0.1475714 
-#> *** Solution reached
+#> Run 1 stress 0.1068237 
+#> Run 2 stress 0.1096403 
+#> Run 3 stress 0.1042523 
+#> Run 4 stress 0.1093951 
+#> Run 5 stress 0.1026594 
+#> Run 6 stress 0.1048121 
+#> Run 7 stress 0.1217424 
+#> Run 8 stress 0.09954197 
+#> Run 9 stress 0.1255564 
+#> Run 10 stress 0.1088713 
+#> Run 11 stress 0.1172315 
+#> Run 12 stress 0.1243951 
+#> Run 13 stress 0.09954214 
+#> Run 14 stress 0.1152297 
+#> Run 15 stress 0.1257986 
+#> Run 16 stress 0.1172314 
+#> Run 17 stress 0.1284706 
+#> Run 18 stress 0.1275011 
+#> Run 19 stress 0.1244946 
+#> Run 20 stress 0.1042511 
+#> *** No convergence -- monoMDS stopping criteria:
+#>      4: no. of iterations >= maxit
+#>     16: stress ratio > sratmax
 plot(tikus_mds$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
 ```
 
@@ -424,59 +401,63 @@ Yes it does, 1981 (before El Niño disturbance) the points are close together in
 ```r
 tikus_mdsEuc=metaMDS(log(tikusAbund+1),distance="euclidean")
 #> Run 0 stress 0.05741195 
-#> Run 1 stress 0.0574117 
+#> Run 1 stress 0.05741187 
 #> ... New best solution
-#> ... Procrustes: rmse 0.0006040334  max resid 0.001755331 
+#> ... Procrustes: rmse 0.0007323776  max resid 0.00214931 
 #> ... Similar to previous best
-#> Run 2 stress 0.05741207 
-#> ... Procrustes: rmse 0.0002360083  max resid 0.0007165394 
+#> Run 2 stress 0.05741196 
+#> ... Procrustes: rmse 5.344633e-05  max resid 0.0001573046 
 #> ... Similar to previous best
 #> Run 3 stress 0.0574119 
-#> ... Procrustes: rmse 0.0005762837  max resid 0.001677264 
+#> ... Procrustes: rmse 0.0007138967  max resid 0.002092021 
 #> ... Similar to previous best
-#> Run 4 stress 0.07425327 
-#> Run 5 stress 0.05741188 
-#> ... Procrustes: rmse 0.0005713984  max resid 0.00166317 
+#> Run 4 stress 0.05741222 
+#> ... Procrustes: rmse 0.000174726  max resid 0.0005233103 
 #> ... Similar to previous best
-#> Run 6 stress 0.05741211 
-#> ... Procrustes: rmse 0.0002562405  max resid 0.0007773331 
-#> ... Similar to previous best
-#> Run 7 stress 0.05741165 
+#> Run 5 stress 0.05741186 
 #> ... New best solution
-#> ... Procrustes: rmse 7.397262e-05  max resid 0.0002236007 
+#> ... Procrustes: rmse 0.0006913628  max resid 0.002031054 
 #> ... Similar to previous best
-#> Run 8 stress 0.05741203 
-#> ... Procrustes: rmse 0.000571415  max resid 0.001643115 
+#> Run 6 stress 0.05741169 
+#> ... New best solution
+#> ... Procrustes: rmse 0.0001261903  max resid 0.0003622647 
 #> ... Similar to previous best
-#> Run 9 stress 0.07425304 
-#> Run 10 stress 0.05741166 
-#> ... Procrustes: rmse 4.266406e-05  max resid 0.000132459 
+#> Run 7 stress 0.05741214 
+#> ... Procrustes: rmse 0.0006915695  max resid 0.00205748 
 #> ... Similar to previous best
-#> Run 11 stress 0.07425298 
-#> Run 12 stress 0.05741199 
-#> ... Procrustes: rmse 0.0005544893  max resid 0.001591259 
+#> Run 8 stress 0.07425302 
+#> Run 9 stress 0.07425298 
+#> Run 10 stress 0.0574116 
+#> ... New best solution
+#> ... Procrustes: rmse 0.0003000391  max resid 0.000882151 
 #> ... Similar to previous best
-#> Run 13 stress 0.05741213 
-#> ... Procrustes: rmse 0.0003408697  max resid 0.001033423 
+#> Run 11 stress 0.0574119 
+#> ... Procrustes: rmse 0.0004413087  max resid 0.001266712 
 #> ... Similar to previous best
-#> Run 14 stress 0.05741181 
-#> ... Procrustes: rmse 0.0001640364  max resid 0.0004996793 
+#> Run 12 stress 0.0574119 
+#> ... Procrustes: rmse 0.0004457318  max resid 0.001283056 
 #> ... Similar to previous best
-#> Run 15 stress 0.05741166 
-#> ... Procrustes: rmse 0.0003297201  max resid 0.0009738707 
+#> Run 13 stress 0.05741227 
+#> ... Procrustes: rmse 0.0004551786  max resid 0.001377039 
 #> ... Similar to previous best
-#> Run 16 stress 0.05741166 
-#> ... Procrustes: rmse 3.541119e-05  max resid 0.0001048059 
+#> Run 14 stress 0.05741199 
+#> ... Procrustes: rmse 0.0003376904  max resid 0.00101902 
 #> ... Similar to previous best
-#> Run 17 stress 0.05741194 
-#> ... Procrustes: rmse 0.0005278599  max resid 0.001523223 
+#> Run 15 stress 0.05741175 
+#> ... Procrustes: rmse 0.0001889044  max resid 0.000567864 
 #> ... Similar to previous best
-#> Run 18 stress 0.05741206 
-#> ... Procrustes: rmse 0.0005868747  max resid 0.00168278 
+#> Run 16 stress 0.0574117 
+#> ... Procrustes: rmse 0.0001409573  max resid 0.0004234382 
 #> ... Similar to previous best
-#> Run 19 stress 0.07425299 
-#> Run 20 stress 0.05741184 
-#> ... Procrustes: rmse 0.0001881958  max resid 0.0005719071 
+#> Run 17 stress 0.0574119 
+#> ... Procrustes: rmse 0.0002847193  max resid 0.0008592249 
+#> ... Similar to previous best
+#> Run 18 stress 0.07425305 
+#> Run 19 stress 0.05741191 
+#> ... Procrustes: rmse 0.0004479513  max resid 0.001284921 
+#> ... Similar to previous best
+#> Run 20 stress 0.05741203 
+#> ... Procrustes: rmse 0.0005138651  max resid 0.001470291 
 #> ... Similar to previous best
 #> *** Solution reached
 plot(tikus_mdsEuc$points,pch=as.numeric(tikus$x$time),col=tikus$x$time)
@@ -530,11 +511,11 @@ by(iris, iris$Species, function(dat){ apply(dat[,1:4],2,mean) } )
 #> iris$Species: setosa
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        5.006        3.428        1.462        0.246 
-#> ------------------------------------------------------------------------------------------------------------------ 
+#> --------------------------------------------------------------------------- 
 #> iris$Species: versicolor
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        5.936        2.770        4.260        1.326 
-#> ------------------------------------------------------------------------------------------------------------------ 
+#> --------------------------------------------------------------------------- 
 #> iris$Species: virginica
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        6.588        2.974        5.552        2.026
