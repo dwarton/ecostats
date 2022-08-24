@@ -456,16 +456,6 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   invisible(out)
 }
 
-qqenvelope = function (y, n.sim=199, conf.level=0.95, ylab="Sample Quantiles", ...) 
-{
-  # If y is data, make it a model fit to call plotenvelope
-  if(is.numeric(y))
-    y = lm(y~1)
-  
-  out = plotenvelope(y, which=2, ylab=ylab, n.sim=n.sim, conf.level=conf.level, ...)
-  invisible(out[[2]])
-}
-
 resFitEnvelope = function(x,y,fits, resids, n.obs, conf.level=0.95, type="st",n.sim=n.sim,
                           plot.it=TRUE, main, ylab, xlab, col, line.col, envelope.col, add.smooth, 
                           nXs=nXs, nPred=500, ...)

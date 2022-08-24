@@ -1,7 +1,7 @@
 ---
 title: "Chapter 7 -- Correlated samples in times, space, phylogeny... -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-08-23"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 7 -- Correlated samples in times, space, phylogeny... -- Exercise solutions and Code Boxes}

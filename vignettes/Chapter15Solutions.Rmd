@@ -1,7 +1,7 @@
 ---
 title: "Chapter 15 -- Predicting multivariate abundances -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-08-23"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 15 -- Predicting multivariate abundances -- Exercise solutions and Code Boxes}
@@ -380,8 +380,8 @@ Xformula = paste(colnames(spider$x),collapse="+")
 fullFormula = formula(paste0("value~cols+",Xformula,"+(",Xformula,"|cols)"))
 library(glmmTMB)
 spid_glmm = glmmTMB(fullFormula,family=nbinom2(),data=spiderLong)
-#> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite
-#> Hessian matrix. See vignette('troubleshooting')
+#> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite Hessian matrix.
+#> See vignette('troubleshooting')
 #> Warning in fitTMB(TMBStruc): Model convergence problem; false convergence (8). See
 #> vignette('troubleshooting')
 summary(spid_glmm)

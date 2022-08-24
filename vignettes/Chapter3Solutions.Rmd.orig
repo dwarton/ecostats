@@ -1,0 +1,263 @@
+---
+title: "Chapter 3 -- Regression with multiple predictor variables -- Exercise solutions and Code Boxes"
+author: "David Warton"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Chapter 3 -- Regression with multiple predictor variables -- Exercise solutions and Code Boxes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, fig.path=figPath,
+  comment = "#>"
+)
+```
+
+## Exercise 3.1: Global plant height
+
+*Can latitudinal variation in plant height be explained by climate?*
+This is a hypothesis testing question: we want to know if there is a relationship between height and latitude, after controlling for climate.
+
+This research question now involves several variables: *height* (quantitative), *latitude* (quantitative) and *climate*. How climate is measured has not been specified here, but it typically involves quantitative measurements of temperature, precipitation and often related variables.
+
+We will answer this question using multiple regression, a type of linear model, see Code Box 3.2.
+
+
+
+## Code Box 3.1: Simple linear regression of global plant height data - predicting
+height as a function of latitude only.
+
+```{r box3.1heightLat}
+ library(ecostats)
+ data(globalPlants)
+ ft_heightLat=lm(height~lat, data=globalPlants)
+ summary(ft_heightLat)
+```
+
+
+## Code Box 3.2: Multiple linear regression of global plant height data on R -- predicting
+plant height as a function of annual precipitation and latitude.
+
+Note the code is almost the same as for simple linear regression -- just add an extra predictor variable!
+```{r box3.2heightRainLat summary}
+ ft_heightRainLat=lm(height~rain+lat, data=globalPlants)
+ summary(ft_heightRainLat)
+```
+
+## Code Box 3.3: R code to produce the plots of Figure 3.1
+
+```{r box3.3avPlots, fig.width=4, fig.height=4}
+library(car)
+avPlots(ft_heightLat, terms = ~lat, xlab="Latitude", ylab="Height",
+grid=FALSE) ##left plot
+avPlots(ft_heightRainLat, terms = ~lat, xlab="Latitude|rain",
+ylab="Height|rain", grid=FALSE) ## right plot
+```
+
+## Code Box 3.4: Tests of multiple parameters on R using the anova function
+
+```{r box3.4anovaClim}
+ ft_Lat=lm(height~lat,data=globalPlants)
+ ft_LatClim=lm(height~lat+rain+temp,data=globalPlants)
+ anova(ft_Lat,ft_LatClim)
+```
+ 
+##  Code Box 3.5: Multi-collinearity example -- adding rainfall in the wettest month (rain.wetm) to a model that already has annual precipitation (rain).
+
+Note that standard errors are larger and suddenly everything is non-significant.
+
+```{r box3.5anovaClim probs}
+ ft_climproblems=lm(height~rain+rain.wetm+lat,data=globalPlants)
+ summary(ft_climproblems)
+```
+
+
+## Exercise 3.2: Plant height data -- transform response?
+
+```{r ex3.2heightRainLat, fig.width=8, fig.height=4}
+ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+ globalPlants$loght = log(globalPlants$height)
+ ft_logheightRainLat=lm(loght~rain+lat, data=globalPlants)
+ plotenvelope(ft_logheightRainLat)
+ summary(ft_logheightRainLat)
+```
+
+These diagnostic plots look a lot better.
+
+But now results have changed -- the effect of latitude, after controlling for rainfall, is significant! These results are more trustworthy than the previous ones because assumptions are looking reasonable now, whereas before we had strong right-skew.
+
+Results changing is not entirely unexpected here. Least squares methods have low power when applied to strongly skewed data. What happened here is that there was a (fairly strong)  pattern in the data, with latitudinal effects that are not explained by rainfall, but we couldn't see this before because data were strongly skewed, which makes it hard to see anything.
+
+## Exercise 3.3: Plant height -- skewed rainfall data?
+```{r ex3.3logRain, fig.width=8, fig.height=4}
+ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+ globalPlants$logRain = log(globalPlants$rain)
+ hist(globalPlants$rain)
+ hist(globalPlants$logRain)
+ ft_logheightlogRainLat=lm(loght~logRain+lat, data=globalPlants)
+ plotenvelope(ft_logheightlogRainLat)
+ summary(ft_logheightlogRainLat)
+```
+
+The histogram for rainfall is slightly right-skewed, although it's not super-scary.
+Reanalysing data we still get pretty good-loking diagnostic plots and results look very similar -- $R^2$ is almost the same, $P$-values are still very significant.
+
+
+## Code Box 3.6: Computing variance inflation factors to check for multi-collinearity.
+
+```{r box3.6vi}
+ require(car)
+ vif(ft_heightRainLat)
+ vif(ft_climproblems)
+```
+Clearly adding rain.wetm to the model has done some damage (but to rain only,
+not so much to lat).
+
+
+## Code Box 3.7: Correlations and pairwise scatterplots to look for multi-collinearity.
+
+```{r box3.7heightPairs, fig.width=5, fig.height=5}
+X = data.frame(globalPlants$lat,globalPlants$rain,globalPlants$rain.wetm)
+cor(X)
+pairs(X)
+```
+
+## Exercise 3.4: Snails on seaweed
+
+*Does invertebrate density change with isolation?*
+This research question asks for a hypothesis test: is there are relationship between invertebrate density and isolation.
+
+There are two variables -- invertebrate density (quantitative) and distance of isolation, which was set experimentally at 0, 2 or 10 metres (categorical).
+
+So I'm thinking ANOVA.
+
+
+## Code Box 3.8: Analysis of variance in R for the seaweed data of Exercise 1.13 using
+lm.
+```{r box3.8seaweedanova}
+ data(seaweed)
+ seaweed$Dist = factor(seaweed$Dist)
+ ft_seaweed=lm(Total~Dist,data=seaweed)
+ anova(ft_seaweed)
+```
+There is strong evidence of a `Dist` effect.
+
+## Code Box 3.9: Running confint on the seaweed data doesn't give us what we
+want.
+```{r box3.9seaweedconfint}
+ confint(ft_seaweed)
+```
+
+## Code Box 3.10: Analysis of variance of the seaweed data of Exercise 1.13 with Tukey's multiple comparisons via the multcomp package.
+
+```{r box3.10seaweedmultcomp, fig.width=4, fig.height=4}
+ library(multcomp)
+ contDist = mcp(Dist="Tukey") # telling R to compare on the Dist factor
+ compDist = glht(ft_seaweed, linfct=contDist) # run multiple comparisions
+ summary(compDist)
+ plot(compDist)
+```
+
+## Exercise 3.5: Plant height -- climate explains patterns?
+
+I will take climate to mean temperature (*temp*) and rainfall (*rain*).
+
+So a good plan here would be to fit a multiple regression model, to appropriately transformed data, and see if latitude explains any variation not captured by climate.
+
+```{r ex3.5logClimate, fig.width=8, fig.height=4}
+ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+ globalPlants$logRain = log(globalPlants$rain)
+ globalPlants$logHt = log(globalPlants$height)
+ ft_logheightClim=lm(loght~logRain+temp+lat, data=globalPlants)
+ plotenvelope(ft_logheightClim)
+ summary(ft_logheightClim)
+```
+
+In terms of minding our P's and Q's:
+
+**Q's** our research question suggests we are primarily interested in seeing if there is an effect of latitude after controlling for climate, hence primary interest is in the bottom row of the above summmary table.
+
+**P's**
+
+* *(conditional) independence* requires randomly sampled sites. This wasn't actually done so we are left waving our arms and thinking hard about possible sources of dependence... sites tended to be relatively far apart geographically so are unlikely to exhibit dependence. We could check for this using a spatial correlogram (see Chapter 7).
+* *normality* no trend on normal quantile plot suggests no evidence against this assumption
+* *equal variance* no fan-shape pattern on residual vs fits plot suggests this looks OK
+* *linearity* no U-shape on residual vs fits plots suggests this looks reasonable.
+
+After adding *temp* to the model, there is no longer any evidence of a latitudinal effect. So latitudinal variation in height can be explained by climate, in the sense that there is no evidence of a latitudinal effect after controlling for climate.
+
+The main reason for this is that temperature and latitude are highly correlated (as below), hence we can think of latitude primarily as a surrogate for temperature. It is not immediately obvious however if plants tend to grow taller towards the equator because it is warmer (hence *temp* is driving this relationship) or because of reduced seasonality and more even day lengths (hence *lat* is the driver).
+```{r 3.5Climatepairs, fig.width=5, fig.height=5}
+X = data.frame(globalPlants$lat,globalPlants$rain,globalPlants$temp)
+cor(X)
+pairs(X)
+```
+
+## Exercise 3.6: Habitat conguration study { mind your P's and Q's
+
+```{r ex3.6seaweedbox, fig.width=5, fig.height=5}
+ boxplot(Total~Dist,data=seaweed)
+ by(seaweed$Total,seaweed$Dist,sd)
+```
+Small means have small variances.  There is a boundary at zero and data are being "pushed up" against it, with `Total` tending to take small values near zero for `Dist=0`, with less than half the sd of `Dist=2` or `Dist=10`. 
+
+There is also a suggestion of non-normality when checking assumptions on the fitted ANOVA model:
+```{r ex3.6seaweedlogreplot, fig.width=8, fig.height=4}
+ par(mfrow=c(1,3),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+ plotenvelope(ft_seaweed,which=1:3)
+```
+
+Notice that in the quantile plot that points get close to the lower bound in the middle of the plot and get near the top of it at large values -- this is mildly suggestive of skew. We similarly see an increasing trend in the scale-location plot, although it does stay within its simulation bounds. Notice these are only subtle patterns and not particularly strong.
+
+(As an aside, note there is no envelope visible on the residual vs fits plot. This happens because we are fitting an ANOVA model, which ends up with a residuals mean exactly equal to zero for all treatments, hence no mean trend on the res vs fits plot for all fitted values, just a flat line at zero. Put another way, non-linearity isn't an assumption to worry about in ANOVA models, the fitted model goes exactly through the mean of each treatment.)
+
+We can try to address the suggestion of skew this using log-transformation:
+
+```{r ex3.6seaweedtrans, fig.width=4, fig.height=4}
+ seaweed$logTot = log(seaweed$Total)
+ boxplot(logTot~Dist,data=seaweed)
+ by(seaweed$logTot,seaweed$Dist,sd)
+```
+
+This is looking pretty good now, let's run with that.
+
+```{r ex3.6seaweedlogre, fig.width=8, fig.height=4}
+ par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(1.75,0.75,0))
+ ft_loghabconf=lm(logTot~Dist,data=seaweed)
+ plotenvelope(ft_loghabconf,which=1:2)
+ anova(ft_loghabconf)
+ library(multcomp)
+ contDist = mcp(Dist="Tukey") # telling R to compare on the Dist factor
+ compDistlog = glht(ft_loghabconf, linfct=contDist) # run multiple comparisions
+ summary(compDistlog)
+ plot(compDistlog)
+```
+
+And the main change in results here is that there is now evidence that mean `logTot` is different between `Dist==0` and `Dist==10` now as well as between `Dist==0` and `Dist==2`. Again this is an example of being able to better see patterns when assumptions are closer to being satisfied (in particular, removing right-skew from response when fitting a linear model).
+
+
+## Exercise 3.7: Habitat conguration study { small plots
+
+```{r ex3.7seaweedSMALL, fig.width=4, fig.height=4}
+ habSmall=seaweed[seaweed$Size=="SMALL",]
+ ft_smhabconf=lm(logTot~Dist,data=habSmall)
+ plotenvelope(ft_smhabconf,which=1:2)
+ anova(ft_smhabconf)
+ library(multcomp)
+ contDist = mcp(Dist="Tukey") # telling R to compare on the Dist factor
+ compDistsm = glht(ft_smhabconf, linfct=contDist) # run multiple comparisons
+ summary(compDistsm)
+ plot(compDistsm)
+```
+
+Results are now less significant, with only marginal evidence of a difference in mean `logTot` between `Dist==0` and `Dist==10`. This is expected because we have almost halved our sample size:
+
+```{r ex3.7seaweedn}
+dim(seaweed)
+dim(habSmall)
+```
+
+By reducing our sample size, we are less able to see patterns in the data (because there is less data to look for patterns in!).

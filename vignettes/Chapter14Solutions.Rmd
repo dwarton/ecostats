@@ -1,7 +1,7 @@
 ---
 title: "Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-08-23"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 14 -- Multivariate abundances -- inference about environmental associations -- Exercise solutions and Code Boxes}
@@ -44,7 +44,7 @@ reveg$abundMV=mvabund(reveg$abund)
 ft_reveg=manyglm(abundMV~treatment+offset(log(pitfalls)),
 family="negative.binomial", data=reveg) # offset included as in Exercise 10.9
 anova(ft_reveg)
-#> Time elapsed: 0 hr 0 min 10 sec
+#> Time elapsed: 0 hr 0 min 7 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: abundMV ~ treatment + offset(log(pitfalls))
@@ -78,7 +78,7 @@ seaweed$PA[seaweed$PA>1] = 1
 #fit model
 ft_epiAlt = manyglm(PA~(Wmass+Size+Time)*Dist,family="cloglog", data=seaweed)
 anova(ft_epiAlt,nBoot=99)
-#> Time elapsed: 0 hr 0 min 20 sec
+#> Time elapsed: 0 hr 0 min 13 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: PA ~ (Wmass + Size + Time) * Dist
@@ -107,7 +107,7 @@ To see if there is an effect of `Dist` I guess we could remove it from the model
 ```r
 ft_epiNull = manyglm(PA~Wmass+Size+Time,family="cloglog", data=seaweed)
 anova(ft_epiNull, ft_epiAlt, nBoot=99)
-#> Time elapsed: 0 hr 0 min 4 sec
+#> Time elapsed: 0 hr 0 min 2 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_epiNull: PA ~ Wmass + Size + Time
@@ -372,7 +372,7 @@ windMV = mvabund(windFarms$abund)
 ft_wind=manyglm(windMV~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull=manyglm(windMV~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull, ft_wind, nBoot=19)
-#> Time elapsed: 0 hr 0 min 19 sec
+#> Time elapsed: 0 hr 0 min 11 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_windNull: windMV ~ Station + Year
@@ -398,7 +398,7 @@ windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull1=manyglm(windMV1~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull1, ft_wind1, nBoot=19)
-#> Time elapsed: 0 hr 0 min 16 sec
+#> Time elapsed: 0 hr 0 min 11 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_windNull1: windMV1 ~ Station + Year
@@ -446,7 +446,7 @@ windMV3 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>3])
 ft_wind3=manyglm(windMV3~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 ft_windNull3=manyglm(windMV3~Station+Year, family="poisson", data=windFarms$X)
 anova(ft_windNull3, ft_wind3, nBoot=19)
-#> Time elapsed: 0 hr 0 min 13 sec
+#> Time elapsed: 0 hr 0 min 10 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_windNull3: windMV3 ~ Station + Year
@@ -486,35 +486,31 @@ library(ordinal)
 #> The following objects are masked from 'package:lme4':
 #> 
 #>     ranef, VarCorr
+#> The following object is masked from 'package:dplyr':
+#> 
+#>     slice
 summary(habOrd) # Amphipods are all "2" which would return an error in clm
-#>       Amph        Cope            Poly            Anem             Iso       
-#>  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000  
-#>  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000  
-#>  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000  
-#>  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877  
-#>  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000  
-#>  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000  
-#>      Bival            Gast            Turb             Prawn       
-#>  Min.   :0.000   Min.   :1.000   Min.   :0.00000   Min.   :0.0000  
-#>  1st Qu.:0.000   1st Qu.:2.000   1st Qu.:0.00000   1st Qu.:0.0000  
-#>  Median :2.000   Median :2.000   Median :0.00000   Median :0.0000  
-#>  Mean   :1.351   Mean   :1.947   Mean   :0.08772   Mean   :0.5263  
-#>  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.00000   3rd Qu.:2.0000  
-#>  Max.   :2.000   Max.   :2.000   Max.   :2.00000   Max.   :2.0000  
-#>      Urchin             Fish             Crab            Caddis       
-#>  Min.   :0.00000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000  
-#>  1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:0.00000  
-#>  Median :0.00000   Median :0.0000   Median :0.0000   Median :0.00000  
-#>  Mean   :0.07018   Mean   :0.1754   Mean   :0.5965   Mean   :0.03509  
-#>  3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.0000   3rd Qu.:0.00000  
-#>  Max.   :2.00000   Max.   :2.0000   Max.   :2.0000   Max.   :2.00000  
-#>       Opi              Ost            Bstar       
-#>  Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
-#>  1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
-#>  Median :0.0000   Median :2.000   Median :0.0000  
-#>  Mean   :0.1404   Mean   :1.404   Mean   :0.2105  
-#>  3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  
-#>  Max.   :2.0000   Max.   :2.000   Max.   :2.0000
+#>       Amph        Cope            Poly            Anem             Iso            Bival      
+#>  Min.   :2   Min.   :0.000   Min.   :0.000   Min.   :0.0000   Min.   :0.000   Min.   :0.000  
+#>  1st Qu.:2   1st Qu.:2.000   1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:2.000   1st Qu.:0.000  
+#>  Median :2   Median :2.000   Median :2.000   Median :0.0000   Median :2.000   Median :2.000  
+#>  Mean   :2   Mean   :1.895   Mean   :1.772   Mean   :0.2456   Mean   :1.877   Mean   :1.351  
+#>  3rd Qu.:2   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:2.000  
+#>  Max.   :2   Max.   :2.000   Max.   :2.000   Max.   :2.0000   Max.   :2.000   Max.   :2.000  
+#>       Gast            Turb             Prawn            Urchin             Fish       
+#>  Min.   :1.000   Min.   :0.00000   Min.   :0.0000   Min.   :0.00000   Min.   :0.0000  
+#>  1st Qu.:2.000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000  
+#>  Median :2.000   Median :0.00000   Median :0.0000   Median :0.00000   Median :0.0000  
+#>  Mean   :1.947   Mean   :0.08772   Mean   :0.5263   Mean   :0.07018   Mean   :0.1754  
+#>  3rd Qu.:2.000   3rd Qu.:0.00000   3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000  
+#>  Max.   :2.000   Max.   :2.00000   Max.   :2.0000   Max.   :2.00000   Max.   :2.0000  
+#>       Crab            Caddis             Opi              Ost            Bstar       
+#>  Min.   :0.0000   Min.   :0.00000   Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
+#>  1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
+#>  Median :0.0000   Median :0.00000   Median :0.0000   Median :2.000   Median :0.0000  
+#>  Mean   :0.5965   Mean   :0.03509   Mean   :0.1404   Mean   :1.404   Mean   :0.2105  
+#>  3rd Qu.:2.0000   3rd Qu.:0.00000   3rd Qu.:0.0000   3rd Qu.:2.000   3rd Qu.:0.0000  
+#>  Max.   :2.0000   Max.   :2.00000   Max.   :2.0000   Max.   :2.000   Max.   :2.0000
 habOrd=habOrd[,-1] #remove Amphipods
 manyOrd=manyany(habOrd~Dist*Time*Size,"clm",data=seaweed)
 manyOrdNull=manyany(habOrd~Time*Size,"clm",data=seaweed)
@@ -543,7 +539,7 @@ data
 ```r
 ft_comp=manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg, composition=TRUE)
 anova(ft_comp,nBoot=99)
-#> Time elapsed: 0 hr 0 min 29 sec
+#> Time elapsed: 0 hr 0 min 21 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: abundMV ~ cols + treatment + offset(log(pitfalls)) + rows + cols:(treatment + offset(log(pitfalls)))
@@ -573,7 +569,7 @@ data=ft_comp$data)
 ft_alt = manyglm(abundMV~cols+rows+treatment:cols
 +offset(log(pitfalls)), data=ft_comp$data)
 anova(ft_null,ft_alt,nBoot=99,block=ft_comp$rows)
-#> Time elapsed: 0 hr 0 min 7 sec
+#> Time elapsed: 0 hr 0 min 5 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_null: abundMV ~ cols + rows + offset(log(pitfalls))
@@ -598,7 +594,7 @@ ft_reveg = manyglm(abundMV~treatment+offset(log(pitfalls)), data=reveg)
 QDrows = log(rowSums(reveg$abundMV)) - log( rowSums(fitted(ft_reveg)) )
 ft_row=manyglm(abundMV~treatment+offset(log(pitfalls))+offset(QDrows), data=reveg)
 anova(ft_row0,ft_row)
-#> Time elapsed: 0 hr 0 min 8 sec
+#> Time elapsed: 0 hr 0 min 7 sec
 #> Analysis of Deviance Table
 #> 
 #> ft_row0: abundMV ~ 1 + offset(log(pitfalls)) + offset(QDrows0)
@@ -624,7 +620,7 @@ The quick-and-dirty offset approach only roughly approximates the row effect, so
 
 ```r
 an_reveg = anova(ft_reveg,p.uni="adjusted")
-#> Time elapsed: 0 hr 0 min 8 sec
+#> Time elapsed: 0 hr 0 min 6 sec
 an_reveg
 #> Analysis of Deviance Table
 #> 
@@ -642,30 +638,30 @@ an_reveg
 #>                 Dev Pr(>Dev)       Dev Pr(>Dev)     Dev Pr(>Dev)       Dev Pr(>Dev)
 #> (Intercept)                                                                        
 #> treatment     8.538    0.183     9.363    0.155   0.493    0.976    10.679    0.118
-#>             Coleoptera          Collembola          Dermaptera          Diotocardia
-#>                    Dev Pr(>Dev)        Dev Pr(>Dev)        Dev Pr(>Dev)         Dev
-#> (Intercept)                                                                        
-#> treatment        9.741    0.143      6.786    0.297      0.196    0.976           0
-#>                      Diplura          Diptera          Formicidae         
-#>             Pr(>Dev)     Dev Pr(>Dev)     Dev Pr(>Dev)        Dev Pr(>Dev)
-#> (Intercept)                                                               
-#> treatment      0.983    2.24    0.840    5.93    0.348      0.831    0.973
-#>             Haplotaxida          Hemiptera          Hymenoptera          Isopoda
-#>                     Dev Pr(>Dev)       Dev Pr(>Dev)         Dev Pr(>Dev)     Dev
+#>             Coleoptera          Collembola          Dermaptera          Diotocardia         
+#>                    Dev Pr(>Dev)        Dev Pr(>Dev)        Dev Pr(>Dev)         Dev Pr(>Dev)
+#> (Intercept)                                                                                 
+#> treatment        9.741    0.143      6.786    0.297      0.196    0.976           0    0.983
+#>             Diplura          Diptera          Formicidae          Haplotaxida         
+#>                 Dev Pr(>Dev)     Dev Pr(>Dev)        Dev Pr(>Dev)         Dev Pr(>Dev)
+#> (Intercept)                                                                           
+#> treatment      2.24    0.840    5.93    0.348      0.831    0.973       2.889    0.766
+#>             Hemiptera          Hymenoptera          Isopoda          Larvae         
+#>                   Dev Pr(>Dev)         Dev Pr(>Dev)     Dev Pr(>Dev)    Dev Pr(>Dev)
+#> (Intercept)                                                                         
+#> treatment       1.302    0.967       4.254    0.528   1.096    0.973  0.463    0.976
+#>             Lepidoptera          Polydesmida          Pseudoscorpionida         
+#>                     Dev Pr(>Dev)         Dev Pr(>Dev)               Dev Pr(>Dev)
 #> (Intercept)                                                                     
-#> treatment         2.889    0.766     1.302    0.967       4.254    0.528   1.096
-#>                      Larvae          Lepidoptera          Polydesmida         
-#>             Pr(>Dev)    Dev Pr(>Dev)         Dev Pr(>Dev)         Dev Pr(>Dev)
-#> (Intercept)                                                                   
-#> treatment      0.973  0.463    0.976       0.913    0.973       1.451    0.957
-#>             Pseudoscorpionida          Scolopendrida          Seolifera         
-#>                           Dev Pr(>Dev)           Dev Pr(>Dev)       Dev Pr(>Dev)
-#> (Intercept)                                                                     
-#> treatment               1.056    0.973         0.913    0.973      1.03    0.973
-#>             Soleolifera          Thysanoptera          Tricladida         
-#>                     Dev Pr(>Dev)          Dev Pr(>Dev)        Dev Pr(>Dev)
-#> (Intercept)                                                               
-#> treatment         4.223    0.528        1.056    0.973      2.804    0.766
+#> treatment         0.913    0.973       1.451    0.957             1.056    0.973
+#>             Scolopendrida          Seolifera          Soleolifera          Thysanoptera
+#>                       Dev Pr(>Dev)       Dev Pr(>Dev)         Dev Pr(>Dev)          Dev
+#> (Intercept)                                                                            
+#> treatment           0.913    0.973      1.03    0.973       4.223    0.528        1.056
+#>                      Tricladida         
+#>             Pr(>Dev)        Dev Pr(>Dev)
+#> (Intercept)                             
+#> treatment      0.973      2.804    0.766
 #> Arguments:
 #>  Test statistics calculated assuming uncorrelated response (for faster computation) 
 #> P-value calculated using 999 iterations via PIT-trap resampling.
@@ -701,7 +697,7 @@ data(windFarms)
 windMV1 = mvabund(windFarms$abund[,colSums(windFarms$abund>0)>1])
 ft_wind1=manyglm(windMV1~Station+Year+Year:Zone, family="poisson", data=windFarms$X)
 an_wind1 = anova(ft_wind1,p.uni="adjusted",nBoot=99)
-#> Time elapsed: 0 hr 4 min 3 sec
+#> Time elapsed: 0 hr 2 min 48 sec
 sortedWindStats = sort(an_wind1$uni.test[4,], decreasing=T, index.return=T)
 sortedWindStats$x[1:5]
 #>  Tanglake     Torsk   Oxsimpa Rootsimpa        AL 

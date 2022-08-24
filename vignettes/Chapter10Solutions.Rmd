@@ -1,7 +1,7 @@
 ---
 title: "Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-08-23"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes}
@@ -269,6 +269,8 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_eels, which=1:3, n.sim=99)
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
 ```
 
 ![plot of chunk ex10.5](../man/figures/ex10.5-1.png)
@@ -405,7 +407,7 @@ anova(ftmany_Hap)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 2.811    0.157
+#> treatment        8       1 2.811    0.158
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
@@ -424,9 +426,9 @@ anova(ftMany_crab)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)  
 #> (Intercept)     56                         
-#> Time            55       1 6.670    0.012 *
-#> Dist            53       2 1.026    0.646  
-#> Time:Dist       51       2 0.401    0.860  
+#> Time            55       1 6.670    0.014 *
+#> Dist            53       2 1.026    0.654  
+#> Time:Dist       51       2 0.401    0.873  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
@@ -472,7 +474,7 @@ anova(ft_wormmanyPois)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 11.67    0.224
+#> treatment        8       1 11.67    0.204
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
@@ -482,8 +484,7 @@ anova(ft_wormmanyPois)
 data(seedsTemp)
 seedsTemp$propGerm = seedsTemp$NumGerm / seedsTemp$NumSown
 plot(propGerm/(1-propGerm)~Test.Temp,data=seedsTemp,log="y")
-#> Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values <= 0 omitted from
-#> logarithmic plot
+#> Warning in xy.coords(x, y, xlabel, ylabel, log): 5 y values <= 0 omitted from logarithmic plot
 ```
 
 ![plot of chunk box10.9Load](../man/figures/box10.9Load-1.png)
@@ -495,8 +496,7 @@ seedsTemp$ID = 1:length(seedsTemp$NumGerm)
 ft_temp = glmer(cbind(NumGerm,NumSown-NumGerm)~poly(Test.Temp,2)+
                (1|ID),data=seedsTemp,family="binomial")
 summary(ft_temp)
-#> Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) [
-#> glmerMod]
+#> Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
 #>  Family: binomial  ( logit )
 #> Formula: cbind(NumGerm, NumSown - NumGerm) ~ poly(Test.Temp, 2) + (1 |      ID)
 #>    Data: seedsTemp
@@ -593,7 +593,7 @@ anova(ants_NB)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 0.765    0.534
+#> treatment        8       1 0.765    0.542
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
@@ -636,7 +636,7 @@ anova(ftmany_hapoffset)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 2.889    0.159
+#> treatment        8       1 2.889    0.143
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
