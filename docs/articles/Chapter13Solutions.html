@@ -98,7 +98,7 @@
                         <h4 data-toc-skip class="author">David
 Warton</h4>
             
-            <h4 data-toc-skip class="date">2022-07-28</h4>
+            <h4 data-toc-skip class="date">2022-08-25</h4>
       
       
       <div class="d-none name"><code>Chapter13Solutions.Rmd</code></div>
@@ -159,7 +159,7 @@ data <em>do</em> fit the 2/3 power law!</p>
 <h2 id="code-box-13-2-testing-if-the-brain-body-mass-slope-is-23">Code Box 13.2: Testing if the brain-body mass slope is 2/3<a class="anchor" aria-label="anchor" href="#code-box-13-2-testing-if-the-brain-body-mass-slope-is-23"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://web.maths.unsw.edu.au/~dwarton" class="external-link">smatr</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/traitecoevo" class="external-link">smatr</a></span><span class="op">)</span></span>
 <span><span class="va">sma_brainBody</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">brain</span><span class="op">~</span><span class="va">body</span>, data<span class="op">=</span><span class="va">Animals</span>,log<span class="op">=</span><span class="st">"xy"</span>,slope.test<span class="op">=</span><span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">sma_brainBody</span></span>
 <span><span class="co">#&gt; Call: sma(formula = brain ~ body, data = Animals, log = "xy", slope.test = 2/3) </span></span>
@@ -231,63 +231,16 @@ the 2/3 power law.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">leaflife</span><span class="op">)</span></span>
 <span><span class="va">leafSlopes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">*</span><span class="va">site</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaflife</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Call: sma(formula = longev ~ lma * site, data = leaflife, log = "xy") </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Results of comparing lines among groups.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : slopes are equal.</span></span>
-<span><span class="co">#&gt; Likelihood ratio statistic : 9.382 with 3 degrees of freedom</span></span>
-<span><span class="co">#&gt; P-value : 0.02462 </span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients by group in variable "site"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 1 </span></span>
-<span><span class="co">#&gt;             elevation    slope</span></span>
-<span><span class="co">#&gt; estimate    -4.218236 2.119823</span></span>
-<span><span class="co">#&gt; lower limit -5.903527 1.451816</span></span>
-<span><span class="co">#&gt; upper limit -2.532946 3.095192</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.5039152 </span></span>
-<span><span class="co">#&gt; P-value : 0.0014113 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 2 </span></span>
-<span><span class="co">#&gt;             elevation     slope</span></span>
-<span><span class="co">#&gt; estimate    -2.321737 1.1768878</span></span>
-<span><span class="co">#&gt; lower limit -3.475559 0.7631512</span></span>
-<span><span class="co">#&gt; upper limit -1.167915 1.8149286</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.3407371 </span></span>
-<span><span class="co">#&gt; P-value : 0.013891 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 3 </span></span>
-<span><span class="co">#&gt;             elevation     slope</span></span>
-<span><span class="co">#&gt; estimate    -2.523634 1.1825381</span></span>
-<span><span class="co">#&gt; lower limit -3.135266 0.9398479</span></span>
-<span><span class="co">#&gt; upper limit -1.912003 1.4878965</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.7392636 </span></span>
-<span><span class="co">#&gt; P-value : 1.462e-07 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 4 </span></span>
-<span><span class="co">#&gt;             elevation    slope</span></span>
-<span><span class="co">#&gt; estimate    -3.837710 1.786551</span></span>
-<span><span class="co">#&gt; lower limit -5.291926 1.257257</span></span>
-<span><span class="co">#&gt; upper limit -2.383495 2.538672</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.80651 </span></span>
-<span><span class="co">#&gt; P-value : 0.00041709</span></span>
+<span><span class="co">#&gt;   group  n        r2         pval    Slope Slope_lowCI Slope_highCI       Int</span></span>
+<span><span class="co">#&gt; 1     1 17 0.5039152 1.411320e-03 2.119823   1.4518161     3.095192 -4.218236</span></span>
+<span><span class="co">#&gt; 2     2 17 0.3407371 1.389091e-02 1.176888   0.7631512     1.814929 -2.321737</span></span>
+<span><span class="co">#&gt; 3     3 23 0.7392636 1.461968e-07 1.182538   0.9398479     1.487896 -2.523634</span></span>
+<span><span class="co">#&gt; 4     4 10 0.8065100 4.170919e-04 1.786551   1.2572572     2.538672 -3.837710</span></span>
+<span><span class="co">#&gt;   Int_lowCI Int_highCI Slope_test Slope_test_p Elev_test Elev_test_p</span></span>
+<span><span class="co">#&gt; 1 -5.903527  -2.532946         NA           NA        NA          NA</span></span>
+<span><span class="co">#&gt; 2 -3.475559  -1.167915         NA           NA        NA          NA</span></span>
+<span><span class="co">#&gt; 3 -3.135266  -1.912003         NA           NA        NA          NA</span></span>
+<span><span class="co">#&gt; 4 -5.291926  -2.383495         NA           NA        NA          NA</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Chapter13Solutions_files/figure-html/code13.3-1.png" width="576"></p>
 </div>
@@ -463,64 +416,16 @@ differently?</em></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">leafSlopes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/smatr/man/sma.html" class="external-link">sma</a></span><span class="op">(</span><span class="va">longev</span><span class="op">~</span><span class="va">lma</span><span class="op">*</span><span class="va">site</span>, log<span class="op">=</span><span class="st">"xy"</span>, data<span class="op">=</span><span class="va">leaflife</span>, robust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">leafSlopes</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Call: sma(formula = longev ~ lma * site, data = leaflife, log = "xy", </span></span>
-<span><span class="co">#&gt;     robust = TRUE) </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Fit using Standardized Major Axis </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; These variables were log-transformed before fitting: xy </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Confidence intervals (CI) are at 95%</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Results of comparing lines among groups.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : slopes are equal.</span></span>
-<span><span class="co">#&gt; Likelihood ratio statistic : 15.03 with 3 degrees of freedom</span></span>
-<span><span class="co">#&gt; P-value : 0.001789 </span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients by group in variable "site"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 1 </span></span>
-<span><span class="co">#&gt;             elevation    slope</span></span>
-<span><span class="co">#&gt; estimate    -4.811259 2.411612</span></span>
-<span><span class="co">#&gt; lower limit -6.589002 1.694694</span></span>
-<span><span class="co">#&gt; upper limit -3.033515 3.431812</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.5039152 </span></span>
-<span><span class="co">#&gt; P-value : 0.0014113 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 2 </span></span>
-<span><span class="co">#&gt;             elevation     slope</span></span>
-<span><span class="co">#&gt; estimate    -2.824595 1.4019760</span></span>
-<span><span class="co">#&gt; lower limit -4.040935 0.9552956</span></span>
-<span><span class="co">#&gt; upper limit -1.608255 2.0575167</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.3407371 </span></span>
-<span><span class="co">#&gt; P-value : 0.013891 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 3 </span></span>
-<span><span class="co">#&gt;             elevation     slope</span></span>
-<span><span class="co">#&gt; estimate    -2.448110 1.1510462</span></span>
-<span><span class="co">#&gt; lower limit -2.979219 0.9373065</span></span>
-<span><span class="co">#&gt; upper limit -1.917001 1.4135261</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.7392636 </span></span>
-<span><span class="co">#&gt; P-value : 1.462e-07 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Group: 4 </span></span>
-<span><span class="co">#&gt;             elevation    slope</span></span>
-<span><span class="co">#&gt; estimate    -4.142043 1.925544</span></span>
-<span><span class="co">#&gt; lower limit -5.680918 1.361460</span></span>
-<span><span class="co">#&gt; upper limit -2.603167 2.723342</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; H0 : variables uncorrelated.</span></span>
-<span><span class="co">#&gt; R-squared : 0.80651 </span></span>
-<span><span class="co">#&gt; P-value : 0.00041709</span></span></code></pre></div>
+<span><span class="co">#&gt;   group  n        r2         pval    Slope Slope_lowCI Slope_highCI       Int</span></span>
+<span><span class="co">#&gt; 1     1 17 0.5039152 1.411320e-03 2.411612   1.6946943     3.431812 -4.811259</span></span>
+<span><span class="co">#&gt; 2     2 17 0.3407371 1.389091e-02 1.401976   0.9552956     2.057517 -2.824595</span></span>
+<span><span class="co">#&gt; 3     3 23 0.7392636 1.461968e-07 1.151046   0.9373065     1.413526 -2.448110</span></span>
+<span><span class="co">#&gt; 4     4 10 0.8065100 4.170919e-04 1.925544   1.3614601     2.723342 -4.142043</span></span>
+<span><span class="co">#&gt;   Int_lowCI Int_highCI Slope_test Slope_test_p Elev_test Elev_test_p</span></span>
+<span><span class="co">#&gt; 1 -6.589002  -3.033515         NA           NA        NA          NA</span></span>
+<span><span class="co">#&gt; 2 -4.040935  -1.608255         NA           NA        NA          NA</span></span>
+<span><span class="co">#&gt; 3 -2.979219  -1.917001         NA           NA        NA          NA</span></span>
+<span><span class="co">#&gt; 4 -5.680918  -2.603167         NA           NA        NA          NA</span></span></code></pre></div>
 <p>This result is fairly similar, although there is stronger evidence
 now that the slopes are not the same, perhaps because the slope for
 group 1 is now noticeably steeper.</p>

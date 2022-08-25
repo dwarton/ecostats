@@ -20,5 +20,8 @@ articles:
   Chapter8Solutions: Chapter8Solutions.html
   Chapter9Solutions: Chapter9Solutions.html
   ecostats: ecostats.html
-last_built: 2022-07-28T00:33Z
+last_built: 2022-08-25T02:24Z
+urls:
+  reference: https://dwarton.github.io/ecostats/reference
+  article: https://dwarton.github.io/ecostats/articles
 

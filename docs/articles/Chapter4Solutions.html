@@ -98,7 +98,7 @@
                         <h4 data-toc-skip class="author">David
 Warton</h4>
             
-            <h4 data-toc-skip class="date">2022-07-28</h4>
+            <h4 data-toc-skip class="date">2022-08-25</h4>
       
       
       <div class="d-none name"><code>Chapter4Solutions.Rmd</code></div>
@@ -116,7 +116,7 @@ importantly, paired differences are independent of each other)</li>
 <li>the paired differences are approixmately normal.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<code class="sourceCode R"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dwarton.github.io/ecostats/">ecostats</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: mvabund</span></span>
 <span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">)</span></span>
 <span> <span class="fu"><a href="../reference/qqenvelope.html">qqenvelope</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">$</span><span class="va">delta</span><span class="op">[</span><span class="va">ravens</span><span class="op">$</span><span class="va">treatment</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
@@ -512,15 +512,15 @@ Exercise 4.6, assuming no interaction.<a class="anchor" aria-label="anchor" href
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fit: lm(formula = logTot ~ Time + Dist, data = seaweed)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Quantile = 2.4106</span></span>
+<span><span class="co">#&gt; Quantile = 2.4112</span></span>
 <span><span class="co">#&gt; 95% family-wise confidence level</span></span>
 <span><span class="co">#&gt;  </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span><span class="co">#&gt;             Estimate lwr      upr     </span></span>
-<span><span class="co">#&gt; 2 - 0 == 0   0.72650  0.28784  1.16515</span></span>
-<span><span class="co">#&gt; 10 - 0 == 0  0.45838  0.03894  0.87782</span></span>
-<span><span class="co">#&gt; 10 - 2 == 0 -0.26812 -0.70677  0.17054</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 - 0 == 0   0.72650  0.28774  1.16526</span></span>
+<span><span class="co">#&gt; 10 - 0 == 0  0.45838  0.03885  0.87791</span></span>
+<span><span class="co">#&gt; 10 - 2 == 0 -0.26812 -0.70687  0.17064</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-4-14-tukeys-comparisons-for-all-possible-treatment-combinations-for-exercise-4-6-">Code Box 4.14: Tukey’s comparisons for all possible treatment
@@ -544,20 +544,20 @@ interested in (e.g. 2.10 vs 0.5).</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span><span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; 2.5 - 0.5 == 0      0.4356     0.2391   1.822  0.46047   </span></span>
+<span><span class="co">#&gt; 2.5 - 0.5 == 0      0.4356     0.2391   1.822  0.46038   </span></span>
 <span><span class="co">#&gt; 10.5 - 0.5 == 0     0.1013     0.2391   0.424  0.99815   </span></span>
-<span><span class="co">#&gt; 0.10 - 0.5 == 0    -0.2643     0.2391  -1.105  0.87659   </span></span>
-<span><span class="co">#&gt; 2.10 - 0.5 == 0     0.7852     0.2635   2.980  0.04744 * </span></span>
-<span><span class="co">#&gt; 10.10 - 0.5 == 0    0.5512     0.2391   2.305  0.21032   </span></span>
-<span><span class="co">#&gt; 10.5 - 2.5 == 0    -0.3343     0.2391  -1.398  0.72724   </span></span>
-<span><span class="co">#&gt; 0.10 - 2.5 == 0    -0.6999     0.2391  -2.927  0.05398 . </span></span>
-<span><span class="co">#&gt; 2.10 - 2.5 == 0     0.3496     0.2635   1.327  0.76828   </span></span>
+<span><span class="co">#&gt; 0.10 - 0.5 == 0    -0.2643     0.2391  -1.105  0.87658   </span></span>
+<span><span class="co">#&gt; 2.10 - 0.5 == 0     0.7852     0.2635   2.980  0.04752 * </span></span>
+<span><span class="co">#&gt; 10.10 - 0.5 == 0    0.5512     0.2391   2.305  0.21039   </span></span>
+<span><span class="co">#&gt; 10.5 - 2.5 == 0    -0.3343     0.2391  -1.398  0.72725   </span></span>
+<span><span class="co">#&gt; 0.10 - 2.5 == 0    -0.6999     0.2391  -2.927  0.05417 . </span></span>
+<span><span class="co">#&gt; 2.10 - 2.5 == 0     0.3496     0.2635   1.327  0.76842   </span></span>
 <span><span class="co">#&gt; 10.10 - 2.5 == 0    0.1156     0.2391   0.483  0.99654   </span></span>
-<span><span class="co">#&gt; 0.10 - 10.5 == 0   -0.3656     0.2391  -1.529  0.64681   </span></span>
-<span><span class="co">#&gt; 2.10 - 10.5 == 0    0.6839     0.2635   2.596  0.11668   </span></span>
-<span><span class="co">#&gt; 10.10 - 10.5 == 0   0.4499     0.2391   1.882  0.42421   </span></span>
-<span><span class="co">#&gt; 2.10 - 0.10 == 0    1.0495     0.2635   3.983  0.00277 **</span></span>
-<span><span class="co">#&gt; 10.10 - 0.10 == 0   0.8155     0.2391   3.411  0.01539 * </span></span>
+<span><span class="co">#&gt; 0.10 - 10.5 == 0   -0.3656     0.2391  -1.529  0.64684   </span></span>
+<span><span class="co">#&gt; 2.10 - 10.5 == 0    0.6839     0.2635   2.596  0.11651   </span></span>
+<span><span class="co">#&gt; 10.10 - 10.5 == 0   0.4499     0.2391   1.882  0.42419   </span></span>
+<span><span class="co">#&gt; 2.10 - 0.10 == 0    1.0495     0.2635   3.983  0.00285 **</span></span>
+<span><span class="co">#&gt; 10.10 - 0.10 == 0   0.8155     0.2391   3.411  0.01522 * </span></span>
 <span><span class="co">#&gt; 10.10 - 2.10 == 0  -0.2340     0.2635  -0.888  0.94749   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
@@ -592,11 +592,11 @@ and are primarily interested in Dist.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span><span class="co">#&gt;                           Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; Two.five - Zero.five == 0   0.4356     0.2391   1.822  0.31170   </span></span>
-<span><span class="co">#&gt; Ten.five - Zero.five == 0   0.1013     0.2391   0.424  0.99083   </span></span>
-<span><span class="co">#&gt; Ten.five - Two.five == 0   -0.3343     0.2391  -1.398  0.57121   </span></span>
-<span><span class="co">#&gt; Two.ten - Zero.ten == 0     1.0495     0.2635   3.983  0.00125 **</span></span>
-<span><span class="co">#&gt; Ten.ten - Zero.ten == 0     0.8155     0.2391   3.411  0.00718 **</span></span>
+<span><span class="co">#&gt; Two.five - Zero.five == 0   0.4356     0.2391   1.822  0.31171   </span></span>
+<span><span class="co">#&gt; Ten.five - Zero.five == 0   0.1013     0.2391   0.424  0.99084   </span></span>
+<span><span class="co">#&gt; Ten.five - Two.five == 0   -0.3343     0.2391  -1.398  0.57119   </span></span>
+<span><span class="co">#&gt; Two.ten - Zero.ten == 0     1.0495     0.2635   3.983  0.00124 **</span></span>
+<span><span class="co">#&gt; Ten.ten - Zero.ten == 0     0.8155     0.2391   3.411  0.00713 **</span></span>
 <span><span class="co">#&gt; Ten.ten - Two.ten == 0     -0.2340     0.2635  -0.888  0.87446   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>

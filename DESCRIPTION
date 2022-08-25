@@ -53,3 +53,4 @@ Suggests:
     covr
 Additional_repositories: https://dwarton.github.io/drat
 VignetteBuilder: knitr
+URL: https://dwarton.github.io/ecostats/

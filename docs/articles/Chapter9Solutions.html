@@ -98,7 +98,7 @@
                         <h4 data-toc-skip class="author">David
 Warton</h4>
             
-            <h4 data-toc-skip class="date">2022-07-28</h4>
+            <h4 data-toc-skip class="date">2022-08-25</h4>
       
       
       <div class="d-none name"><code>Chapter9Solutions.Rmd</code></div>
@@ -132,7 +132,7 @@ unusual this is we should do many more permutations…</p>
 <h2 id="code-behind-figure-9-1">Code behind Figure 9.1<a class="anchor" aria-label="anchor" href="#code-behind-figure-9-1"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecostats</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dwarton.github.io/ecostats/">ecostats</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: mvabund</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">)</span></span>
 <span><span class="va">ft_guinea</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
@@ -154,16 +154,16 @@ unusual this is we should do many more permutations…</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span> <span class="va">tStats</span> <span class="op">&gt;=</span> <span class="va">tObs</span> <span class="op">)</span> <span class="co">#compute P-value</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.009</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.007</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-box-9-1-a-permutation-test-for-the-guinea-pig-data-using-mvabund">Code Box 9.1: A permutation test for the guinea pig data using
 <code>mvabund</code><a class="anchor" aria-label="anchor" href="#code-box-9-1-a-permutation-test-for-the-guinea-pig-data-using-mvabund"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fontikar.github.io/mvabund/" class="external-link">mvabund</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">guineapig</span><span class="op">)</span></span>
-<span><span class="va">ft_guinea</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
+<span><span class="va">ft_guinea</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_guinea</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -171,9 +171,9 @@ unusual this is we should do many more permutations…</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Overall test for all response variables</span></span>
 <span><span class="co">#&gt; Test statistics:</span></span>
-<span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)  </span></span>
-<span><span class="co">#&gt; (Intercept)     19                        </span></span>
-<span><span class="co">#&gt; treatment       18       1  7.134  0.013 *</span></span>
+<span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)   </span></span>
+<span><span class="co">#&gt; (Intercept)     19                         </span></span>
+<span><span class="co">#&gt; treatment       18       1  7.134  0.009 **</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual (without replacement) resampling.</span></span></code></pre></div>
@@ -184,7 +184,7 @@ and plant height<a class="anchor" aria-label="anchor" href="#code-box-9-2-permut
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">globalPlants</span><span class="op">)</span></span>
-<span><span class="va">ft_height</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>, data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<span><span class="va">ft_height</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">lat</span>, data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_height</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -194,7 +194,7 @@ and plant height<a class="anchor" aria-label="anchor" href="#code-box-9-2-permut
 <span><span class="co">#&gt; Test statistics:</span></span>
 <span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)   </span></span>
 <span><span class="co">#&gt; (Intercept)    130                         </span></span>
-<span><span class="co">#&gt; lat            129       1  9.271  0.005 **</span></span>
+<span><span class="co">#&gt; lat            129       1  9.271  0.004 **</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual (without replacement) resampling.</span></span></code></pre></div>
@@ -204,8 +204,8 @@ and plant height<a class="anchor" aria-label="anchor" href="#code-box-9-2-permut
 test of guinea pig data<a class="anchor" aria-label="anchor" href="#code-box-9-3-using-the-mvabund-package-for-a-bootstrap-test-of-guinea-pig-data"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
-<span><span class="va">ft_guinea</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fontikar.github.io/mvabund/" class="external-link">mvabund</a></span><span class="op">)</span></span>
+<span><span class="va">ft_guinea</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">errors</span><span class="op">~</span><span class="va">treatment</span>, data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_guinea</span>, resamp<span class="op">=</span><span class="st">"residual"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -215,7 +215,7 @@ test of guinea pig data<a class="anchor" aria-label="anchor" href="#code-box-9-3
 <span><span class="co">#&gt; Test statistics:</span></span>
 <span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)  </span></span>
 <span><span class="co">#&gt; (Intercept)     19                        </span></span>
-<span><span class="co">#&gt; treatment       18       1  7.134  0.013 *</span></span>
+<span><span class="co">#&gt; treatment       18       1  7.134  0.016 *</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual resampling.</span></span></code></pre></div>
@@ -259,7 +259,7 @@ rainfall.</p>
 Exercise 9.4.<a class="anchor" aria-label="anchor" href="#code-box-9-4-residual-resampling-using-mvabund-for-exercise-9-4-"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ft_heightRL</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">rain</span><span class="op">+</span><span class="va">lat</span>, data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ft_heightRL</span><span class="op">=</span><span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">height</span><span class="op">~</span><span class="va">rain</span><span class="op">+</span><span class="va">lat</span>, data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_heightRL</span>, resamp<span class="op">=</span><span class="st">"perm.resid"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -270,7 +270,7 @@ Exercise 9.4.<a class="anchor" aria-label="anchor" href="#code-box-9-4-residual-
 <span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)   </span></span>
 <span><span class="co">#&gt; (Intercept)    130                         </span></span>
 <span><span class="co">#&gt; rain           129       1 20.983  0.002 **</span></span>
-<span><span class="co">#&gt; lat            128       1  0.429  0.539   </span></span>
+<span><span class="co">#&gt; lat            128       1  0.429  0.484   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual (without replacement) resampling.</span></span></code></pre></div>
@@ -295,7 +295,7 @@ test for an effect of latitude after controlling for the effect of
 rainfall.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">globalPlants</span><span class="op">$</span><span class="va">loght</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">globalPlants</span><span class="op">$</span><span class="va">height</span><span class="op">)</span></span>
-<span><span class="va">ft_loghtRL</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">loght</span><span class="op">~</span><span class="va">rain</span><span class="op">+</span><span class="va">lat</span>, data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
+<span><span class="va">ft_loghtRL</span><span class="op">=</span><span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">loght</span><span class="op">~</span><span class="va">rain</span><span class="op">+</span><span class="va">lat</span>, data<span class="op">=</span><span class="va">globalPlants</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_loghtRL</span>, resamp<span class="op">=</span><span class="st">"perm.resid"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -306,7 +306,7 @@ rainfall.</p>
 <span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)   </span></span>
 <span><span class="co">#&gt; (Intercept)    130                         </span></span>
 <span><span class="co">#&gt; rain           129       1  32.01  0.002 **</span></span>
-<span><span class="co">#&gt; lat            128       1   9.62  0.004 **</span></span>
+<span><span class="co">#&gt; lat            128       1   9.62  0.003 **</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual (without replacement) resampling.</span></span>
@@ -360,8 +360,8 @@ now, no obvious non-normal trend on quantile plot.</p>
 <p><em>Repeat the permutation test of Code Box 9.2 on log-transformed
 data.</em></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
-<span><span class="va">ftMany_guineaLog</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logErrors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fontikar.github.io/mvabund/" class="external-link">mvabund</a></span><span class="op">)</span></span>
+<span><span class="va">ftMany_guineaLog</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logErrors</span><span class="op">~</span><span class="va">treatment</span>,data<span class="op">=</span><span class="va">guineapig</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ftMany_guineaLog</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -427,14 +427,14 @@ and reanalyse using (residual) resampling for inference.</em></p>
 <span><span class="co">#&gt; snow        -1.180299e-02 -0.0088315037</span></span></code></pre></div>
 <p>Repeating using resampling:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span>
-<span><span class="va">mft_logsnow</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logFlow</span><span class="op">~</span><span class="va">elev</span><span class="op">+</span><span class="va">snow</span>, data<span class="op">=</span><span class="va">snowReduced</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fontikar.github.io/mvabund/" class="external-link">mvabund</a></span><span class="op">)</span></span>
+<span><span class="va">mft_logsnow</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logFlow</span><span class="op">~</span><span class="va">elev</span><span class="op">+</span><span class="va">snow</span>, data<span class="op">=</span><span class="va">snowReduced</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mft_logsnow</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Test statistics:</span></span>
 <span><span class="co">#&gt;             F value Pr(&gt;F)    </span></span>
 <span><span class="co">#&gt; (Intercept) 147.699  0.001 ***</span></span>
-<span><span class="co">#&gt; elev          7.503  0.009 ** </span></span>
+<span><span class="co">#&gt; elev          7.503  0.005 ** </span></span>
 <span><span class="co">#&gt; snow        186.668  0.001 ***</span></span>
 <span><span class="co">#&gt; --- </span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 </span></span>
@@ -475,7 +475,7 @@ the same way irrespective of resampling.</p>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mlm_aphids</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logcount</span><span class="op">~</span><span class="va">Plot</span><span class="op">+</span><span class="va">Time</span><span class="op">+</span><span class="va">Treatment</span><span class="op">:</span><span class="va">Time</span>,data<span class="op">=</span><span class="va">aphidsBACI</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mlm_aphids</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logcount</span><span class="op">~</span><span class="va">Plot</span><span class="op">+</span><span class="va">Time</span><span class="op">+</span><span class="va">Treatment</span><span class="op">:</span><span class="va">Time</span>,data<span class="op">=</span><span class="va">aphidsBACI</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">mlm_aphids</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -486,8 +486,8 @@ the same way irrespective of resampling.</p>
 <span><span class="co">#&gt;                Res.Df Df.diff val(F) Pr(&gt;F)   </span></span>
 <span><span class="co">#&gt; (Intercept)        15                         </span></span>
 <span><span class="co">#&gt; Plot                8       7  0.130  0.994   </span></span>
-<span><span class="co">#&gt; Time                7       1 15.860  0.010 **</span></span>
-<span><span class="co">#&gt; Time:Treatment      6       2 -2.499  0.528   </span></span>
+<span><span class="co">#&gt; Time                7       1 15.860  0.006 **</span></span>
+<span><span class="co">#&gt; Time:Treatment      6       2 -2.499  0.529   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual (without replacement) resampling.</span></span></code></pre></div>
@@ -504,7 +504,7 @@ estuary data<a class="anchor" aria-label="anchor" href="#code-box-9-6-block-resa
 </h2>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">estuaries</span><span class="op">)</span></span>
-<span>  <span class="va">ft_estLM</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">Total</span><span class="op">~</span><span class="va">Mod</span>,data<span class="op">=</span><span class="va">estuaries</span><span class="op">)</span></span>
+<span>  <span class="va">ft_estLM</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">Total</span><span class="op">~</span><span class="va">Mod</span>,data<span class="op">=</span><span class="va">estuaries</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ft_estLM</span>,resamp<span class="op">=</span><span class="st">"case"</span>,block<span class="op">=</span><span class="va">estuaries</span><span class="op">$</span><span class="va">Estuary</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -514,7 +514,7 @@ estuary data<a class="anchor" aria-label="anchor" href="#code-box-9-6-block-resa
 <span><span class="co">#&gt; Test statistics:</span></span>
 <span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)</span></span>
 <span><span class="co">#&gt; (Intercept)     41                      </span></span>
-<span><span class="co">#&gt; Mod             40       1  9.916  0.444</span></span>
+<span><span class="co">#&gt; Mod             40       1  9.916  0.482</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via case block resampling.</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -532,7 +532,7 @@ data<a class="anchor" aria-label="anchor" href="#code-box-9-7-block-resampling-u
 <span><span class="va">CTRL</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/permute/man/how.html" class="external-link">how</a></span><span class="op">(</span>blocks<span class="op">=</span><span class="va">crowLong</span><span class="op">$</span><span class="va">site</span><span class="op">)</span></span>
 <span><span class="va">permIDs</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/permute/man/shuffleSet.html" class="external-link">shuffleSet</a></span><span class="op">(</span><span class="fl">24</span>,nset<span class="op">=</span><span class="fl">999</span>,control<span class="op">=</span><span class="va">CTRL</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Set of permutations &lt; 'minperm'. Generating entire set.</span></span>
-<span><span class="va">ravenlm</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">~</span><span class="va">site</span><span class="op">+</span><span class="va">time</span>,data<span class="op">=</span><span class="va">crowLong</span><span class="op">)</span></span>
+<span><span class="va">ravenlm</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">ravens</span><span class="op">~</span><span class="va">site</span><span class="op">+</span><span class="va">time</span>,data<span class="op">=</span><span class="va">crowLong</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">ravenlm</span>,bootID<span class="op">=</span><span class="va">permIDs</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using &lt;int&gt; bootID matrix from input.</span></span>
 <span><span class="co">#&gt; Analysis of Variance Table</span></span>
@@ -544,7 +544,7 @@ data<a class="anchor" aria-label="anchor" href="#code-box-9-7-block-resampling-u
 <span><span class="co">#&gt;             Res.Df Df.diff val(F) Pr(&gt;F)  </span></span>
 <span><span class="co">#&gt; (Intercept)     23                        </span></span>
 <span><span class="co">#&gt; site            12      11   3.27  1.000  </span></span>
-<span><span class="co">#&gt; time            11       1   6.76  0.027 *</span></span>
+<span><span class="co">#&gt; time            11       1   6.76  0.022 *</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 999 iterations via residual (without replacement) resampling.</span></span></code></pre></div>
@@ -578,7 +578,7 @@ modelling<a class="anchor" aria-label="anchor" href="#code-box-9-8-moving-block-
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Myrtaceae</span><span class="op">)</span></span>
 <span><span class="co"># fit a lm:</span></span>
 <span><span class="va">Myrtaceae</span><span class="op">$</span><span class="va">logrich</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Myrtaceae</span><span class="op">$</span><span class="va">richness</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">mft_richAdd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logrich</span><span class="op">~</span><span class="va">soil</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">TMP_MAX</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span><span class="va">mft_richAdd</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logrich</span><span class="op">~</span><span class="va">soil</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">TMP_MAX</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">TMP_MIN</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">RAIN_ANN</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>                                         data<span class="op">=</span><span class="va">Myrtaceae</span><span class="op">)</span></span>
 <span>                                         </span>
@@ -596,10 +596,10 @@ modelling<a class="anchor" aria-label="anchor" href="#code-box-9-8-moving-block-
 <span><span class="co">#&gt; Test statistics:</span></span>
 <span><span class="co">#&gt;                            Res.Df Df.diff val(F) Pr(&gt;F)   </span></span>
 <span><span class="co">#&gt; (Intercept)                   999                         </span></span>
-<span><span class="co">#&gt; soil                          991       8 11.971   0.01 **</span></span>
-<span><span class="co">#&gt; poly(TMP_MAX, degree = 2)     989       2 18.244   0.46   </span></span>
-<span><span class="co">#&gt; poly(TMP_MIN, degree = 2)     987       2 17.533   0.57   </span></span>
-<span><span class="co">#&gt; poly(RAIN_ANN, degree = 2)    985       2  8.208   0.50   </span></span>
+<span><span class="co">#&gt; soil                          991       8 11.971   1.00   </span></span>
+<span><span class="co">#&gt; poly(TMP_MAX, degree = 2)     989       2 18.244   0.35   </span></span>
+<span><span class="co">#&gt; poly(TMP_MIN, degree = 2)     987       2 17.533   0.01 **</span></span>
+<span><span class="co">#&gt; poly(RAIN_ANN, degree = 2)    985       2  8.208   0.59   </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; Arguments: P-value calculated using 99 iterations via case resampling.</span></span></code></pre></div>
@@ -652,16 +652,16 @@ richness predictions<a class="anchor" aria-label="anchor" href="#code-box-9-9-mo
 <span><span class="va">lmSEs</span>   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">ft_richAdd</span>,se.fit<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">se.fit</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">bootSEs</span>,<span class="va">lmSEs</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="op">]</span></span>
 <span><span class="co">#&gt;          bootSEs      lmSEs</span></span>
-<span><span class="co">#&gt;  [1,] 0.03664694 0.02982530</span></span>
-<span><span class="co">#&gt;  [2,] 0.03508373 0.02396074</span></span>
-<span><span class="co">#&gt;  [3,] 0.04419696 0.02853756</span></span>
-<span><span class="co">#&gt;  [4,] 0.03646692 0.03348368</span></span>
-<span><span class="co">#&gt;  [5,] 0.07338291 0.06279115</span></span>
-<span><span class="co">#&gt;  [6,] 0.04327011 0.03413518</span></span>
-<span><span class="co">#&gt;  [7,] 0.04850785 0.02808283</span></span>
-<span><span class="co">#&gt;  [8,] 0.07768138 0.08272950</span></span>
-<span><span class="co">#&gt;  [9,] 0.03173301 0.02759009</span></span>
-<span><span class="co">#&gt; [10,] 0.05838022 0.06622908</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1,] 0.03649928 0.02982530</span></span>
+<span><span class="co">#&gt;  [2,] 0.03152043 0.02396074</span></span>
+<span><span class="co">#&gt;  [3,] 0.04901495 0.02853756</span></span>
+<span><span class="co">#&gt;  [4,] 0.04354511 0.03348368</span></span>
+<span><span class="co">#&gt;  [5,] 0.07444903 0.06279115</span></span>
+<span><span class="co">#&gt;  [6,] 0.03488393 0.03413518</span></span>
+<span><span class="co">#&gt;  [7,] 0.05688125 0.02808283</span></span>
+<span><span class="co">#&gt;  [8,] 0.06780912 0.08272950</span></span>
+<span><span class="co">#&gt;  [9,] 0.03091922 0.02759009</span></span>
+<span><span class="co">#&gt; [10,] 0.05072837 0.06622908</span></span></code></pre></div>
 <p><em>Is this what you expected to see?</em></p>
 <p>The bootstrapped standard errors account for spatial autocorrelation
 in the data, whereas the <code>lm</code> standard errors are not. The
@@ -700,12 +700,12 @@ three times as long as the relevant line from Code Box 9.8 did :(</p>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bootSEall</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               5         10         20         40</span></span>
-<span><span class="co">#&gt; [1,] 0.03167751 0.03709461 0.03664694 0.04532942</span></span>
-<span><span class="co">#&gt; [2,] 0.03044361 0.02718432 0.03508373 0.03651010</span></span>
-<span><span class="co">#&gt; [3,] 0.03621433 0.03392671 0.04419696 0.05480904</span></span>
-<span><span class="co">#&gt; [4,] 0.03592110 0.03403671 0.03646692 0.04554475</span></span>
-<span><span class="co">#&gt; [5,] 0.06642325 0.06644221 0.07338291 0.05505570</span></span>
-<span><span class="co">#&gt; [6,] 0.03134453 0.03833537 0.04327011 0.04678505</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,] 0.03754653 0.03302526 0.03649928 0.04173397</span></span>
+<span><span class="co">#&gt; [2,] 0.02790558 0.02671102 0.03152043 0.03239639</span></span>
+<span><span class="co">#&gt; [3,] 0.03324380 0.03500954 0.04901495 0.05110152</span></span>
+<span><span class="co">#&gt; [4,] 0.03119783 0.03832587 0.04354511 0.04710782</span></span>
+<span><span class="co">#&gt; [5,] 0.08567634 0.07377823 0.07444903 0.05619550</span></span>
+<span><span class="co">#&gt; [6,] 0.04296960 0.03924622 0.03488393 0.04217837</span></span></code></pre></div>
 <p><em>Did results change, as you changed block size?</em></p>
 <p>Yep, and standard errors tend to be getting a bit bigger as block
 size increases</p>
@@ -714,7 +714,7 @@ there a trend?</em></p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">bootSEall</span>,<span class="fl">2</span>,<span class="va">mean</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          5         10         20         40 </span></span>
-<span><span class="co">#&gt; 0.04598638 0.04715439 0.05289854 0.05460264</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.04651489 0.04804150 0.05157695 0.05202845</span></span></code></pre></div>
 <p>The mean of the standard errors of predictions tends to be getting
 bigger as block size increases. This makes sense because increasing
 block size effectively reducing sample size, by reducng the number of

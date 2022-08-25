@@ -1,8 +1,7 @@
-url: ~
+url: https://dwarton.github.io/ecostats/
 template:
   bootstrap: 5
   bootswatch: lumen
-
 navbar:
   structure:
     left:

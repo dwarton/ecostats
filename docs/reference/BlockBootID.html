@@ -80,7 +80,7 @@ Blocks are constructed as discs or tiles of observations of a user-specified siz
 
     <div class="ref-description section level2">
     <p>A spatial moving block bootstrap resampling scheme is constructed, that can then
-be used in resampling-based inference (e.g. using <code><a href="https://rdrr.io/pkg/mvabund/man/anova.manyglm.html" class="external-link">anova.manyglm</a></code>).
+be used in resampling-based inference (e.g. using <code><a href="https://fontikar.github.io/mvabund/reference/anova.manyglm.html" class="external-link">anova.manyglm</a></code>).
 Blocks are constructed as discs or tiles of observations of a user-specified size and shape.</p>
     </div>
 
@@ -147,7 +147,7 @@ resamples in rows and observations in columns.</p>
     <p>A spatial moving block bootstrap resampling scheme is constructed, that can then
 be used in resampling-based inference. A matrix of IDs is returned, with different resamples 
 in different rows of the matrix, which can be used as input to functions designed for 
-resampling-based inference (such as <code><a href="https://rdrr.io/pkg/mvabund/man/anova.manyglm.html" class="external-link">anova.manyglm</a></code>).</p>
+resampling-based inference (such as <code><a href="https://fontikar.github.io/mvabund/reference/anova.manyglm.html" class="external-link">anova.manyglm</a></code>).</p>
 <p>Blocks are constructed as discs or tiles of observations, whose size is controlled by <code>blockl_L</code>,
 these blocks are kept together in resampling. The centre of each block is chosen 
 at random along a lattice specified via <code>Grid_space</code>.</p>
@@ -160,7 +160,7 @@ and the whole thing runs heaps faster.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/mvabund/man/anova.manyglm.html" class="external-link">anova.manyglm</a></code>, <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://fontikar.github.io/mvabund/reference/anova.manyglm.html" class="external-link">anova.manyglm</a></code>, <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -172,9 +172,9 @@ and the whole thing runs heaps faster.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Myrtaceae</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># fit a lm:</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mvabund</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fontikar.github.io/mvabund/" class="external-link">mvabund</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Myrtaceae</span><span class="op">$</span><span class="va">logrich</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Myrtaceae</span><span class="op">$</span><span class="va">richness</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mft_richAdd</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/mvabund/man/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logrich</span><span class="op">~</span><span class="va">soil</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">TMP_MAX</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span></span>
+<span class="r-in"><span><span class="va">mft_richAdd</span> <span class="op">=</span> <span class="fu"><a href="https://fontikar.github.io/mvabund/reference/manylm.html" class="external-link">manylm</a></span><span class="op">(</span><span class="va">logrich</span><span class="op">~</span><span class="va">soil</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">TMP_MAX</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span></span>
 <span class="r-in"><span>                     <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">TMP_MIN</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">RAIN_ANN</span>,degree<span class="op">=</span><span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                                        data<span class="op">=</span><span class="va">Myrtaceae</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                                        </span></span>
@@ -193,9 +193,9 @@ and the whole thing runs heaps faster.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            Res.Df Df.diff val(F) Pr(&gt;F)   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                   999                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> soil                          991       8 11.971  0.005 **</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> poly(TMP_MAX, degree = 2)     989       2 18.244  0.005 **</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(TMP_MAX, degree = 2)     989       2 18.244  0.450   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> poly(TMP_MIN, degree = 2)     987       2 17.533  0.005 **</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> poly(RAIN_ANN, degree = 2)    985       2  8.208  0.475   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(RAIN_ANN, degree = 2)    985       2  8.208  0.515   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Arguments: P-value calculated using 199 iterations via case resampling.</span>
