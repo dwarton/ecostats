@@ -1,0 +1,27 @@
+pandoc: 2.14.2
+pkgdown: 2.0.6
+pkgdown_sha: ~
+articles:
+  Chapter10Solutions: Chapter10Solutions.html
+  Chapter11Solutions: Chapter11Solutions.html
+  Chapter12Solutions: Chapter12Solutions.html
+  Chapter13Solutions: Chapter13Solutions.html
+  Chapter14Solutions: Chapter14Solutions.html
+  Chapter15Solutions: Chapter15Solutions.html
+  Chapter16Solutions: Chapter16Solutions.html
+  Chapter17Solutions: Chapter17Solutions.html
+  Chapter1Solutions: Chapter1Solutions.html
+  Chapter2Solutions: Chapter2Solutions.html
+  Chapter3Solutions: Chapter3Solutions.html
+  Chapter4Solutions: Chapter4Solutions.html
+  Chapter5Solutions: Chapter5Solutions.html
+  Chapter6Solutions: Chapter6Solutions.html
+  Chapter7Solutions: Chapter7Solutions.html
+  Chapter8Solutions: Chapter8Solutions.html
+  Chapter9Solutions: Chapter9Solutions.html
+  ecostats: ecostats.html
+last_built: 2022-08-25T02:54Z
+urls:
+  reference: https://dwarton.github.io/ecostats/reference
+  article: https://dwarton.github.io/ecostats/articles
+
