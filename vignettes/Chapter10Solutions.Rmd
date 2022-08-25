@@ -1,7 +1,7 @@
 ---
 title: "Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 10 -- Analysing discrete data -- Exercise solutions and Code Boxes}
@@ -56,7 +56,7 @@ North        After     N36        0
 She is looking for evidence of a difference across different values of `Zone` when `Impact=After` so will be wanting to do a hypothesis test. This is a BACI design, so she would be particularly interested in the `Zone:Impact` interaction. Because she has count data with plenty of zeros, this should be analysed using a generalised linear model (assuming a negative binomial or Poisson response, as in Code Box 10.1).
 
 
-## Exercise 10.3: Invertebrate response to bush regeneration
+## Exercise 10.3: Invertebrate response to bush regeneration}
 *Anthony wants to evaluate how well invertebrate communities are re-establishing following bush regeneration efforts.*
 
  Treatment |    Count
@@ -77,7 +77,7 @@ She is looking for evidence of a difference across different values of `Zone` wh
 He is looking for evidence of an effect of revegetation so will be wanting to do a hypothesis test for a `Treatment` effect. Because he has count data, with zeros, this should be analysed using a generalised linear model (assuming a negative binomial or Poisson response, as in Code Box 10.1).
 
 
-## Code Box 10.1: Example GLM fits for Exercises 10.1-3.
+## Code Box 10.1: Example GLM fits for Exercises 10.1-3.}
 For Exercise 10.1:
 
 ```r
@@ -89,6 +89,7 @@ ft_crab = glm(CrabPres~Time*Dist, family=binomial("cloglog"),
 ```
 
 For Exercise 10.2:
+\begin{verbatim}
 
 ```r
 data(windFarms)
@@ -268,6 +269,8 @@ par(mfrow=c(1,3),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_eels, which=1:3, n.sim=99)
 #> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
 #>   NA/NaN/Inf in 'x'
+#> Error in glm.fit(x = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  : 
+#>   NA/NaN/Inf in 'x'
 ```
 
 ![plot of chunk ex10.5](../man/figures/ex10.5-1.png)
@@ -299,8 +302,6 @@ plotenvelope(ft_worms, which=1:2, n.sim=99)
 ft_wormsNB = manyglm(worms~treatment,family="negative.binomial", data=reveg)
 par(mfrow=c(1,2),mar=c(3,3,1.5,0.5),mgp=c(1.75,0.75,0))
 plotenvelope(ft_wormsNB, which=1:2, n.sim=99)
-#> Warning in predict.lm(gam.yxi, newdata = data.frame(xiSim = xPred)): prediction from a rank-deficient fit may be
-#> misleading
 ```
 
 ![plot of chunk box10.6NB](../man/figures/box10.6NB-1.png)
@@ -406,7 +407,7 @@ anova(ftmany_Hap)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 2.811    0.156
+#> treatment        8       1 2.811    0.158
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
@@ -417,7 +418,7 @@ anova(ftmany_Hap)
 ftMany_crab = manyglm(CrabPres~Time*Dist, family=binomial("cloglog"),
                  data=seaweed)
 anova(ftMany_crab)
-#> Time elapsed: 0 hr 0 min 2 sec
+#> Time elapsed: 0 hr 0 min 1 sec
 #> Analysis of Deviance Table
 #> 
 #> Model: CrabPres ~ Time * Dist
@@ -425,9 +426,9 @@ anova(ftMany_crab)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)  
 #> (Intercept)     56                         
-#> Time            55       1 6.670    0.016 *
-#> Dist            53       2 1.026    0.614  
-#> Time:Dist       51       2 0.401    0.857  
+#> Time            55       1 6.670    0.014 *
+#> Dist            53       2 1.026    0.654  
+#> Time:Dist       51       2 0.401    0.873  
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
@@ -473,7 +474,7 @@ anova(ft_wormmanyPois)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 11.67    0.224
+#> treatment        8       1 11.67    0.204
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
@@ -592,7 +593,7 @@ anova(ants_NB)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 0.765     0.56
+#> treatment        8       1 0.765    0.542
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 
@@ -635,7 +636,7 @@ anova(ftmany_hapoffset)
 #> Multivariate test:
 #>             Res.Df Df.diff   Dev Pr(>Dev)
 #> (Intercept)      9                       
-#> treatment        8       1 2.889    0.157
+#> treatment        8       1 2.889    0.143
 #> Arguments: P-value calculated using 999 iterations via PIT-trap resampling.
 ```
 

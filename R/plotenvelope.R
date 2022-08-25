@@ -28,6 +28,8 @@
 #'  \code{\link[GET]{global_envelope_test}} for details. Default \code{"st"} uses 
 #'  studentized envelope tests to protect for unequal variance, which has performed well
 #'  in simulations in this context.
+#' @param overlay logical. For multivariate data, determines whether residuals from 
+#' different responses are overlaid on a single plot (default), or plotted separately.
 #' @param transform a character vector pointing to a function that should be applied to both
 #'  axes of the normal quantile plot. The most common use is to set \code{transform="pnorm"}
 #'  for a PP-plot.
@@ -56,10 +58,16 @@
 #' @param add.smooth logical defaults to \code{TRUE}, which adds a smoother to residual vs fits and
 #' scale-location plots, and computes a global envelope around the \emph{smoother} rather than the data (\code{add.smooth=FALSE}). No smoother is added to the normal quantile plot.
 #' @param plot.it logical. Should the result be plotted? If not, a list of analysis outputs is returned, see \emph{Value}.
+#' @param resFunction the function used to compute residuals for all diagnostic plots. Defaults
+#' to \code{\link{cresiduals}} for multivariate linear models, \code{\link{rstandard}} for linear
+#' models, or \code{\link{residuals}} in other cases.
+#' @param predFunction the function used to compute predicted values in residual vs fits or
+#' scale-location plots. Defaults to \code{\link{cpredict}} for multivariate linear models
+#' and to \code{\link{cpredict}} otherwise.
 #' @param fitMin the minimum fitted value to use in plots, any fitted value less than this will be truncated to
 #' \code{fitMin}. This is useful for generalised linear models, where small fitted values correspond to
 #' predictions that are numerically zero. The default is to set \code{fitMin} to \code{-6} for GLMs, otherwise no truncation (\code{-Inf}).
-#' @param ... further arguments sent through to \code{plot}
+#' @param ... further arguments sent through to \code{plot}.
 #' 
 #' @details
 #' A challenge when interpreting diagnostic plots is understanding the extent to which
@@ -154,18 +162,22 @@
 #' y = rpois(50,lambda=1)
 #' x = 1:50
 #' rpois_glm = glm(y~x,family=poisson())
-#' plotenvelope(rpois_glm,n.sim=99)
+#' plotenvelope(rpois_glm,n.sim=59)
 #' 
 #' # Fit a multivariate linear model to the iris dataset:
 #' data(iris)
 #' Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 #' iris_mlm=lm(Y~Species,data=iris)
 #' # check normality assumption:
-#' plotenvelope(iris_mlm,n.sim=99,which=2)
+#' plotenvelope(iris_mlm,n.sim=59,which=2)
 #' 
 #' # A few more plots, with envelopes around data not smoothers:
 #' \donttest{plotenvelope(iris_mlm, which=1:3, add.smooth=FALSE)
-#' # Note violation on the scale/location plot.}
+#' # Note minor violation on the scale/location plot.}
+#' 
+#' # Repeat but with smoothers and with separate plots for each response and 
+#' # a multiple testing adjustment to sim envelopes:
+#' \donttest{plotenvelope(iris_mlm, which=1:3, overlay=FALSE, conf.level=1-0.05/4)}
 #' 
 #' @importFrom grDevices adjustcolor 
 #' @import graphics
@@ -173,23 +185,23 @@
 #' @export
 
 plotenvelope = function (y, which = 1:2, sim.method="refit", 
-                       n.sim=199, conf.level=0.95, type="st", transform = NULL, 
+                       n.sim=199, conf.level=0.95, type="st", overlay=TRUE, transform = NULL, 
                        main = c("Residuals vs Fitted Values", "Normal Quantile Plot", "Scale-Location Plot"), xlab = c("Fitted values", "Theoretical Quantiles", "Fitted Values"),
-                       ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), col=par("col"), 
+                       ylab = c("Residuals", "Residuals", expression(sqrt("|Residuals|"))), col=NULL, 
                        line.col=if(add.smooth) c("slateblue4","olivedrab","slateblue4") else rep("olivedrab",3), 
                        envelope.col = adjustcolor(line.col, 0.1), add.smooth=TRUE,
-                       plot.it = TRUE, fitMin=if(inherits(y,"glm")|inherits(y,"manyglm")) -6 else -Inf, ...) 
-{
+                       plot.it = TRUE, resFunction=NULL, predFunction=NULL, fitMin=if(inherits(y,"glm")|inherits(y,"manyglm")) -6 else -Inf, ...) 
+  {
   ### which plots to construct? And clean up arguments
   show = rep(FALSE, 6)
   show[which] = TRUE
   if(length(main)==1) main = rep(main,3)
   if(length(xlab)==1) xlab = rep(xlab,3)
   if(length(ylab)==1) ylab = rep(ylab,3)
-
+  
   ### first work out what object we have and get observed residuals and fits ###
   
-  # is y data or model fit? Make y data, object model fit
+  # return error if y is data, otherwise store model as object and data as yResp
   if(is.numeric(y))
     stop("y must be an object obtained by fitting a model to data, it cannot be the dataset itself")
   else
@@ -198,37 +210,43 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     yResp     = model.response(model.frame(object))
   }
   
-  # define residual function to be cresiduals for mlm, rstandard for lm, otherwise residuals
-  resFunction = 
-  if(inherits(object,"mlm")) 
-    cresiduals
-  else
+  # unless told otherwise, define residual function to be cresiduals for mlm, rstandard for lm, otherwise residuals
+  if(is.null(resFunction))
   {
-    if(all(class(object)=="lm")) 
-      rstandard
+    resFunction = 
+    if(inherits(object,"mlm")) 
+        cresiduals
+    else
+    {
+      if(all(class(object)=="lm")) 
+        rstandard
+      else 
+        residuals
+    } 
+  }
+  # unless told otherwise, define predict function to be cpredict for mlm, otherwise predict
+  if(is.null(predFunction))
+  {
+    prFunction = if(inherits(object,"mlm")) 
+      function(obj, xMin){ pmax(cpredict(obj), xMin) } #try using unconditional fitted values
     else 
-      residuals
-  } 
-
-  # define predict function to be cpredict for mlm, otherwise predict
-  predFunction = if(inherits(object,"mlm")) 
-#    cpredict
-#  else
-#    fitted
-    function(obj, xMin){ pmax(cpredict(obj), xMin) }
-  else 
-    function(obj, xMin){ pmax(predict(obj), xMin) }
-    
-
-  y = resFunction(object)
-  x = predFunction(object, fitMin)
+      function(obj, xMin){ pmax(predict(obj), xMin) }
+  }  
+  else
+    prFunction = function(obj,xMin){pmax(predFunction(obj), xMin)}
+  
+  if(inherits(object,"glmmTMB"))
+    y = resFunction(object,type="pearson")
+  else
+    y = resFunction(object)
+  x = prFunction(object, xMin=fitMin)
   
   y[y==Inf] = 2*max(y[y<Inf]) #deal with any probs with infinite resids
-
+  
   # set defaults for sim.method ("stand.norm" for manyglm, otherwise "refit")
   if(all(sim.method==c("refit","norm","stand.norm"))) 
     sim.method = if(inherits(object,"manyglm")) "stand.norm" else "refit"
-
+  
   # if it's a non-Gaussian GLM, change sim.method to "refit" with warning if required
   if(inherits(object,"glm")) 
   {
@@ -251,11 +269,18 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
       is.mva = FALSE
     mu     = switch(sim.method[1], "stand.norm" = rep(0, n.resp), colMeans(y) )
     Sigma  = switch(sim.method[1], "stand.norm" = cor(y), var(y) ) 
-    if(col==par("col"))
+    if(is.null(col))
+    {
       col  = rep(1:n.resp,each=n.rows)
+    }
+    else
+    if(length(col)==n.resp) # if a vector of length n.resp was given, expand to required size
+      col = rep(col, each=n.rows)
   }
   else
   {
+    if(is.null(col))
+      col=1  
     is.mva = FALSE
     n.resp = 1
     mu     = switch(sim.method[1],"stand.norm" = 0, mean(y))
@@ -278,15 +303,15 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
                  "weights", "na.action", "etastart", 
                  "mustart", "offset"), names(mf), 0L)
     mf <- mf[c(1L, m)]
-#    mf$drop.unused.levels <- TRUE
+    #    mf$drop.unused.levels <- TRUE
     mf[[1L]] <- quote(stats::model.frame)
     modelF <- try( eval(mf, parent.frame()), silent=TRUE )
     
     # if for some reason this didn't work (mgcv::gam objects cause grief) then just call model.frame on object:    
-    # also, do this for lme4 and glmmTMB because random effects are not recognised by above method
+    # also, do this for lme4 because it is so not a team player 
     if(inherits(modelF, "try-error") | inherits(object,c("lmerMod","glmerMod","glmmTMB")) )
       modelF = model.frame(object)
-
+    
     # if response has brackets in its name, it is some sort of expression,
     # put quotes around it so it works (?)
     respName   = names(modelF)[1]
@@ -297,8 +322,8 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     }
     else
       fm.update  = reformulate(".")
-
-        # if there is an offset, add it, as a separate argument when updating
+    
+    # if there is an offset, add it, as a separate argument when updating
     offs=NULL
     modelF$offs=try(model.offset(modelF))
     if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
@@ -306,7 +331,7 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     else
       objectY = update(object, formula = fm.update, data=modelF,offset=offs)
     
-
+    
     # simulate new data as a matrix
     yNew   = simulate(objectY,n.sim)
     if(is.mva) # for multivariate data, vectorise res for each sim dataset
@@ -315,22 +340,25 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     for(i.sim in 1:n.sim)
     {
       if(is.mva)
-        modelF[[1]]      = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
+        modelF[[1]] = matrix(yNew[,i.sim],ncol=n.resp,dimnames=dimnames(yResp))
       else
-        modelF[[1]]      = yNew[,i.sim]
+        modelF[[1]] = yNew[,i.sim]
       if(inherits(modelF$offs,"try-error") | is.null(modelF$offs))
         newFit         = try(update(objectY, formula=fm.update, data=modelF))
       else
         newFit         = try(update(objectY, formula=fm.update, data=modelF, offset=offs))
-      resids[,i.sim] = resFunction(newFit)
-      ftt   = try(predFunction(newFit, fitMin)) #using try for fitted values because eel data occasionally failed(!?)
+      if(inherits(object,"glmmTMB"))
+        resids[,i.sim] = resFunction(newFit,type="pearson")
+      else
+        resids[,i.sim] = resFunction(newFit)
+      ftt   = try(prFunction(newFit, xMin=fitMin)) #using try for fitted values because eel data occasionally failed(!?)
       if(inherits(ftt,"try-error"))
         fits[,i.sim] = x
       else
         fits[,i.sim] = ftt
 
       if(inherits(fits[,i.sim],"try-error"))
-      # if no variation in preds, add v small random noise to avoid error later
+        # if no variation in preds, add v small random noise to avoid error later
         if(var(fits[,i.sim])<1.e-8) fits[,i.sim] = fits[,i.sim] + 1.e-6*rnorm(n.obs)
     }
   }
@@ -349,12 +377,6 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
     fits = matrix(rep(x,n.sim),ncol=n.sim)
   }
   
-  # for smoothers, check df is not larger than the model permits
-  if(add.smooth)
-  {
-    nXs = length(unique(x))
-    kStart = if(nXs<11) max(nXs-3,1) else -1 
-  }
   
   out=vector("list",3)
   
@@ -362,311 +384,319 @@ plotenvelope = function (y, which = 1:2, sim.method="refit",
   
   if (show[1L])
   {
-    # get observed smoother
-    if(add.smooth)
-    {
-      nPred = 500
-      xPred = seq(min(x),max(x),length=nPred)
-      # get smoother for observed data
-      if(nXs>3) 
-        gam.yx=mgcv::gam(c(y)~s(c(x),k=kStart), method="ML")
-      if(nXs==3)
-        gam.yx = lm(c(y)~c(x)+I(c(x^2)))
-      if(nXs==2)  
-        gam.yx=lm(c(y)~c(x))
-      
-      resObs=as.vector(predict(gam.yx,newdata=data.frame(x=xPred)))
-
-      # get smoothers for simulated data
-      residFn=matrix(NA,nPred,n.sim)
-      for(i.sim in 1:n.sim)
-      {
-        xiSim=fits[,i.sim]
-        if(nXs>3)
-          gam.yxi = mgcv::gam(resids[,i.sim]~s(xiSim,k=kStart), method="ML")
-        if(nXs==3)
-          gam.yxi = lm(resids[,i.sim]~xiSim+I(xiSim^2))
-        if(nXs==2)
-          gam.yxi = lm(resids[,i.sim]~xiSim)
-        residFn[,i.sim]=predict(gam.yxi,newdata=data.frame(xiSim=xPred))
-      }
-    }
+    if(overlay==TRUE || is.mva==FALSE)
+      out[[1]] = resFitEnvelope(x,y,fits, resids, n.obs=n.obs, conf.level=conf.level, type=type, n.sim=n.sim,
+                                plot.it=plot.it, main=main, ylab=ylab, xlab=xlab, col=col,
+                                line.col=line.col, envelope.col=envelope.col, 
+                                add.smooth=add.smooth, nXs=length(unique(x)), nPred=500, ...)
     else
     {
-      # get observed smoother
-      nPred=n.obs
-      xSort = sort(x,index.return=TRUE)
-      xPred=xSort$x
-      resObs = y[xSort$ix]
-      
-      residFn=resids
-      for(i.sim in 1:n.sim)
+      out[[1]] = vector("list",n.resp)
+      names(out[[1]])=colnames(y)
+      for(i.resp in 1:n.resp)
       {
-        fitSort = sort(fits[,i.sim],index.return=TRUE)
-        residFn[,i.sim]=resids[,i.sim][fitSort$ix]
+        whichRows = (i.resp-1)*n.rows + 1:n.rows
+        out[[1]][[i.resp]] = resFitEnvelope(x[,i.resp],y[,i.resp],fits[whichRows,], resids[whichRows,],
+                                            n.obs=n.rows, conf.level=conf.level, type=type, n.sim=n.sim,
+                                            plot.it=plot.it, main=paste0(main, ": ", colnames(y)[i.resp]), ylab=ylab, xlab=xlab, col=col,
+                                            line.col=line.col, envelope.col=envelope.col, 
+                                            add.smooth=add.smooth, nXs = length(unique(x[,i.resp])), nPred=500, ...)  
       }
-      
     }
-    
-    #use the Global Envelope Test package to get global envelope
-    datCurves = GET::create_curve_set(list(obs=resObs, sim_m=residFn))
-    cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
-    
-    if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
-    {
-      # make axes and scales as appropriate
-      loPlot = cr$lo
-      hiPlot = cr$hi
-      if(add.smooth) #for smoother, keep ylim to data only
-      {
-        plot(x,y, main=main[1], 
-             xlab=xlab[1], ylab=ylab[1], type="n", ...)
-        eps=0.025*(max(y)-min(y)) # truncate envelope so it just goes a little bit outside the data
-        loPlot[cr$lo<min(y)] = min(y)-eps
-        hiPlot[cr$hi>max(y)] = max(y)+eps
-      }
-      else #otherwise ylim should cover envelope
-      {
-        plot(c(x,xPred,xPred), c(y,cr$lo,cr$hi), main=main[1], 
-             xlab=xlab[1], ylab=ylab[1], type="n", ...)
-      }
-      # add envelope and line
-      polygon(xPred[c(1:nPred,nPred:1)], c(loPlot,hiPlot[nPred:1]), 
-              col=envelope.col[1], border=NA)
-      # add smooth, if applicable
-      if(add.smooth)
-        lines(xPred,resObs,col=line.col[1])
-      else
-        lines(range(x),c(0,0),col=line.col[1],...)
-      # add data
-      points(x, y, col=col, ...)
-      
-    }
-
-    # return a list with smoother predictions and limits
-    out[[1]]=list(x = xPred, y = resObs, lo=cr$lo, hi=cr$hi, p.value=attr(cr,"p"))
   }
-    
+  
   ### plot 2 - normal quantile plot ###
   
   if (show[2L]) 
   {
-      qq.x=qqnorm(as.vector(y),plot.it=FALSE)
-      qqSort=apply(resids,2,sort)
-    
-      # if required, transform data
-      if (is.null(transform)==FALSE)
+    if(overlay==TRUE || is.mva==FALSE)
+      out[[2]] = qqnormEnvelope(y, resids, n.obs=n.obs, transform=transform, conf.level=conf.level, type=type, sim.method=sim.method,
+                                plot.it=plot.it, main=main, ylab=ylab, xlab=xlab, col=col, line.col=line.col, envelope.col=envelope.col, ...)
+    else
+    {
+      out[[2]] = vector("list",n.resp)
+      names(out[[2]])=colnames(y)
+      for(i.resp in 1:n.resp)
       {
-        qq.x$x = do.call(transform,list(qq.x$x))
-        qq.x$y = do.call(transform,list(qq.x$y))
-        qqSort = do.call(transform,list(qqSort))
-        y      = do.call(transform,list(y))
+        whichRows = (i.resp-1)*n.rows + 1:n.rows
+        out[[2]][[i.resp]] = qqnormEnvelope(y[,i.resp], resids[whichRows,], n.obs=n.rows, transform=transform, conf.level=conf.level, type=type, sim.method=sim.method,
+                                            plot.it=plot.it, main=paste0(main, ": ", colnames(y)[i.resp]), ylab=ylab, xlab=xlab, col=col, 
+                                            line.col=line.col, envelope.col=envelope.col, ...)
       }
-    
-      #use the Global Envelope Test package to get global envelope
-      ySort = sort(y, index.return=TRUE)
-      datCurves = GET::create_curve_set(list(obs=ySort$x, sim_m=qqSort))
-      cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
-    
-      if(plot.it==TRUE)      #do a qq plot and add sim envelope
-      {
-        # make qqplot
-        plot(qq.x$x, qq.x$y, col=col, main=main[2], 
-             xlab=xlab[2], ylab=ylab[2], ...)
-        #add a qq line.
-        # this is done as in qqline, but limited to range of data, unless sim.method="stand.norm"
-        probs=c(0.25,0.75)
-        qs=quantile(qq.x$y,probs)
-        xs=qnorm(probs)
-        if(sim.method[1]=="stand.norm")
-        {
-          slope = 1
-          int = 0
-        }
-        else
-        {
-          slope=diff(qs)/diff(xs)
-          int=qs[1]-slope*xs[1]
-        }
-        #truncate limits outside of data range so polygon actually bloody plots 
-        loPlot = cr$lo
-        hiPlot = cr$hi
-        eps=0.025*(max(y)-min(y))
-        loPlot[cr$lo<min(y)] = min(y)-eps
-        hiPlot[cr$hi>max(y)] = max(y)+eps
-
-        # add envelope
-        polygon(sort(qq.x$x)[c(1:n.obs,n.obs:1)], c(loPlot,hiPlot[n.obs:1]), 
-                col=envelope.col[2], border=NA)
-        lines(range(qq.x$x),int+slope*range(qq.x$x),col=line.col[2])
-      }
-    
-      # return a list with qq values and limits, ordered same way as input data
-      qqLo = qqHi = rep(NA,n.obs)
-      qqLo[ySort$ix] = cr$lo
-      qqHi[ySort$ix] = cr$hi
-      out[[2]]=list(x = qq.x$x, y = qq.x$y, lo=qqLo, hi=qqHi, p.value=attr(cr,"p"))
+    }
   }
-
+  
   ### plot 3 - scale-location plot ###
-
+  
   if (show[3L])
   {
     yAbs    = sqrt(abs(y))
     residsAbs = sqrt(abs(resids))
-    # get observed smoother
-    if(add.smooth==TRUE)
+    if(overlay==TRUE || is.mva==FALSE)
+      out[[3]] = scaleLocationEnvelope(x,yAbs,fits, residsAbs, n.obs=n.obs, conf.level=conf.level, type=type, n.sim=n.sim,
+                                       plot.it=plot.it, main=main, ylab=ylab, xlab=xlab, col=col,
+                                       line.col=line.col, envelope.col=envelope.col, 
+                                       add.smooth=add.smooth, nXs=length(unique(x)), nPred=500, ...)
+    else
     {
-      nPred = 500
-      xPred = seq(min(x),max(x),length=nPred)
-      # get smoother for observed data
-      if(nXs>3)
-        gam.yx=mgcv::gam(c(yAbs)~s(c(x),k=kStart), method="ML")
-      if(nXs==3)
-        gam.yx=lm(c(yAbs)~c(x)+I(c(x^2)))
-      if(nXs==2)
-        gam.yx=lm(c(yAbs)~c(x))
-      resObs=as.vector(predict(gam.yx,newdata=data.frame(x=xPred)))
-      
-      # get smoothers for simulated data
-      residFn=matrix(NA,nPred,n.sim)
-      for(i.sim in 1:n.sim)
+      out[[3]] = vector("list",n.resp)
+      names(out[[3]])=colnames(y)
+      for(i.resp in 1:n.resp)
       {
-        xiSim            = fits[,i.sim]
-        if(nXs>3)
-          gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim,k=kStart), method="ML")
-        if(nXs==3)
-          gam.yxi        = lm(residsAbs[,i.sim]~xiSim+I(xiSim^2))
-        if(nXs==2)
-          gam.yxi        = lm(residsAbs[,i.sim]~xiSim)
-        residFn[,i.sim]  = predict(gam.yxi,newdata=data.frame(xiSim=xPred))
+        whichRows = (i.resp-1)*n.rows + 1:n.rows
+        out[[3]][[i.resp]] = scaleLocationEnvelope(x[,i.resp],yAbs[,i.resp],fits[whichRows,], residsAbs[whichRows,],
+                                                   n.obs=n.rows, conf.level=conf.level, type=type, n.sim=n.sim,
+                                                   plot.it=plot.it, main=paste0(main, ": ", colnames(y)[i.resp]), ylab=ylab, xlab=xlab, col=col,
+                                                   line.col=line.col, envelope.col=envelope.col, 
+                                                   add.smooth=add.smooth, nXs = length(unique(x[,i.resp])), nPred=500, ...)  
       }
+    }
+  }
+  
+  invisible(out)
+}
+
+resFitEnvelope = function(x,y,fits, resids, n.obs, conf.level=0.95, type="st",n.sim=n.sim,
+                          plot.it=TRUE, main, ylab, xlab, col, line.col, envelope.col, add.smooth, 
+                          nXs=nXs, nPred=500, ...)
+{
+  # get observed smoother
+  if(add.smooth)
+  {
+    # for smoothers, check df is not larger than the model permits
+    kStart = if(nXs<11) max(nXs-3,1) else -1 
+    
+    xPred = seq(min(x),max(x),length=nPred)
+    # get smoother for observed data
+    if(nXs>3) 
+      gam.yx=mgcv::gam(c(y)~s(c(x),k=kStart),method="ML")
+    if(nXs==3)
+      gam.yx = lm(c(y)~c(x)+I(c(x^2)))
+    if(nXs==2)  
+      gam.yx=lm(c(y)~c(x))
+    
+    resObs=as.vector(predict(gam.yx,newdata=data.frame(x=xPred)))
+    
+    # get smoothers for simulated data
+    residFn=matrix(NA,nPred,n.sim)
+    for(i.sim in 1:n.sim)
+    {
+      xiSim=fits[,i.sim]
+      if(var(xiSim)<1.e-8)
+        xiSim = xiSim + rnorm(n.obs)*1.e-4 # to avoid an error for constant fitted value
+      if(nXs>3)
+        gam.yxi = mgcv::gam(resids[,i.sim]~s(xiSim,k=kStart),method="ML")
+      if(nXs==3)
+        gam.yxi = lm(resids[,i.sim]~xiSim+I(xiSim^2))
+      if(nXs==2)
+        gam.yxi = lm(resids[,i.sim]~xiSim)
+      residFn[,i.sim]=predict(gam.yxi,newdata=data.frame(xiSim=xPred))
+    }
+  }
+  else
+  {
+    # get observed smoother
+    nPred=n.obs
+    xSort = sort(x,index.return=TRUE)
+    xPred=xSort$x
+    resObs = y[xSort$ix]
+    
+    residFn=resids
+    for(i.sim in 1:n.sim)
+    {
+      fitSort = sort(fits[,i.sim],index.return=TRUE)
+      residFn[,i.sim]=resids[,i.sim][fitSort$ix]
+    }
+    
+  }
+  
+  #use the Global Envelope Test package to get global envelope
+  datCurves = GET::create_curve_set(list(obs=resObs, sim_m=residFn))
+  cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
+  
+  if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
+  {
+    # make axes and scales as appropriate
+    loPlot = cr$lo
+    hiPlot = cr$hi
+    if(add.smooth) #for smoother, keep ylim to data only
+    {
+      plot(x,y, main=main[1], 
+           xlab=xlab[1], ylab=ylab[1], type="n", ...)
+      eps=0.025*(max(y)-min(y)) # truncate envelope so it just goes a little bit outside the data
+      loPlot[cr$lo<min(y)] = min(y)-eps
+      hiPlot[cr$hi>max(y)] = max(y)+eps
+    }
+    else #otherwise ylim should cover envelope
+    {
+      plot(c(x,xPred,xPred), c(y,cr$lo,cr$hi), main=main[1], 
+           xlab=xlab[1], ylab=ylab[1], type="n", ...)
+    }
+    # add envelope and line
+    polygon(xPred[c(1:nPred,nPred:1)], c(loPlot,hiPlot[nPred:1]), 
+            col=envelope.col[1], border=NA)
+    # add smooth, if applicable
+    if(add.smooth)
+      lines(xPred,resObs,col=line.col[1])
+    else
+      lines(range(x),c(0,0),col=line.col[1],...)
+    # add data
+    points(x, y, col=col, ...)
+  }
+  # return a list with smoother predictions and limits
+  return(list(x = xPred, y = resObs, lo=cr$lo, hi=cr$hi, p.value=attr(cr,"p")))
+}
+
+qqnormEnvelope = function(y, resids, n.obs, transform, conf.level=0.95, type="st", sim.method="refit",
+                          plot.it=TRUE, main, ylab, xlab, col, line.col, envelope.col, ...)
+{
+  qq.x=qqnorm(as.vector(y),plot.it=FALSE)
+  qqSort=apply(resids,2,sort)
+  
+  # if required, transform data
+  if (is.null(transform)==FALSE)
+  {
+    qq.x$x = do.call(transform,list(qq.x$x))
+    qq.x$y = do.call(transform,list(qq.x$y))
+    qqSort = do.call(transform,list(qqSort))
+    y      = do.call(transform,list(y))
+  }
+  
+  #use the Global Envelope Test package to get global envelope
+  ySort = sort(y, index.return=TRUE)
+  datCurves = GET::create_curve_set(list(obs=ySort$x, sim_m=qqSort))
+  cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
+  
+  if(plot.it==TRUE)      #do a qq plot and add sim envelope
+  {
+    # make qqplot
+    plot(qq.x$x, qq.x$y, col=col, main=main[2], 
+         xlab=xlab[2], ylab=ylab[2], ...)
+    #add a qq line.
+    # this is done as in qqline, but limited to range of data, unless sim.method="stand.norm"
+    probs=c(0.25,0.75)
+    qs=quantile(qq.x$y,probs)
+    xs=qnorm(probs)
+    if(sim.method[1]=="stand.norm")
+    {
+      slope = 1
+      int = 0
     }
     else
     {
-      # get observed smoother
-      nPred=n.obs
-      xSort = sort(x,index.return=TRUE)
-      xPred=xSort$x
-      resObs = yAbs[xSort$ix]
-      
-      residFn=residsAbs
-      for(i.sim in 1:n.sim)
-      {
-        fitSort = sort(fits[,i.sim],index.return=TRUE)
-        residFn[,i.sim]=residsAbs[,i.sim][fitSort$ix]
-      }
+      slope=diff(qs)/diff(xs)
+      int=qs[1]-slope*xs[1]
     }
+    #truncate limits outside of data range so polygon actually bloody plots 
+    loPlot = cr$lo
+    hiPlot = cr$hi
+    eps=0.025*(max(y)-min(y))
+    loPlot[cr$lo<min(y)] = min(y)-eps
+    hiPlot[cr$hi>max(y)] = max(y)+eps
     
-    #use the Global Envelope Test package to get global envelope
-    datCurves = GET::create_curve_set(list(obs=resObs, sim_m=residFn))
-    cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
-    cr$lo=pmax(cr$lo,0) #ensure non-negative
-    
-    if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
-    {
-      # make axes and scales as appropriate
-      loPlot = cr$lo
-      hiPlot = cr$hi
-      if(add.smooth==TRUE) #for smoother, keep ylim to data only
-      {
-        plot(x, yAbs, main=main[3], 
-             xlab=xlab[3], ylab=ylab[3], type="n", ...)
-        #truncate limits outside of data range so polygon actually bloody plots 
-        eps=0.025*(max(yAbs)-min(yAbs))
-        loPlot[cr$lo<min(yAbs)] = min(yAbs)-eps
-        hiPlot[cr$hi>max(yAbs)] = max(yAbs)+eps
-      }
-      else #otherwise ylim should cover envelope
-      {
-        plot(c(x,xPred,xPred),c(yAbs,cr$lo,cr$hi), main=main[3], 
-             xlab=xlab[3], ylab=ylab[3], type="n", ...)
-      }
-      # add envelope and line
-      polygon(xPred[c(1:nPred,nPred:1)], c(loPlot,hiPlot[nPred:1]), 
-              col=envelope.col[3], border=NA)
-#      lines(range(xObs),median(yAbs)*c(1,1),col=line.col,...)
-      # add smooth, if applicable
-      if(add.smooth==TRUE)
-        lines(xPred,resObs,col=line.col[3],...)
-      # add data
-      points(x, yAbs, col=col, ...)
-      
-    }
-    
-    # return a list with smoother predictions and limits
-    out[[3]]=list(x = xPred, y = resObs, lo=cr$lo, hi=cr$hi, p.value=attr(cr,"p"))
+    # add envelope
+    polygon(sort(qq.x$x)[c(1:n.obs,n.obs:1)], c(loPlot,hiPlot[n.obs:1]), 
+            col=envelope.col[2], border=NA)
+    #        lines(range(qq.x$x),int+slope*range(qq.x$x),col=line.col[2])
   }
+  # return a list with qq values and limits, ordered same way as input data
+  qqLo = qqHi = rep(NA,n.obs)
+  qqLo[ySort$ix] = cr$lo
+  qqHi[ySort$ix] = cr$hi
   
-  
-  # an envelope around points on res vs fits plot - used in simulation work for faster comp times
-  if (show[4L])
+  return(list(x = qq.x$x, y = qq.x$y, lo=qqLo, hi=qqHi, p.value=attr(cr,"p")))
+}
+
+
+
+scaleLocationEnvelope = function(x,yAbs,fits, residsAbs, n.obs, conf.level=0.95, type="st", n.sim=n.sim,
+                                 plot.it=TRUE, main, ylab, xlab, col, line.col, envelope.col, add.smooth, 
+                                 nXs=nXs, nPred=500, ...)
+{
+  # get observed smoother
+  if(add.smooth==TRUE)
+  {
+    # for smoothers, check df is not larger than the model permits
+    kStart = if(nXs<11) max(nXs-3,1) else -1 
+    
+    xPred = seq(min(x),max(x),length=nPred)
+    # get smoother for observed data
+    if(nXs>3)
+      gam.yx=mgcv::gam(c(yAbs)~s(c(x),k=kStart),method="ML")
+    if(nXs==3)
+      gam.yx=lm(c(yAbs)~c(x)+I(c(x^2)))
+    if(nXs==2)
+      gam.yx=lm(c(yAbs)~c(x))
+    resObs=as.vector(predict(gam.yx,newdata=data.frame(x=xPred)))
+    
+    # get smoothers for simulated data
+    residFn=matrix(NA,nPred,n.sim)
+    for(i.sim in 1:n.sim)
+    {
+      xiSim            = fits[,i.sim]
+      if(var(xiSim)<1.e-8)
+        xiSim = xiSim + rnorm(n.obs)*1.e-4 # to avoid an error for constant fitted value
+      if(nXs>3)
+        gam.yxi        = mgcv::gam(residsAbs[,i.sim]~s(xiSim,k=kStart),method="ML")
+      if(nXs==3)
+        gam.yxi        = lm(residsAbs[,i.sim]~xiSim+I(xiSim^2))
+      if(nXs==2)
+        gam.yxi        = lm(residsAbs[,i.sim]~xiSim)
+      residFn[,i.sim]  = predict(gam.yxi,newdata=data.frame(xiSim=xPred))
+    }
+  }
+  else
   {
     # get observed smoother
+    nPred=n.obs
     xSort = sort(x,index.return=TRUE)
-    ySort = y[xSort$ix]
-
-    residSort=resids
+    xPred=xSort$x
+    resObs = yAbs[xSort$ix]
+    
+    residFn=residsAbs
     for(i.sim in 1:n.sim)
     {
       fitSort = sort(fits[,i.sim],index.return=TRUE)
-      residSort[,i.sim]=resids[,i.sim][fitSort$ix]
+      residFn[,i.sim]=residsAbs[,i.sim][fitSort$ix]
     }
-      
-    #use the Global Envelope Test package to get global envelope
-    datCurves = GET::create_curve_set(list(obs=ySort, sim_m=residSort))
-    cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
-      
-    if(plot.it==TRUE)      #do a qq plot and add sim envelope
-    {
-      # make axes and scales as appropriate
-      plot(rep(xSort$x,3), c(ySort,cr$lo,cr$hi), main=main[1], 
-           xlab=xlab[1], ylab=ylab[1], type="n", ...)
-      # add data
-      points(xSort$x, ySort, col=col, ...)
-      polygon(xSort$x[c(1:n.obs,n.obs:1)], c(cr$lo,cr$hi[n.obs:1]), 
-              col=envelope.col, border=NA)
-    }
-      
-    # return a list with qq values and limits, ordered same way as input data
-    out[[4]]=list(x = xSort, y = ySort, lo=cr$lo, hi=cr$hi, p.value=attr(cr,"p"))
   }
-    
-  # an envelope around points on scale-location plot
-  if (show[6L])
+  
+  #use the Global Envelope Test package to get global envelope
+  datCurves = GET::create_curve_set(list(obs=resObs, sim_m=residFn))
+  cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
+  cr$lo=pmax(cr$lo,0) #ensure non-negative
+  
+  if(plot.it==TRUE)      #do a res vs fits plot and add sim envelope
   {
-    # get observed smoother
-    xSort = sort(x,index.return=TRUE)
-    ySort = sqrt(abs(y))[xSort$ix]
-
-    residsAbs = sqrt(abs(resids))
-    residSort = residsAbs
-    for(i.sim in 1:n.sim)
+    # make axes and scales as appropriate
+    loPlot = cr$lo
+    hiPlot = cr$hi
+    if(add.smooth==TRUE) #for smoother, keep ylim to data only
     {
-      fitSort = sort(fits[,i.sim],index.return=TRUE)
-      residSort[,i.sim]=residsAbs[,i.sim][fitSort$ix]
-    }
-    
-    #use the Global Envelope Test package to get global envelope
-    datCurves = GET::create_curve_set(list(obs=ySort, sim_m=residSort))
-    cr = GET::global_envelope_test(datCurves, type=type, alpha=1-conf.level)
-    
-    if(plot.it==TRUE)      #do a qq plot and add sim envelope
-    {
-      # make axes and scales as appropriate
-      plot(rep(xSort$x,3), c(ySort,cr$lo,cr$hi), main=main[3], 
+      plot(x, yAbs, main=main[3], 
            xlab=xlab[3], ylab=ylab[3], type="n", ...)
-      # add data
-      points(xSort$x, ySort, col=col, ...)
-      polygon(xSort$x[c(1:n.obs,n.obs:1)], c(cr$lo,cr$hi[n.obs:1]), 
-              col=envelope.col, border=NA)
+      #truncate limits outside of data range so polygon actually bloody plots 
+      eps=0.025*(max(yAbs)-min(yAbs))
+      loPlot[cr$lo<min(yAbs)] = min(yAbs)-eps
+      hiPlot[cr$hi>max(yAbs)] = max(yAbs)+eps
     }
+    else #otherwise ylim should cover envelope
+    {
+      plot(c(x,xPred,xPred),c(yAbs,cr$lo,cr$hi), main=main[3], 
+           xlab=xlab[3], ylab=ylab[3], type="n", ...)
+    }
+    # add envelope and line
+    polygon(xPred[c(1:nPred,nPred:1)], c(loPlot,hiPlot[nPred:1]), 
+            col=envelope.col[3], border=NA)
+    #      lines(range(xObs),median(yAbs)*c(1,1),col=line.col,...)
+    # add smooth, if applicable
+    if(add.smooth==TRUE)
+      lines(xPred,resObs,col=line.col[3],...)
+    # add data
+    points(x, yAbs, col=col, ...)
     
-    # return a list with qq values and limits, ordered same way as input data
-    out[[6]]=list(x = xSort, y = ySort, lo=cr$lo, hi=cr$hi, p.value=attr(cr,"p"))
   }
-#  if(sim.method=="refit")
-#    out[[7]]=list(logLik=logLik(object), p.value=sum(logLiks<=logLik(object))/(n.sim+1))
   
-  invisible(out)
+  # return a list with smoother predictions and limits
+  return(list(x = xPred, y = resObs, lo=cr$lo, hi=cr$hi, p.value=attr(cr,"p")))
 }

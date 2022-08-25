@@ -11,7 +11,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
+  collapse = TRUE, fig.path=figPath,
   comment = "#>"
 )
 ```
@@ -105,13 +105,16 @@ This returned some concerning warnings but did fit the model :)
 
 *Check some assumptions, by fitting a linear model to some of the response variables, as a function of factor scores.*
 
-```{r ex12.4plots, fig.width=8,fig.height=6}
+```{r ex12.4RFplots, fig.width=8,fig.height=6}
 par(mfrow=c(3,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 for(iVar in 1:9)
 {
   y=reveg$abund[,iVar]
   plotenvelope(lm(y~fa_reveg$scores), which=1,main=names(reveg$abund)[iVar], n.sim=99)
 }
+```
+```{r ex12.4QQplots, fig.width=8,fig.height=6}
+par(mfrow=c(3,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 for(iVar in 1:9)
 {
   y=reveg$abund[,iVar]

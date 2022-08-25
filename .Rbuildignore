@@ -2,8 +2,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github
+^vignettes/Chapter3Solutions\.Rmd\.orig$
+^vignettes/Chapter4Solutions\.Rmd\.orig$
 ^vignettes/Chapter5Solutions\.Rmd\.orig$
 ^vignettes/Chapter7Solutions\.Rmd\.orig$
+^vignettes/Chapter9Solutions\.Rmd\.orig$
 ^vignettes/Chapter10Solutions\.Rmd\.orig$
 ^vignettes/Chapter11Solutions\.Rmd\.orig$
 ^vignettes/Chapter12Solutions\.Rmd\.orig$

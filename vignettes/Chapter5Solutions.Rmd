@@ -1,7 +1,7 @@
 ---
 title: "Chapter 5 -- Model selection -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 5 -- Model selection -- Exercise solutions and Code Boxes}
@@ -574,7 +574,7 @@ str(headbobLizards)
 #>  $ AmbientLight       : num  0.47 4.13 2.46 0.31 2.36 ...
 #>  $ Bg_noise_max       : num  11.1 16.47 9.32 2.29 7.37 ...
 #>  $ Hbspd_max          : num  29.7 54.4 34.6 26.7 28.7 ...
-#>  $ time               : POSIXct, format: "2005-07-03 15:44:00" "2005-07-04 09:33:00" "2005-07-03 16:18:00" "2005-07-03 17:50:00" ...
+#>  $ time               : POSIXct, format: "2005-07-03 15:44:00" "2005-07-04 09:33:00" "2005-07-03 16:18:00" ...
 
 # try some AIC funny-business
 library(MASS)
@@ -847,19 +847,31 @@ This time we are going with two rainfall variables again, but different ones -- 
 ```r
 library(car)
 vif(ft_tempRain)
-#>        temp        rain   rain.wetm   rain.drym   rain.seas  rain.wetqr  rain.dryqr rain.warmqr rain.coldqr 
-#>    1.773040  111.063634   85.433552  110.163673    5.524702  130.580531  144.565319    9.577784    6.436926
+#>        temp        rain   rain.wetm   rain.drym   rain.seas  rain.wetqr  rain.dryqr 
+#>      1.7730    111.0600     85.4340    110.1600      5.5247    130.5800    144.5700 
+#> rain.warmqr rain.coldqr 
+#>      9.5778      6.4369
 cor(XtempRain)
-#>                 temp        rain rain.wetm  rain.drym   rain.seas rain.wetqr rain.dryqr rain.wetqr rain.dryqr
-#> temp       1.0000000  0.47869648 0.5552163  0.1923458  0.37764956  0.5530709  0.1959310  0.5530709  0.1959310
-#> rain       0.4786965  1.00000000 0.9170080  0.7540378 -0.03914991  0.9276384  0.7811679  0.9276384  0.7811679
-#> rain.wetm  0.5552163  0.91700800 1.0000000  0.4730420  0.30626819  0.9935421  0.5030374  0.9935421  0.5030374
-#> rain.drym  0.1923458  0.75403779 0.4730420  1.0000000 -0.53128346  0.4907095  0.9933645  0.4907095  0.9933645
-#> rain.seas  0.3776496 -0.03914991 0.3062682 -0.5312835  1.00000000  0.2893864 -0.5243323  0.2893864 -0.5243323
-#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558  1.0000000  0.5187558
-#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000  0.5187558  1.0000000
-#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558  1.0000000  0.5187558
-#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000  0.5187558  1.0000000
+#>                 temp        rain rain.wetm  rain.drym   rain.seas rain.wetqr rain.dryqr
+#> temp       1.0000000  0.47869648 0.5552163  0.1923458  0.37764956  0.5530709  0.1959310
+#> rain       0.4786965  1.00000000 0.9170080  0.7540378 -0.03914991  0.9276384  0.7811679
+#> rain.wetm  0.5552163  0.91700800 1.0000000  0.4730420  0.30626819  0.9935421  0.5030374
+#> rain.drym  0.1923458  0.75403779 0.4730420  1.0000000 -0.53128346  0.4907095  0.9933645
+#> rain.seas  0.3776496 -0.03914991 0.3062682 -0.5312835  1.00000000  0.2893864 -0.5243323
+#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558
+#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000
+#> rain.wetqr 0.5530709  0.92763843 0.9935421  0.4907095  0.28938641  1.0000000  0.5187558
+#> rain.dryqr 0.1959310  0.78116788 0.5030374  0.9933645 -0.52433232  0.5187558  1.0000000
+#>            rain.wetqr rain.dryqr
+#> temp        0.5530709  0.1959310
+#> rain        0.9276384  0.7811679
+#> rain.wetm   0.9935421  0.5030374
+#> rain.drym   0.4907095  0.9933645
+#> rain.seas   0.2893864 -0.5243323
+#> rain.wetqr  1.0000000  0.5187558
+#> rain.dryqr  0.5187558  1.0000000
+#> rain.wetqr  1.0000000  0.5187558
+#> rain.dryqr  0.5187558  1.0000000
 ```
 
 A bunch of high VIF's, looking at correlations, `rain.wetm` looks like one of the main culprits, it is quite understandable that rainfall in the wettest month should be highly correlated with total rainfall, and with rainfall in the wettest quarter! Will also remove `rain.drym` because there is high redundancy between this variable and `rain.dryqr`.

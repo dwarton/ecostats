@@ -68,5 +68,6 @@ cpredict = function(object, standardize=TRUE, ...)
   }
   if(standardize==TRUE)
     results=scale(results)
+
   return(results)
 }

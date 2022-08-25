@@ -1,7 +1,7 @@
 Package: ecostats
 Title: Code and Data Accompanying the Eco-Stats Text (Warton 2022)
-Version: 1.1.9
-Date: 2022-06-09
+Version: 1.1.11
+Date: 2022-08-23
 Authors@R: c(person("David", "Warton", email = "david.warton@unsw.edu.au", role = c("aut", "cre")),
             person("Christopher", "Chung", role = "ctb"),
             person("Mark", "Donoghoe", role = "ctb"),
@@ -51,6 +51,5 @@ Suggests:
     vegan,
     VGAM,
     covr
-Additional_repositories: https://dwarton.github.io/drat
 VignetteBuilder: knitr
 URL: https://dwarton.github.io/ecostats/

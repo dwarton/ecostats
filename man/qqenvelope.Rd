@@ -68,7 +68,7 @@ data(iris)
 Y = with(iris, cbind(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))
 iris.mlm=lm(Y~Species,data=iris)
 # check normality assumption:
-qqenvelope(iris.mlm,n.sim=99)
+qqenvelope(iris.mlm,n.sim=79)
 
 }
 \references{

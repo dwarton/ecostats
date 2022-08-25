@@ -1,7 +1,7 @@
 ---
 title: "Chapter 11 -- Multivariate analysis -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 11 -- Multivariate analysis -- Exercise solutions and Code Boxes}
@@ -141,8 +141,8 @@ anova(ftmany_leaf,cor.type="R",test="LR")
 #>             Res.Df Df.diff val(LR) Pr(>LR)   
 #> (Intercept)     66                           
 #> rain            65       1  23.941   0.002 **
-#> soilp           64       1   4.475   0.117   
-#> rain:soilp      63       1   3.371   0.231   
+#> soilp           64       1   4.475   0.128   
+#> rain:soilp      63       1   3.371   0.194   
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> Arguments:
@@ -687,9 +687,10 @@ head(spider3Long)
 
 spid_glmm3 = glmmTMB(abundance~species+soil.dry:species+moss:species
    +(0+species|rows), family="poisson",data=spider3Long)
-#> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite Hessian matrix. See
+#> Warning in fitTMB(TMBStruc): Model convergence problem; non-positive-definite Hessian matrix.
+#> See vignette('troubleshooting')
+#> Warning in fitTMB(TMBStruc): Model convergence problem; singular convergence (7). See
 #> vignette('troubleshooting')
-#> Warning in fitTMB(TMBStruc): Model convergence problem; singular convergence (7). See vignette('troubleshooting')
 ```
 
 Uh oh, non-convergence.  Try using `MCMCglmm`:
@@ -933,6 +934,7 @@ mtext(colnames(ft_MCMC$VCV)[iPlot])
 }
 ```
 
+![plot of chunk ex11.7mcmc](../man/figures/ex11.7mcmc-1.png)
 
 ```r
 gelman.diag(mcmc.list(ft_MCMC$VCV[,whichPlot],ft_MCMC2$VCV[,whichPlot],

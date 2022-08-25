@@ -1,7 +1,7 @@
 ---
 title: "Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 12 -- Visualising many responses -- Exercise solutions and Code Boxes}
@@ -163,9 +163,11 @@ fa_reveg <- fa(reveg$abund, nfactors=2)
 #> In smc, smcs < 0 were set to .0
 #> Warning in cor.smooth(R): Matrix was not positive definite, smoothing was done
 #> In smc, smcs < 0 were set to .0
+#> Loading required namespace: GPArotation
 #> Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
-#> Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated weights for the factor scores
-#> are probably incorrect. Try a different factor score estimation method.
+#> Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, : The estimated
+#> weights for the factor scores are probably incorrect. Try a different factor score estimation
+#> method.
 #> In factor.scores, the correlation matrix is singular, an approximation is used
 #> Warning in cor.smooth(r): Matrix was not positive definite, smoothing was done
 ```
@@ -184,9 +186,10 @@ for(iVar in 1:9)
 }
 ```
 
-![plot of chunk ex12.4plots](../man/figures/ex12.4plots-1.png)
+![plot of chunk ex12.4RFplots](../man/figures/ex12.4RFplots-1.png)
 
 ```r
+par(mfrow=c(3,3),mar=c(3,3,2,1),mgp=c(1.75,0.75,0))
 for(iVar in 1:9)
 {
   y=reveg$abund[,iVar]
@@ -194,7 +197,7 @@ for(iVar in 1:9)
 }
 ```
 
-![plot of chunk ex12.4plots](../man/figures/ex12.4plots-2.png)
+![plot of chunk ex12.4QQplots](../man/figures/ex12.4QQplots-1.png)
 
 *Can you see any issues with factor analysis assumptions?*
 
@@ -235,15 +238,15 @@ data(reveg)
 library(gllvm)
 #> 
 #> Attaching package: 'gllvm'
-#> The following object is masked from 'package:vegan':
-#> 
-#>     ordiplot
 #> The following objects are masked from 'package:VGAM':
 #> 
 #>     AICc, nobs, predict, vcov
 #> The following objects are masked from 'package:stats4':
 #> 
 #>     nobs, vcov
+#> The following object is masked from 'package:vegan':
+#> 
+#>     ordiplot
 #> The following object is masked from 'package:mvabund':
 #> 
 #>     coefplot
@@ -518,11 +521,11 @@ by(iris, iris$Species, function(dat){ apply(dat[,1:4],2,mean) } )
 #> iris$Species: setosa
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        5.006        3.428        1.462        0.246 
-#> ------------------------------------------------------------------------------------------- 
+#> ---------------------------------------------------------------------- 
 #> iris$Species: versicolor
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        5.936        2.770        4.260        1.326 
-#> ------------------------------------------------------------------------------------------- 
+#> ---------------------------------------------------------------------- 
 #> iris$Species: virginica
 #> Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 #>        6.588        2.974        5.552        2.026

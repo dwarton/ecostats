@@ -1,7 +1,7 @@
 ---
 title: "Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes"
 author: "David Warton"
-date: "2022-06-09"
+date: "2022-08-24"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Chapter 16 -- Understanding variation in environmental response across taxa -- Exercise solutions and Code Boxes}
@@ -76,16 +76,20 @@ if(is_ecomix_installed)
 #> Iteration: 1 | New loglik -1041.731 | Ratio loglik 0
 #> Iteration: 2 | New loglik -834.997 | Ratio loglik 0.801548
 #> initial  value 834.997322 
-#> iter  10 value 821.805630
-#> iter  20 value 818.658041
-#> iter  30 value 817.420228
-#> iter  40 value 781.755656
-#> iter  50 value 778.215211
+#> iter  10 value 822.933991
+#> iter  20 value 818.054221
+#> iter  30 value 816.602567
+#> iter  40 value 812.844421
+#> iter  50 value 793.214165
+#> iter  60 value 791.057454
+#> iter  70 value 786.683339
+#> iter  80 value 778.413169
+#> iter  90 value 777.956005
 #> final  value 777.933344 
 #> converged
 #>              soil.dry   bare.sand fallen.leaves       moss herb.layer reflection
-#> Archetype1  1.5628882 -0.05472053    -0.2785304 -0.1449823  0.7081129 -0.4731397
-#> Archetype2 -0.1067054  0.22426193    -0.2855950  0.4186594  0.5893706  0.4760833
+#> Archetype1  1.5629184 -0.05470042    -0.2784744 -0.1449658  0.7081518 -0.4730736
+#> Archetype2 -0.1069941  0.22420728    -0.2855582  0.4186874  0.5894873  0.4759734
 ```
 
 *Which predictors vary the most across archetypes (hence across taxa)? Is this what you saw in Code Box 15.7?*
@@ -155,18 +159,11 @@ if(is_ecomix_installed)
 #> Iteration: 1 | New loglik -932.547 | Ratio loglik 0
 #> Iteration: 2 | New loglik -745.016 | Ratio loglik 0.798905
 #> initial  value 745.015688 
-#> iter  10 value 740.900796
-#> iter  20 value 740.884813
-#> iter  30 value 740.865771
-#> iter  40 value 740.817682
-#> iter  50 value 739.833832
-#> iter  60 value 728.725117
-#> iter  70 value 728.591056
-#> final  value 728.590862 
+#> final  value 745.015688 
 #> converged
 #>            treatmentImpact
-#> Archetype1        1.463471
-#> Archetype2        1.463359
+#> Archetype1        5.350399
+#> Archetype2        1.441362
 ```
 
 *Explain what the main two types of response to revegetation were, across invertebrate taxa.*
@@ -243,15 +240,15 @@ He wants to know *why* species vary in their environmental response, so a good i
 library(gllvm)
 #> 
 #> Attaching package: 'gllvm'
-#> The following object is masked from 'package:vegan':
-#> 
-#>     ordiplot
 #> The following objects are masked from 'package:VGAM':
 #> 
 #>     AICc, nobs, predict, vcov
 #> The following objects are masked from 'package:stats4':
 #> 
 #>     nobs, vcov
+#> The following object is masked from 'package:vegan':
+#> 
+#>     ordiplot
 #> The following object is masked from 'package:mvabund':
 #> 
 #>     coefplot
