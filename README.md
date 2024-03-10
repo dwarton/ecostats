@@ -28,9 +28,4 @@ install.packages("ecostats")
 library(ecostats)
 ```
 
-But if you want access to this development version, with the latest bells and whistles (where applicable), it can be installed from GitHub using the `devtools` package:
-
-``` r
-devtools::install_github('dwarton/ecostats', ref='main')
-library(ecostats)
-```
+This is an archived version -- if you want access to the latest development version go to [https://github.com/eco-stats/ecostats].
