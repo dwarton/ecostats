@@ -28,4 +28,4 @@ install.packages("ecostats")
 library(ecostats)
 ```
 
-This is an archived version -- if you want access to the latest development version go to [https://github.com/eco-stats/ecostats].
+This is an archived version -- if you want access to the latest development version go to [https://github.com/eco-stats/ecostats](eco-stats/ecostats).
